@@ -250,3 +250,46 @@ Next:
 3. Add Gemini/Ollama/Claude/Perplexity artifacts one at a time only when a real task needs them.
 
 Status: simple routing workflow smoke test complete.
+
+## 2026-06-21 00:36 Asia/Taipei - Hermes Codex Live CLI Bridge Test
+
+Executor: Codex
+
+Action:
+- Built `scripts\hermes_codex_bridge.ps1` for a real one-shot Hermes CLI -> Codex CLI -> Hermes CLI handoff.
+- Tested Hermes one-shot output.
+- Tested Codex non-interactive execution.
+- Diagnosed Codex CLI auth failure caused by invalid `OPENAI_API_KEY` / `CODEX_API_KEY` environment variables overriding stored ChatGPT auth.
+- Updated the bridge to clear those env vars only inside the bridge process.
+- Ran a successful ASCII-safe live bridge transcript.
+
+Files changed:
+- `E:\AgentOS\scripts\hermes_codex_bridge.ps1`
+- `E:\AgentOS\data\live_bridge\2026-06-21-0036-live-ascii\01_HERMES_TO_CODEX.md`
+- `E:\AgentOS\data\live_bridge\2026-06-21-0036-live-ascii\02_CODEX_REPLY.md`
+- `E:\AgentOS\data\live_bridge\2026-06-21-0036-live-ascii\03_HERMES_SUMMARY.md`
+- `E:\AgentOS\data\live_bridge\2026-06-21-0036-live-ascii\TRANSCRIPT.md`
+- `E:\AgentOS\docs\AGENT_ROUTING_PLAN.md`
+- `E:\AgentOS\docs\ARCHITECTURE.md`
+- `E:\AgentOS\docs\SETUP_STATUS.md`
+- `E:\AgentOS\progress_log.md`
+
+Verified live transcript:
+- Hermes generated a message for Codex.
+- Codex replied:
+  - `RECEIVED=YES`
+  - `NEXT_ACTION=Run a local read-only health check of AgentOS status`
+  - `BOUNDARY=No file changes or external communications without explicit operator approval`
+- Hermes summarized the Codex reply for Josh in Chinese.
+
+Findings:
+- Hermes and Codex can now communicate through a real CLI bridge.
+- ASCII key/value output is safer for the Codex reply on Windows CLI; Hermes can still summarize for Josh in Chinese.
+- This is direct one-shot CLI communication, not Telegram automation and not a daemon.
+
+Next:
+1. Use the bridge for a harmless read-only AgentOS health check.
+2. Add explicit task templates if Hermes should trigger Codex bridge runs from Telegram later.
+3. Keep file-packet task outputs for anything that changes files or affects client work.
+
+Status: live Hermes-Codex CLI bridge working.

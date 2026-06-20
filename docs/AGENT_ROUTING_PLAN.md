@@ -29,6 +29,40 @@ Hermes defines decision
   -> Hermes updates routing decision and summarizes to Josh
 ```
 
+## Live Hermes-Codex CLI Bridge
+
+For direct CLI communication, use:
+
+```powershell
+.\scripts\hermes_codex_bridge.ps1
+```
+
+The bridge runs one live handoff:
+
+```text
+Hermes CLI
+  -> writes a message for Codex
+  -> Codex CLI receives and replies
+  -> Hermes CLI summarizes Codex's reply for Josh
+```
+
+Outputs are stored under:
+
+```text
+E:\AgentOS\data\live_bridge\<bridge-id>\
+  01_HERMES_TO_CODEX.md
+  02_CODEX_REPLY.md
+  03_HERMES_SUMMARY.md
+  TRANSCRIPT.md
+```
+
+Current proven status:
+
+- Hermes CLI can generate the message.
+- Codex CLI can receive and answer when invalid API-key environment variables are cleared for the bridge process.
+- Hermes CLI can summarize the Codex reply.
+- This is direct CLI handoff, not Telegram automation and not a long-running daemon.
+
 ## Escalation Rules
 
 - Use Ollama for cheap local rough classification.

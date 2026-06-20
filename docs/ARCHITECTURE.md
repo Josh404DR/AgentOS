@@ -136,6 +136,24 @@ Hermes summarizes result to Josh
 
 Do not build an execution daemon yet. Use file packets first, then automate only after the packet workflow is proven.
 
+### Live Hermes-Codex Bridge
+
+Source of truth: `docs\AGENT_ROUTING_PLAN.md`
+
+A direct Hermes CLI -> Codex CLI -> Hermes CLI bridge has been tested through:
+
+```text
+scripts\hermes_codex_bridge.ps1
+```
+
+Successful transcript:
+
+```text
+data\live_bridge\2026-06-21-0036-live-ascii\TRANSCRIPT.md
+```
+
+Boundary: this proves direct CLI handoff, not Telegram automation, not a scheduler integration, and not a long-running daemon.
+
 ## State And Queue Model
 
 AgentOS currently uses lightweight file-based state:

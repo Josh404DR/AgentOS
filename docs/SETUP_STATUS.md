@@ -297,3 +297,34 @@ Script verification:
   - `watchdog.ps1`
   - `model_fallback.ps1`
   - `replicate_to_machine2.ps1`
+
+## Task 8 - Hermes / Codex Live CLI Bridge
+
+Updated: 2026-06-21
+
+Result: Added and tested `E:\AgentOS\scripts\hermes_codex_bridge.ps1`.
+
+What was tested:
+
+```text
+Hermes CLI -> Codex CLI -> Hermes CLI
+```
+
+Successful transcript:
+
+```text
+E:\AgentOS\data\live_bridge\2026-06-21-0036-live-ascii\TRANSCRIPT.md
+```
+
+Important auth note:
+
+- Initial `codex exec` failed because `OPENAI_API_KEY` / `CODEX_API_KEY` environment variables pointed to an invalid API key.
+- Codex Doctor showed stored ChatGPT tokens are available.
+- The bridge clears those two API-key environment variables only for the bridge process so Codex CLI can use stored ChatGPT auth.
+
+Current boundary:
+
+- Direct CLI handoff works.
+- This is not yet Telegram automation.
+- This is not yet a long-running daemon.
+- This does not yet mean Hermes can autonomously run arbitrary Codex tasks without an explicit bridge command.
