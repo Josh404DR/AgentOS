@@ -204,4 +204,7 @@ Notes:
 - Runtime logs such as `logs\hermes-gateway.stdout.log` and `logs\hermes-gateway.stderr.log` are ignored.
 - JSON state files under `logs\` remain trackable because they document current operational state.
 
-Status: ready for initial Git commit.
+Commit:
+- `43201ee` - `Initial AgentOS baseline`
+
+Status: complete. AgentOS now has Git traceability.
