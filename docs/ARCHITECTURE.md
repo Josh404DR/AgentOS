@@ -72,9 +72,9 @@ Current state by layer:
 |---|---|---|
 | Role definitions | `agents\roles\hermes.md`, `agents\roles\codex.md`, `agents\roles\gemini.md` | Clean role docs exist; they are guidance, not runnable agents |
 | Lead discovery | Hermes cron job `daily-upwork-lead-patrol`; `data\leads\` | Hermes owns real search; directory exists; no real daily lead file observed in this workspace yet |
-| Screening | `data\screening\`, `workflows\ai_freelancer_os.md` | Designed as append-only file flow; directory exists; no `screening_log.md` observed yet |
-| Proposal prep | `data\proposals\`; `workflows\ai_freelancer_os.md` | Directory and format exist; no real proposal draft observed yet |
-| Codex execution | `data\codex_tasks\`; `workflows\hermes_to_codex.md` | Task packet contract exists; no completed packet/result cycle observed yet |
+| Screening | `data\screening\`, `workflows\ai_freelancer_os.md` | Designed as append-only file flow; mock screening log exists; no real lead screening observed yet |
+| Proposal prep | `data\proposals\`; `workflows\ai_freelancer_os.md` | Directory and format exist; mock proposal draft exists; no real proposal draft observed yet |
+| Codex execution | `data\codex_tasks\`; `workflows\hermes_to_codex.md` | Task packet contract exists; mock/smoke packet cycles completed; no real client packet cycle observed yet |
 | Project delivery | `data\projects\`; `workflows\client_project.md` | Directory and workflow exist; no active project artifacts observed yet |
 | Maintenance | `scripts\start.ps1`, `watchdog.ps1`, `model_fallback.ps1`; `logs\*.json` | Scripts exist and parser checks were previously recorded as passing; logs show legacy gateway and healthy model check |
 | Queue/database | File directories only | No database, broker, queue runner, or daemon inside AgentOS |
@@ -116,7 +116,7 @@ data\leads\YYYY-MM-DD.md
   -> Josh review
 ```
 
-No implemented `screening_log.md` exists yet. This should be added only after Hermes produces a real lead file or with clearly marked mock data.
+A mock `screening_log.md` exists from dry-run work. Real screening entries should be added only after Hermes produces a real lead file, or with clearly marked mock data.
 
 Important boundary: screening consumes Hermes lead output. It must not run a second independent lead search.
 
@@ -171,6 +171,7 @@ Gemini may help Hermes summarize leads, sanity-check proposal wording, or provid
 ## Model And Tool Resources
 
 Canonical resource inventory: `E:\AgentOS\docs\RESOURCE_INVENTORY.md`
+Agent routing plan: `E:\AgentOS\docs\AGENT_ROUTING_PLAN.md`
 
 Current verified/local resources:
 
@@ -235,9 +236,9 @@ Known blockers:
 ## Gaps
 
 1. No real `data\leads\YYYY-MM-DD.md` lead output has been observed yet.
-2. No screening log exists yet.
+2. Screening/proposal/Codex dry runs exist, but only with mock/internal data.
 3. No proposal draft has been generated from a real lead yet.
-4. No Codex task packet has completed a full Hermes -> Codex -> Hermes result cycle yet.
+4. No Codex task packet has completed a full real Hermes lead -> Codex -> Hermes result cycle yet.
 5. Proxy/Claude subscription bridging remains unresolved.
 6. Gateway mode needs a Josh decision: keep legacy mode or migrate to formal `hermes gateway run` / service.
 

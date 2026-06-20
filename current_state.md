@@ -10,6 +10,7 @@ Use these files going forward:
 - Business lead/proposal workflow: `E:\AgentOS\workflows\ai_freelancer_os.md`
 - Hermes-to-Codex handoff: `E:\AgentOS\workflows\hermes_to_codex.md`
 - Model/tool resource inventory: `E:\AgentOS\docs\RESOURCE_INVENTORY.md`
+- Agent routing plan: `E:\AgentOS\docs\AGENT_ROUTING_PLAN.md`
 - Operational status history: `E:\AgentOS\docs\SETUP_STATUS.md`
 - Append-only work log: `E:\AgentOS\progress_log.md`
 

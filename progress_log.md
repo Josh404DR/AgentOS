@@ -208,3 +208,45 @@ Commit:
 - `43201ee` - `Initial AgentOS baseline`
 
 Status: complete. AgentOS now has Git traceability.
+
+## 2026-06-21 00:13 Asia/Taipei - Simple Agent Routing Workflow Smoke Test
+
+Executor: Codex
+
+Action:
+- Ran a simple internal task through the AgentOS routing workflow.
+- Created a minimal agent routing plan without adding a daemon, queue, or third-party agent framework.
+- Created a routing decision artifact to simulate Hermes assigning work.
+- Created a Codex task packet for a local documentation consistency check.
+- Executed the task by inspecting local docs, fixing one indexing gap, and writing `OUTPUTS\RESULT.md`.
+
+Files changed:
+- `E:\AgentOS\docs\AGENT_ROUTING_PLAN.md`
+- `E:\AgentOS\README.md`
+- `E:\AgentOS\current_state.md`
+- `E:\AgentOS\docs\ARCHITECTURE.md`
+- `E:\AgentOS\data\routing_decisions\2026-06-21-agentos-docs-consistency-smoke.md`
+- `E:\AgentOS\data\codex_tasks\2026-06-21-agentos-docs-consistency-smoke\TASK.md`
+- `E:\AgentOS\data\codex_tasks\2026-06-21-agentos-docs-consistency-smoke\STATUS.md`
+- `E:\AgentOS\data\codex_tasks\2026-06-21-agentos-docs-consistency-smoke\OUTPUTS\RESULT.md`
+- `E:\AgentOS\progress_log.md`
+
+Workflow checkpoints:
+- Hermes simulation recorded routing decision in `data\routing_decisions`.
+- Codex task packet was created under `data\codex_tasks`.
+- Codex performed deterministic local file checks.
+- Codex found and fixed one documentation indexing gap.
+- Codex wrote `OUTPUTS\RESULT.md`.
+- Task status was updated to `done`.
+
+Findings:
+- The routing workflow is viable for simple internal work.
+- `docs\AGENT_ROUTING_PLAN.md` is now the minimal routing reference.
+- This still does not make Claude, Perplexity, Gemini, Ollama, or Antigravity automatic workers; they remain routed resources until their handoffs are tested.
+
+Next:
+1. Run the same routing pattern on the first real Hermes lead artifact.
+2. If a task needs technical validation, dispatch it to Codex with this packet format.
+3. Add Gemini/Ollama/Claude/Perplexity artifacts one at a time only when a real task needs them.
+
+Status: simple routing workflow smoke test complete.
