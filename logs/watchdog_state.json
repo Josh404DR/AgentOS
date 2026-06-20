@@ -1,0 +1,21 @@
+﻿{
+    "proxy":  {
+                  "requested":  false
+              },
+    "cronSummary":  [
+                        "    Name:      daily-upwork-lead-patrol",
+                        "    Name:      daily-agentos-health-check",
+                        "    Name:      Daily-Token-Cost-Summary",
+                        "  ⚠  Gateway is not running — jobs won\u0027t fire automatically."
+                    ],
+    "updated":  "2026-06-20T12:30:17",
+    "gateway":  {
+                    "pids":  [
+                                 3404,
+                                 41880
+                             ],
+                    "restarted":  false,
+                    "running":  true,
+                    "mode":  "legacy-cli-py-gateway"
+                }
+}
