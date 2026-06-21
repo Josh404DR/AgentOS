@@ -1,6 +1,6 @@
 # AgentOS Resource Inventory
 
-Updated: 2026-06-20 21:58 Asia/Taipei
+Updated: 2026-06-21 22:33 Asia/Taipei
 Owner: Josh Hsu
 Purpose: This file is the source of truth for model/tool resources that affect future AgentOS agent configuration.
 
@@ -17,6 +17,9 @@ Local verification performed from `E:\AgentOS`.
 | Perplexity subscription | User-reported | Josh reports active subscription | Useful for research; no local AgentOS CLI/API integration verified |
 | Ollama | Installed | `ollama list` succeeded | Local fallback/small model pool |
 | Antigravity IDE desktop subscription | User-reported | Josh reports subscribed desktop usage quota | Manual IDE resource; no AgentOS CLI/API integration verified |
+| Perplexity IDE | User-reported | Josh reports available IDE resource | Manual research/coding assistant; no AgentOS automation verified |
+| VSCode + Cline free | User-reported | Josh reports available free-tier resource | Manual IDE/agent resource; no AgentOS automation verified |
+| Cursor free quota | User-reported | Josh reports available free quota | Manual IDE coding resource; no AgentOS automation verified |
 
 ## Ollama Local Models
 
@@ -109,6 +112,22 @@ Recommended role for now:
 - Manual coding/IDE resource when Josh wants to spend desktop quota.
 - Not part of Hermes automated orchestration until there is a tested CLI/API/workflow handoff.
 
+### Other Manual IDE Resources
+
+Current state:
+
+- Perplexity IDE is user-reported.
+- VSCode + Cline free is user-reported.
+- Cursor free quota is user-reported.
+- No AgentOS automation interface has been verified for these resources.
+
+Recommended role for now:
+
+- Manual coding/research/review support.
+- Useful for interactive work when Josh chooses to spend free or subscribed quota.
+- Outputs should be copied into tracked AgentOS artifacts if they affect decisions.
+- Not part of Hermes automated orchestration until a tested CLI/API/workflow handoff exists.
+
 ## Routing Rules
 
 Use the cheapest reliable resource that fits the task:
@@ -118,7 +137,7 @@ Use the cheapest reliable resource that fits the task:
 - Perplexity: current web research with sources.
 - Codex: repo edits, scripts, tests, debugging, implementation artifacts.
 - Claude: manual high-context review or second opinion, not yet automated.
-- Antigravity desktop: manual IDE work, not yet automated.
+- Antigravity / Perplexity IDE / VSCode Cline / Cursor: manual IDE work, not yet automated.
 
 Escalate resource choice when:
 
@@ -130,6 +149,6 @@ Escalate resource choice when:
 ## Current Non-Goals
 
 - Do not build a new multi-agent framework around these resources yet.
-- Do not make Claude, Perplexity, or Antigravity automatic workers until their handoff paths are tested.
+- Do not make Claude, Perplexity, Antigravity, Perplexity IDE, VSCode Cline, or Cursor automatic workers until their handoff paths are tested.
 - Do not route client-facing messages directly through any model without Josh approval.
 - Do not assume a subscription equals API or CLI automation access.

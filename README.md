@@ -11,6 +11,7 @@ Hermes coordinates the system and talks to Josh through Telegram. Codex performs
 - Hermes-to-Codex task packets: `workflows\hermes_to_codex.md`
 - Model/tool resource inventory: `docs\RESOURCE_INVENTORY.md`
 - Agent routing plan: `docs\AGENT_ROUTING_PLAN.md`
+- Pre-flight test plan: `docs\PRE_FLIGHT_TEST_PLAN.md`
 - Hermes setup and operational status: `docs\SETUP_STATUS.md`
 - Append-only work history: `progress_log.md`
 

@@ -293,3 +293,37 @@ Next:
 3. Keep file-packet task outputs for anything that changes files or affects client work.
 
 Status: live Hermes-Codex CLI bridge working.
+
+## 2026-06-21 22:33 Asia/Taipei - Added Pre-Flight Multi-Resource Test Plan
+
+Executor: Codex
+
+Action:
+- Clarified that the current goal is testing the AgentOS workflow before real client task execution.
+- Added a staged pre-flight test plan covering Hermes 24h operation, Codex, Gemini, Claude reviewer, Perplexity, Ollama, and manual IDE resources.
+- Added user-reported resources: Perplexity IDE, VSCode + Cline free, and Cursor free quota.
+- Explicitly recorded that the real task knowledge accumulation loop has not started yet.
+- Avoided modifying currently dirty `agents\roles\*.md` files because they contain pre-existing uncommitted changes.
+
+Files changed:
+- `E:\AgentOS\docs\PRE_FLIGHT_TEST_PLAN.md`
+- `E:\AgentOS\docs\RESOURCE_INVENTORY.md`
+- `E:\AgentOS\docs\AGENT_ROUTING_PLAN.md`
+- `E:\AgentOS\README.md`
+- `E:\AgentOS\current_state.md`
+- `E:\AgentOS\docs\ARCHITECTURE.md`
+- `E:\AgentOS\progress_log.md`
+
+Current answer:
+- Yes, the current phase is workflow testing.
+- Hermes/Gemini as brain, Codex as coder, and Claude as reviewer is the intended model.
+- Other resources are now included in the pre-flight plan.
+- The mock/internal loops exist, but Hermes 24h operation and real task knowledge accumulation are not complete yet.
+
+Next:
+1. Run Stage 1 read-only AgentOS health check through the live Hermes-Codex bridge.
+2. Run Stage 2 Ollama local triage.
+3. Run Stage 4 Claude reviewer on an existing Codex result.
+4. Start a 24h Hermes observation window before using real client tasks.
+
+Status: pre-flight plan added.

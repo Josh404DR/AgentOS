@@ -1,7 +1,7 @@
 # AgentOS Agent Routing Plan
 
-Updated: 2026-06-21 00:13 Asia/Taipei
-Purpose: Minimal routing rules for assigning work across Hermes, Codex, Gemini, Claude, Perplexity, Ollama, and Antigravity without adding a new agent framework.
+Updated: 2026-06-21 22:33 Asia/Taipei
+Purpose: Minimal routing rules for assigning work across Hermes, Codex, Gemini, Claude, Perplexity, Ollama, and manual IDE resources without adding a new agent framework.
 
 ## Routing Principle
 
@@ -18,6 +18,9 @@ Use file artifacts first. Hermes coordinates, then assigns explicit work packets
 | Perplexity | Current web research with sources | Subscription user-reported, integration not verified |
 | Ollama | Local low-cost classification, draft summaries, fallback reasoning | Local models available |
 | Antigravity IDE | Manual desktop coding resource | Subscription user-reported, not automated |
+| Perplexity IDE | Manual research/coding assistant | User-reported, not automated |
+| VSCode + Cline free | Manual IDE/agent support | User-reported, not automated |
+| Cursor free quota | Manual IDE coding support | User-reported, not automated |
 
 ## Minimal Dispatch Flow
 
@@ -70,10 +73,21 @@ Current proven status:
 - Use Perplexity only when current external facts or sources matter.
 - Use Codex when local files, code, scripts, tests, or implementation are involved.
 - Use Claude for manual high-context review after Codex output exists.
+- Use IDE resources manually when Josh chooses to spend desktop/free quota; copy meaningful output back into tracked artifacts.
 - Ask Josh before client-facing commitments, paid API use, credentials, or proposal submission.
+
+## Pre-Flight Plan
+
+Canonical staged test plan:
+
+```text
+E:\AgentOS\docs\PRE_FLIGHT_TEST_PLAN.md
+```
+
+Do not start real client task knowledge accumulation until the pre-flight plan records acceptable results for Hermes 24h operation and the first safe multi-resource tests.
 
 ## Current Non-Goals
 
 - Do not build a new daemon or queue yet.
-- Do not make Claude, Perplexity, or Antigravity automatic workers until their handoff is tested.
+- Do not make Claude, Perplexity, Ollama, Antigravity, Perplexity IDE, VSCode Cline, or Cursor automatic workers until their handoff is tested.
 - Do not bypass the `data\codex_tasks\...\OUTPUTS\RESULT.md` return contract for Codex work.

@@ -11,6 +11,7 @@ Use these files going forward:
 - Hermes-to-Codex handoff: `E:\AgentOS\workflows\hermes_to_codex.md`
 - Model/tool resource inventory: `E:\AgentOS\docs\RESOURCE_INVENTORY.md`
 - Agent routing plan: `E:\AgentOS\docs\AGENT_ROUTING_PLAN.md`
+- Pre-flight test plan: `E:\AgentOS\docs\PRE_FLIGHT_TEST_PLAN.md`
 - Operational status history: `E:\AgentOS\docs\SETUP_STATUS.md`
 - Append-only work log: `E:\AgentOS\progress_log.md`
 

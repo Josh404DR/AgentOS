@@ -190,6 +190,7 @@ Gemini may help Hermes summarize leads, sanity-check proposal wording, or provid
 
 Canonical resource inventory: `E:\AgentOS\docs\RESOURCE_INVENTORY.md`
 Agent routing plan: `E:\AgentOS\docs\AGENT_ROUTING_PLAN.md`
+Pre-flight test plan: `E:\AgentOS\docs\PRE_FLIGHT_TEST_PLAN.md`
 
 Current verified/local resources:
 
@@ -203,6 +204,9 @@ User-reported subscription resources:
 - Claude Pro subscription
 - Perplexity subscription
 - Antigravity IDE desktop subscribed usage quota
+- Perplexity IDE
+- VSCode + Cline free
+- Cursor free quota
 
 These resources affect future agent configuration, but they do not change the current Hermes -> file packet -> Codex handoff contract until each automated path is tested.
 
