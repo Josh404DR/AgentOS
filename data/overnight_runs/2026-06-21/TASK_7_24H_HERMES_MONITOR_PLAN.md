@@ -1,36 +1,26 @@
-# Task 7: 24h Hermes Operation Monitor Plan
+# TASK 7 - HERMES 24H OPERATION MONITOR PLAN
 
-## Execution Date
-2026-06-21 01:22 Asia/Taipei
-
-## Current Operational Snapshot
-- **Hermes Gateway**: Running (PID: 9968)
-- **Cron Jobs**: 3 Active
-- **Telegram Connectivity**: Verified
+## Current Status
+- **Gateway**: Running (PID: 9968).
+- **Scheduled Jobs**: 3 Active.
+  - `daily-agentos-health-check`: 2026-06-22 07:55
+  - `daily-upwork-lead-patrol`: 2026-06-22 08:00
+  - `Daily-Token-Cost-Summary`: 2026-06-23 00:00
+- **Watchdog State**: Manual Gateway mode; no automatic Windows service.
+- **Model Fallback**: Gemini-3-Flash is primary; Ollama qwen3:8b is available as local fallback.
 
 ## 24h Observation Checklist
+- [ ] **Gateway Stability**: Verify PID 9968 (or its child) remains alive for 24 hours.
+- [ ] **Telegram Handoff**: Confirm `Daily-Token-Cost-Summary` successfully delivers to the home channel.
+- [ ] **Cron Execution**: Verify `daily-agentos-health-check` runs and writes its daily health artifact.
+- [ ] **Lead Patrol**: Confirm `daily-upwork-lead-patrol` executes and outputs results to `data/leads/`.
 
-### 1. Connectivity & Delivery
-- [ ] **Gateway Uptime**: Verify the gateway process (PID: 9968 or its successor) does not crash.
-- [ ] **Telegram Handoff**: Confirm `Daily-Token-Cost-Summary` is delivered to the origin chat.
-- [ ] **Lead Patrol**: Confirm `daily-upwork-lead-patrol` runs at 08:00 and reports results.
+## Operational Boundaries
+- **Status**: 24h observation started.
+- **Success Criteria**: 24 hours of uninterrupted gateway and cron operation with evidence in `progress_log.md`.
+- **Note**: No Windows service installed. Stability depends on the current persistent session.
 
-### 2. Resource Health
-- [ ] **Model Fallback**: Log any 429/500 errors from Gemini and verify if Hermes remains responsive.
-- [ ] **File Consistency**: Ensure `progress_log.md` is updated after every automated run.
-
-### 3. Watchdog Behavior
-- [ ] **Auto-Recovery**: If a manual restart was required, log the timestamp and reason.
-- [ ] **Memory Growth**: Monitor if the Hermes process consumes excessive RAM over 24 hours.
-
-## Identified Blockers for Unattended Run
-- **Git Dubious Ownership**: Codex may still be blocked from performing git operations on E:/ unless fixed.
-- **External Research**: Perplexity remains manual-only.
-
-## Coordinator Decision
-The 24h observation window starts **NOW**. No new Windows services will be installed without approval. Hermes remains in "Manual Gateway" mode (PID: 9968).
-
-## Actions Taken
-- Performed `hermes status` and `cron list` verification.
-- Drafted the 24h observation checklist.
-- Recorded artifact at E:/AgentOS/data/overnight_runs/2026-06-21/TASK_7_24H_HERMES_MONITOR_PLAN.md.
+## Acceptance Criteria Check
+- **Gateway/Cron status recorded**: YES
+- **Checklist created**: YES
+- **ASCII Safety**: Verified.
