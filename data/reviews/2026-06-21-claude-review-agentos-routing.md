@@ -5,9 +5,9 @@
 
 ## Review Findings (Claude)
 - **Overclaiming**: Codex claimed "success" for a workflow smoke test, but the work was limited to documentation link fixes. Codex also performed "self-grading" (verifying its own fixes).
-- **Boundaries**: 🔴 High Risk. Codex was allowed to edit Governance docs (`README.md`, `ARCHITECTURE.md`) which should ideally be owned by Hermes (the coordinator).
+- **Boundaries**: HIGH_RISK. Codex was allowed to edit Governance docs (`README.md`, `ARCHITECTURE.md`) which should ideally be owned by Hermes (the coordinator).
 - **Missing Tests**: No functional test of the `hermes_codex_bridge.ps1` was exercised; no markdown linting or link-checks were performed on the modified files.
-- **Pattern Safety**: 🔴 High Risk. The blast radius of a single task (8 files modified) is too high. Recommended directory isolation for workers.
+- **Pattern Safety**: HIGH_RISK. The blast radius of a single task (8 files modified) is too high. Recommended directory isolation for workers.
 
 ## Hermes Coordinator Summary
 - **Action Needed**: YES. The AgentOS pattern must be revised to prevent Codex from editing Governance/Metadata files directly.

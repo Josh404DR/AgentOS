@@ -1,9 +1,9 @@
 # AgentOS Overnight Execution Report
 
 ## Executive Summary
-- Pre-flight overnight run (2026-06-21) mostly completed, producing initial artifacts for all planned tasks.
+- All planned artifacts were created; several capabilities remain partial or observing.
 - Hermes-Codex bridge succeeded in the second attempt (via PowerShell bridge script) after an initial 401 Unauthorized/Timeout failure during direct CLI testing.
-- 24h Hermes stability is in the **observing** phase; a monitor plan exists, but a full 24h uptime evidence record has not yet been completed.
+- 24h observation started; not yet proven. A monitor plan exists, but a full 24h uptime evidence record has not yet been completed.
 - Git state is **not clean**; several role definition files are dirty and live bridge transcripts remain untracked.
 
 ## Task Status Table
@@ -49,11 +49,14 @@
 
 ## Git Status
 ```text
- M agents/roles/codex.md
+M agents/roles/codex.md
  M agents/roles/gemini.md
  M agents/roles/hermes.md
+ M data/reviews/2026-06-21-claude-review-agentos-routing.md
+ M docs/overnight_report.md
 ?? data/live_bridge/2026-06-21-235219/
 ?? data/live_bridge/2026-06-21-235324/
+?? data/overnight_runs/2026-06-21/CORRECTION_NOTE.md
 ```
 
 ## 24h Operation Status
