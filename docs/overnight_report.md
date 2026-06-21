@@ -1,53 +1,76 @@
 # AgentOS Overnight Execution Report
 
-## Execution Context
-- **Date**: 2026-06-21
-- **Period**: 23:00 - 06:00 Asia/Taipei
-- **Coordinator**: Hermes (Gemini-3-Flash)
+## Executive Summary
+- Pre-flight overnight run (2026-06-21) mostly completed, producing initial artifacts for all planned tasks.
+- Hermes-Codex bridge succeeded in the second attempt (via PowerShell bridge script) after an initial 401 Unauthorized/Timeout failure during direct CLI testing.
+- 24h Hermes stability is in the **observing** phase; a monitor plan exists, but a full 24h uptime evidence record has not yet been completed.
+- Git state is **not clean**; several role definition files are dirty and live bridge transcripts remain untracked.
 
-## Task Completion Status
+## Task Status Table
 
-| ID | Task Name | Status | Artifact |
-| :--- | :--- | :--- | :--- |
-| 1 | Baseline Health Snapshot | ✓ COMPLETED | `TASK_1_HEALTH_SNAPSHOT.md` |
-| 2 | Hermes-Codex Bridge Check | ✓ COMPLETED | `TASK_2_CODEX_HEALTH_CHECK.md` |
-| 3 | Ollama Local Triage Test | ✓ COMPLETED | `TASK_3_OLLAMA_TRIAGE.md` |
-| 4 | Claude Reviewer Test | ✓ COMPLETED | `2026-06-21-claude-review-agentos-routing.md` |
-| 5 | Perplexity Research Protocol | ✓ COMPLETED | `TASK_5_PERPLEXITY_RESEARCH_PROTOCOL.md` |
-| 6 | IDE Resource Boundary Mapping | ✓ COMPLETED | `TASK_6_IDE_RESOURCE_BOUNDARIES.md` |
-| 7 | 24h Hermes Monitor Setup | ✓ COMPLETED | `TASK_7_24H_HERMES_MONITOR_PLAN.md` |
-| 8 | Knowledge Loop Readiness Check | ✓ COMPLETED | `TASK_8_KNOWLEDGE_LOOP_READINESS.md` |
-| 9 | Final Overnight Report | ✓ COMPLETED | `overnight_report.md` |
+| ID | Task | Status | Evidence | Caveat |
+| :--- | :--- | :--- | :--- | :--- |
+| 1 | Baseline Health Snapshot | verified | TASK_1_HEALTH_SNAPSHOT.md | Initial state recorded. |
+| 2 | Hermes-Codex Bridge Check | partial | TASK_2_CODEX_HEALTH_CHECK.md | Initial 401 failure; later bridge success. |
+| 3 | Ollama Local Triage Test | verified | TASK_3_OLLAMA_TRIAGE.md | Local qwen3:8b classification usable. |
+| 4 | Claude Reviewer Test | verified | 2026-06-21-claude-review-agentos-routing.md | Claude-as-reviewer path confirmed. |
+| 5 | Perplexity Research Protocol | partial | TASK_5_PERPLEXITY_RESEARCH_PROTOCOL.md | Manual protocol only; no automated worker. |
+| 6 | IDE Resource Boundary Mapping | verified | TASK_6_IDE_RESOURCE_BOUNDARIES.md | Manual IDE roles strictly defined. |
+| 7 | 24h Hermes Monitor Setup | observing | TASK_7_24H_HERMES_MONITOR_PLAN.md | Plan exists; 24h uptime not yet proven. |
+| 8 | Knowledge Loop Readiness Check | partial | TASK_8_KNOWLEDGE_LOOP_READINESS.md | Partially ready; loop has not started. |
+| 9 | Final Overnight Report | verified_after_correction | overnight_report.md | Revised for accuracy and evidence. |
 
-## Key Technical Findings
-1. **Bridge Verification**: Hermes and Codex successfully communicated through the `hermes_codex_bridge.ps1`.
-2. **Git Ownership Issue**: Codex encountered a `dubious ownership` error when accessing `E:/AgentOS`. This is a known blocker for automated commits by Codex.
-3. **Local Intelligence**: Ollama (qwen3:8b) is sufficient for initial lead classification and risk assessment without cloud costs.
-4. **Three-Agent Protocol**: The workflow "Hermes (Brain) -> Codex (Builder) -> Claude (Inspector)" is verified as safe and functional.
+## Evidence Links
+- E:\AgentOS\data\overnight_runs\2026-06-21\TASK_1_HEALTH_SNAPSHOT.md
+- E:\AgentOS\data\overnight_runs\2026-06-21\TASK_2_CODEX_HEALTH_CHECK.md
+- E:\AgentOS\data\live_bridge\2026-06-21-235324\TRANSCRIPT.md
+- E:\AgentOS\data\overnight_runs\2026-06-21\TASK_3_OLLAMA_TRIAGE.md
+- E:\AgentOS\data\reviews\2026-06-21-claude-review-agentos-routing.md
+- E:\AgentOS\data\overnight_runs\2026-06-21\TASK_5_PERPLEXITY_RESEARCH_PROTOCOL.md
+- E:\AgentOS\data\overnight_runs\2026-06-21\TASK_6_IDE_RESOURCE_BOUNDARIES.md
+- E:\AgentOS\data\overnight_runs\2026-06-21\TASK_7_24H_HERMES_MONITOR_PLAN.md
+- E:\AgentOS\data\overnight_runs\2026-06-21\TASK_8_KNOWLEDGE_LOOP_READINESS.md
+
+## Corrected Technical Findings
+- **Hermes-Codex Bridge**: The CLI bridge works, but Telegram-triggered Codex dispatch is not yet verified.
+- **Codex Auth**: An initial authentication failure occurred (401/Timeout); subsequent bridge path using specific environment handling succeeded.
+- **Triage**: Ollama is highly usable for low-cost, local task classification.
+- **Review**: Claude is effective as a secondary reviewer for technical outputs.
+- **Manual Resources**: Perplexity and specialized IDEs (Antigravity, Cursor, Cline) are manual-only resources.
+- **Blockers**: Git ownership issues and the existing dirty/untracked file state must be resolved to enable full automation.
 
 ## Resource Readiness
-- **Hermes**: Ready & Stable (Gateway PID: 9968).
-- **Codex**: Ready (Pending Git fix).
-- **Claude**: Ready as Reviewer.
-- **Ollama**: Ready for Triage.
-- **Perplexity**: Manual-only protocol established.
-- **IDE Resources**: Manual-only boundaries established.
+- Hermes: observing
+- Codex: partial
+- Claude: verified_for_review
+- Ollama: verified_for_triage
+- Perplexity: manual_only
+- IDE resources: manual_only
 
-## Commits Created
-- `3ff4405` Assess knowledge loop readiness
-- `90bd698` Prepare Hermes 24h operation monitor plan
-- `c859f54` Document manual IDE resource boundaries
-- `da34bc2` Document Perplexity research test protocol
-- `6ae7a53` Add Claude reviewer smoke test
-- `f5c9166` Test Ollama local triage path
-- `0ecc571` Run overnight Codex read-only health check
-- `4fcdbf6` Record overnight baseline health snapshot
+## Git Status
+```text
+ M agents/roles/codex.md
+ M agents/roles/gemini.md
+ M agents/roles/hermes.md
+?? data/live_bridge/2026-06-21-235219/
+?? data/live_bridge/2026-06-21-235324/
+```
 
-## Final Git Status
-- Dirty files (Pre-existing): `agents/roles/codex.md`, `gemini.md`, `hermes.md`.
-- Untracked artifacts: `data/live_bridge/` transcripts.
+## 24h Operation Status
+**not_verified_yet**
 
-## Next Recommended Action
-Fix the Git ownership issue using: `git config --global --add safe.directory E:/AgentOS` and proceed with the first non-critical automated task.
+- The Hermes Gateway was confirmed running during task execution.
+- A 24h observation plan has been established.
+- No completed 24h start/end evidence record has been produced yet.
 
-**Report Status: Finalized.**
+## Knowledge Loop Status
+**not_started_for_real_tasks**
+
+- Mock/internal workflow loops have been tested.
+- Real client-facing or internal production task knowledge accumulation has not begun.
+
+## Next Actions
+1. Resolve or intentionally commit/revert dirty role files in `agents/roles/`.
+2. Determine whether to track live bridge transcripts as official evidence.
+3. Initiate a formal 24h observation log artifact.
+4. Begin the first safe, non-client real task once 24h stability is proven.
