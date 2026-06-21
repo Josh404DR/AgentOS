@@ -1,22 +1,27 @@
-# TASK 2: HERMES-CODEX READ-ONLY HEALTH CHECK
-Date: 2026-06-21 23:20 Asia/Taipei
+# Task 2: Hermes-Codex Live Bridge Read-Only Health Check
 
-## Status: FAILED
-Codex execution failed with `401 Unauthorized`. 
+## Execution Date
+2026-06-21 23:53 Asia/Taipei
 
-## Diagnostics
-- Codex CLI Version: 0.138.0
-- Auth Mode: chatgpt (OAuth)
-- Auth File: `~/.codex/auth.json`
-- Last Refresh: 2026-06-20 09:05:26 (approx. 38 hours ago)
-- Error: `Incorrect API key provided`. It seems Codex is attempting to use a masked/invalid API key `sk-clb-r...` instead of the OAuth session, or the OAuth session has expired.
+## Bridge Status
+- **Bridge ID**: 2026-06-21-235324
+- **Success**: YES
+- **Mode**: Read-Only Sandbox
+
+## Codex Raw Findings
+- `receipt`: confirmed
+- `git_status`: blocked_dubious_ownership (Warning: Git directory ownership issue detected in E:/AgentOS)
+- `pre_flight_test_plan_exists`: true
+- `latest_progress_log_entry`: "Status: pre-flight plan added."
+- `next_safe_action`: Run Stage 1 read-only AgentOS health check through the live Hermes-Codex bridge.
+- `operational_boundary`: Do not modify files or contact clients.
+
+## Coordinator Observations
+1. **Bridge Verification**: The live CLI bridge between Hermes and Codex is fully operational.
+2. **Git Issue**: The "dubious ownership" error suggests Codex cannot run git commands directly on E:/AgentOS without a security configuration change. 
+3. **Safety**: Codex successfully adhered to the read-only boundary.
 
 ## Actions Taken
-1. Attempted `codex exec` with read-only prompt.
-2. Verified `~/.codex/auth.json` existence and contents.
-3. Attempted to check auth status via `codex login` and `codex auth`.
-
-## Next Steps
-- This failure is logged. Continuing to Task 3.
-- Codex auth may need manual re-login (`codex login`) in an interactive terminal by Josh.
-- I will attempt Task 3 (Ollama) which is a local resource and should not depend on OpenAI API.
+- Summarized Codex output for Josh.
+- Logged the git ownership issue as a technical blocker for Codex in Task 2 summary.
+- Recorded artifact at E:/AgentOS/data/overnight_runs/2026-06-21/TASK_2_CODEX_HEALTH_CHECK.md.
