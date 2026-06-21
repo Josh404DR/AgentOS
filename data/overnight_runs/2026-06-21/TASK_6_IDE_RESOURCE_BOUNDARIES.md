@@ -1,26 +1,15 @@
-# Task 6: IDE Resource Boundary Mapping
+# TASK 6 - MANUAL IDE RESOURCE BOUNDARY MAPPING
 
-## Execution Date
-2026-06-21 01:05 Asia/Taipei
+## Resources & Boundaries
 
-## Resource Boundary Registry (Manual Only)
+| Resource | Role | Best Use Case | Boundary | Handoff Method |
+| :--- | :--- | :--- | :--- | :--- |
+| **Antigravity IDE** | Manual Implementation | High-context refactoring or complex feature build. | **NO AUTOMATION**. Used only when Josh manually spends desktop quota. | Manual copy/paste of files into `E:\AgentOS`. |
+| **Perplexity IDE** | Manual Research/Dev | Finding current library versions or API patterns. | **NO AUTOMATION**. Not a persistent worker. | Citation URLs must be saved in the task artifact. |
+| **VSCode + Cline** | Local Experimental Agent | Rapid prototyping or local-only script debugging. | **NO AUTOMATION**. Limited by free-tier token usage. | Commits made to the git repo must include `(via Cline)`. |
+| **Cursor** | Manual Code Completion | Routine boilerplate and fast inline refactoring. | **NO AUTOMATION**. Josh's personal coding preference. | Standard git commit workflow. |
 
-| Resource | Primary Role | Defined Boundary | Handoff Method |
-| :--- | :--- | :--- | :--- |
-| **Antigravity IDE** | High-context development / Subscribed quota usage | **Manual Only**. No automated CLI/API triggers permitted. | Manual copy-paste of results to `E:/AgentOS/artifacts/` |
-| **Perplexity IDE** | Research-driven implementation | **Manual Only**. Used for interactive research/coding loops. | Source URLs must be captured in the resulting markdown artifact. |
-| **VSCode + Cline (Free)** | Local experimental agent assistance | **Manual Only**. Josh chooses when to use free-tier tokens. | Use `E:/AgentOS` as the workspace; changes must be git committed. |
-| **Cursor (Free)** | Rapid prototyping and AI-assisted refactoring | **Manual Only**. Not a persistent AgentOS worker. | Final code must be verified by Codex or Josh before merging to master. |
-
-## Operational Rules for Hermes
-1. **No Pretending**: Hermes must never claim these resources are "running" in the background.
-2. **Quota Awareness**: Acknowledge that these resources belong to Josh's manual workspace (desktop subscriptions).
-3. **Audit Trail**: Any code or decision originating from these IDEs must be logged in `progress_log.md` with the suffix `(Manual IDE Execution)`.
-
-## Coordinator Conclusion
-All manual IDE resources are now correctly mapped as "External Manual Resources" in `docs/RESOURCE_INVENTORY.md`. There is zero risk of Hermes attempting to automate these GUI-based tools overnight.
-
-## Actions Taken
-- Reviewed `docs/RESOURCE_INVENTORY.md`.
-- Defined explicit boundaries and handoff methods.
-- Recorded artifact at E:/AgentOS/data/overnight_runs/2026-06-21/TASK_6_IDE_RESOURCE_BOUNDARIES.md.
+## Acceptance Criteria Check
+- **Each resource has role/boundary**: YES
+- **No background automation claimed**: YES
+- **Tracked artifact requirement**: Any code or decision from these IDEs must be logged in the project's `progress_log.md`.
