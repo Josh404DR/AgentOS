@@ -701,3 +701,19 @@ Status Labels:
 - verified_by_codex
 - production_ready=false
 - next_checkpoint_time=2026-06-23 06:00+ (approx)
+
+## 2026-06-23 05:00 Asia/Taipei - Established HERMES_NOTES Idea Bank
+Executor: Hermes
+Action:
+- Created root-level file `HERMES_NOTES.md` to accumulate durable cross-task insights.
+- Initialized with historical testing notes from 2026-06-17.
+- Appended durable insights from the Stabilization Phase (2026-06-23), including encoding boundaries, process residue risks, and log cost gaps.
+
+Findings:
+- Durable knowledge now has a home separate from routine logs.
+- Identified the linear cost growth of `progress_log.md` as a priority architectural gap.
+
+Status Labels:
+- notes_file_created=true
+- notes_file_appended=true
+- durable_insights_recorded=true
