@@ -1,4 +1,4 @@
-﻿
+
 ## 2026-06-20 12:45 Asia/Taipei - Stage Zero Inventory
 
 Executor: Codex
@@ -334,7 +334,7 @@ Executor: Codex
 
 Action:
 - Investigated Avira warning for `install.ps1` detected as `TR/SNH`.
-- Confirmed the working-tree script was removed from `C:\Users\brian\AppData\Local\hermes\hermes-agent\scripts`, consistent with Avira quarantine.
+- Confirmed the working-tree script was removed from `C:\\Users\\brian\\AppData\\Local\\hermes\\hermes-agent\\scripts`, consistent with Avira quarantine.
 - Confirmed `scripts/install.ps1` still exists in the Hermes git repository and inspected it from git HEAD without restoring the quarantined file.
 - Checked for high-risk patterns such as antivirus-disabling commands, encoded PowerShell, base64 payloads, and scheduled-task persistence.
 - Confirmed Hermes executables still exist in the external AgentOS/Hermes install paths.
@@ -363,7 +363,7 @@ Executor: Codex
 
 Action:
 - Confirmed Josh's decision to keep the Hermes Windows installer script removed locally.
-- Checked both known Hermes checkout locations for `scripts\install.ps1`.
+- Checked both known Hermes checkout locations for `scripts\\install.ps1`.
 - Confirmed both working trees report `D scripts/install.ps1`.
 - Updated the Avira security review with the explicit local-removal decision and operational impact.
 
@@ -440,4 +440,24 @@ Status Labels:
 - zh_tw_summary_status=fallback_logic_implemented
 - stability_monitor_plan_ready=true
 - first_internal_loop_selected=daily-usage-summary-setup
+- production_ready=false
+
+## 2026-06-22 Asia/Taipei - Phase 6 Execution: Daily Usage Summary Setup
+Executor: Hermes
+Action:
+- Executed the first real internal loop: `daily-usage-summary-setup`.
+- Created usage tracking infrastructure: `data/usage/TEMPLATE.md` and `data/usage/2026-06-22.md`.
+- Populated the first daily log with estimated token usage and costs from today's bridge tests.
+- Wrote the technical execution result to `data/codex_tasks/2026-06-22-daily-usage-summary-setup/OUTPUTS/RESULT.md`.
+
+Findings:
+- Task executed successfully using conservative estimates for token usage.
+- AI usage tracking is now operational as a daily internal loop.
+
+Status Labels:
+- task_executed=true
+- template_created=true
+- daily_usage_log_created=true
+- result_written=true
+- estimates_used=true
 - production_ready=false
