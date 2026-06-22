@@ -12,8 +12,8 @@ Local verification performed from `E:\AgentOS`.
 |---|---|---|---|
 | Codex CLI | Installed | `codex --version` -> `codex-cli 0.138.0` | Primary technical execution tool |
 | Gemini CLI | Installed | `gemini --version` -> `0.46.0` | Research/summarization/support tool |
-| Claude Code CLI | Installed | `claude --version` -> `2.1.104 (Claude Code)` | Available locally, not yet integrated into AgentOS workflow |
-| Claude Pro subscription | User-reported | Josh reports active Pro subscription | Manual/desktop/CLI use possible; Hermes proxy bridge remains unproven |
+| Claude Code CLI | Active via tripartite bridge | `claude auth status` -> `loggedIn: true`, `subscriptionType: pro` | Verified Inspector for high-assurance review |
+| Claude Pro subscription | Verified via CLI | `claude auth status` | Pro quota available for CLI and manual use |
 | Perplexity subscription | User-reported | Josh reports active subscription | Useful for research; no local AgentOS CLI/API integration verified |
 | Ollama | Installed | `ollama list` succeeded | Local fallback/small model pool |
 | Antigravity IDE desktop subscription | User-reported | Josh reports subscribed desktop usage quota | Manual IDE resource; no AgentOS CLI/API integration verified |
@@ -75,16 +75,15 @@ Gemini output should be folded back into Hermes-managed files and should not bec
 
 Current state:
 
-- Claude Code CLI is installed.
-- Claude Pro subscription is user-reported.
-- Hermes proxy/Claude bridge is not verified.
+- Claude Code CLI is active and verified through the `hermes_tripartite_bridge.ps1`.
+- Claude Pro subscription is verified via CLI auth status.
 
-Recommended role for now:
+Recommended role:
 
-- Manual high-context code review.
-- Architecture critique.
-- Complex implementation second opinion.
-- Do not make Claude an automatic AgentOS worker until authentication, CLI workflow, and output handoff are tested.
+- **Inspector**: High-assurance technical review of Codex output.
+- **Architecture Critique**: Complex reasoning about system design.
+- **Second Opinion**: Final safety check before destructive or client-facing actions.
+- Use `scripts/hermes_tripartite_bridge.ps1` for automated coordination.
 
 ### Perplexity
 
@@ -136,9 +135,8 @@ Use the cheapest reliable resource that fits the task:
 - Gemini: bulk reasoning, lead summaries, proposal second opinions.
 - Perplexity: current web research with sources.
 - Codex: repo edits, scripts, tests, debugging, implementation artifacts.
-- Claude: manual high-context review or second opinion, not yet automated.
+- Claude: automated high-assurance review (tripartite bridge) or manual complex reasoning.
 - Antigravity / Perplexity IDE / VSCode Cline / Cursor: manual IDE work, not yet automated.
-
 Escalate resource choice when:
 
 - A proposal depends on technical feasibility: create a Codex task packet.

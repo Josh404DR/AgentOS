@@ -14,7 +14,7 @@ Use file artifacts first. Hermes coordinates, then assigns explicit work packets
 | Hermes | Coordinator, Telegram brain, lead/proposal owner | Active coordinator, file-based handoff |
 | Codex | Repo edits, scripts, tests, implementation, technical validation | Active through task packets |
 | Gemini | Research, summaries, proposal second opinion | Available, not separate state owner |
-| Claude | High-context review, architecture critique, second opinion | CLI installed, not automated yet |
+| Claude | Inspector, high-context review, architecture critique | Active through tripartite bridge |
 | Perplexity | Current web research with sources | Subscription user-reported, integration not verified |
 | Ollama | Local low-cost classification, draft summaries, fallback reasoning | Local models available |
 | Antigravity IDE | Manual desktop coding resource | Subscription user-reported, not automated |
@@ -40,31 +40,37 @@ For direct CLI communication, use:
 .\scripts\hermes_codex_bridge.ps1
 ```
 
-The bridge runs one live handoff:
+## Live Hermes-Codex-Claude Tripartite Bridge
+
+For high-assurance coordination where Codex implementation is reviewed by Claude, use:
+
+```powershell
+.\scripts\hermes_tripartite_bridge.ps1
+```
+
+The tripartite bridge runs a full cycle:
 
 ```text
-Hermes CLI
-  -> writes a message for Codex
-  -> Codex CLI receives and replies
-  -> Hermes CLI summarizes Codex's reply for Josh
+Hermes CLI (Brain)
+  -> Dispatches TASK.md packet
+  -> Codex CLI (Builder)
+    -> Executes and writes RESULT.md
+    -> Claude CLI (Inspector)
+      -> Reviews RESULT.md and provides RATING
+      -> Hermes CLI
+        -> Summarizes the verified outcome for Josh
 ```
 
 Outputs are stored under:
 
 ```text
-E:\AgentOS\data\live_bridge\<bridge-id>\
-  01_HERMES_TO_CODEX.md
-  02_CODEX_REPLY.md
-  03_HERMES_SUMMARY.md
+E:\AgentOS\data\live_bridge\tripartite_<id>\
+  01_HERMES_DISPATCH.md
+  02_CODEX_OUTPUT.md
+  03_CLAUDE_REVIEW.md
+  04_HERMES_FINAL_SUMMARY.md
   TRANSCRIPT.md
 ```
-
-Current proven status:
-
-- Hermes CLI can generate the message.
-- Codex CLI can receive and answer when invalid API-key environment variables are cleared for the bridge process.
-- Hermes CLI can summarize the Codex reply.
-- This is direct CLI handoff, not Telegram automation and not a long-running daemon.
 
 ## Escalation Rules
 
@@ -72,7 +78,8 @@ Current proven status:
 - Use Gemini for lead/proposal summarization and second opinions.
 - Use Perplexity only when current external facts or sources matter.
 - Use Codex when local files, code, scripts, tests, or implementation are involved.
-- Use Claude for manual high-context review after Codex output exists.
+- Use Claude (via Tripartite Bridge) for automated high-assurance review after Codex output exists.
+- Use Claude manually for interactive architecture critique or complex reasoning.
 - Use IDE resources manually when Josh chooses to spend desktop/free quota; copy meaningful output back into tracked artifacts.
 - Ask Josh before client-facing commitments, paid API use, credentials, or proposal submission.
 
