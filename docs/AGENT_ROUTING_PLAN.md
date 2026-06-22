@@ -22,6 +22,47 @@ Use file artifacts first. Hermes coordinates, then assigns explicit work packets
 | VSCode + Cline free | Manual IDE/agent support | User-reported, not automated |
 | Cursor free quota | Manual IDE coding support | User-reported, not automated |
 
+## Hermes Internal Load Split
+
+Hermes is the coordinator, but not every Hermes task deserves Gemini quota.
+Split Hermes work by mode:
+
+| Hermes mode | Main work | Preferred model/resource |
+|---|---|---|
+| Operator Interface | Telegram intake, status replies, approval boundaries | Ollama by default; Gemini only for ambiguity |
+| Orchestrator / Planner | Routing decisions, Codex task packets, escalation calls | Gemini Flash normally; Ollama for low-risk drafts |
+| Scout / Research Coordinator | Lead discovery, lead summaries, source-backed research | Gemini or Perplexity/manual research |
+| Watchtower / Monitor | Checkpoints, process/Git/security status | Ollama by default |
+| Notes Curator | Durable insight classification and append-only notes | Ollama by default; Gemini for synthesis |
+| Proposal Coordinator | Proposal drafts, client-facing preparation | Gemini; Claude review for high-risk cases |
+
+When Gemini is rate-limited, Hermes must enter degraded mode:
+
+```text
+/model ollama
+```
+
+Allowed in degraded mode:
+
+- Telegram status replies.
+- Health checks and checkpoint summaries.
+- Formatting, classification, and durable-note triage.
+- Creating low-risk routing drafts for Josh review.
+
+Deferred in degraded mode unless Josh explicitly approves:
+
+- Proposal-quality writing.
+- Real lead analysis that affects business decisions.
+- High-impact architecture planning.
+- Repeated Gemini retry loops.
+
+Exit degraded mode with:
+
+```text
+/model gemini-flash
+/model status
+```
+
 ## Minimal Dispatch Flow
 
 ```text

@@ -40,12 +40,28 @@ Default role: coordinator, Telegram brain, lead workflow owner.
 
 Recommended resource stack:
 
-1. Gemini API through Hermes config for normal coordination and scheduled jobs.
-2. Gemini CLI for manual research/summarization support when Hermes needs a low-cost second pass.
-3. Perplexity subscription for current web research and source discovery, used manually or through a future verified integration.
-4. Ollama for low-risk local preprocessing, categorization, and draft summaries.
+1. Gemini API through Hermes config for proposal-quality reasoning, lead
+   analysis, and high-value planning.
+2. Ollama for low-risk Telegram status replies, monitoring checkpoints,
+   classification, formatting, and durable-note triage.
+3. Gemini CLI for manual research/summarization support when Hermes needs a
+   second pass.
+4. Perplexity subscription for current web research and source discovery, used
+   manually or through a future verified integration.
 
 Hermes should not use Codex/Claude directly for client-facing commitments. Hermes can ask Josh to dispatch a technical packet to Codex.
+
+Rate-limit policy:
+
+- If Gemini rate-limits Hermes, switch the Telegram brain to Ollama with
+  `/model ollama`.
+- While on Ollama, keep Hermes in low-risk modes: Operator Interface,
+  Watchtower / Monitor, Notes Curator, and simple routing drafts.
+- Defer proposal-quality writing and business-critical lead analysis until
+  Gemini is available again, unless Josh explicitly approves the lower-quality
+  fallback.
+- Resume normal mode with `/model gemini-flash` and verify with
+  `/model status`.
 
 ### Codex
 

@@ -782,3 +782,32 @@ Status Labels:
 - poc_status=failure
 - authentication_method=api_key
 - next_step=acquire_api_key
+
+## 2026-06-23 Asia/Taipei - Split Hermes Internal Roles For Gemini Rate-Limit Control
+Executor: Codex
+Action:
+- Rewrote `agents/roles/hermes.md` into a clean role definition with internal operating modes.
+- Added Hermes internal load-split rules to `docs/AGENT_ROUTING_PLAN.md`.
+- Updated `docs/RESOURCE_INVENTORY.md` with Gemini/Ollama rate-limit policy.
+
+Files changed:
+- `agents/roles/hermes.md`
+- `docs/AGENT_ROUTING_PLAN.md`
+- `docs/RESOURCE_INVENTORY.md`
+- `progress_log.md`
+
+Design:
+- Hermes remains one coordinator, not a new agent framework.
+- Gemini is reserved for proposal-quality reasoning, lead analysis, and high-value planning.
+- Ollama is the default fallback for Telegram status, monitoring, note triage, formatting, and low-risk routing drafts.
+- Codex remains the builder; Claude remains the inspector.
+
+Operational rule:
+- When Gemini hits rate limits, use `/model ollama` and keep Hermes in degraded low-risk mode.
+- Resume normal mode with `/model gemini-flash` and verify with `/model status`.
+
+Status Labels:
+- hermes_internal_roles_split=true
+- new_agent_framework_added=false
+- gemini_rate_limit_policy_added=true
+- ollama_degraded_mode_defined=true
