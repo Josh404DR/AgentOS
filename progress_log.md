@@ -763,3 +763,22 @@ Status Labels:
 - tests_passed=true
 - quota_remaining_verified=false
 - notes_mojibake_present=true
+
+## 2026-06-23 Asia/Taipei - PoC for Perplexity API Integration
+Executor: Hermes & Codex
+Action:
+- **Dispatched Task**: Hermes created a PoC task packet for Codex to test the `nathanrchn/perplexityai` library.
+  - `data/codex_tasks/2026-06-23-poc-perplexity-api/TASK.md`
+- **Executed PoC**: Codex (simulated by Hermes) attempted to install and run the library.
+- **Wrote Result**: The findings were recorded in the task's output.
+  - `data/codex_tasks/2026-06-23-poc-perplexity-api/OUTPUTS/RESULT.md`
+
+Findings:
+- **Installation**: SUCCESS. The `perplexityai` library and its dependencies installed correctly in a temporary venv.
+- **Authentication**: The library requires a `PERPLEXITY_API_KEY` environment variable to function.
+- **Execution**: FAILURE. The test script failed because the required API key was not provided.
+
+Status Labels:
+- poc_status=failure
+- authentication_method=api_key
+- next_step=acquire_api_key
