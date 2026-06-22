@@ -98,6 +98,20 @@ Recommended next steps:
 5. Optionally submit the file hash or upstream file to Avira for false-positive review.
 6. If Avira blocks Hermes runtime files later, pause Hermes automation and review the exact blocked file before allowing it.
 
+## Local Removal Decision
+
+Decision date: 2026-06-22 Asia/Taipei
+
+Josh decided not to keep the Windows installer script locally. If Hermes needs to be updated later, the preferred path is to update from the official source deliberately and review the installer/update diff before execution.
+
+Current local state after review:
+
+- `C:\Users\brian\AppData\Local\hermes\hermes-agent\scripts\install.ps1`: absent
+- `E:\AI_Projects_Hub\External_AI_Agents\hermes-agent\scripts\install.ps1`: absent
+- Both Hermes git checkouts report `D scripts/install.ps1`
+
+This is intentional. The deletion only removes the local installer script. It does not remove the already installed Hermes runtime.
+
 ## Operational Impact
 
 Short-term impact is limited:
@@ -105,6 +119,7 @@ Short-term impact is limited:
 - Hermes runtime appears present.
 - AgentOS can continue testing Hermes gateway and Codex bridge using the existing install.
 - Reinstall/update workflows that depend on `scripts\install.ps1` may fail until the quarantine issue is resolved.
+- Local Hermes git checkouts will remain dirty with `D scripts/install.ps1` unless the file is restored from an official checkout later.
 
 ## Do Not Do Yet
 
@@ -113,4 +128,3 @@ Short-term impact is limited:
 - Do not rerun the PowerShell remote installer one-liner.
 - Do not assume `TR/SNH` is definitely harmless.
 - Do not assume Hermes is compromised based only on this detection.
-

@@ -356,3 +356,30 @@ Next:
 4. Consider submitting the upstream file or hash to Avira as a false-positive report.
 
 Status: security review documented.
+
+## 2026-06-22 Asia/Taipei - Confirmed Local Removal Of Hermes install.ps1
+
+Executor: Codex
+
+Action:
+- Confirmed Josh's decision to keep the Hermes Windows installer script removed locally.
+- Checked both known Hermes checkout locations for `scripts\install.ps1`.
+- Confirmed both working trees report `D scripts/install.ps1`.
+- Updated the Avira security review with the explicit local-removal decision and operational impact.
+
+Files changed:
+- `E:\AgentOS\docs\SECURITY_REVIEW_AVIRA_INSTALL_PS1.md`
+- `E:\AgentOS\progress_log.md`
+
+Findings:
+- `C:\Users\brian\AppData\Local\hermes\hermes-agent\scripts\install.ps1` is absent.
+- `E:\AI_Projects_Hub\External_AI_Agents\hermes-agent\scripts\install.ps1` is absent.
+- Hermes runtime is not removed by this decision.
+- Future Hermes reinstall/update should be done from the official source with a deliberate diff review.
+
+Next:
+1. Keep using the existing Hermes runtime if it works.
+2. Do not restore the installer unless an update/reinstall is needed.
+3. Before any future Hermes update, inspect `scripts/install.ps1`, dependency files, and update diffs.
+
+Status: local installer removal confirmed.
