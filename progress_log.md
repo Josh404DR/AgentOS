@@ -841,3 +841,27 @@ Status Labels:
 - message_content_read=false
 - usage_db_confirmed=true
 - biggest_burn_source=telegram_long_sessions
+
+## 2026-06-23 Asia/Taipei - Hermes Gateway Cost Guard Command
+Executor: Codex
+Action:
+- Modified external Hermes gateway source to add `/cost`.
+- `/cost` reports current session model/provider, message count, tool count, API calls, non-cache tokens, cache-read tokens, and routing advice.
+- The command is advisory only; it does not auto-switch models or reset sessions.
+- Added focused tests in external Hermes repo.
+
+External Hermes commit:
+- `0b987b0cb` - `Add gateway cost guard command`
+
+Verification:
+- Ran `python -m pytest tests\gateway\test_cost_command.py tests\gateway\test_model_command_custom_providers.py tests\hermes_cli\test_regression_16767.py`.
+- Result: `8 passed`.
+
+Operational use:
+- Ask Hermes: `/cost`
+- If status is HIGH_RISK, summarize and start a fresh session with `/new`, then use `/model ollama` for low-risk work.
+
+Status Labels:
+- cost_guard_command_added=true
+- auto_switch_enabled=false
+- tests_passed=true
