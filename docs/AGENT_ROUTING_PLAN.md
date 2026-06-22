@@ -14,7 +14,7 @@ Use file artifacts first. Hermes coordinates, then assigns explicit work packets
 | Hermes | Coordinator, Telegram brain, lead/proposal owner | Active coordinator, file-based handoff |
 | Codex | Repo edits, scripts, tests, implementation, technical validation | Active through task packets |
 | Gemini | Research, summaries, proposal second opinion | Available, not separate state owner |
-| Claude | Inspector, high-context review, architecture critique | Active through tripartite bridge |
+| Claude | Inspector, high-context review, architecture critique | Active Inspector via tripartite bridge for tested review handoffs |
 | Perplexity | Current web research with sources | Subscription user-reported, integration not verified |
 | Ollama | Local low-cost classification, draft summaries, fallback reasoning | Local models available |
 | Antigravity IDE | Manual desktop coding resource | Subscription user-reported, not automated |

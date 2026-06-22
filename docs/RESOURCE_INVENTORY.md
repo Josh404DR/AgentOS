@@ -12,7 +12,7 @@ Local verification performed from `E:\AgentOS`.
 |---|---|---|---|
 | Codex CLI | Installed | `codex --version` -> `codex-cli 0.138.0` | Primary technical execution tool |
 | Gemini CLI | Installed | `gemini --version` -> `0.46.0` | Research/summarization/support tool |
-| Claude Code CLI | Active via tripartite bridge | `claude auth status` -> `loggedIn: true`, `subscriptionType: pro` | Verified Inspector for high-assurance review |
+| Claude Code CLI | Active via tripartite bridge | `claude auth status` -> `loggedIn: true` | Active Inspector via tripartite bridge for tested review handoffs |
 | Claude Pro subscription | Verified via CLI | `claude auth status` | Pro quota available for CLI and manual use |
 | Perplexity subscription | User-reported | Josh reports active subscription | Useful for research; no local AgentOS CLI/API integration verified |
 | Ollama | Installed | `ollama list` succeeded | Local fallback/small model pool |
