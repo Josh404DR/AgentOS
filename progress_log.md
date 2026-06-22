@@ -383,3 +383,29 @@ Next:
 3. Before any future Hermes update, inspect `scripts/install.ps1`, dependency files, and update diffs.
 
 Status: local installer removal confirmed.
+
+## 2026-06-22 Asia/Taipei - Created Stage 1 Health Check Task Packet
+Executor: Hermes
+Action:
+- Created technical task packet for Codex to perform Stage 1 Health Check.
+- Defined objective, inputs, and acceptance criteria in E:\AgentOS\data\codex_tasks\2026-06-22-agentos-health-check\TASK.md.
+- Set initial status to pending in STATUS.md.
+Status: Awaiting Codex execution.
+
+## 2026-06-22 Asia/Taipei - Corrected Tripartite Run Status
+Executor: Hermes
+Action:
+- Corrected the status of the post-fix tripartite run.
+- Acknowledged that while the ASCII summary is canonical and verified, the Traditional Chinese summary and transcript still contain encoding/mojibake issues.
+- Updated progress log and status language to avoid treating the mojibake issue as fully fixed.
+
+Findings:
+- Post-fix tripartite run succeeded using ASCII canonical summary. 
+- Traditional Chinese Hermes summary still has encoding/mojibake issue and must not be treated as fixed.
+- Transcript (`TRANSCRIPT.md`) still contains mojibake in the ZH-TW section.
+
+Status Labels:
+- ascii_summary_canonical=true
+- zh_tw_summary_failed=true
+- production_ready=false
+- not_yet_production_ready=true
