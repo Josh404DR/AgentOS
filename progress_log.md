@@ -620,3 +620,32 @@ Status Labels:
 - process_status=stable_observe
 - production_ready=false
 - next_checkpoint_time=2026-06-22 23:59+ (approx)
+
+## 2026-06-23 00:05 Asia/Taipei - 24H Stability Monitor: Checkpoint 08
+Executor: Hermes
+Action:
+- Executed the eighth checkpoint of the 24H Stability Monitor.
+- Created report: `data/monitoring/24h/2026-06-22/CHECKPOINT_08.md`.
+- Verified infrastructure (Hermes, Codex Bridge, Claude, Gemini, Git, Processes, Security).
+- Monitored Claude process count: remained stable at 9.
+
+Findings:
+- **Hermes Gateway**: OK. Update available but deferred.
+- **Telegram Path**: Inferred active session (conservative labeling).
+- **Claude CLI**: OK. Process count stable at 9.
+- **Process Status**: `stable_observe`.
+- **Git State**: Stable.
+- **Security**: OK.
+
+Status Labels:
+- checkpoint_created=true
+- overall_status=ok_with_caveats
+- checkpoint_05_status=skipped_or_not_committed
+- telegram_status=inferred_active_session
+- telegram_verified=false
+- hermes_update_status=known_nonblocking_update_available
+- claude_status=ok
+- claude_process_count=9
+- process_status=stable_observe
+- production_ready=false
+- next_checkpoint_time=2026-06-23 02:00+ (approx)
