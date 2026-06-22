@@ -27,10 +27,10 @@ Verified with `ollama list`:
 
 | Model | Size | Recommended use |
 |---|---:|---|
-| `qwen3:8b` | 5.2 GB | Local general reasoning, drafting, lightweight triage |
+| `qwen3:8b` | 5.2 GB | Local general reasoning outside Hermes; not valid as Hermes default because context is 40,960, below Hermes minimum 64K |
 | `qwen2.5-coder:7b` | 4.7 GB | Local code explanation, small script drafts, fallback code review |
-| `qwen3.5:9b` | 6.6 GB | Local reasoning fallback when quality matters more than speed |
-| `llama3.2:3b` | 2.0 GB | Fast local classification, rough summaries, low-stakes preprocessing |
+| `qwen3.5:9b` | 6.6 GB | Preferred Hermes Ollama fallback; verified context is 262,144 |
+| `llama3.2:3b` | 2.0 GB | Fast local classification, rough summaries, low-stakes preprocessing; verified context is 131,072 |
 
 ## Recommended Agent Configuration
 
@@ -54,7 +54,8 @@ Hermes should not use Codex/Claude directly for client-facing commitments. Herme
 Rate-limit policy:
 
 - If Gemini rate-limits Hermes, switch the Telegram brain to Ollama with
-  `/model ollama`.
+  `/model ollama`. This should resolve to `qwen3.5:9b`, not `qwen3:8b`,
+  because Hermes requires at least 64K context.
 - While on Ollama, keep Hermes in low-risk modes: Operator Interface,
   Watchtower / Monitor, Notes Curator, and simple routing drafts.
 - Defer proposal-quality writing and business-critical lead analysis until

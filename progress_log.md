@@ -865,3 +865,27 @@ Status Labels:
 - cost_guard_command_added=true
 - auto_switch_enabled=false
 - tests_passed=true
+
+## 2026-06-23 Asia/Taipei - Fixed Hermes Ollama Fallback Context
+Executor: Codex
+Action:
+- Fixed external Hermes `/model ollama` alias after Hermes rejected `qwen3:8b` for having only 40,960 context tokens.
+- Verified local Ollama model context lengths:
+  - `qwen3:8b`: 40,960, below Hermes 64K minimum.
+  - `qwen3.5:9b`: 262,144, valid Hermes fallback.
+  - `llama3.2:3b`: 131,072, valid lightweight fallback.
+- Changed `/model ollama`, `/model local`, and `/model qwen-local` to route to `qwen3.5:9b`.
+- Added `/model llama-local` for `llama3.2:3b`.
+- Updated `docs/RESOURCE_INVENTORY.md` to document the context constraint.
+
+External Hermes commit:
+- `7ec231366` - `Use long-context Ollama model for local fallback`
+
+Verification:
+- Ran focused Hermes tests: `8 passed`.
+- Verified runtime direct aliases resolve to `qwen3.5:9b` for `ollama` and `qwen-local`.
+
+Status Labels:
+- ollama_alias_fixed=true
+- qwen3_8b_rejected_context=true
+- qwen35_9b_context_valid=true
