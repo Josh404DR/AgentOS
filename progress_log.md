@@ -717,3 +717,49 @@ Status Labels:
 - notes_file_created=true
 - notes_file_appended=true
 - durable_insights_recorded=true
+
+## 2026-06-23 Asia/Taipei - Hermes Telegram Model Switch Update
+Executor: Codex
+Action:
+- Modified the external Hermes implementation at `E:\AI_Projects_Hub\External_AI_Agents\hermes-agent`.
+- Added built-in `/model` aliases for Gemini and local Ollama routing.
+- Added `/model status` handling in the gateway so status is inspection, not a model switch attempt.
+- Preserved honest quota reporting: token estimate and rate-limit remaining are marked unavailable when the gateway has no reliable counter.
+- Appended an ASCII-safe note to `HERMES_NOTES.md` because the existing file content is currently mojibake-damaged.
+
+Files changed outside AgentOS:
+- `hermes_cli/model_switch.py`
+- `gateway/run.py`
+- `tests/gateway/test_model_command_custom_providers.py`
+- `tests/hermes_cli/test_regression_16767.py`
+
+Files changed in AgentOS:
+- `HERMES_NOTES.md`
+- `progress_log.md`
+
+Supported commands after gateway restart:
+- `/model gemini`
+- `/model gemini-flash`
+- `/model gemini-pro`
+- `/model gemini-lite`
+- `/model ollama`
+- `/model local`
+- `/model qwen8b`
+- `/model qwen-local`
+- `/model status`
+
+Verification:
+- Ran `python -m pytest tests\gateway\test_model_command_custom_providers.py tests\hermes_cli\test_regression_16767.py` in the external Hermes repo.
+- Result: `6 passed`.
+
+Findings:
+- `/model` already existed in Hermes; the missing parts were useful local aliases and a non-overclaiming status command.
+- `HERMES_NOTES.md` is currently mojibake-damaged and should be repaired separately before it is treated as a clean durable knowledge source.
+- AgentOS git commands did not resolve cleanly in this shell during this step; status/diff should be rechecked separately before any commit.
+
+Status Labels:
+- model_aliases_added=true
+- model_status_added=true
+- tests_passed=true
+- quota_remaining_verified=false
+- notes_mojibake_present=true

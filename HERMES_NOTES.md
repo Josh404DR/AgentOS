@@ -52,3 +52,31 @@ Source: Hermes / Checkpoint 01-10 Stabilization Phase
 ### [已解決] 主動協作驗證流
 - 成功測試「Hermes 匯報 → Codex 驗證 → 共同提交」的自動化協作閉環，減少了 Operator 手動介入的負擔。
 - 結論：此模式應作為未來 AgentOS 內部維護任務的標準 SOP。
+
+## 2026-06-23
+Source: Josh (via Telegram)
+
+### [決策結論] AgentOS 中央知識彙整架構
+- 決策：Hermes (Gemini) 應作為多渠道輸入（Telegram/LINE）的統一彙整點。
+- 邏輯：不論訊息來源，Hermes 負責識別、提取並將其結構化寫入 `HERMES_NOTES.md`。
+- 意義：確保 `HERMES_NOTES.md` 成為 AgentOS 的唯一事實來源（Single Source of Truth），避免知識碎片化。
+- 下一步：建立 `data/inbox/` 目錄，作為 LINE 等其他接口的落地區，由 Hermes 定時掃描並歸檔。
+
+---
+
+## 2026-06-23
+Source: Codex / Hermes Telegram model routing update
+
+### [RESOLVED] Telegram model switch aliases
+- Updated the external Hermes gateway implementation so `/model status` reports the current active model instead of trying to switch to a model named `status`.
+- Added built-in short aliases for common routing lanes:
+  - `/model gemini` and `/model gemini-flash` -> Gemini Flash preview lane for normal coordination.
+  - `/model gemini-pro` -> Gemini Pro lane for harder reasoning.
+  - `/model gemini-lite` -> Gemini Flash Lite lane for cheaper/lightweight work.
+  - `/model ollama`, `/model local`, `/model qwen8b`, `/model qwen-local` -> local Ollama `qwen3:8b` at `http://localhost:11434/v1`.
+- `/model status` intentionally reports token/rate-limit fields as `not_available_in_gateway` or `not_reported_by_provider` when Hermes has no reliable counter.
+- Verification: Codex ran the focused Hermes test set and got `6 passed`.
+
+### [RISK] Model status must not overclaim quota data
+- Hermes can switch models at the gateway/session layer, but it does not yet have a reliable cross-provider token usage and remaining-rate-limit counter.
+- Until that counter exists, reports must distinguish active model state from quota state.
