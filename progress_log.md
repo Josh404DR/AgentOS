@@ -811,3 +811,33 @@ Status Labels:
 - new_agent_framework_added=false
 - gemini_rate_limit_policy_added=true
 - ollama_degraded_mode_defined=true
+
+## 2026-06-23 Asia/Taipei - Hermes Usage Audit Implemented
+Executor: Codex
+Action:
+- Created `scripts/hermes_usage_audit.py` to read the existing Hermes `state.db` usage counters.
+- Generated `data/usage/hermes_usage_audit_2026-06-23.md`.
+- The script reads session metadata and token counters only; it does not read message content.
+
+Files changed:
+- `scripts/hermes_usage_audit.py`
+- `data/usage/hermes_usage_audit_2026-06-23.md`
+- `progress_log.md`
+
+Findings:
+- Hermes already records token counters in `C:\Users\brian\AppData\Local\hermes\state.db`.
+- All-time total including cache reads: 71,364,474 tokens.
+- Gemini 3 Flash Preview dominates usage: 66,647,573 tokens including cache reads.
+- The largest burn is long Telegram sessions, not only lightweight checkpoint work.
+- The biggest observed session is `20260622_061850_ddc06c87` with 49,819,501 total tokens including cache reads.
+
+Next:
+- Add explicit Hermes mode tags to future sessions so usage can be attributed to Watchtower, Notes Curator, Planner, Scout, or Proposal Coordinator.
+- Keep routine monitoring and note triage on Ollama.
+- Address long-session context growth separately with session split/compression policy.
+
+Status Labels:
+- hermes_usage_audit_created=true
+- message_content_read=false
+- usage_db_confirmed=true
+- biggest_burn_source=telegram_long_sessions
