@@ -78,7 +78,7 @@ Findings:
 - Existing scripts and logs show a lightweight file-based operational model with watchdog and model fallback state.
 - `logs\watchdog_state.json` shows legacy `cli.py --gateway` mode and Hermes cron warning that formal gateway is not running.
 - `logs\model_fallback_state.json` shows Hermes model health check status `ok`.
-- Hermes proxy / Claude bridge must still be treated as unproven because `nous`/`xai` upstream login is unresolved and no native Claude adapter was confirmed.
+- Hermes proxy / Claude bridge must still be treated as unproven because `nous`/`xai` upstream login unresolved and no native Claude adapter was confirmed.
 
 Collaboration seam recorded:
 - Hermes writes real search results to `data\leads\YYYY-MM-DD.md`.
@@ -226,9 +226,9 @@ Files changed:
 - `E:\\AgentOS\current_state.md`
 - `E:\\AgentOS\docs\ARCHITECTURE.md`
 - `E:\\AgentOS\data\routing_decisions\2026-06-21-agentos-docs-consistency-smoke.md`
-- `E:\\AgentOS\data\codex_tasks\2026-06-21-agentos-docs-consistency-smoke\TASK.md`
-- `E:\\AgentOS\data\codex_tasks\2026-06-21-agentos-docs-consistency-smoke\STATUS.md`
-- `E:\\AgentOS\data\codex_tasks\2026-06-21-agentos-docs-consistency-smoke\OUTPUTS\RESULT.md`
+- `E:\\AgentOS\data\codex_tasks\2026-06-21-agentos-docs-consistency-smoke\\TASK.md`
+- `E:\\AgentOS\data\codex_tasks\2026-06-21-agentos-docs-consistency-smoke\\STATUS.md`
+- `E:\\AgentOS\data\codex_tasks\2026-06-21-agentos-docs-consistency-smoke\\OUTPUTS\\RESULT.md`
 - `E:\\AgentOS\progress_log.md`
 
 Workflow checkpoints:
@@ -334,7 +334,7 @@ Executor: Codex
 
 Action:
 - Investigated Avira warning for `install.ps1` detected as `TR/SNH`.
-- Confirmed the working-tree script was removed from `C:\\Users\\brian\\AppData\\Local\\hermes\\hermes-agent\\scripts`, consistent with Avira quarantine.
+- Confirmed the working-tree script was removed from `C:\\\\Users\\\\brian\\\\AppData\\\\Local\\\\hermes\\\\hermes-agent\\\\scripts`, consistent with Avira quarantine.
 - Confirmed `scripts/install.ps1` still exists in the Hermes git repository and inspected it from git HEAD without restoring the quarantined file.
 - Checked for high-risk patterns such as antivirus-disabling commands, encoded PowerShell, base64 payloads, and scheduled-task persistence.
 - Confirmed Hermes executables still exist in the external AgentOS/Hermes install paths.
@@ -363,7 +363,7 @@ Executor: Codex
 
 Action:
 - Confirmed Josh's decision to keep the Hermes Windows installer script removed locally.
-- Checked both known Hermes checkout locations for `scripts\\install.ps1`.
+- Checked both known Hermes checkout locations for `scripts\\\\install.ps1`.
 - Confirmed both working trees report `D scripts/install.ps1`.
 - Updated the Avira security review with the explicit local-removal decision and operational impact.
 
@@ -483,3 +483,28 @@ Status Labels:
 - overall_status=ok
 - production_ready=false
 - next_checkpoint_time=2026-06-22 14:00+ (approx)
+
+## 2026-06-22 Asia/Taipei - 24H Stability Monitor: Checkpoint 02
+Executor: Hermes
+Action:
+- Executed the second checkpoint of the 24H Stability Monitor.
+- Created report: `data/monitoring/24h/2026-06-22/CHECKPOINT_02.md`.
+- Verified core infrastructure (Hermes, Codex Bridge, Claude, Gemini, Git, Processes).
+
+Findings:
+- **Hermes Gateway**: OK. A non-blocking update is available, but deferred per stabilization rules.
+- **Telegram Path**: Verified via active session.
+- **Codex Bridge**: Available.
+- **Claude CLI**: OK.
+- **Gemini CLI**: Available.
+- **Git State**: Stable. Untracked evidence folders remain as expected.
+- **Process Sanity**: Normal.
+- **Security**: OK. `install.ps1` remains removed.
+
+Status Labels:
+- checkpoint_created=true
+- overall_status=ok_with_caveats
+- telegram_status=verified
+- hermes_update_status=known_nonblocking_update_available
+- production_ready=false
+- next_checkpoint_time=2026-06-22 16:00+ (approx)
