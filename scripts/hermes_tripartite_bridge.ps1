@@ -1,6 +1,6 @@
 # AgentOS Hermes <-> Codex <-> Claude Tripartite Bridge
 # Pipeline: Hermes (Dispatch) -> Codex (Execution) -> Claude (Review) -> Hermes (Summary)
-# Version: 1.12 (Fixed Input Piping for Windows)
+# Version: 1.13 (ZH-TW Mojibake Fallback)
 
 param(
     [string]$BridgeId = (Get-Date -Format "yyyy-MM-dd-HHmmss"),
@@ -36,7 +36,7 @@ $oldOpenAiApiKey = [Environment]::GetEnvironmentVariable("OPENAI_API_KEY", "Proc
 $oldCodexApiKey = [Environment]::GetEnvironmentVariable("CODEX_API_KEY", "Process")
 try {
     Remove-Item Env:\OPENAI_API_KEY -ErrorAction SilentlyContinue
-    Remove-Item Env:\CODEX_API_KEY -ErrorAction SilentlyContinue
+    Remove-Item Env:\\CODEX_API_KEY -ErrorAction SilentlyContinue
     $codexOutputPath = Join-Path $RunDir "02_CODEX_OUTPUT.md"
     
     # Temporarily allow stderr without stopping
@@ -92,21 +92,31 @@ if (-not $claudeSuccess) {
 [System.IO.File]::WriteAllLines((Join-Path $RunDir "03_CLAUDE_REVIEW.md"), $claudeReviewStr, $Utf8NoBom)
 
 Write-Checkpoint "Phase 4: Hermes Final Summary"
-$summaryPromptZh = "You are Hermes. Pipeline status: $pipelineStatus. Summarize this Tripartite Test for Josh in Traditional Chinese. Codex: $codexResult. Claude: $claudeReviewStr."
-$finalSummaryZh = & $HermesExe -z $summaryPromptZh | Out-String
-if ($null -eq $finalSummaryZh) { $finalSummaryZh = "SUMMARY_FAILED" }
-[System.IO.File]::WriteAllLines((Join-Path $RunDir "04_HERMES_FINAL_SUMMARY.zh-TW.md"), $finalSummaryZh, $Utf8NoBom)
 
+# Generate ASCII Summary (Canonical)
 $summaryPromptAscii = "Summarize the Tripartite Test for Josh in English (ASCII-safe). Codex: $codexResult. Claude: $claudeReviewStr. Mention pipeline status: $pipelineStatus."
 $finalSummaryAscii = & $HermesExe -z $summaryPromptAscii | Out-String
-if ($null -eq $finalSummaryAscii) { $finalSummaryAscii = "SUMMARY_FAILED" }
+if ($null -eq $finalSummaryAscii -or $finalSummaryAscii.Trim() -eq "") { $finalSummaryAscii = "SUMMARY_FAILED" }
 [System.IO.File]::WriteAllLines((Join-Path $RunDir "04_HERMES_FINAL_SUMMARY.ascii.md"), $finalSummaryAscii, $Utf8NoBom)
+
+# Generate ZH-TW Summary (Optional)
+$summaryPromptZh = "You are Hermes. Pipeline status: $pipelineStatus. Summarize this Tripartite Test for Josh in Traditional Chinese. Codex: $codexResult. Claude: $claudeReviewStr."
+$finalSummaryZh = & $HermesExe -z $summaryPromptZh | Out-String
+$zhTwSummaryFailed = "false"
+
+if ($null -eq $finalSummaryZh -or $finalSummaryZh.Trim() -eq "" -or $finalSummaryZh -match "[?]\s*[\ue711]") {
+    $zhTwSummaryFailed = "true"
+    Write-Host "ZH-TW Summary failed or contains mojibake. Falling back to ASCII canonical." -ForegroundColor Yellow
+}
+[System.IO.File]::WriteAllLines((Join-Path $RunDir "04_HERMES_FINAL_SUMMARY.zh-TW.md"), $finalSummaryZh, $Utf8NoBom)
 
 Write-Checkpoint "Finalizing Transcript"
 $transcript = @"
 # AgentOS Tripartite Coordination Transcript
 Bridge ID: $BridgeId
 Status: $pipelineStatus
+ascii_summary_canonical=true
+zh_tw_summary_failed=$zhTwSummaryFailed
 
 ## 1. Hermes Dispatch
 $hermesDispatch
@@ -117,10 +127,10 @@ $codexResult
 ## 3. Claude Review
 $claudeReviewStr
 
-## 4. Hermes Summary (ASCII)
+## 4. Hermes Summary (ASCII - Canonical)
 $finalSummaryAscii
 
-## 5. Hermes Summary (ZH-TW)
+## 5. Hermes Summary (ZH-TW - Optional/Fallible)
 $finalSummaryZh
 "@
 [System.IO.File]::WriteAllLines((Join-Path $RunDir "TRANSCRIPT.md"), $transcript, $Utf8NoBom)

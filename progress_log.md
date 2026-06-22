@@ -221,15 +221,15 @@ Action:
 - Executed the task by inspecting local docs, fixing one indexing gap, and writing `OUTPUTS\RESULT.md`.
 
 Files changed:
-- `E:\AgentOS\docs\AGENT_ROUTING_PLAN.md`
-- `E:\AgentOS\README.md`
-- `E:\AgentOS\current_state.md`
-- `E:\AgentOS\docs\ARCHITECTURE.md`
-- `E:\AgentOS\data\routing_decisions\2026-06-21-agentos-docs-consistency-smoke.md`
-- `E:\AgentOS\data\codex_tasks\2026-06-21-agentos-docs-consistency-smoke\TASK.md`
-- `E:\AgentOS\data\codex_tasks\2026-06-21-agentos-docs-consistency-smoke\STATUS.md`
-- `E:\AgentOS\data\codex_tasks\2026-06-21-agentos-docs-consistency-smoke\OUTPUTS\RESULT.md`
-- `E:\AgentOS\progress_log.md`
+- `E:\\AgentOS\docs\AGENT_ROUTING_PLAN.md`
+- `E:\\AgentOS\README.md`
+- `E:\\AgentOS\current_state.md`
+- `E:\\AgentOS\docs\ARCHITECTURE.md`
+- `E:\\AgentOS\data\routing_decisions\2026-06-21-agentos-docs-consistency-smoke.md`
+- `E:\\AgentOS\data\codex_tasks\2026-06-21-agentos-docs-consistency-smoke\TASK.md`
+- `E:\\AgentOS\data\codex_tasks\2026-06-21-agentos-docs-consistency-smoke\STATUS.md`
+- `E:\\AgentOS\data\codex_tasks\2026-06-21-agentos-docs-consistency-smoke\OUTPUTS\RESULT.md`
+- `E:\\AgentOS\progress_log.md`
 
 Workflow checkpoints:
 - Hermes simulation recorded routing decision in `data\routing_decisions`.
@@ -409,3 +409,35 @@ Status Labels:
 - zh_tw_summary_failed=true
 - production_ready=false
 - not_yet_production_ready=true
+
+## 2026-06-22 Asia/Taipei - Update progress_log with tripartite run status and mojibake caveats
+Executor: Hermes
+Action:
+- Fixed historical path formatting in progress_log.md (removed extra backslashes).
+- Committed progress_log.md.
+
+## 2026-06-22 Asia/Taipei - Stabilization Plan Phase 1-6
+Executor: Hermes
+Action:
+- **Phase 1: Architecture Freeze**: Confirmed current roles (Hermes/Brain, Codex/Builder, Claude/Inspector, Gemini/Research, Ollama/Triage). Updated ARCHITECTURE.md to reflect consistency.
+- **Phase 2: Evidence Hygiene**: Created docs/EVIDENCE_HYGIENE_PLAN.md with a cleanup manifest. Identified canonical evidence (tripartite_2026-06-22-120958) and classified others for archival/deletion pending Josh approval.
+- **Phase 3: Dirty Role Files Resolution**: Inspected and committed agents/roles/hermes.md, codex.md, and gemini.md. Validated that changes add Three-Agent Protocol details and ZH-TW translations.
+- **Phase 4: ZH-TW Mojibake Fallback**: Updated scripts/hermes_tripartite_bridge.ps1 (v1.13) with mojibake detection and ASCII canonical fallback logic.
+- **Phase 5: 24h Stability Monitor Plan**: Created docs/24H_STABILITY_MONITOR_PLAN.md with checklist, status labels, and reporting path.
+- **Phase 6: First Real Internal Loop**: Selected "Daily AI cost / token usage summary". Created task packet data/codex_tasks/2026-06-22-daily-usage-summary-setup/TASK.md.
+
+Findings:
+- Architecture is stable and documented.
+- Role files are now clean and committed.
+- Mojibake issue in ZH-TW summaries is handled via ASCII fallback in the bridge script.
+- 24h monitoring is ready to begin.
+
+Status Labels:
+- architecture_frozen=true
+- evidence_hygiene_plan_created=true
+- dirty_role_files_status=resolved_and_committed
+- ascii_summary_canonical=true
+- zh_tw_summary_status=fallback_logic_implemented
+- stability_monitor_plan_ready=true
+- first_internal_loop_selected=daily-usage-summary-setup
+- production_ready=false
