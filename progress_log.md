@@ -327,3 +327,32 @@ Next:
 4. Start a 24h Hermes observation window before using real client tasks.
 
 Status: pre-flight plan added.
+
+## 2026-06-22 Asia/Taipei - Reviewed Avira Detection on Hermes install.ps1
+
+Executor: Codex
+
+Action:
+- Investigated Avira warning for `install.ps1` detected as `TR/SNH`.
+- Confirmed the working-tree script was removed from `C:\Users\brian\AppData\Local\hermes\hermes-agent\scripts`, consistent with Avira quarantine.
+- Confirmed `scripts/install.ps1` still exists in the Hermes git repository and inspected it from git HEAD without restoring the quarantined file.
+- Checked for high-risk patterns such as antivirus-disabling commands, encoded PowerShell, base64 payloads, and scheduled-task persistence.
+- Confirmed Hermes executables still exist in the external AgentOS/Hermes install paths.
+
+Files changed:
+- `E:\AgentOS\docs\SECURITY_REVIEW_AVIRA_INSTALL_PS1.md`
+- `E:\AgentOS\progress_log.md`
+
+Findings:
+- Current assessment is likely false positive, not fully proven.
+- The script is a large Windows bootstrap installer and includes behaviors that commonly trigger heuristic antivirus detection: `irm | iex`, `ExecutionPolicy ByPass`, downloads, archive extraction, npm/Python dependency installation, and process startup.
+- No obvious antivirus-disable, encoded command, base64 payload, or scheduled-task persistence pattern was found in the focused review.
+- Existing unrelated dirty files were not modified.
+
+Next:
+1. Do not restore or whitelist the quarantined script yet.
+2. Continue using the existing Hermes runtime if it still works.
+3. If reinstall/update is needed, use a pinned checkout and inspect the installer before execution.
+4. Consider submitting the upstream file or hash to Avira as a false-positive report.
+
+Status: security review documented.
