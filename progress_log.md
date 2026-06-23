@@ -1,4 +1,22 @@
 
+## 2026-06-23 Asia/Taipei - Marked Device Maintenance Project
+Executor: Codex
+Action:
+- Created `data\projects\device_maintenance.md` to group Fan Control and Memory Guard under one internal maintenance project.
+- Updated `current_state.md` to classify Fan Control and Memory Guard as device maintenance tools instead of freelance delivery work.
+- Updated `docs\ARCHITECTURE.md` with the internal device maintenance boundary.
+
+Findings:
+- Fan Control and Memory Guard support local machine stability during AgentOS work.
+- These tools are not customer-facing.
+- GUI actions and process killing remain approval-gated.
+
+Status Labels:
+- device_maintenance_project_created=true
+- customer_facing=false
+- fan_control_marked_as_device_maintenance=true
+- memory_guard_marked_as_device_maintenance=true
+
 ## 2026-06-23: Fan Control CLI Contract Completion (Parallel Lane)
 ### [STATUS: SUCCESS / VERIFIED]
 - **Action**: Hermes coordinated a 3-lane parallel mission to productionize the Fan Control tool.

@@ -79,6 +79,23 @@ Current state by layer:
 | Maintenance | `scripts\start.ps1`, `watchdog.ps1`, `model_fallback.ps1`; `logs\*.json` | Scripts exist and parser checks were previously recorded as passing; logs show legacy gateway and healthy model check |
 | Queue/database | File directories only | No database, broker, queue runner, or daemon inside AgentOS |
 
+## Internal Device Maintenance
+
+Source of truth: `data\projects\device_maintenance.md`
+
+AgentOS separates local machine maintenance from customer-facing freelance work. Device maintenance tools may support long-running AgentOS operations, but they are not client deliverables.
+
+Current device maintenance tools:
+
+- Fan Control CLI: `scripts\fan_control\run.bat`
+- Memory Guard: `scripts\memory_guard.ps1`
+
+Safety boundary:
+
+- Fan Control `--action status` may be used for routine checks.
+- Fan Control `--action enable_max` requires operator awareness before unattended automation.
+- Memory Guard defaults to dry-run; process killing requires Josh approval.
+
 ## Memory and Knowledge Architecture
 
 AgentOS uses a 3-Layer Memory Model to ensure cost-efficiency and data integrity:
