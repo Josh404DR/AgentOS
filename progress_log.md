@@ -889,3 +889,27 @@ Status Labels:
 - ollama_alias_fixed=true
 - qwen3_8b_rejected_context=true
 - qwen35_9b_context_valid=true
+
+## 2026-06-23 Asia/Taipei - Established File-Based Memory Layer
+Executor: Codex
+Action:
+- Created `docs\MEMORY_ARCHITECTURE.md` to define Hermes persistent memory as a compact pointer layer instead of a full project-history store.
+- Created `data\memory\HERMES_CORE_MEMORY.md` as the short memory payload Hermes should keep after pruning.
+- Created `data\memory\NOTEBOOKLM_SOURCE_INDEX.md` to define which AgentOS files should be uploaded or exported into NotebookLM later.
+- Created `data\memory\HERMES_MEMORY_PRUNE_PROMPT.md` as a copy-paste prompt for Hermes to prune its near-full MEMORY and USER PROFILE stores.
+
+Findings:
+- Hermes persistent memory should not carry routine checkpoints, command output, raw bridge transcripts, or duplicated docs.
+- AgentOS files remain canonical. NotebookLM should be treated as retrieval only until a verified sync process exists.
+- `HERMES_NOTES.md` has known mojibake risk and should not be treated as clean canonical memory until repaired.
+
+Next:
+- Give Hermes `data\memory\HERMES_MEMORY_PRUNE_PROMPT.md`.
+- After Hermes prunes memory, ask it to report MEMORY and USER PROFILE percentages and run `/cost`.
+- Later, build or manually assemble a NotebookLM source pack from `data\memory\NOTEBOOKLM_SOURCE_INDEX.md`.
+
+Status Labels:
+- file_based_memory_layer_created=true
+- hermes_internal_memory_should_be_pruned=true
+- notebooklm_source_index_ready=true
+- notebooklm_production_ready=false
