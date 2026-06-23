@@ -1,7 +1,7 @@
 # AgentOS Current State Snapshot
-Last Updated: 2026-06-23 18:55 Asia/Taipei
+Last Updated: 2026-06-23 19:30 Asia/Taipei
 
-## Status Overview (Evidence-Based)
+## 🚀 Status Overview (Evidence-Based)
 
 ### 1. Memory Layer Architecture (V2)
 - **Architecture Setup**: `verified_by_codex`
@@ -16,26 +16,24 @@ Last Updated: 2026-06-23 18:55 Asia/Taipei
 
 ### 3. Device Maintenance Project
 - **Project Index**: `data\projects\device_maintenance.md`
-- **Customer Facing**: `false`
-- **Tools**:
-  - Fan Control CLI: `scripts\fan_control\run.bat`
-  - Memory Guard: `scripts\memory_guard.ps1`
-- **Status**: `internal_maintenance_tools_active`
-- **Safety Boundary**:
-  - Use Fan Control `--action status` for routine checks.
-  - Do not use Fan Control `--action enable_max` in unattended automation until threshold and unknown-temperature behavior is reverified.
-  - Memory Guard is dry-run by default; do not use `-KillCandidates` without Josh approval.
+- **Fan Control Utility**:
+  - `fan_control_code_landed=true`
+  - `run_bat_resolution_fixed=true` (Successfully bypassed WindowsApps Python shim)
+  - `dependency_status=not_ready` (Verified: `run.bat` executes but reports missing dependencies)
+  - `enable_max_unattended=false`
+- **Memory Guard**: `scripts\memory_guard.ps1`
+- **Overall Status**: `internal_maintenance_tools_active` (Partial: Fan Control depends on environment setup)
 
 ---
 
-## Codex Handoff & Memory
+## 📋 Codex Handoff & Memory
+*Note: This section is for Codex Desktop to understand the system state.*
 
-1. **Truth resides in files**: Always read `docs\MEMORY_ARCHITECTURE.md`.
-2. **Device maintenance**: Fan Control and Memory Guard are tracked under `data\projects\device_maintenance.md`.
-3. **Git hygiene**: Never use `git add .`; stage explicit files only.
+1. **Truth resides in Files**: Always read `docs\MEMORY_ARCHITECTURE.md`.
+2. **Fan Control Runner**: Use `scripts\fan_control\run.bat`. It tries `py -3.13`, then `py`. If failing, set `FAN_CONTROL_PYTHON`.
+3. **Git Hygiene**: Strict rule - Never use `git add .`. Add specific files only.
 
-## Key Documentation Index
-
+## 🔗 Key Documentation Index
 - **Memory Protocol**: `docs\MEMORY_ARCHITECTURE.md`
 - **Core Memory**: `data\memory\HERMES_CORE_MEMORY.md`
 - **Device Maintenance**: `data\projects\device_maintenance.md`

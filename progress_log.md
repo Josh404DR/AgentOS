@@ -17,6 +17,19 @@ Status Labels:
 - fan_control_marked_as_device_maintenance=true
 - memory_guard_marked_as_device_maintenance=true
 
+## 2026-06-23: Fan Control Runner Python Resolution Fix
+### [STATUS: PARTIAL / EVIDENCE-BASED]
+- **Action**: Corrected `scripts/fan_control/run.bat` to resolve Python without hitting WindowsApps shim errors.
+- **Implementation**: Added strategy: Check `FAN_CONTROL_PYTHON` env var -> `py -3.13` -> `py`.
+- **Testing**:
+  - `run.bat --help`: Success (bypassed shim, executed script).
+  - `run.bat --action status`: Success (bypassed shim, executed script).
+- **Dependency Status**: `not_ready`. Both commands returned `STATUS=ERROR` due to missing `psutil`/`pyautogui` in the `py` launcher environment. This is an expected and handled state.
+- **Constraints**: Did not execute `enable_max` or trigger GUI.
+- **Files Affected**: `scripts/fan_control/run.bat`, `current_state.md`, `progress_log.md`.
+
+---
+
 ## 2026-06-23: Fan Control CLI Contract Completion (Parallel Lane)
 ### [STATUS: SUCCESS / VERIFIED]
 - **Action**: Hermes coordinated a 3-lane parallel mission to productionize the Fan Control tool.
