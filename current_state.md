@@ -12,10 +12,11 @@ Last Updated: 2026-06-23 19:30 Asia/Taipei
 - **Local Export Package**: `verified_by_codex`
 - **Sync Tool**: `tracked` (`scripts\sync_notebooklm.py`)
 - **Dry Run**: `verified_by_codex`
-- **Live Sync Preflight**: `done`
-- **Fresh Notebook Sync Test**: `failed_auth_expired` (Executed 2026-06-23)
-- **Sync Audit Log**: `data\memory\sync_logs\fresh_notebook_sync\notebooklm_fresh_sync_2026-06-23_214007.md`
-- **Remote Sync**: `not_verified`
+- **Fresh Notebook Sync Test**: `verified_by_audit_log` (Executed 2026-06-23)
+- **Fresh Notebook Title**: `AgentOS_Fresh_Sync_Test_20260623_2313`
+- **Fresh Notebook ID**: `041d2902-0435-4e57-8e0a-712d1dc42860`
+- **Source Count After Sync**: 12
+- **Remote Sync**: `verified_fresh_notebook`
 - **NotebookLM Role**: Layer 3 (Retrieval-Only, not Source of Truth)
 - **Sync/Cleanup Decoupling**: `true` (Cleanup does not depend on Sync)
 
