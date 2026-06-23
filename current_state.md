@@ -13,11 +13,9 @@ Last Updated: 2026-06-23 19:30 Asia/Taipei
 - **Sync Tool**: `tracked` (`scripts\sync_notebooklm.py`)
 - **Dry Run**: `verified_by_codex`
 - **Live Sync Preflight**: `done`
-- **Live Sync Attempt**: `executed_2026-06-23`
-- **Live Sync Status**: `failed` (Auth expired)
-- **Live Sync Log**: `data\memory\sync_logs\controlled_live_sync\notebooklm_sync_2026-06-23_212001.md`
+- **Fresh Notebook Sync Test**: `failed_auth_expired` (Executed 2026-06-23)
+- **Sync Audit Log**: `data\memory\sync_logs\fresh_notebook_sync\notebooklm_fresh_sync_2026-06-23_214007.md`
 - **Remote Sync**: `not_verified`
-- **Approval Required Before Retry**: `true`
 - **NotebookLM Role**: Layer 3 (Retrieval-Only, not Source of Truth)
 - **Sync/Cleanup Decoupling**: `true` (Cleanup does not depend on Sync)
 

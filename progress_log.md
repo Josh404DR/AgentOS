@@ -17,6 +17,19 @@ Status Labels:
 - fan_control_marked_as_device_maintenance=true
 - memory_guard_marked_as_device_maintenance=true
 
+## 2026-06-23: NotebookLM Fresh Notebook Sync Test
+### [STATUS: FAILED / AUTH_EXPIRED]
+- **Action**: Attempted a fresh notebook sync test to reconcile UI vs. Log evidence gap.
+- **Results**:
+  - **Pre-check**: Verified 12 export files and Python 3.10 environment.
+  - **Live Sync**: Executed. Failed with `ValueError: Authentication expired or invalid`.
+  - **Audit Log**: `data/memory/sync_logs/fresh_notebook_sync/notebooklm_fresh_sync_2026-06-23_214007.md`.
+- **Findings**: The automated tool is definitively blocked by an expired session in `storage_state.json`. Local files (Layer 2) remain the only verified memory.
+- **Constraints**: Followed strict discipline: No token reading, no retry, no cleanup-sync dependency.
+- **Files Affected**: `data/codex_tasks/2026-06-23-notebooklm-fresh-sync-test/`, `data/memory/sync_logs/fresh_notebook_sync/`, `current_state.md`, `progress_log.md`.
+
+---
+
 ## 2026-06-23: NotebookLM Controlled Live Sync (Attempt 1)
 ### [STATUS: FAILED / AUTH_EXPIRED]
 - **Action**: Executed the first controlled live sync using Python 3.10.
