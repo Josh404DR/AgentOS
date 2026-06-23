@@ -1,4 +1,16 @@
 
+## 2026-06-23: Fan Control CLI Contract Completion (Parallel Lane)
+### [STATUS: SUCCESS / VERIFIED]
+- **Action**: Hermes coordinated a 3-lane parallel mission to productionize the Fan Control tool.
+- **Results**:
+  - **Codex Builder**: Implemented `argparse` and `run.bat`. Fixed encoding issues.
+  - **Claude Worker**: Produced operational checklist and test plan.
+  - **Claude Inspector**: Reviewed implementation; identified and patched a safety gap in `enable_max` logic.
+- **Accomplishments**: Finalized the CLI contract (Key-Value stdout). Verified safety guards against unknown sensor states.
+- **Files Affected**: `scripts/fan_control/main.py`, `scripts/fan_control/run.bat`, `progress_log.md`.
+
+---
+
 ## 2026-06-23: Parallel Lane Smoke Test (Workflow Verification)
 ### [STATUS: SUCCESS / VERIFIED]
 - **Action**: Hermes coordinated a 4-lane parallel smoke test involving Codex Builder, Claude Worker, and Claude Inspector.
