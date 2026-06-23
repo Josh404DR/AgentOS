@@ -1,5 +1,5 @@
 # AgentOS Current State Snapshot
-Last Updated: 2026-06-23 16:30 Asia/Taipei
+Last Updated: 2026-06-23 17:35 Asia/Taipei
 
 ## 🚀 Status Overview (Evidence-Based)
 
@@ -9,11 +9,12 @@ Last Updated: 2026-06-23 16:30 Asia/Taipei
 - **Source of Truth**: AgentOS local files are the canonical source of truth.
 
 ### 2. NotebookLM Integration
-- **Export Package**: `verified_by_codex` (`exports\notebooklm_v1` contains 12 verified Markdown files).
-- **Sync Tool**: `scripts\sync_notebooklm.py` exists but is currently **untracked** in Git.
-- **Remote Sync Status**: `not_verified`
-  - **Blocker**: PoC venv is broken (Python path error: No Python at WindowsApps).
-  - **Blocker**: No audit logs found confirming "Successfully uploaded" or "Ready" status on remote NotebookLM.
+- **Local Export Package**: `verified_by_codex` (`exports\notebooklm_v1` contains 12 verified Markdown files).
+- **Sync Tool**: `tracked_or_pending_commit` (Refactored `scripts\sync_notebooklm.py` with logging and dry-run support).
+- **Dry Run**: `verified_by_hermes` (Successfully discovered 12 files and generated audit log).
+- **Remote Sync**: `not_verified`
+  - **Blocker**: PoC venv reported as broken in background (Python path error), though dry-run worked using absolute path.
+  - **Blocker**: No verified live sync logs found for the current notebook `9af31a16-7984-428a-85ff-2d648d858560`.
   - **Note**: NotebookLM remains a retrieval layer only; do not treat as a source of truth until sync is verified.
 
 ### 3. Fan Control Project (IoT)
@@ -39,3 +40,4 @@ Last Updated: 2026-06-23 16:30 Asia/Taipei
 - **Core Memory**: `data\memory\HERMES_CORE_MEMORY.md`
 - **Progress History**: `progress_log.md`
 - **Architecture**: `docs\ARCHITECTURE.md`
+- **Sync Logs**: `data\memory\sync_logs\`

@@ -1,4 +1,20 @@
 
+## 2026-06-23: NotebookLM Sync Tool Stabilization (Dry-Run & Logging)
+### [STATUS: PARTIAL / EVIDENCE-BASED]
+- **Action**: Refactored `scripts/sync_notebooklm.py` to support `--dry-run`, `--export-dir`, `--notebook-id`, and `--log-dir`.
+- **Accomplishments**:
+  - Established a Markdown-based audit logging system in `data/memory/sync_logs/`.
+  - Executed dry-run verification: Successfully discovered 12 Markdown files in `exports/notebooklm_v1`.
+  - Updated `current_state.md` with precise verification labels.
+- **Dry-Run Result**: `dry_run_ok` (Verified by `notebooklm_sync_2026-06-23_172604.md`).
+- **Live Sync**: **Not executed**. Keeping `remote_sync=not_verified` due to venv and auth audit concerns.
+- **Remaining Blockers**:
+  - NotebookLM remote sync state is still unverified (no live success log).
+  - Fan Control project remains in draft (no CLI contract, run.bat, or mojibake fix).
+- **Files Affected**: `scripts/sync_notebooklm.py`, `current_state.md`, `progress_log.md`.
+
+---
+
 ## 2026-06-23: Current State Status Correction (Verification Pass)
 ### [STATUS: PARTIAL / EVIDENCE-BASED]
 - **Action**: Codex performed verification of `current_state.md` and identified overclaims.
