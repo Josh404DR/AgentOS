@@ -23,6 +23,27 @@
 
 ---
 
+## 2026-06-23 Asia/Taipei - Added Memory Guard Dry-Run Tool
+Executor: Codex
+Action:
+- Created `scripts\memory_guard.ps1` to detect high RAM pressure and list close candidates.
+- Tool defaults to dry-run mode and does not close processes unless `-KillCandidates` is explicitly passed.
+- Protected Hermes/Codex/Claude/Python/Telegram/Explorer/DWM/antivirus style processes by default.
+
+Verification:
+- Ran `powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\memory_guard.ps1 -ThresholdPercent 85 -Top 15`.
+- Result: `MEMORY_STATUS=HIGH`, `MEMORY_USED_PERCENT=93.3`, `MEMORY_FREE_MB=1089.6`.
+- Close candidates reported: `steamwebhelper`, two `powershell` processes.
+- No processes were closed.
+
+Next:
+- Josh can approve closing candidates, or run the tool manually with `-KillCandidates` after reviewing the list.
+
+Status Labels:
+- memory_guard_created=true
+- memory_pressure_high=true
+- process_kill_executed=false
+
 ## 2026-06-23: NotebookLM Sync Tool Follow-up (Lazy Import & Dry-Run Fix)
 ### [STATUS: SUCCESS / EVIDENCE-BASED]
 - **Action**: Codex identified that dry-run failed due to top-level `notebooklm` import.
