@@ -23,10 +23,13 @@ Last Updated: 2026-06-23 19:30 Asia/Taipei
   - `dependency_preflight_done=true`
   - `dependency_install_executed=false`
   - `recommended_FAN_CONTROL_PYTHON=C:\Users\brian\AppData\Local\Programs\Python\Python310\python.exe`
-  - `dependency_status=not_ready` (Ready Python found, but runner not yet configured to use it)
-  - `approval_required_before_install=true`
+  - `dependency_status=ready_with_python310`
+  - `runner_with_FAN_CONTROL_PYTHON=verified_by_codex`
+  - `sensor_status=temperature_unavailable_on_host`
+  - `enable_max_executed=false`
   - `enable_max_unattended=false`
-  - `final_status=partial`
+  - `final_status=partial_sensor_unavailable`
+  - **Notes**: Dependencies are available when using Python 3.10. The `status` action executes correctly but fails to read CPU temperature on this host. Due to sensor unavailability, the tool is not considered fully ready. Automatic execution of `enable_max` is prohibited.
 - **Memory Guard**: `scripts\memory_guard.ps1`
 - **Overall Status**: `internal_maintenance_tools_active` (Partial: Fan Control depends on environment setup)
 

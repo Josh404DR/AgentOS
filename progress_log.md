@@ -17,6 +17,21 @@ Status Labels:
 - fan_control_marked_as_device_maintenance=true
 - memory_guard_marked_as_device_maintenance=true
 
+## 2026-06-23: Fan Control Python 3.10 Verification
+### [STATUS: PARTIAL_SENSOR_UNAVAILABLE / VERIFIED]
+- **Action**: Codex verified the functionality of the Fan Control runner using the identified Python 3.10 environment.
+- **Verification Results**:
+  - **Python 3.10 Path**: `C:\Users\brian\AppData\Local\Programs\Python\Python310\python.exe` (Verified exists).
+  - **Dependencies**: `psutil` and `pyautogui` confirmed available in Python 3.10.
+  - **Runner Execution**: Setting `FAN_CONTROL_PYTHON` allows `run.bat` to successfully start `main.py`.
+  - **Help Command**: `--help` successfully displays argparse documentation.
+  - **Status Command**: `--action status` returns a graceful `STATUS=ERROR` with `MESSAGE=Could not determine CPU temperature.` (Sensor unavailable on host).
+- **Constraints**: No dependency installation executed. No `enable_max` executed.
+- **Final Status**: `partial_sensor_unavailable`.
+- **Files Affected**: `current_state.md`, `progress_log.md`.
+
+---
+
 ## 2026-06-23: Fan Control Environment Dependency Preflight
 ### [STATUS: SUCCESS / VERIFIED]
 - **Action**: Performed a 3-lane preflight survey of Python environments to resolve Fan Control dependencies.
