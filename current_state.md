@@ -20,12 +20,13 @@ Last Updated: 2026-06-23 19:30 Asia/Taipei
   - `fan_control_code_landed=true`
   - `run_bat_resolution_strategy_added=true`
   - `windowsapps_shim_avoided=true`
-  - `run_bat_without_env_var=failed_no_usable_python`
-  - `run_bat_with_FAN_CONTROL_PYTHON=executes_script`
-  - `dependency_status=not_ready`
+  - `dependency_preflight_done=true`
+  - `dependency_install_executed=false`
+  - `recommended_FAN_CONTROL_PYTHON=C:\Users\brian\AppData\Local\Programs\Python\Python310\python.exe`
+  - `dependency_status=not_ready` (Ready Python found, but runner not yet configured to use it)
+  - `approval_required_before_install=true`
   - `enable_max_unattended=false`
   - `final_status=partial`
-  - **Notes**: `run.bat` no longer depends on bare WindowsApps shim. However, currently no usable `py` launcher path is found for automatic use on this host. Execution requires setting `FAN_CONTROL_PYTHON` or installing a working Python launcher. Dependencies are not yet installed, so the tool is not fully ready.
 - **Memory Guard**: `scripts\memory_guard.ps1`
 - **Overall Status**: `internal_maintenance_tools_active` (Partial: Fan Control depends on environment setup)
 

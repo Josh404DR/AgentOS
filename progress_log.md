@@ -17,6 +17,20 @@ Status Labels:
 - fan_control_marked_as_device_maintenance=true
 - memory_guard_marked_as_device_maintenance=true
 
+## 2026-06-23: Fan Control Environment Dependency Preflight
+### [STATUS: SUCCESS / VERIFIED]
+- **Action**: Performed a 3-lane preflight survey of Python environments to resolve Fan Control dependencies.
+- **Findings**: 
+  - Surveyed 6 Python executors.
+  - **Python 3.10** (`C:\Users\brian\AppData\Local\Programs\Python\Python310\python.exe`) already satisfies both `psutil` and `pyautogui`.
+  - Other environments (Codex, Hermes, 3.14) lack one or both dependencies.
+- **Recommendation**: Set `FAN_CONTROL_PYTHON` to the 3.10 path to avoid new installations.
+- **Dependency Status**: `not_ready` (Pending choice and configuration).
+- **Constraints**: No `pip install` executed. No `enable_max` executed.
+- **Files Affected**: `data/codex_tasks/2026-06-23-fan-control-env-preflight/`, `current_state.md`, `progress_log.md`.
+
+---
+
 ## 2026-06-23: Fan Control Runner Python Resolution Fix
 ### [STATUS: PARTIAL / EVIDENCE-BASED]
 - **Action**: Corrected `scripts/fan_control/run.bat` to resolve Python without hitting WindowsApps shim errors.
