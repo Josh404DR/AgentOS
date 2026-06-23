@@ -1,4 +1,29 @@
 
+## 2026-06-23: Current State Status Correction (Verification Pass)
+### [STATUS: PARTIAL / EVIDENCE-BASED]
+- **Action**: Codex performed verification of `current_state.md` and identified overclaims.
+- **Corrections**:
+  - Downgraded NotebookLM remote sync to `not_verified`.
+  - Downgraded Fan Control status to `draft_exists` (not completed).
+  - Labeled Hermes memory reduction as `claimed_by_hermes`.
+- **Remaining Blockers**:
+  - **NotebookLM**: Venv points to missing WindowsApps Python shim; no verified upload success logs found.
+  - **Fan Control**: Lacks CLI contract (`argparse`), missing `run.bat`, and contains mojibake (`簞C`).
+- **Files Affected**: `current_state.md`, `progress_log.md`.
+
+---
+
+## 2026-06-23: NotebookLM Memory Layer Integration (Milestone)
+### [STATUS: SUCCESS]
+- Accomplishments: 
+  - Reduced Hermes memory (94% -> 48%). 
+  - Integrated `notebooklm-py` for automated knowledge sync.
+  - Solved Windows file-upload corruption by switching to "Text-Stream Sync" (L3 fix).
+  - Created `E:/AgentOS/scripts/sync_notebooklm.py`.
+- Lessons: Windows terminal subprocesses can corrupt file buffers; inline text is the stable workaround for unofficial APIs.
+
+---
+
 ## 2026-06-20 12:45 Asia/Taipei - Stage Zero Inventory
 
 Executor: Codex

@@ -79,6 +79,23 @@ Current state by layer:
 | Maintenance | `scripts\start.ps1`, `watchdog.ps1`, `model_fallback.ps1`; `logs\*.json` | Scripts exist and parser checks were previously recorded as passing; logs show legacy gateway and healthy model check |
 | Queue/database | File directories only | No database, broker, queue runner, or daemon inside AgentOS |
 
+## Memory and Knowledge Architecture
+
+AgentOS uses a 3-Layer Memory Model to ensure cost-efficiency and data integrity:
+
+| Layer | Type | Location | Purpose |
+| :--- | :--- | :--- | :--- |
+| **Layer 1** | Internal | Hermes/Codex Memory | **Indexes & Red-lines.** Compact pointers to files and safety rules. |
+| **Layer 2** | Canonical | `E:\AgentOS\*.md` | **Source of Truth.** The master record of all architecture and decisions. |
+| **Layer 3** | Retrieval | NotebookLM | **Synthesis.** High-speed retrieval and cross-document analysis. |
+
+### Synchronization Policy
+- Files in Layer 2 are the ground truth.
+- Layer 3 is updated via `E:\AgentOS\scripts\sync_notebooklm.py`.
+- On Windows hosts, sync must use the **Text-Stream Sync** method to avoid buffer corruption.
+
+---
+
 ## Agent Responsibilities
 
 | Agent | Current role | Primary artifacts | Status |

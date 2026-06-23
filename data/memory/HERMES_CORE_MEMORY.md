@@ -41,3 +41,6 @@ NotebookLM rule:
 - NotebookLM is a retrieval layer, not source of truth.
 - Feed NotebookLM curated AgentOS files from `data\memory\NOTEBOOKLM_SOURCE_INDEX.md`.
 - Keep AgentOS files canonical.
+- **Tooling**: `E:\AgentOS\scripts\sync_notebooklm.py`.
+- **CRITICAL**: On Windows, always sync as `--type text` instead of `--type file` to avoid corrupted source errors (red status).
+- **Active DB**: `AgentOS_Central_Memory_v2` (ID: `9af31a16-7984-428a-85ff-2d648d858560`).
