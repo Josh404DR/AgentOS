@@ -22,10 +22,11 @@ Status Labels:
 - **Action**: Corrected `scripts/fan_control/run.bat` to resolve Python without hitting WindowsApps shim errors.
 - **Implementation**: Added strategy: Check `FAN_CONTROL_PYTHON` env var -> `py -3.13` -> `py`.
 - **Testing**:
-  - `run.bat --help`: Success (bypassed shim, executed script).
-  - `run.bat --action status`: Success (bypassed shim, executed script).
-- **Dependency Status**: `not_ready`. Both commands returned `STATUS=ERROR` due to missing `psutil`/`pyautogui` in the `py` launcher environment. This is an expected and handled state.
-- **Constraints**: Did not execute `enable_max` or trigger GUI.
+  - `without FAN_CONTROL_PYTHON`: runner returns `STATUS=ERROR` / `RUNNER_INIT` (No usable Python found).
+  - `with FAN_CONTROL_PYTHON`: runner executes `main.py` but dependency check returns `STATUS=ERROR`.
+- **Dependency Status**: `not_ready`.
+- **Final Status**: `partial`.
+- **Enable Max Executed**: `false`.
 - **Files Affected**: `scripts/fan_control/run.bat`, `current_state.md`, `progress_log.md`.
 
 ---

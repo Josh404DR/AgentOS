@@ -1,7 +1,7 @@
 # AgentOS Current State Snapshot
 Last Updated: 2026-06-23 19:30 Asia/Taipei
 
-## 🚀 Status Overview (Evidence-Based)
+## Status Overview (Evidence-Based)
 
 ### 1. Memory Layer Architecture (V2)
 - **Architecture Setup**: `verified_by_codex`
@@ -18,22 +18,27 @@ Last Updated: 2026-06-23 19:30 Asia/Taipei
 - **Project Index**: `data\projects\device_maintenance.md`
 - **Fan Control Utility**:
   - `fan_control_code_landed=true`
-  - `run_bat_resolution_fixed=true` (Successfully bypassed WindowsApps Python shim)
-  - `dependency_status=not_ready` (Verified: `run.bat` executes but reports missing dependencies)
+  - `run_bat_resolution_strategy_added=true`
+  - `windowsapps_shim_avoided=true`
+  - `run_bat_without_env_var=failed_no_usable_python`
+  - `run_bat_with_FAN_CONTROL_PYTHON=executes_script`
+  - `dependency_status=not_ready`
   - `enable_max_unattended=false`
+  - `final_status=partial`
+  - **Notes**: `run.bat` no longer depends on bare WindowsApps shim. However, currently no usable `py` launcher path is found for automatic use on this host. Execution requires setting `FAN_CONTROL_PYTHON` or installing a working Python launcher. Dependencies are not yet installed, so the tool is not fully ready.
 - **Memory Guard**: `scripts\memory_guard.ps1`
 - **Overall Status**: `internal_maintenance_tools_active` (Partial: Fan Control depends on environment setup)
 
 ---
 
-## 📋 Codex Handoff & Memory
+## Codex Handoff & Memory
 *Note: This section is for Codex Desktop to understand the system state.*
 
 1. **Truth resides in Files**: Always read `docs\MEMORY_ARCHITECTURE.md`.
 2. **Fan Control Runner**: Use `scripts\fan_control\run.bat`. It tries `py -3.13`, then `py`. If failing, set `FAN_CONTROL_PYTHON`.
 3. **Git Hygiene**: Strict rule - Never use `git add .`. Add specific files only.
 
-## 🔗 Key Documentation Index
+## Key Documentation Index
 - **Memory Protocol**: `docs\MEMORY_ARCHITECTURE.md`
 - **Core Memory**: `data\memory\HERMES_CORE_MEMORY.md`
 - **Device Maintenance**: `data\projects\device_maintenance.md`
