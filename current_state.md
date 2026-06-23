@@ -12,9 +12,12 @@ Last Updated: 2026-06-23 19:30 Asia/Taipei
 - **Local Export Package**: `verified_by_codex`
 - **Sync Tool**: `tracked` (`scripts\sync_notebooklm.py`)
 - **Dry Run**: `verified_by_codex`
-- **Live Sync Preflight**: `done` (Verified Python 3.10 is ready)
+- **Live Sync Preflight**: `done`
+- **Live Sync Attempt**: `executed_2026-06-23`
+- **Live Sync Status**: `failed` (Auth expired)
+- **Live Sync Log**: `data\memory\sync_logs\controlled_live_sync\notebooklm_sync_2026-06-23_212001.md`
 - **Remote Sync**: `not_verified`
-- **Approval Required Before Live Sync**: `true`
+- **Approval Required Before Retry**: `true`
 - **NotebookLM Role**: Layer 3 (Retrieval-Only, not Source of Truth)
 - **Sync/Cleanup Decoupling**: `true` (Cleanup does not depend on Sync)
 

@@ -17,6 +17,20 @@ Status Labels:
 - fan_control_marked_as_device_maintenance=true
 - memory_guard_marked_as_device_maintenance=true
 
+## 2026-06-23: NotebookLM Controlled Live Sync (Attempt 1)
+### [STATUS: FAILED / AUTH_EXPIRED]
+- **Action**: Executed the first controlled live sync using Python 3.10.
+- **Results**:
+  - **Live Sync Command**: Executed without `--dry-run`.
+  - **Outcome**: `live_sync_failed`. The session in `storage_state.json` has expired.
+  - **Files Uploaded**: 0.
+  - **Log Path**: `data/memory/sync_logs/controlled_live_sync/notebooklm_sync_2026-06-23_212001.md`.
+- **Decisions**: No automated retries were performed. Hermes and Codex remain on Layer 2 local memory.
+- **Constraints**: Followed strict discipline: No token reading, no scope creep.
+- **Files Affected**: `data/codex_tasks/2026-06-23-notebooklm-controlled-live-sync/`, `data/memory/sync_logs/controlled_live_sync/`, `current_state.md`, `progress_log.md`.
+
+---
+
 ## 2026-06-23: NotebookLM Live Sync Preflight
 ### [STATUS: SUCCESS / VERIFIED]
 - **Action**: Performed a 3-lane preflight for NotebookLM live synchronization.
