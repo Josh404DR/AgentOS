@@ -17,6 +17,21 @@ Status Labels:
 - fan_control_marked_as_device_maintenance=true
 - memory_guard_marked_as_device_maintenance=true
 
+## 2026-06-23: NotebookLM Live Sync Preflight
+### [STATUS: SUCCESS / VERIFIED]
+- **Action**: Performed a 3-lane preflight for NotebookLM live synchronization.
+- **Findings**:
+  - **Dry Run**: `scripts/sync_notebooklm.py --dry-run` successfully discovered 12 files.
+  - **Python 3.10**: Verified as the ready environment containing both `notebooklm` and `playwright` packages.
+  - **Auth**: `storage_state.json` profile exists (14KB).
+- **Decisions**: 
+  - NotebookLM is confirmed as Layer 3 (Retrieval-Only).
+  - Evidence Cleanup is officially decoupled from NotebookLM sync status.
+- **Constraints**: No live sync executed. No tokens read. No `pip install` performed.
+- **Files Affected**: `data/codex_tasks/2026-06-23-notebooklm-live-sync-preflight/`, `current_state.md`, `progress_log.md`.
+
+---
+
 ## 2026-06-23: Fan Control Python 3.10 Verification
 ### [STATUS: PARTIAL_SENSOR_UNAVAILABLE / VERIFIED]
 - **Action**: Codex verified the functionality of the Fan Control runner using the identified Python 3.10 environment.

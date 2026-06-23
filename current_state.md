@@ -12,7 +12,11 @@ Last Updated: 2026-06-23 19:30 Asia/Taipei
 - **Local Export Package**: `verified_by_codex`
 - **Sync Tool**: `tracked` (`scripts\sync_notebooklm.py`)
 - **Dry Run**: `verified_by_codex`
+- **Live Sync Preflight**: `done` (Verified Python 3.10 is ready)
 - **Remote Sync**: `not_verified`
+- **Approval Required Before Live Sync**: `true`
+- **NotebookLM Role**: Layer 3 (Retrieval-Only, not Source of Truth)
+- **Sync/Cleanup Decoupling**: `true` (Cleanup does not depend on Sync)
 
 ### 3. Device Maintenance Project
 - **Project Index**: `data\projects\device_maintenance.md`
