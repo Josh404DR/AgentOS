@@ -13,8 +13,8 @@ Last Updated: 2026-06-23 19:30 Asia/Taipei
 - **Sync Tool**: `tracked` (`scripts\sync_notebooklm.py`)
 - **Dry Run**: `verified_by_codex`
 - **Fresh Notebook Sync Test**: `verified_by_audit_log` (Executed 2026-06-23)
-- **Fresh Notebook Title**: `AgentOS_Fresh_Sync_Test_20260623_2313`
-- **Fresh Notebook ID**: `041d2902-0435-4e57-8e0a-712d1dc42860`
+- **Fresh Notebook Title**: `AgentOS_Fresh_Sync_Test_20260623_2320`
+- **Fresh Notebook ID**: `79ef4683-f7d2-43da-b8d3-7298858949e5`
 - **Source Count After Sync**: 12
 - **Remote Sync**: `verified_fresh_notebook`
 - **NotebookLM Role**: Layer 3 (Retrieval-Only, not Source of Truth)
