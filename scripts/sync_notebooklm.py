@@ -3,7 +3,6 @@ import os
 import argparse
 import datetime
 from pathlib import Path
-from notebooklm.client import NotebookLMClient
 
 # Default Configuration
 DEFAULT_NOTEBOOK_ID = "9af31a16-7984-428a-85ff-2d648d858560"
@@ -59,6 +58,16 @@ async def sync_files(args):
 
     # Live Sync Logic
     try:
+        try:
+            from notebooklm.client import NotebookLMClient
+        except ImportError:
+            msg = "NotebookLM package missing. Cannot perform live sync."
+            print(msg)
+            log_data["errors"].append(msg)
+            log_data["final_status"] = "live_sync_failed"
+            write_log(log_file, log_data)
+            return
+
         async with NotebookLMClient.from_storage() as client:
             print(f"Fetching existing sources for notebook {args.notebook_id}...")
             existing_sources = await client.sources.list(args.notebook_id)
@@ -100,6 +109,9 @@ async def sync_files(args):
     write_log(log_file, log_data)
 
 def write_log(path, data):
+    errors_list = [f"- {e}" for e in data['errors']]
+    errors_str = "\n".join(errors_list) if errors_list else "None"
+    
     content = f"""# NotebookLM Sync Log - {data['run_id']}
 
 - **Timestamp**: {data['timestamp']}
@@ -116,7 +128,7 @@ def write_log(path, data):
 {chr(10).join(['- ' + f for f in data['files_discovered']])}
 
 ## Errors
-{chr(10).join(['- ' + e for f in data['errors']]) if data['errors'] else "None"}
+{errors_str}
 
 ---
 **Note**: NotebookLM remains retrieval layer; AgentOS files remain source of truth.
