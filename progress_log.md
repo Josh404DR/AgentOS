@@ -57,6 +57,15 @@
   - post_manifest_items_included_in_stage_1_execution=false
 - **Caveat**: This is still an approval artifact only. No cleanup action is authorized until Josh explicitly approves the relevant checklist items.
 
+## 2026-06-24: Knowledge Intake - Unlimited-OCR (Secondary Source)
+### [STATUS: artifact_created]
+- **Action**: Appended a second source to the Unlimited-OCR entry.
+- **Source**: https://www.threads.net/@laxima.tech/post/DZ7TlzVlYsy
+- **Findings**: Emphasizes the "One-shot Long-horizon" capability of the Baidu project.
+- **Constraints**: 
+  - NO governance files modified.
+- **Verification**: Pending Codex verification and future NotebookLM sync.
+
 ## 2026-06-24: Knowledge Intake - insane-search & slides-grab
 ### [STATUS: artifact_created]
 - **Action**: Recorded two critical implementation components of the "LazyCodex Trinity" from Korean developer circles.

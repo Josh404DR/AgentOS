@@ -4,6 +4,7 @@
 - **Title**: Baidu Unlimited-OCR: Ultra-long Document Parsing with R-SWA
 - **Category**: open-source-tool, computer-vision, ocr, ai-research
 - **Source**: https://www.threads.net/@aimalaysia/post/DZ8g7oRAa3k
+- **Source 2**: https://www.threads.net/@laxima.tech/post/DZ7TlzVlYsy (Ref: "One-shot Long-horizon Parsing")
 - **GitHub**: https://github.com/baidu/Unlimited-OCR
 - **HuggingFace**: https://huggingface.co/baidu/Unlimited-OCR
 - **Paper**: https://arxiv.org/abs/2410.18091 (Corrected from screenshot inference)
