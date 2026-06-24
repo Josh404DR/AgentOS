@@ -23,5 +23,13 @@ Establish a formal task queue for the "Device Maintenance" project, focusing on 
 2.  [ ] **Claude**: Review the security of running a persistent PowerShell monitor.
 3.  [ ] **Josh**: Approve the transition from dry-run script to persistent background monitoring.
 
+## Attribution Block
+- **actual_author**: Hermes
+- **claimed_role**: coordinator
+- **generation_method**: Task packet defined by Hermes based on Josh's requirements.
+- **verification_level**: claimed_by_hermes
+- **raw_evidence_path**: not_available
+- **caveats**: This is a planning artifact; no execution has occurred.
+
 ---
 *Created by Hermes Coordinator.*

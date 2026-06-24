@@ -62,6 +62,7 @@ Last Updated: 2026-06-24 22:05 Asia/Taipei
   - `env_manager_risk=medium_plaintext_secrets`
   - `monitor_ui_risk=low`
   - `review_report_path=data\codex_tasks\2026-06-24-risk-review\OUTPUTS\CLAUDE_RISK_REVIEW.md`
+  - `attribution_status=needs_independent_agent_verification`
 
 ### 6. Agent Coordination
 - **Autonomous Coordination Mode**:
