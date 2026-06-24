@@ -1,5 +1,5 @@
 # AgentOS Current State Snapshot
-Last Updated: 2026-06-24 17:20 Asia/Taipei
+Last Updated: 2026-06-24 21:20 Asia/Taipei
 
 ## Status Overview (Evidence-Based)
 
@@ -66,6 +66,14 @@ Last Updated: 2026-06-24 17:20 Asia/Taipei
   - `quoted_text_executable_only_when_explicit=true`
   - `changes_require_josh_approval=true`
   - `production_ready=false`
+
+### 6. Agent Coordination
+- **Autonomous Coordination Mode**:
+  - `no_human_relay_default=true`
+  - `hermes_coordinates_codex_claude_directly=true`
+  - `use_existing_bridge_scripts=true`
+  - `josh_contact_only_for_approval_or_blocker=true`
+  - `new_queue_or_database_created=false`
 
 ---
 

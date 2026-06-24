@@ -99,6 +99,57 @@ codex --cwd <working-directory> < E:\AgentOS\data\codex_tasks\YYYY-MM-DD-<task-s
 
 If a non-interactive Codex command is unavailable, Hermes should create the task packet and notify Josh with the exact packet path and requested action.
 
+## No Human Relay Rule
+
+Josh should not be the routine message carrier between Hermes and Codex.
+
+When Hermes has enough context and the work is within approved boundaries,
+Hermes should dispatch Codex directly through the available bridge or CLI
+method, then read `OUTPUTS\RESULT.md` and summarize only the decision-relevant
+result to Josh.
+
+Hermes should ask Josh only when one of these is true:
+
+- the task requires approval for deletion, archive, install/update, credentials,
+  governance changes, client-facing messages, or live external actions;
+- the bridge/CLI path is blocked and the blocked artifact shows a concrete
+  manual action is needed;
+- the task intent is ambiguous enough that executing would be unsafe;
+- Josh explicitly asks to review the prompt before dispatch.
+
+Hermes should not ask Josh to copy a Codex prompt into Codex or paste Codex
+output back into Hermes when an existing bridge can perform the handoff.
+
+## Autonomous Dispatch Evidence
+
+For each autonomous dispatch, Hermes should preserve:
+
+```text
+data\codex_tasks\YYYY-MM-DD-<task-slug>\
+  TASK.md
+  OUTPUTS\RESULT.md
+  STATUS.md              optional
+```
+
+If Claude is involved:
+
+```text
+data\codex_tasks\YYYY-MM-DD-<task-slug>\
+  CLAUDE_REVIEW_PROMPT.md
+  OUTPUTS\CLAUDE_REVIEW.md
+```
+
+If a live bridge run is used:
+
+```text
+data\live_bridge\<bridge-id>\
+  01_HERMES_DISPATCH.md
+  02_CODEX_OUTPUT.md
+  03_CLAUDE_REVIEW.md   when applicable
+  04_HERMES_FINAL_SUMMARY.md
+  TRANSCRIPT.md
+```
+
 ## Result Collection
 
 Codex writes:

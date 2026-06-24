@@ -113,6 +113,57 @@ E:\AgentOS\data\live_bridge\tripartite_<id>\
   TRANSCRIPT.md
 ```
 
+## Autonomous Coordination Mode
+
+Default operating target: Josh should not act as the relay between Hermes,
+Codex, and Claude.
+
+Hermes must coordinate other agents directly through the existing bridge
+scripts and file artifacts whenever the next step does not require Josh
+approval.
+
+```text
+Josh intent / approval boundary
+  -> Hermes classifies and routes
+  -> Hermes creates task or review packet
+  -> Hermes invokes Codex and/or Claude bridge where available
+  -> Codex/Claude write evidence artifacts
+  -> Hermes reads artifacts and updates Josh only when useful or required
+```
+
+Allowed autonomous coordination:
+
+- Hermes creates Codex task packets for read-only review, implementation, or
+  verification work.
+- Hermes invokes Codex through `scripts\hermes_codex_bridge.ps1` when the task
+  is within an approved/non-destructive scope.
+- Hermes invokes Claude through `scripts\hermes_claude_bridge.ps1` for
+  inspector reviews or risk analysis.
+- Hermes invokes `scripts\hermes_tripartite_bridge.ps1` when Codex output
+  should be reviewed by Claude before summarizing to Josh.
+- Hermes records all results under `data\codex_tasks\...`, `data\live_bridge\...`,
+  or the relevant workflow/project artifact.
+
+Josh approval is required before Hermes or any worker executes:
+
+- deletion, archive, or cleanup actions;
+- `.gitignore` changes unless Josh already approved the exact scope;
+- governance or role-boundary changes;
+- install/update commands;
+- credential, token, OAuth, or auth-profile changes;
+- client-facing messages or proposal submission;
+- live external operations that spend money, contact third parties, or may
+  violate platform rules.
+
+If a bridge fails, Hermes must not ask Josh to manually relay every intermediate
+message. Hermes should:
+
+1. write a blocked artifact with the failing command, error, and attempted
+   bridge path;
+2. retry only if the failure is transient and within the task rules;
+3. ask Josh for help only when approval, credentials, provider quota, or manual
+   desktop interaction is required.
+
 ## Escalation Rules
 
 - Use Ollama for cheap local rough classification.

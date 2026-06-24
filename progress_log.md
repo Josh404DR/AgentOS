@@ -170,6 +170,24 @@
   - NO deletion, movement, or archiving of files.
 - **Next Step**: Pending Codex execution of the Gitignore update.
 
+## 2026-06-24: Add Autonomous Agent Coordination Rule
+### [STATUS: locally_verified]
+- **Action**: Added operating rules so Hermes coordinates Codex and Claude directly instead of asking Josh to manually relay prompts and outputs.
+- **Files Modified**:
+  - `docs\AGENT_ROUTING_PLAN.md`
+  - `workflows\hermes_to_codex.md`
+  - `current_state.md`
+  - `progress_log.md`
+- **Rule Summary**:
+  - Josh should not be the routine relay between agents.
+  - Hermes should use existing bridge scripts and file artifacts for Codex/Claude handoffs.
+  - Josh should be contacted for approval gates, concrete blockers, unsafe ambiguity, credentials, quota/provider issues, manual desktop interaction, or client-facing decisions.
+- **Constraints**:
+  - cleanup_executed=false
+  - governance_owner_rule_followed=true
+  - no new queue, daemon, or database was created.
+  - no bridge was executed in this documentation update.
+
 ## 2026-06-24: P0a Gitignore Update Executed
 ### [STATUS: locally_verified]
 - **Action**: Codex added low-risk operational ignore patterns to `.gitignore`.
