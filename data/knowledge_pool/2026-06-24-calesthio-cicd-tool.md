@@ -4,6 +4,7 @@
 - **Title**: Calesthio - CI/CD Deployment Optimization Tool
 - **Category**: devops, cicd-tools, deployment-optimization
 - **Source**: https://www.threads.net/@ien_vision/post/DZ9FXUklCdr
+- **GitHub**: https://github.com/sponsors/calesthio (Reference Repo)
 - **Actionability**: reference_only
 - **Sync Status**: pending_notebooklm
 

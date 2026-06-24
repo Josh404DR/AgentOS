@@ -4,6 +4,7 @@
 - **Title**: Hermes Agent Starter Pack (by @krumjahn)
 - **Category**: hermes-optimization, skills-sharing, open-source-asset
 - **Source**: https://www.threads.net/@krumjahn/post/DZ7NMWglCjV
+- **GitHub**: https://dub.sh/6vvCODt (Direct Download/Link from source)
 - **Actionability**: to_be_tested
 - **Sync Status**: pending_notebooklm
 
