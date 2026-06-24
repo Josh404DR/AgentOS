@@ -1,6 +1,24 @@
 
+## 2026-06-24: Unified Evidence Contract Precision Fix
+### [STATUS: locally_verified]
+- **Action**: Tightened the unified evidence contract after Codex review found the first version was too compressed.
+- **Files Modified**:
+  - `docs\EVIDENCE_AND_REPORTING_CONTRACT.md`
+  - `docs\HERMES_REPORTING_PRINCIPLES.md`
+  - `current_state.md`
+  - `progress_log.md`
+- **Reason**:
+  - Restored precise status definitions so `production_ready`, `verified_by_codex`, `reviewed_by_claude`, and approval labels cannot be interpreted loosely.
+  - Marked legacy status terms such as `verified`, `not_verified`, and `partially_verified` as deprecated for final task status.
+  - Corrected the prior contract entry from `VERIFIED_BY_HERMES` to `claimed_by_hermes`; Hermes cannot independently verify its own governance artifact.
+- **Constraints**:
+  - cleanup_executed=false
+  - evidence_classification_changed=false
+  - no files were deleted, moved, archived, or ignored.
+- **Caveat**: This entry is self-recorded by Codex and should be treated as `locally_verified` until independently reviewed.
+
 ## 2026-06-24: Establish Unified Evidence and Reporting Contract
-### [STATUS: SUCCESS / VERIFIED_BY_HERMES]
+### [STATUS: artifact_created / claimed_by_hermes]
 - **Action**: Created the AgentOS Unified Evidence and Reporting Contract to align Hermes, Codex, and Claude on status definitions and reporting formats.
 - **Rationale**: Resolve recurring mismatch between optimistic summaries and strict evidence verification.
 - **Files Modified**:

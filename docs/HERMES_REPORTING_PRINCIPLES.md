@@ -8,11 +8,17 @@ Do not claim success based on intent or partial execution. Reports must use spec
 
 **Authoritative Source:** All status labels and reporting formats must follow the [EVIDENCE_AND_REPORTING_CONTRACT.md](EVIDENCE_AND_REPORTING_CONTRACT.md).
 
-- **verified**: Evidence fully supports the claim and the task result is complete. (Note: use `verified_by_codex` for independent proof).
-- **partial**: Artifact exists, but the capability is not fully proven or is limited in scope.
-- **observing**: Monitoring or long-duration testing has started, but the duration proof (e.g., 24h uptime) is incomplete.
-- **not_verified**: No sufficient evidence exists to support the claim.
-- **blocked**: A manual action, external condition, or technical error prevents progress.
+Legacy status terms are deprecated for final task status. Hermes may quote them
+only when discussing old logs.
+
+- Do not use `verified` as a final status. Use `verified_by_codex` only after
+  Codex independently checks the specific claim.
+- Do not use `not_verified` as a final status. Use `claimed_by_agent`,
+  `artifact_created`, `partial`, or `blocked` according to the contract.
+- Do not use `partially_verified` as a final status. Use `partial`.
+- Use `observing` only when time-based evidence has started but the required
+  observation window is incomplete.
+- Use `blocked` only when a concrete blocker exists.
 
 ## Principle 2: Git State Integrity
 The repository state is the ultimate source of truth for automation readiness.
@@ -53,10 +59,15 @@ Testing a bridge is a proof of capability, not an endorsement of production stab
   - Git cleanliness.
   - Auth stability (no 401/timeouts).
   - Real task knowledge loops.
-- **Readiness Scale**:
-  - `capability_tested`: Path works once.
-  - `partially_verified`: Works repeatedly but requires manual oversight.
-  - `production_ready`: Stable, automated, and auditable.
+Legacy readiness shorthand such as `capability_tested` and `partially_verified`
+must not replace the contract status labels. A bridge or workflow can be
+described in prose as "tested once", but final status must still use the
+contract labels.
+
+`production_ready` must follow the contract definition: implementation,
+environment assumptions, error handling, rollback/safety boundaries, and
+verification evidence are all complete. A single smoke test, dry-run, or demo
+is not enough.
 
 ## Operational Checklist Before Claiming "Ready"
 Before finalizing any report or claiming a component is "ready":

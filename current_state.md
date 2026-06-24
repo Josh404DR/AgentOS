@@ -1,5 +1,5 @@
 # AgentOS Current State Snapshot
-Last Updated: 2026-06-23 19:30 Asia/Taipei
+Last Updated: 2026-06-24 17:05 Asia/Taipei
 
 ## Status Overview (Evidence-Based)
 
@@ -57,6 +57,8 @@ Last Updated: 2026-06-23 19:30 Asia/Taipei
   - `unified_evidence_contract_created=true`
   - `contract_path=docs\EVIDENCE_AND_REPORTING_CONTRACT.md`
   - `status_labels_authoritative=true`
+  - `legacy_status_terms_deprecated=true`
+  - `contract_precision_fix_applied=true`
   - `changes_require_josh_approval=true`
   - `production_ready=false`
 

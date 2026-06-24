@@ -13,16 +13,18 @@ All agents must use the following definitions for reporting task status:
 
 | Status Label | Definition |
 | :--- | :--- |
-| **claimed_by_agent** | Agent claims the task is done, but no independent verification has been performed. |
-| **artifact_created** | A file, commit, or report exists, but its content correctness is unverified. |
-| **locally_verified** | The performing agent ran local checks (file existence, diff, dry-run). Stronger than a claim, but not independent. |
-| **verified_by_codex** | Codex independently inspected evidence (files, diffs, logs) and confirmed the specific claim. |
-| **reviewed_by_claude** | Claude reviewed quality, risk, or compliance. Does not imply execution success. |
-| **approved_by_josh** | Josh explicitly approved a decision or high-risk action. |
-| **blocked** | Task cannot proceed due to a concrete blocker (credentials, outage, hardware, etc.). |
-| **partial** | Some criteria are complete, but at least one required condition remains incomplete/unverified. |
-| **observing** | Monitoring started, but the time-based evidence period (e.g., 24h) is incomplete. |
-| **production_ready** | Implementation, environment, error handling, safety, and verification are ALL complete. |
+| **claimed_by_agent** | An agent claims the task, action, or result is complete, but no independent verification has been performed. |
+| **artifact_created** | A file, output, commit, report, or task packet exists, but its content and correctness have not yet been verified. |
+| **locally_verified** | The same agent that performed the work also ran local checks such as file existence, `rg`/`grep`, `git diff`, dry-run, or command output inspection. This is stronger than `claimed_by_agent`, but weaker than independent verification. |
+| **verified_by_codex** | Codex independently inspected relevant files, diffs, commits, logs, or command outputs and confirmed the specific claim is supported by evidence. |
+| **reviewed_by_claude** | Claude reviewed quality, risk, boundary compliance, overclaim risk, or test coverage. This does not automatically mean execution succeeded or production readiness is achieved. |
+| **approved_by_josh** | Josh explicitly approved a decision or action, especially for high-risk actions such as deletion, archiving, sending client messages, changing install/update paths, or running live external operations. |
+| **blocked** | The task cannot proceed due to a concrete blocker, such as missing credentials, provider outage, permissions, rate limits, unavailable hardware, or unclear approval. |
+| **partial** | Some acceptance criteria are complete, but at least one required condition remains incomplete or unverified. |
+| **observing** | Monitoring has started, but time-based evidence is not complete yet. Example: a 24h stability test cannot be marked verified before the full observation period completes. |
+| **production_ready** | A feature or workflow is ready for real operational use only after implementation, environment assumptions, error handling, rollback/safety boundaries, and verification evidence are all complete. A single smoke test, dry-run, or successful demo is not enough. |
+
+Legacy labels such as `verified`, `not_verified`, `review_passed`, `partially_verified`, and `ready` are deprecated for final task status. They may appear only when quoting old logs or explaining prior reports. New reports must use the labels above.
 
 ---
 
@@ -35,6 +37,8 @@ All agents must use the following definitions for reporting task status:
 - **Content over Existence**: A file's existence or a commit hash is NOT evidence that the content is correct. Evidence must match the claim.
 - **External State**: A script success code is NOT evidence of external state change unless the external state is verified.
 - **Hygiene**: Accidental shell/runtime error contamination in reports downgrades task status until fixed.
+- **No Inferred Approval**: Agents must not infer `approved_by_josh` from silence, prior preference, or broad project direction.
+- **No Inferred Verification**: Agents must not infer `verified_by_codex` or `reviewed_by_claude` unless that actor actually performed the check and produced evidence.
 - **Governance Change**: Any change to this contract requires explicit Josh approval and a `progress_log.md` entry.
 
 ---
