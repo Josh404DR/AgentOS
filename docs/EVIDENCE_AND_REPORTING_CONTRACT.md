@@ -74,7 +74,41 @@ production_ready:
 
 ---
 
-## 4. Acceptance Checklist Rules
+## 4. Resource Contribution Summary
+
+Every multi-agent task report must include a contribution distribution summary.
+The goal is to help Josh adjust future work allocation across subscription,
+metered API, local, and manual resources.
+
+Required fields:
+
+```text
+resource_contribution_summary:
+  - resource:
+    role:
+    contribution:
+    artifacts:
+    cost_class:
+    usage_basis:
+underused_resources:
+overused_resources:
+api_cost_reduction_opportunities:
+next_allocation_recommendation:
+```
+
+Rules:
+
+- `cost_class` must be one of: `api_metered`, `subscription`, `local`, `manual`, `unknown`.
+- `usage_basis` must be one of: `measured`, `estimated`, `not_available`.
+- Do not invent token counts, quota remaining, or dollar costs.
+- If exact usage data is unavailable, write `usage_basis=not_available`.
+- Subscription resources should be used for suitable work, but not used purely to consume quota.
+- Gemini API usage should be reserved for work where its reasoning/synthesis value justifies metered cost.
+- The summary must distinguish coordination, execution, review, verification, and approval work.
+
+---
+
+## 5. Acceptance Checklist Rules
 
 Before reporting SUCCESS, an agent must include a checklist mapping requirements to `pass`/`fail`/`not_applicable`.
 - If any required item is `fail` or `unknown`, the final `task_status` cannot be SUCCESS.
@@ -82,7 +116,7 @@ Before reporting SUCCESS, an agent must include a checklist mapping requirements
 
 ---
 
-## 5. Josh Message Classification
+## 6. Josh Message Classification
 
 Josh-provided messages are context by default. They become executable instructions only when Josh clearly asks an agent to act.
 
@@ -111,7 +145,7 @@ Execution threshold:
 
 ---
 
-## 6. Role-Specific Obligations
+## 7. Role-Specific Obligations
 
 ### Hermes (Brain/Coordinator)
 - Primary coordinator and Josh-facing interface.

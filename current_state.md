@@ -1,5 +1,5 @@
 # AgentOS Current State Snapshot
-Last Updated: 2026-06-24 21:45 Asia/Taipei
+Last Updated: 2026-06-24 22:05 Asia/Taipei
 
 ## Status Overview (Evidence-Based)
 
@@ -74,6 +74,11 @@ Last Updated: 2026-06-24 21:45 Asia/Taipei
   - `use_existing_bridge_scripts=true`
   - `josh_contact_only_for_approval_or_blocker=true`
   - `new_queue_or_database_created=false`
+- **Resource Allocation Reporting**:
+  - `resource_contribution_summary_required_for_multi_agent_tasks=true`
+  - `subscription_resources_codex_claude_should_be_used_for_suitable_work=true`
+  - `gemini_api_metered_usage_should_be_minimized_when_lower_cost_resources_fit=true`
+  - `usage_estimates_must_be_labeled=true`
 
 ### 7. Role File Hygiene
 - **Role Definitions**:

@@ -1,6 +1,6 @@
 # AgentOS Agent Routing Plan
 
-Updated: 2026-06-24 21:45 Asia/Taipei
+Updated: 2026-06-24 22:05 Asia/Taipei
 Purpose: Minimal routing rules for assigning work across Hermes, Codex, Gemini, Claude, Perplexity, Ollama, and manual IDE resources without adding a new agent framework.
 
 ## Routing Principle
@@ -163,6 +163,68 @@ message. Hermes should:
 2. retry only if the failure is transient and within the task rules;
 3. ask Josh for help only when approval, credentials, provider quota, or manual
    desktop interaction is required.
+
+## Resource Contribution and Cost Routing
+
+AgentOS should route work with both quality and resource economics in mind.
+
+Codex and Claude are subscription/capacity resources. Gemini API is metered
+usage. Ollama is local zero-cost compute. Perplexity and IDE tools are manual
+subscription resources until their automation paths are verified.
+
+Routing principles:
+
+- Do not burn Gemini API quota on work that Codex, Claude, or Ollama can do
+  reliably.
+- Do not force Codex or Claude usage just to consume quota; route useful work
+  that matches their strengths.
+- Prefer Codex for implementation, file inspection, scripts, tests, and
+  independent claim verification.
+- Prefer Claude for parallel review, risk analysis, acceptance checklist
+  preparation, architecture critique, and overclaim detection.
+- Prefer Ollama for low-risk classification, formatting, watchtower summaries,
+  and routine status triage.
+- Use Gemini for Hermes planning, proposal-quality language, nuanced lead
+  analysis, and synthesis where cheaper resources are insufficient.
+- Use Perplexity/manual tools only when fresh external sources or manual
+  subscription capabilities are actually needed.
+
+Every multi-agent task should end with a contribution distribution summary:
+
+```text
+resource_contribution_summary:
+  - resource: Hermes
+    role: coordinator
+    contribution:
+    artifacts:
+    cost_class: api_metered | subscription | local | manual | unknown
+    usage_basis: measured | estimated | not_available
+  - resource: Codex
+    role: builder_or_verifier
+    contribution:
+    artifacts:
+    cost_class: subscription
+    usage_basis: measured | estimated | not_available
+  - resource: Claude
+    role: inspector_or_worker
+    contribution:
+    artifacts:
+    cost_class: subscription
+    usage_basis: measured | estimated | not_available
+  - resource: Gemini
+    role: brain_or_synthesis
+    contribution:
+    artifacts:
+    cost_class: api_metered
+    usage_basis: measured | estimated | not_available
+next_allocation_recommendation:
+underused_resources:
+overused_resources:
+api_cost_reduction_opportunities:
+```
+
+This summary is not a billing statement unless real usage counters exist. If
+usage is estimated or unavailable, reports must say so explicitly.
 
 ## Escalation Rules
 

@@ -170,6 +170,28 @@
   - NO deletion, movement, or archiving of files.
 - **Next Step**: Pending Codex execution of the Gitignore update.
 
+## 2026-06-24: Add Resource Contribution Summary Requirement
+### [STATUS: locally_verified]
+- **Action**: Added a required contribution distribution summary for multi-agent tasks.
+- **Files Modified**:
+  - `docs\AGENT_ROUTING_PLAN.md`
+  - `docs\EVIDENCE_AND_REPORTING_CONTRACT.md`
+  - `current_state.md`
+  - `progress_log.md`
+- **Reason**:
+  - Josh needs to see whether Codex and Claude subscription capacity is being used effectively.
+  - Gemini is API-metered, so Hermes should avoid spending Gemini quota on work that Codex, Claude, or Ollama can handle reliably.
+  - Future task reports should help adjust agent assignments based on actual contribution, not assumptions.
+- **Rules Added**:
+  - Multi-agent task reports must include `resource_contribution_summary`.
+  - Reports must distinguish `api_metered`, `subscription`, `local`, `manual`, and `unknown` cost classes.
+  - Usage must be labeled as `measured`, `estimated`, or `not_available`.
+  - Agents must not invent token counts, quota remaining, or costs.
+- **Constraints**:
+  - cleanup_executed=false
+  - no resource usage was measured in this documentation update.
+  - no agent bridge was executed.
+
 ## 2026-06-24: Clean Role Definitions and Codex Dual Mode
 ### [STATUS: locally_verified]
 - **Action**: Cleaned role definition drift after reviewing the current AgentOS role plan.
