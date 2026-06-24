@@ -170,6 +170,26 @@
   - NO deletion, movement, or archiving of files.
 - **Next Step**: Pending Codex execution of the Gitignore update.
 
+## 2026-06-24: P0a Gitignore Update Executed
+### [STATUS: locally_verified]
+- **Action**: Codex added low-risk operational ignore patterns to `.gitignore`.
+- **Files Modified**:
+  - `.gitignore`
+  - `progress_log.md`
+- **Files Created**:
+  - `data\codex_tasks\2026-06-24-p0a-gitignore-update\OUTPUTS\RESULT.md`
+- **Patterns Added**:
+  - `**/__pycache__/`
+  - `scripts/fan_control/fan_control.log`
+  - `**/.venv_notebooklm_poc/`
+- **Constraints**:
+  - cleanup_executed=false
+  - files_deleted=false
+  - files_moved=false
+  - archive_executed=false
+  - no untracked evidence folders were staged.
+- **Remaining Work**: Debug artifact deletion, archive candidates, `scrape_upwork.py`, and `env_manager.py` decisions still require Josh approval or review.
+
 ## 2026-06-24: Knowledge Pool Intake Hardening
 ### [STATUS: artifact_created]
 - **Action**: Performed process hardening for the knowledge pool by triaging all 12 entries.

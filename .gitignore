@@ -14,6 +14,11 @@ machine2_hermes_config/.env
 *.bak
 ~$*
 
+# Python and local tool runtime artifacts
+**/__pycache__/
+scripts/fan_control/fan_control.log
+**/.venv_notebooklm_poc/
+
 # OS/editor noise
 Thumbs.db
 Desktop.ini
