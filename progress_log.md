@@ -1,4 +1,20 @@
 
+## 2026-06-24: Record Governance Owner Rule Adoption
+### [STATUS: artifact_created]
+- **Action**: Recorded the adoption of the "Governance Owner Rule" as mandated by Josh.
+- **Rules**:
+  - Governance is single-writer (Codex), multi-reader (Hermes/Claude).
+  - Hermes and Claude may propose but not directly edit governance files.
+  - Codex remains the designated editor for governance and role-boundary files.
+- **Files Created**:
+  - `data\codex_tasks\2026-06-24-governance-owner-rule-adoption\TASK.md`
+  - `data\codex_tasks\2026-06-24-governance-owner-rule-adoption\OUTPUTS\ADOPTION_NOTE.md`
+- **Constraints**:
+  - NO governance files were modified.
+  - NO files were moved, deleted, or archived.
+  - cleanup_executed=false.
+- **Verification**: Pending Codex verification.
+
 ## 2026-06-24: Unified Evidence Contract Precision Fix
 ### [STATUS: locally_verified]
 - **Action**: Tightened the unified evidence contract after Codex review found the first version was too compressed.
