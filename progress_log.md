@@ -57,6 +57,20 @@
   - post_manifest_items_included_in_stage_1_execution=false
 - **Caveat**: This is still an approval artifact only. No cleanup action is authorized until Josh explicitly approves the relevant checklist items.
 
+## 2026-06-24: Setup Knowledge Pool and Initial Intake
+### [STATUS: artifact_created]
+- **Action**: Established the `data/knowledge_pool/` directory and recorded two initial AI knowledge entries from Josh's Threads shares.
+- **Rules Adopted**: Josh's "ㄌㄜ ㄓ ㄨㄣ" (Approved) instruction for the Knowledge Acquisition Protocol.
+- **Entries Created**:
+  - `data\knowledge_pool\2026-06-24-hermes-starter-pack.md`
+  - `data\knowledge_pool\2026-06-24-calesthio-cicd-tool.md`
+- **Files Created**:
+  - `data\codex_tasks\2026-06-24-setup-knowledge-pool\TASK.md`
+- **Constraints**:
+  - NO deletion or movement of unrelated files.
+  - cleanup_executed=false.
+- **Verification**: Pending Codex verification and future NotebookLM sync.
+
 ## 2026-06-24: Dispatch Gitignore Update Task
 ### [STATUS: artifact_created]
 - **Action**: Dispatched Codex task packet for approved Gitignore update (P0a).
