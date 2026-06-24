@@ -86,6 +86,10 @@ Last Updated: 2026-06-24 23:40 Asia/Taipei
   - `routing_cache_path=data\routing\routing_cache.jsonl`
   - `budget_state_path=data\routing\budget_state.json`
   - `hermes_should_assemble_prompts_not_improvise=true`
+  - `typed_dispatch_runner=scripts\typed_dispatch.ps1`
+  - `typed_dispatch_dry_run_verified=true`
+  - `typed_dispatch_models_invoked=false`
+  - `typed_dispatch_test_routes=CODEX_VERIFY,CLAUDE_REVIEW,GEMINI_PREMIUM_BLOCK`
 
 ### 7. Role File Hygiene
 - **Role Definitions**:
@@ -111,4 +115,5 @@ Last Updated: 2026-06-24 23:40 Asia/Taipei
 - **Architecture**: `docs\ARCHITECTURE.md`
 - **Cost-Saving Routing**: `docs\COST_SAVING_ROUTING_PROTOCOL.md`
 - **Prompt Pack**: `prompts\`
+- **Typed Dispatch Runner**: `scripts\typed_dispatch.ps1`
 - **Sync Logs**: `data\memory\sync_logs\`

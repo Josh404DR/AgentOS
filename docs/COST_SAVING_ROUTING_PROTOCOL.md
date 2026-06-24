@@ -158,6 +158,33 @@ role_header + task_template + context_pack + output_contract
 Hermes should not improvise long prompts for Codex or Claude when a template
 exists.
 
+## Typed Dispatch Runner
+
+Local runner:
+
+```text
+scripts\typed_dispatch.ps1
+```
+
+Recommended invocation on Windows:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\typed_dispatch.ps1 -InputText "<TYPED_REQUEST>"
+```
+
+The runner:
+
+- parses `[TYPE: ...]` fields;
+- selects the route, prompt template, role header, and context pack;
+- writes `ROUTING_DECISION.md` and `ASSEMBLED_PROMPT.md` under
+  `data\routing_decisions\<dispatch_id>\`;
+- appends a compact entry to `data\routing\routing_cache.jsonl`;
+- does not invoke Gemini, Codex, Claude, Ollama, or external services.
+
+Execution-policy note: direct `.\scripts\typed_dispatch.ps1` may be blocked on
+Windows hosts. Use the explicit `powershell -ExecutionPolicy Bypass -File`
+form above for local invocation.
+
 ## Circuit Breakers
 
 Stop and ask Josh before:
@@ -176,3 +203,22 @@ Stop and ask Josh before:
 - Reports identify resource contribution and cost class.
 - Gemini remains frozen except for explicit premium tasks.
 - No new daemon, queue, database, or hidden automation is introduced.
+
+## Initial Dry-Run Evidence
+
+Validated locally without invoking any model:
+
+- `CODEX_VERIFY` -> `route_to=Codex`, `dispatch_status=ready_to_route`,
+  `models_invoked=false`
+- `CLAUDE_REVIEW` -> `route_to=Claude`, `dispatch_status=ready_to_route`,
+  `models_invoked=false`
+- `GEMINI_PREMIUM` without approval -> `route_to=Gemini`,
+  `dispatch_status=approval_required`, `models_invoked=false`
+
+Evidence paths:
+
+```text
+data\routing_decisions\test-codex-verify-write\
+data\routing_decisions\test-claude-review-write\
+data\routing_decisions\test-gemini-premium-block\
+```

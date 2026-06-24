@@ -114,6 +114,16 @@ For direct CLI communication, use:
 .\scripts\hermes_codex_bridge.ps1
 ```
 
+Typed dispatch should happen before invoking a bridge when Josh provides a
+`[TYPE: ...]` request:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\typed_dispatch.ps1 -InputText "<TYPED_REQUEST>"
+```
+
+The typed dispatch runner only creates routing artifacts and assembled prompts.
+It does not call Gemini, Codex, Claude, Ollama, or external services.
+
 ## Live Hermes-Codex-Claude Tripartite Bridge
 
 For high-assurance coordination where Codex implementation is reviewed by Claude, use:

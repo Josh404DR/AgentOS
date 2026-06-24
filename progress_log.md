@@ -39,6 +39,41 @@
   - no install/update executed
 - **Next Step**: Josh will ask Claude to review this protocol before allowing Hermes to use it as the default dispatch path.
 
+## 2026-06-24: Add Typed Dispatch Runner and Dry-Run Tests
+### [STATUS: locally_verified]
+- **Action**: Implemented `scripts\typed_dispatch.ps1` as the local deterministic router for typed Josh requests.
+- **Purpose**:
+  - Convert `[TYPE: ...]` requests into routing artifacts without using Gemini.
+  - Assemble role header, task template, context pack, and parsed request fields.
+  - Give Hermes a concrete no-Gemini intake path.
+- **Files Created**:
+  - `scripts\typed_dispatch.ps1`
+  - `data\routing_decisions\test-codex-verify-write\ROUTING_DECISION.md`
+  - `data\routing_decisions\test-codex-verify-write\ASSEMBLED_PROMPT.md`
+  - `data\routing_decisions\test-claude-review-write\ROUTING_DECISION.md`
+  - `data\routing_decisions\test-claude-review-write\ASSEMBLED_PROMPT.md`
+  - `data\routing_decisions\test-gemini-premium-block\ROUTING_DECISION.md`
+  - `data\routing_decisions\test-gemini-premium-block\ASSEMBLED_PROMPT.md`
+- **Files Modified**:
+  - `docs\COST_SAVING_ROUTING_PROTOCOL.md`
+  - `docs\AGENT_ROUTING_PLAN.md`
+  - `current_state.md`
+  - `progress_log.md`
+  - `data\routing\routing_cache.jsonl`
+- **Dry-Run Results**:
+  - `CODEX_VERIFY`: `route_to=Codex`, `dispatch_status=ready_to_route`, `models_invoked=false`
+  - `CLAUDE_REVIEW`: `route_to=Claude`, `dispatch_status=ready_to_route`, `models_invoked=false`
+  - `GEMINI_PREMIUM`: `dispatch_status=approval_required`, `models_invoked=false`
+- **Fix Applied**:
+  - Corrected an initial keyword bug where `no cleanup` was incorrectly treated as a cleanup request requiring approval.
+- **Constraints**:
+  - cleanup_executed=false
+  - live_external_action_executed=false
+  - gemini_invoked=false
+  - codex_invoked=false
+  - claude_invoked=false
+  - ollama_invoked=false
+
 ## 2026-06-24: Fix Agent Attribution Evidence
 ### [STATUS: artifact_created]
 - **Action**: Corrected attribution hygiene for report artifacts in the "Resource-Aware Coordination" run.
