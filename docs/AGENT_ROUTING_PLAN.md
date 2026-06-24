@@ -1,11 +1,21 @@
 # AgentOS Agent Routing Plan
 
-Updated: 2026-06-24 22:05 Asia/Taipei
+Updated: 2026-06-24 23:40 Asia/Taipei
 Purpose: Minimal routing rules for assigning work across Hermes, Codex, Gemini, Claude, Perplexity, Ollama, and manual IDE resources without adding a new agent framework.
 
 ## Routing Principle
 
 Use file artifacts first. Hermes coordinates, then assigns explicit work packets or review notes to the cheapest reliable resource for the task.
+
+Cost-saving typed dispatch is defined in:
+
+```text
+docs\COST_SAVING_ROUTING_PROTOCOL.md
+```
+
+When Josh provides a recognized `[TYPE: ...]`, Hermes should route by the
+protocol table and prompt pack instead of using Gemini for free-form task
+interpretation.
 
 ## Resource Roles
 
@@ -64,6 +74,29 @@ Exit degraded mode with:
 ```
 
 ## Minimal Dispatch Flow
+
+Typed requests should use this shape whenever possible:
+
+```text
+[TYPE: CODEX_VERIFY]
+[GOAL: Verify a claim or artifact]
+[TARGET: commit, file, or report path]
+[CONSTRAINTS: no cleanup, no external calls]
+[OUTPUT: verifier report path]
+```
+
+Recognized v0.1 types:
+
+- `CODEX_BUILD`
+- `CODEX_VERIFY`
+- `CLAUDE_REVIEW`
+- `CLAUDE_WORKER`
+- `OLLAMA_TRIAGE`
+- `JOSH_APPROVAL`
+- `GEMINI_PREMIUM`
+- `STOP`
+
+Unknown types must be treated as context until Josh clarifies.
 
 ```text
 Hermes defines decision
@@ -176,6 +209,8 @@ Routing principles:
 
 - Do not burn Gemini API quota on work that Codex, Claude, or Ollama can do
   reliably.
+- Keep Gemini API frozen for routine work unless Josh uses
+  `[TYPE: GEMINI_PREMIUM]` or an explicit premium-use approval is recorded.
 - Do not force Codex or Claude usage just to consume quota; route useful work
   that matches their strengths.
 - Prefer Codex for implementation, file inspection, scripts, tests, and
@@ -188,6 +223,8 @@ Routing principles:
   analysis, and synthesis where cheaper resources are insufficient.
 - Use Perplexity/manual tools only when fresh external sources or manual
   subscription capabilities are actually needed.
+- Assemble Codex and Claude prompts from the prompt pack under `prompts\`
+  rather than improvising long prompts.
 
 Every multi-agent task should end with a contribution distribution summary:
 

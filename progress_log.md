@@ -1,4 +1,44 @@
 
+## 2026-06-24: Add Cost-Saving Routing Protocol v0.1
+### [STATUS: locally_verified]
+- **Action**: Created a Codex-owned emergency cost-control routing layer for AgentOS.
+- **Reason**:
+  - Gemini API spend exceeded the intended cap and should not remain the routine Hermes brain for coordination work.
+  - Codex and Claude are subscription resources and should carry suitable execution, verification, review, and reasoning tasks.
+  - Hermes should become a typed dispatch router instead of improvising long prompts with metered API calls.
+- **Files Created**:
+  - `docs\COST_SAVING_ROUTING_PROTOCOL.md`
+  - `prompts\role_headers\codex_builder.md`
+  - `prompts\role_headers\codex_verifier.md`
+  - `prompts\role_headers\claude_inspector.md`
+  - `prompts\role_headers\claude_worker.md`
+  - `prompts\task_templates\codex_build.md`
+  - `prompts\task_templates\codex_verify.md`
+  - `prompts\task_templates\claude_review.md`
+  - `prompts\task_templates\claude_worker.md`
+  - `prompts\task_templates\ollama_triage.md`
+  - `prompts\context_packs\minimal.md`
+  - `prompts\context_packs\repo_task.md`
+  - `prompts\context_packs\evidence_verification.md`
+  - `prompts\context_packs\cleanup_approval.md`
+  - `data\routing\routing_cache.jsonl`
+  - `data\routing\budget_state.json`
+- **Files Modified**:
+  - `docs\AGENT_ROUTING_PLAN.md`
+  - `current_state.md`
+  - `progress_log.md`
+- **Policy Summary**:
+  - `[TYPE: ...]` requests should use deterministic routing instead of Gemini free-form interpretation.
+  - Gemini API is frozen for routine work.
+  - Premium Gemini use requires `[TYPE: GEMINI_PREMIUM]` or explicit approval.
+  - Hermes should assemble prompts from role headers, task templates, context packs, and output contracts.
+- **Constraints**:
+  - cleanup_executed=false
+  - live_external_action_executed=false
+  - no bridge executed
+  - no install/update executed
+- **Next Step**: Josh will ask Claude to review this protocol before allowing Hermes to use it as the default dispatch path.
+
 ## 2026-06-24: Fix Agent Attribution Evidence
 ### [STATUS: artifact_created]
 - **Action**: Corrected attribution hygiene for report artifacts in the "Resource-Aware Coordination" run.

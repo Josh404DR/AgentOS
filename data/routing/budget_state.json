@@ -1,0 +1,11 @@
+{
+  "gemini_api_mode": "frozen",
+  "default_router": "typed_dispatch",
+  "premium_use_requires_explicit_type": true,
+  "last_reviewed": "2026-06-24",
+  "notes": [
+    "Gemini API is metered and should not be used for routine coordination.",
+    "Codex and Claude are subscription resources and should handle suitable execution, verification, and review work.",
+    "Ollama/local models may handle low-risk triage and format checks only."
+  ]
+}

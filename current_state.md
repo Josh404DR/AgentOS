@@ -1,5 +1,5 @@
 # AgentOS Current State Snapshot
-Last Updated: 2026-06-24 22:05 Asia/Taipei
+Last Updated: 2026-06-24 23:40 Asia/Taipei
 
 ## Status Overview (Evidence-Based)
 
@@ -78,6 +78,14 @@ Last Updated: 2026-06-24 22:05 Asia/Taipei
   - `subscription_resources_codex_claude_should_be_used_for_suitable_work=true`
   - `gemini_api_metered_usage_should_be_minimized_when_lower_cost_resources_fit=true`
   - `usage_estimates_must_be_labeled=true`
+- **Cost-Saving Routing Protocol**:
+  - `typed_dispatch_protocol_v0_1=true`
+  - `prompt_pack_v0_1=true`
+  - `gemini_api_mode=frozen_for_routine_work`
+  - `premium_gemini_requires_TYPE_GEMINI_PREMIUM_or_explicit_approval=true`
+  - `routing_cache_path=data\routing\routing_cache.jsonl`
+  - `budget_state_path=data\routing\budget_state.json`
+  - `hermes_should_assemble_prompts_not_improvise=true`
 
 ### 7. Role File Hygiene
 - **Role Definitions**:
@@ -101,4 +109,6 @@ Last Updated: 2026-06-24 22:05 Asia/Taipei
 - **Device Maintenance**: `data\projects\device_maintenance.md`
 - **Progress History**: `progress_log.md`
 - **Architecture**: `docs\ARCHITECTURE.md`
+- **Cost-Saving Routing**: `docs\COST_SAVING_ROUTING_PROTOCOL.md`
+- **Prompt Pack**: `prompts\`
 - **Sync Logs**: `data\memory\sync_logs\`
