@@ -74,6 +74,30 @@
   - claude_invoked=false
   - ollama_invoked=false
 
+## 2026-06-24: Add Telegram Typed Dispatch Handoff Entry
+### [STATUS: locally_verified]
+- **Action**: Added a safe local Telegram handoff wrapper for future Hermes gateway integration.
+- **Files Created**:
+  - `scripts\telegram_typed_dispatch_entry.ps1`
+  - `docs\TELEGRAM_TYPED_DISPATCH_HANDOFF.md`
+- **Files Modified**:
+  - `docs\COST_SAVING_ROUTING_PROTOCOL.md`
+  - `current_state.md`
+  - `progress_log.md`
+- **Purpose**:
+  - Provide a stable local entrypoint that a future Hermes Telegram hook can call.
+  - Keep Telegram runtime changes separate from typed routing logic.
+  - Stop before live gateway integration so Josh can approve the boundary.
+- **Constraints**:
+  - telegram_runtime_hooked=false
+  - gateway_restarted=false
+  - gemini_invoked=false
+  - codex_invoked=false
+  - claude_invoked=false
+  - ollama_invoked=false
+  - external_services_invoked=false
+- **Next Step**: Ask Josh before modifying Hermes gateway hooks or running a live Telegram test.
+
 ## 2026-06-24: Fix Agent Attribution Evidence
 ### [STATUS: artifact_created]
 - **Action**: Corrected attribution hygiene for report artifacts in the "Resource-Aware Coordination" run.

@@ -185,6 +185,25 @@ Execution-policy note: direct `.\scripts\typed_dispatch.ps1` may be blocked on
 Windows hosts. Use the explicit `powershell -ExecutionPolicy Bypass -File`
 form above for local invocation.
 
+## Telegram Handoff Entry
+
+Future Hermes Telegram hooks should call the local wrapper:
+
+```text
+scripts\telegram_typed_dispatch_entry.ps1
+```
+
+This wrapper invokes `scripts\typed_dispatch.ps1` and preserves the same
+no-model, no-external-service behavior. It exists so Hermes gateway integration
+can be reviewed separately from the routing logic.
+
+Do not modify Hermes external runtime or live Telegram hooks until Josh
+approves the handoff step. See:
+
+```text
+docs\TELEGRAM_TYPED_DISPATCH_HANDOFF.md
+```
+
 ## Circuit Breakers
 
 Stop and ask Josh before:
@@ -221,4 +240,5 @@ Evidence paths:
 data\routing_decisions\test-codex-verify-write\
 data\routing_decisions\test-claude-review-write\
 data\routing_decisions\test-gemini-premium-block\
+data\routing_decisions\telegram-entry-test\
 ```
