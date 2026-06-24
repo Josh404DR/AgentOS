@@ -57,6 +57,20 @@
   - post_manifest_items_included_in_stage_1_execution=false
 - **Caveat**: This is still an approval artifact only. No cleanup action is authorized until Josh explicitly approves the relevant checklist items.
 
+## 2026-06-24: Knowledge Intake - insane-search & slides-grab
+### [STATUS: artifact_created]
+- **Action**: Recorded two critical implementation components of the "LazyCodex Trinity" from Korean developer circles.
+- **Entries Created**: 
+  - `data\knowledge_pool\2026-06-24-insane-search-tool.md` (Auto-bypass for blocked sites)
+  - `data\knowledge_pool\2026-06-24-slides-grab-tool.md` (Automated slide generation harness)
+- **Significance**: 
+  - `insane-search` provides a Phase 0-3 adaptive scheduler to solve scraping blocks.
+  - `slides-grab` enables agents to generate editable presentation decks.
+- **Constraints**: 
+  - NO governance files modified.
+  - cleanup_executed=false.
+- **Verification**: Pending Codex verification and future NotebookLM sync.
+
 ## 2026-06-24: Knowledge Intake - LazyCodex Research Tool
 ### [STATUS: artifact_created]
 - **Action**: Analyzed and recorded the "LazyCodex" project by YeonGyu Kim (Korean source).
