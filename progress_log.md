@@ -1,4 +1,27 @@
 
+## 2026-06-24: Post-Manifest Incremental Classification
+### [STATUS: locally_verified]
+- **Action**: Classified the six untracked items generated after the original Evidence Cleanup Manifest.
+- **Files Created**:
+  - `data\codex_tasks\2026-06-24-post-manifest-incremental-classification\TASK.md`
+  - `data\codex_tasks\2026-06-24-post-manifest-incremental-classification\OUTPUTS\INCREMENTAL_CLASSIFICATION.md`
+- **Files Modified**:
+  - `current_state.md`
+  - `progress_log.md`
+- **Classification Summary**:
+  - `data\leads\2026-06-24.md`: keep_canonical
+  - `leads.json`: delete_candidate after Josh approval
+  - `page_source.html`: delete_candidate after Josh approval
+  - `scrape_upwork.py`: needs_josh_decision
+  - `upwork_debug.png`: delete_candidate after Josh approval
+  - `upwork_utf8.html`: delete_candidate after Josh approval
+- **Constraints**:
+  - cleanup_executed=false
+  - live_external_action_executed=false
+  - crawler_executed=false
+  - gitignore_modified=false
+- **Next Step**: Josh decision is still required before delete/archive actions or before deciding whether `scrape_upwork.py` should be retained.
+
 ## 2026-06-24: Add Josh Message Classification Rule
 ### [STATUS: locally_verified]
 - **Action**: Added Josh message classification rules to the unified evidence contract and Hermes role.

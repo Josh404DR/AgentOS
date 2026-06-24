@@ -48,6 +48,8 @@ Last Updated: 2026-06-24 17:20 Asia/Taipei
   - `approval_required_before_cleanup=true`
   - `post_manifest_untracked_items=true`
   - `post_manifest_untracked_items_count=6`
+  - `post_manifest_items_classified_by_codex=true`
+  - `post_manifest_classification_path=data\codex_tasks\2026-06-24-post-manifest-incremental-classification\OUTPUTS\INCREMENTAL_CLASSIFICATION.md`
   - `post_manifest_items_require_review=true`
   - `notebooklm_sync_not_deletion_authority=true`
   - `classification_conservative=true`
