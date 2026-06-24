@@ -44,7 +44,8 @@ Last Updated: 2026-06-24 22:05 Asia/Taipei
   - `manifest_created=true`
   - `manifest_verified_by_codex=true`
   - `drift_check_performed=true`
-  - `drift_report_path=data\codex_tasks\2026-06-24-evidence-drift-check\OUTPUTS\CODEX_EVIDENCE_DRIFT_REPORT.md`
+  - `independent_codex_evidence_found=true`
+  - `drift_report_path=data\codex_tasks\2026-06-24-independent-agent-verification\OUTPUTS\CODEX_RAW_DRIFT_LOG.md`
   - `cleanup_executed=false`
   - `approval_required_before_cleanup=true`
 
@@ -61,8 +62,9 @@ Last Updated: 2026-06-24 22:05 Asia/Taipei
   - `scrape_upwork_risk=high_tos_violation`
   - `env_manager_risk=medium_plaintext_secrets`
   - `monitor_ui_risk=low`
-  - `review_report_path=data\codex_tasks\2026-06-24-risk-review\OUTPUTS\CLAUDE_RISK_REVIEW.md`
-  - `attribution_status=needs_independent_agent_verification`
+  - `independent_claude_evidence_found=true`
+  - `review_report_path=data\codex_tasks\2026-06-24-independent-agent-verification\OUTPUTS\CLAUDE_RAW_RISK_LOG.md`
+  - `attribution_status=verified`
 
 ### 6. Agent Coordination
 - **Autonomous Coordination Mode**:
