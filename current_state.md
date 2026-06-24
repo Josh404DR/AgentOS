@@ -114,6 +114,12 @@ Last Updated: 2026-06-24 23:40 Asia/Taipei
   - `telegram_hook_sync_return_result=action_skip`
   - `telegram_hook_models_invoked_in_smoke=false`
   - `cost_risk_cron_daily_token_summary_hits_gemini=true`
+  - `hermes_model_alias_ollama_fixed=true`
+  - `hermes_model_alias_runtime=C:\Users\brian\AppData\Local\hermes`
+  - `hermes_model_alias_ollama=qwen3.5:9b via custom http://localhost:11434/v1`
+  - `hermes_model_alias_local=qwen3.5:9b via custom http://localhost:11434/v1`
+  - `hermes_model_alias_llama_local=llama3.2:3b via custom http://localhost:11434/v1`
+  - `hermes_gateway_restarted_after_model_alias_fix=true`
 
 ### 7. Role File Hygiene
 - **Role Definitions**:

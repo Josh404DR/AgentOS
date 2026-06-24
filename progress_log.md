@@ -1802,3 +1802,32 @@ Status Labels:
 - typed_messages_skip_model_dispatch=true
 - non_typed_messages_still_use_normal_hermes_flow=true
 - cron_daily_token_summary_gemini_risk=true
+
+## 2026-06-25 Asia/Taipei - Fixed Hermes `/model ollama` Alias in Live Runtime
+Executor: Codex
+Action:
+- Josh reported Telegram `/model ollama` returned:
+  `Error: Model ollama was not found in this provider's model listing.`
+- Diagnosis: the live Hermes runtime did not have a direct `ollama` alias, so
+  `/model` treated `ollama` as a model name under the current provider instead
+  of routing to local Ollama.
+- Updated the active Hermes user config in:
+  `C:\Users\brian\AppData\Local\hermes`.
+- Added direct model aliases:
+  - `ollama` -> `custom`, `qwen3.5:9b`, `http://localhost:11434/v1`
+  - `local` -> `custom`, `qwen3.5:9b`, `http://localhost:11434/v1`
+  - `qwen-local` -> `custom`, `qwen3.5:9b`, `http://localhost:11434/v1`
+  - `llama-local` -> `custom`, `llama3.2:3b`, `http://localhost:11434/v1`
+- Verified the aliases load through `hermes_cli.model_switch`.
+- Restarted Hermes gateway with `gateway run --accept-hooks`.
+- Confirmed gateway is running manually after restart.
+
+Findings:
+- The error was an alias/config mismatch in the active Hermes runtime, not proof
+  that the local Ollama models were unusable.
+- The active runtime is AppData Hermes, not the older external checkout.
+
+Status Labels:
+- hermes_model_alias_ollama_fixed=true
+- hermes_gateway_restarted_after_model_alias_fix=true
+- model_aliases_verified_in_runtime=true
