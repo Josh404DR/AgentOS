@@ -1768,3 +1768,37 @@ Status Labels:
 - telegram_gateway_restarted_after_hook_patch=true
 - telegram_typed_dispatch_live_verified=false
 - cron_daily_token_summary_gemini_risk=true
+
+## 2026-06-25 Asia/Taipei - Telegram Typed Dispatch Live Verification Passed
+Executor: Codex
+Action:
+- Patched the Telegram confirmation path in the installed Hermes plugin to
+  send via `chat_id` before trying the full `SessionSource`.
+- Restarted Hermes gateway so the reply-path patch was loaded.
+- Josh ran a live Telegram typed-dispatch test.
+
+Evidence:
+- Telegram reply received:
+  `AgentOS typed dispatch accepted.`
+- Dispatch id:
+  `telegram-telegram-1449022024-923-20260625-002300`
+- Routing artifact:
+  `data\routing_decisions\telegram-telegram-1449022024-923-20260625-002300\ROUTING_DECISION.md`
+- Artifact status:
+  `route_to=Codex`, `dispatch_status=ready_to_route`,
+  `models_invoked=false`, `external_services_invoked=false`.
+- Gateway log:
+  `pre_gateway_dispatch skip` for the same dispatch id.
+
+Findings:
+- The hook now successfully prevents typed Telegram messages from reaching
+  Hermes normal model dispatch.
+- Non-typed messages still go through normal Hermes/Gemini flow.
+- `Daily-Token-Cost-Summary` cron still has an independent Gemini cost path.
+
+Status Labels:
+- telegram_typed_dispatch_live_verified=true
+- telegram_reply_path_fixed=true
+- typed_messages_skip_model_dispatch=true
+- non_typed_messages_still_use_normal_hermes_flow=true
+- cron_daily_token_summary_gemini_risk=true

@@ -102,7 +102,12 @@ Last Updated: 2026-06-24 23:40 Asia/Taipei
   - `telegram_hook_live_gateway_restart_required=false`
   - `telegram_hook_live_gateway_restarted=true`
   - `telegram_hook_live_gateway_restarted_at=2026-06-25 00:16 Asia/Taipei`
-  - `telegram_hook_live_verified=false`
+  - `telegram_hook_live_verified=true`
+  - `telegram_hook_live_verified_at=2026-06-25 00:23 Asia/Taipei`
+  - `telegram_hook_live_verified_dispatch_id=telegram-telegram-1449022024-923-20260625-002300`
+  - `telegram_hook_live_verified_models_invoked=false`
+  - `telegram_hook_live_verified_external_services_invoked=false`
+  - `telegram_hook_reply_path_fixed=true`
   - `telegram_hook_pre_restart_live_test_api_calls=1`
   - `telegram_hook_async_bug_fixed=true`
   - `telegram_hook_sync_return_verified=true`
