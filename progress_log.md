@@ -57,6 +57,16 @@
   - post_manifest_items_included_in_stage_1_execution=false
 - **Caveat**: This is still an approval artifact only. No cleanup action is authorized until Josh explicitly approves the relevant checklist items.
 
+## 2026-06-24: Knowledge Intake - agent-skills (Addy Osmani)
+### [STATUS: artifact_created]
+- **Action**: Recorded the "agent-skills" project, a high-rigor operational framework for AI agents.
+- **Entry Created**: `data\knowledge_pool\2026-06-24-addy-osmani-agent-skills.md`
+- **Key Discovery**: 8 Slash Commands (e.g., `/spec`, `/plan`) to enforce senior-level engineering discipline in agents.
+- **Constraints**: 
+  - NO governance files modified.
+  - cleanup_executed=false.
+- **Verification**: Pending Codex verification and future NotebookLM sync.
+
 ## 2026-06-24: Knowledge Intake - Bazi-MCP Server
 ### [STATUS: artifact_created]
 - **Action**: Recorded the "Bazi-MCP" open-source project from Josh's share.
