@@ -57,6 +57,16 @@
   - post_manifest_items_included_in_stage_1_execution=false
 - **Caveat**: This is still an approval artifact only. No cleanup action is authorized until Josh explicitly approves the relevant checklist items.
 
+## 2026-06-24: Knowledge Intake - Bazi-MCP Server
+### [STATUS: artifact_created]
+- **Action**: Recorded the "Bazi-MCP" open-source project from Josh's share.
+- **Entry Created**: `data\knowledge_pool\2026-06-24-bazi-mcp-server.md`
+- **Key Discovery**: Implementation of BaZi analysis via the Model Context Protocol (MCP).
+- **Constraints**: 
+  - NO governance files modified.
+  - cleanup_executed=false.
+- **Verification**: Pending Codex verification and future NotebookLM sync.
+
 ## 2026-06-24: Knowledge Intake - Baidu Unlimited-OCR
 ### [STATUS: artifact_created]
 - **Action**: Recorded Baidu's "Unlimited-OCR" project for ultra-long document parsing.
