@@ -1,4 +1,16 @@
 
+## 2026-06-24: Evidence Cleanup Manifest Report Hygiene Fix
+### [STATUS: SUCCESS / VERIFIED]
+- **Action**: Removed accidental shell error contamination from report artifacts.
+- **Files Corrected**: 
+  - `data\codex_tasks\2026-06-24-evidence-cleanup-manifest\OUTPUTS\CLAUDE_INSPECTOR_REVIEW.md`
+  - `data\codex_tasks\2026-06-24-evidence-cleanup-manifest\OUTPUTS\FINAL_SUMMARY.md`
+- **Reason**: Trailing `/usr/bin/bash: ... Permission denied` lines were present due to runtime environment contamination.
+- **Results**: 
+  - cleanup_executed=false
+  - evidence_classification_changed=false
+- **Verification**: `grep` confirms no remaining contamination lines.
+
 ## 2026-06-24: Evidence Cleanup Manifest Incremental Correction
 ### [STATUS: SUCCESS / VERIFIED]
 - **Action**: Performed incremental correction to manifest based on Codex verification.

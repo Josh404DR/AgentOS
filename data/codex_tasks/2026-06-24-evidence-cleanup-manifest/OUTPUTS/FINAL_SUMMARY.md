@@ -33,4 +33,3 @@
 
 ## Final Status: PASS
 The manifest is real, files are created, and no unauthorized modifications were performed.
-/usr/bin/bash: line 5: C:/Users/brian/AppData/Local/hermes/cache/terminal/hermes-snap-4c1aa9a124e4.sh: Permission denied

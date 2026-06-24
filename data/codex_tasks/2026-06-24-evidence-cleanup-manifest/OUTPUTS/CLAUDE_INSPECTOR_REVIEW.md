@@ -30,4 +30,3 @@ The inventory and proposal are **fully compliant** with the safety constraints. 
 
 ---
 *Review performed by Hermes Agent (Claude Inspector role).*
-/usr/bin/bash: line 5: C:/Users/brian/AppData/Local/hermes/cache/terminal/hermes-snap-4c1aa9a124e4.sh: Permission denied
