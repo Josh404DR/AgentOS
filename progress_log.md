@@ -1740,3 +1740,31 @@ Status Labels:
 - telegram_connected_after_restart=true
 - pre_restart_live_typed_test_used_model=true
 - telegram_typed_dispatch_live_verified=false
+
+## 2026-06-25 Asia/Taipei - Fixed Telegram Typed Dispatch Hook Runtime Bug
+Executor: Codex
+Action:
+- Diagnosed live typed-dispatch failure after Josh reported the Telegram test failed.
+- Confirmed post-restart typed messages still reached Hermes normal model flow:
+  `api_calls=1`, provider `gemini`, model `gemini-3-flash-preview`.
+- Root cause: Hermes `pre_gateway_dispatch` plugin runner calls hooks
+  synchronously and does not await coroutine callbacks. The plugin used
+  `async def`, so live Hermes received a coroutine instead of a dict result.
+- Patched the installed Hermes plugin to use a synchronous
+  `_pre_gateway_dispatch(...)` callback that returns `{"action": "skip"}`.
+- Verified the patched hook in the live Hermes venv:
+  `hook_count=1`, `result_type=dict`, `action=skip`.
+- Restarted Hermes gateway again. Telegram reconnected at 2026-06-25 00:16.
+
+Important Cost Finding:
+- The `Daily-Token-Cost-Summary` cron job hit Gemini at 00:00 and failed with
+  `RESOURCE_EXHAUSTED`.
+- This cron cost path is independent of Telegram typed dispatch and should be
+  paused or rerouted next.
+
+Status Labels:
+- telegram_hook_async_bug_fixed=true
+- telegram_hook_sync_return_verified=true
+- telegram_gateway_restarted_after_hook_patch=true
+- telegram_typed_dispatch_live_verified=false
+- cron_daily_token_summary_gemini_risk=true

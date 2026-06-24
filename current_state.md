@@ -101,10 +101,14 @@ Last Updated: 2026-06-24 23:40 Asia/Taipei
   - `telegram_hook_typed_messages_skip_model_dispatch=true`
   - `telegram_hook_live_gateway_restart_required=false`
   - `telegram_hook_live_gateway_restarted=true`
-  - `telegram_hook_live_gateway_restarted_at=2026-06-24 23:42 Asia/Taipei`
+  - `telegram_hook_live_gateway_restarted_at=2026-06-25 00:16 Asia/Taipei`
   - `telegram_hook_live_verified=false`
   - `telegram_hook_pre_restart_live_test_api_calls=1`
+  - `telegram_hook_async_bug_fixed=true`
+  - `telegram_hook_sync_return_verified=true`
+  - `telegram_hook_sync_return_result=action_skip`
   - `telegram_hook_models_invoked_in_smoke=false`
+  - `cost_risk_cron_daily_token_summary_hits_gemini=true`
 
 ### 7. Role File Hygiene
 - **Role Definitions**:
