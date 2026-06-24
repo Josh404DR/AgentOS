@@ -1,4 +1,21 @@
 
+## 2026-06-24: Evidence Cleanup Approval Plan Precision Fix
+### [STATUS: locally_verified]
+- **Action**: Reworked the Stage 1 cleanup approval plan from grouped summary format into a per-item approval table.
+- **Files Modified**:
+  - `data\codex_tasks\2026-06-24-evidence-cleanup-approval-plan\OUTPUTS\STAGE_1_APPROVAL_PLAN.md`
+  - `progress_log.md`
+- **Reason**:
+  - The prior approval plan grouped archive/delete/gitignore candidates, but did not give each candidate its own `path`, `current_category`, `proposed_action`, `risk_level`, `why_it_is_safe_or_not_safe`, and `approval_required` fields.
+  - Josh needs row-level approval control before any archive/delete/gitignore action can be executed.
+- **Constraints**:
+  - cleanup_executed=false
+  - archive_executed=false
+  - delete_executed=false
+  - gitignore_modified=false
+  - post_manifest_items_included_in_stage_1_execution=false
+- **Caveat**: This is still an approval artifact only. No cleanup action is authorized until Josh explicitly approves the relevant checklist items.
+
 ## 2026-06-24: Record Governance Owner Rule Adoption
 ### [STATUS: artifact_created]
 - **Action**: Recorded the adoption of the "Governance Owner Rule" as mandated by Josh.
