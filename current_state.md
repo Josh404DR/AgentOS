@@ -99,7 +99,11 @@ Last Updated: 2026-06-24 23:40 Asia/Taipei
   - `telegram_hook_local_smoke_verified=true`
   - `telegram_hook_plain_messages_allow=true`
   - `telegram_hook_typed_messages_skip_model_dispatch=true`
-  - `telegram_hook_live_gateway_restart_required=true`
+  - `telegram_hook_live_gateway_restart_required=false`
+  - `telegram_hook_live_gateway_restarted=true`
+  - `telegram_hook_live_gateway_restarted_at=2026-06-24 23:42 Asia/Taipei`
+  - `telegram_hook_live_verified=false`
+  - `telegram_hook_pre_restart_live_test_api_calls=1`
   - `telegram_hook_models_invoked_in_smoke=false`
 
 ### 7. Role File Hygiene

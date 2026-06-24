@@ -1718,3 +1718,25 @@ Status Labels:
 - telegram_typed_dispatch_local_smoke_verified=true
 - telegram_typed_dispatch_live_verified=false
 - models_invoked_in_smoke=false
+
+## 2026-06-24 Asia/Taipei - Restarted Hermes Gateway for Typed Dispatch Hook
+Executor: Codex
+Action:
+- Stopped the old manually running Hermes gateway with `hermes gateway stop`.
+- Started a new hidden gateway process with `hermes gateway run --accept-hooks`.
+- Confirmed the active Hermes process is running from:
+  `C:\Users\brian\AppData\Local\hermes\hermes-agent\venv\Scripts\hermes.exe`.
+- Confirmed Telegram reconnected after restart.
+
+Findings:
+- Josh sent a live `[TYPE: CODEX_VERIFY]` test before the restart at 23:40.
+- The old gateway handled that pre-restart test through the normal model path:
+  `api_calls=1`.
+- The hook-enabled gateway came online at 23:42 and needs a new live typed
+  Telegram test to verify `api_calls=0` / model dispatch skipped.
+
+Status Labels:
+- hermes_gateway_restarted=true
+- telegram_connected_after_restart=true
+- pre_restart_live_typed_test_used_model=true
+- telegram_typed_dispatch_live_verified=false
