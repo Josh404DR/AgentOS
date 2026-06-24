@@ -7,6 +7,7 @@ param(
     [string]$Provider = "groq",
     [string]$Message,
     [string]$AgentOSRoot = "E:\AgentOS",
+    [int]$MaxTokens = 120,
     [switch]$Invoke
 )
 
@@ -34,6 +35,46 @@ function Get-EnvValue([string]$Name) {
     $value = [Environment]::GetEnvironmentVariable($Name, "Machine")
     if ($value) { return $value }
     return ""
+}
+
+function Invoke-FreeChatCompletion($ProviderConfig, [string]$ProviderName, [string]$ApiKey, [string]$Message, [int]$MaxTokens) {
+    $model = [string]$ProviderConfig.default_model
+    if ($ProviderName -eq "openrouter") {
+        $allowed = $false
+        if ($model -eq "openrouter/free") { $allowed = $true }
+        if ($model.EndsWith(":free")) { $allowed = $true }
+        if (-not $allowed) {
+            throw "OpenRouter guard blocked non-free model: $model"
+        }
+    }
+
+    $uri = ([string]$ProviderConfig.base_url).TrimEnd("/") + "/chat/completions"
+    $headers = @{
+        Authorization = "Bearer $ApiKey"
+        "Content-Type" = "application/json"
+    }
+    if ($ProviderName -eq "openrouter") {
+        $headers["HTTP-Referer"] = "https://agentos.local"
+        $headers["X-Title"] = "AgentOS Free Window Guard"
+    }
+
+    $body = @{
+        model = $model
+        messages = @(
+            @{
+                role = "system"
+                content = "You are a guarded low-cost AgentOS chat window. Reply briefly. Do not call tools. Do not claim you performed external actions."
+            },
+            @{
+                role = "user"
+                content = $Message
+            }
+        )
+        max_tokens = $MaxTokens
+        temperature = 0.2
+    } | ConvertTo-Json -Depth 8
+
+    return Invoke-RestMethod -Method Post -Uri $uri -Headers $headers -Body $body -TimeoutSec 45
 }
 
 $configPath = Join-Path $AgentOSRoot "config\free_model_providers.json"
@@ -113,4 +154,32 @@ if (-not $Message) {
 $providerUsage.attempted_requests = [int]$providerUsage.attempted_requests + 1
 Save-JsonFile $usagePath $usage
 
-throw "Provider invocation is intentionally not implemented yet. This guard is installed before live provider wiring."
+try {
+    $response = Invoke-FreeChatCompletion $providerConfig $Provider $apiKey $Message $MaxTokens
+    $providerUsage.completed_requests = [int]$providerUsage.completed_requests + 1
+    Save-JsonFile $usagePath $usage
+    $content = ""
+    try {
+        $content = [string]$response.choices[0].message.content
+    } catch {
+        $content = ""
+    }
+    Write-Output "provider_call_status=completed"
+    Write-Output "attempted_requests_today=$($providerUsage.attempted_requests)"
+    Write-Output "completed_requests_today=$($providerUsage.completed_requests)"
+    Write-Output "models_invoked=true"
+    Write-Output "external_services_invoked=true"
+    Write-Output "response_begin"
+    Write-Output $content
+    Write-Output "response_end"
+} catch {
+    $providerUsage.blocked_requests = [int]$providerUsage.blocked_requests + 1
+    Save-JsonFile $usagePath $usage
+    Write-Output "provider_call_status=failed"
+    Write-Output "attempted_requests_today=$($providerUsage.attempted_requests)"
+    Write-Output "blocked_requests_today=$($providerUsage.blocked_requests)"
+    Write-Output "models_invoked=attempted"
+    Write-Output "external_services_invoked=attempted"
+    Write-Output ("error=" + $_.Exception.Message)
+    exit 1
+}
