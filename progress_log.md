@@ -57,6 +57,16 @@
   - post_manifest_items_included_in_stage_1_execution=false
 - **Caveat**: This is still an approval artifact only. No cleanup action is authorized until Josh explicitly approves the relevant checklist items.
 
+## 2026-06-24: Knowledge Intake - OpenHands Software Agent SDK
+### [STATUS: artifact_created]
+- **Action**: Recorded the "software-agent-sdk" project from OpenHands.
+- **Entry Created**: `data\knowledge_pool\2026-06-24-openhands-software-agent-sdk.md`
+- **Significance**: A modular Python SDK for building agents, emphasizing workflow research and automation toolchains. Mentions compatibility for pairing with OpenClaw style systems.
+- **Constraints**: 
+  - NO governance files modified.
+  - cleanup_executed=false.
+- **Verification**: Pending Codex verification and future NotebookLM sync.
+
 ## 2026-06-24: Knowledge Intake - Unlimited-OCR (Secondary Source)
 ### [STATUS: artifact_created]
 - **Action**: Appended a second source to the Unlimited-OCR entry.
