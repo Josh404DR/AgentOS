@@ -1,4 +1,26 @@
 
+## 2026-06-24: Evidence Cleanup Manifest - Real Run
+### [STATUS: SUCCESS / VERIFIED]
+- **Action**: Re-executed Evidence Cleanup Manifest task after previous run failed verification (no files created, fake commit).
+- **Results**:
+  - **Task Directory**: `E:\AgentOS\data\codex_tasks\2026-06-24-evidence-cleanup-manifest\` (Created).
+  - **Inventory**: `OUTPUTS\CODEX_INVENTORY.md` (49 untracked entries identified).
+  - **Classification**: `OUTPUTS\CLAUDE_CLASSIFICATION_PROPOSAL.md` (Grouped into keep, archive, delete, ignore).
+  - **Inspection**: `OUTPUTS\CLAUDE_INSPECTOR_REVIEW.md` (Verified no deletions/moves, no secrets).
+  - **Manifest**: `OUTPUTS\EVIDENCE_CLEANUP_MANIFEST.md` (Produced).
+- **Findings**:
+  - 49 untracked items were reviewed.
+  - 25 items are candidates for archiving (mostly old bridge sessions).
+  - 5 items are candidates for deletion (pycache, POC .venv).
+  - 2 items need Josh decision (security-sensitive `env_manager.py` and L3 source pack).
+- **Constraints**:
+  - **NO files were deleted or moved.**
+  - **NO unrelated evidence was staged.**
+  - **Cleanup is NOT executed; pending Josh approval.**
+  - **NotebookLM sync status is NOT used as deletion authority.**
+- **Next Steps**: Josh to review `EVIDENCE_CLEANUP_MANIFEST.md` and approve classification.
+- **Commit**: Real commit performed for task artifacts and updated state/logs.
+
 ## 2026-06-23 Asia/Taipei - Marked Device Maintenance Project
 Executor: Codex
 Action:

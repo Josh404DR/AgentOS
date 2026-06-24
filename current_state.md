@@ -39,6 +39,15 @@ Last Updated: 2026-06-23 19:30 Asia/Taipei
 - **Memory Guard**: `scripts\memory_guard.ps1`
 - **Overall Status**: `internal_maintenance_tools_active` (Partial: Fan Control depends on environment setup)
 
+### 4. Evidence Cleanup
+- **Evidence Cleanup Status**:
+  - `manifest_created=true`
+  - `manifest_path=E:\AgentOS\data\codex_tasks\2026-06-24-evidence-cleanup-manifest\OUTPUTS\EVIDENCE_CLEANUP_MANIFEST.md`
+  - `cleanup_executed=false`
+  - `approval_required_before_cleanup=true`
+  - `notebooklm_sync_not_deletion_authority=true`
+  - `classification_conservative=true`
+
 ---
 
 ## Codex Handoff & Memory
