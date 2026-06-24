@@ -91,8 +91,16 @@ Last Updated: 2026-06-24 23:40 Asia/Taipei
   - `typed_dispatch_dry_run_verified=true`
   - `typed_dispatch_models_invoked=false`
   - `typed_dispatch_test_routes=CODEX_VERIFY,CLAUDE_REVIEW,GEMINI_PREMIUM_BLOCK`
-  - `telegram_runtime_hooked=false`
-  - `telegram_hook_requires_josh_approval=true`
+  - `telegram_runtime_hooked=enabled_for_next_session`
+  - `telegram_hook_requires_josh_approval=false`
+  - `telegram_hook_plugin=agentos-typed-dispatch`
+  - `telegram_hook_path=C:\Users\brian\AppData\Local\hermes\plugins\agentos-typed-dispatch`
+  - `telegram_hook_type=pre_gateway_dispatch`
+  - `telegram_hook_local_smoke_verified=true`
+  - `telegram_hook_plain_messages_allow=true`
+  - `telegram_hook_typed_messages_skip_model_dispatch=true`
+  - `telegram_hook_live_gateway_restart_required=true`
+  - `telegram_hook_models_invoked_in_smoke=false`
 
 ### 7. Role File Hygiene
 - **Role Definitions**:

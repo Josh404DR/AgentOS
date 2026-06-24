@@ -1686,3 +1686,35 @@ Status Labels:
 - notebooklm_source_index_ready=true
 - notebooklm_production_ready=false
 "- 2026-06-24: Executed independent agent verification. Raw logs generated and attribution status set to verified."
+
+## 2026-06-24 Asia/Taipei - Enabled Telegram Typed Dispatch Hook
+Executor: Codex
+Action:
+- Installed Hermes user plugin `agentos-typed-dispatch` under Hermes' actual home:
+  `C:\Users\brian\AppData\Local\hermes\plugins\agentos-typed-dispatch`.
+- Enabled the plugin with `hermes plugins enable agentos-typed-dispatch`.
+- Verified Hermes plugin manager loads the plugin:
+  `enabled=True`, `hooks=1`, `error=None`.
+- Ran a non-live fake Telegram event smoke test against the installed plugin.
+
+Smoke Test Result:
+- Plain message: `action=allow`.
+- Typed message with `[TYPE: CODEX_VERIFY]`: `action=skip`.
+- Reason prefix: `agentos_typed_dispatch`.
+- Confirmation reply generated: `AgentOS typed dispatch accepted.`
+- Routing artifact:
+  `data\routing_decisions\telegram-telegram-local-test-chat-local-test-msg-20260624-233441\`.
+
+Operational Notes:
+- The plugin routes typed Telegram messages to
+  `scripts\telegram_typed_dispatch_entry.ps1` before Hermes normal model dispatch.
+- Hermes reports plugin enablement takes effect on the next session.
+- A currently running gateway process may need a restart before live Telegram uses the hook.
+- No live Telegram message was sent during this verification.
+
+Status Labels:
+- telegram_typed_dispatch_plugin_installed=true
+- telegram_typed_dispatch_plugin_enabled=true
+- telegram_typed_dispatch_local_smoke_verified=true
+- telegram_typed_dispatch_live_verified=false
+- models_invoked_in_smoke=false
