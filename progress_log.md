@@ -1,4 +1,22 @@
 
+## 2026-06-24: Add Josh Message Classification Rule
+### [STATUS: locally_verified]
+- **Action**: Added Josh message classification rules to the unified evidence contract and Hermes role.
+- **Files Modified**:
+  - `docs\EVIDENCE_AND_REPORTING_CONTRACT.md`
+  - `agents\roles\hermes.md`
+  - `current_state.md`
+  - `progress_log.md`
+- **Reason**:
+  - Josh-provided Telegram text must be treated as context by default, not automatically as executable instruction.
+  - Quoted reports and quoted prompts must not trigger execution unless Josh explicitly says to execute them.
+  - `approved_by_josh=true` must be reserved for specific approved actions, not general policy direction.
+- **Constraints**:
+  - cleanup_executed=false
+  - governance_single_writer_rule_followed=true
+  - modified_by=Codex
+  - no evidence files were moved, deleted, archived, or ignored.
+
 ## 2026-06-24: Evidence Cleanup Approval Plan Precision Fix
 ### [STATUS: locally_verified]
 - **Action**: Reworked the Stage 1 cleanup approval plan from grouped summary format into a per-item approval table.

@@ -1,5 +1,5 @@
 # AgentOS Current State Snapshot
-Last Updated: 2026-06-24 17:05 Asia/Taipei
+Last Updated: 2026-06-24 17:20 Asia/Taipei
 
 ## Status Overview (Evidence-Based)
 
@@ -59,6 +59,9 @@ Last Updated: 2026-06-24 17:05 Asia/Taipei
   - `status_labels_authoritative=true`
   - `legacy_status_terms_deprecated=true`
   - `contract_precision_fix_applied=true`
+  - `josh_message_classification_required=true`
+  - `telegram_text_context_by_default=true`
+  - `quoted_text_executable_only_when_explicit=true`
   - `changes_require_josh_approval=true`
   - `production_ready=false`
 
