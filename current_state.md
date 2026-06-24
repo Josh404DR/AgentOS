@@ -120,6 +120,18 @@ Last Updated: 2026-06-24 23:40 Asia/Taipei
   - `hermes_model_alias_local=qwen3.5:9b via custom http://localhost:11434/v1`
   - `hermes_model_alias_llama_local=llama3.2:3b via custom http://localhost:11434/v1`
   - `hermes_gateway_restarted_after_model_alias_fix=true`
+  - `free_cloud_window_policy_created=true`
+  - `free_cloud_window_candidates=groq,openrouter`
+  - `free_cloud_window_guard=config\free_model_providers.json,scripts\free_model_window.ps1`
+  - `free_cloud_window_default_daily_request_cap=30`
+  - `free_cloud_window_paid_models_allowed=false`
+  - `free_cloud_window_paid_tools_allowed=false`
+  - `free_cloud_window_auto_top_up_allowed=false`
+  - `free_cloud_window_fallback_to_gemini=false`
+  - `free_cloud_window_dry_run_verified=true`
+  - `free_cloud_window_live_invocation_enabled=false`
+  - `kimi_api_automation=deferred_not_verified_free`
+  - `cloudflare_workers_ai_automation=deferred_not_guaranteed_zero_cost`
 
 ### 7. Role File Hygiene
 - **Role Definitions**:

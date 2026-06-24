@@ -1831,3 +1831,46 @@ Status Labels:
 - hermes_model_alias_ollama_fixed=true
 - hermes_gateway_restarted_after_model_alias_fix=true
 - model_aliases_verified_in_runtime=true
+
+## 2026-06-25 Asia/Taipei - Added Free Cloud Window Guard
+Executor: Codex
+Action:
+- Josh approved starting the no-extra-cost cloud-window setup only if it does
+  not silently spend money.
+- Created a conservative provider policy for Groq and OpenRouter:
+  `config\free_model_providers.json`.
+- Created a dry-run-first guard script:
+  `scripts\free_model_window.ps1`.
+- Added `docs\FREE_CLOUD_WINDOW_POLICY.md` as the source of truth for this
+  phase.
+- Updated cost-routing and resource inventory docs.
+- Updated `data\routing\budget_state.json` with free-window guard status.
+
+Policy:
+- Groq is a `candidate_free_plan_limited` provider, not a confirmed unlimited
+  free provider.
+- OpenRouter is a `candidate_free_models_only` provider, using `openrouter/free`
+  or `:free` model slugs only.
+- Kimi API is deferred because API no-extra-cost automation is not verified.
+- Cloudflare Workers AI is deferred because free-plan inclusion exists but unit
+  pricing also exists.
+- Default local cap is 30 attempted provider requests per provider per day.
+- Paid models, paid tools, auto top-up, and automatic Gemini fallback are
+  prohibited.
+
+Verification:
+- Ran Groq guard dry-run:
+  `powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\free_model_window.ps1 -Provider groq -Message "hello"`
+- Ran OpenRouter guard dry-run:
+  `powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\free_model_window.ps1 -Provider openrouter -Message "hello"`
+- Both dry-runs returned `status=dry_run`, `attempted_requests_today=0`,
+  `paid_models_allowed=false`, `paid_tools_allowed=false`, and
+  `fallback_to_gemini=false`.
+
+Status Labels:
+- free_cloud_window_policy_created=true
+- free_cloud_window_candidates=groq,openrouter
+- free_cloud_window_dry_run_verified=true
+- free_cloud_window_live_invocation_enabled=false
+- kimi_api_automation=deferred_not_verified_free
+- cloudflare_workers_ai_automation=deferred_not_guaranteed_zero_cost

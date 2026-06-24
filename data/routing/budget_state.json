@@ -2,10 +2,28 @@
   "gemini_api_mode": "frozen",
   "default_router": "typed_dispatch",
   "premium_use_requires_explicit_type": true,
-  "last_reviewed": "2026-06-24",
+  "last_reviewed": "2026-06-25",
+  "free_cloud_window_mode": "guarded_candidates_only",
+  "free_cloud_window_config": "config/free_model_providers.json",
+  "free_cloud_window_guard": "scripts/free_model_window.ps1",
+  "free_cloud_window_default_daily_request_cap": 30,
+  "free_cloud_window_paid_models_allowed": false,
+  "free_cloud_window_paid_tools_allowed": false,
+  "free_cloud_window_auto_top_up_allowed": false,
+  "free_cloud_window_fallback_to_gemini": false,
+  "free_cloud_window_allowed_candidates": [
+    "groq",
+    "openrouter"
+  ],
+  "free_cloud_window_excluded_for_now": [
+    "kimi_api",
+    "cloudflare_workers_ai"
+  ],
   "notes": [
     "Gemini API is metered and should not be used for routine coordination.",
     "Codex and Claude are subscription resources and should handle suitable execution, verification, and review work.",
-    "Ollama/local models may handle low-risk triage and format checks only."
+    "Ollama/local models may handle low-risk triage and format checks only.",
+    "Groq and OpenRouter may be tested only through the free-model guard; no provider call should happen without an API key, daily cap, and explicit live invocation.",
+    "Kimi API and Cloudflare Workers AI are excluded from automation until their no-extra-cost status is verified."
   ]
 }

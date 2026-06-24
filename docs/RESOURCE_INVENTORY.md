@@ -20,6 +20,10 @@ Local verification performed from `E:\AgentOS`.
 | Perplexity IDE | User-reported | Josh reports available IDE resource | Manual research/coding assistant; no AgentOS automation verified |
 | VSCode + Cline free | User-reported | Josh reports available free-tier resource | Manual IDE/agent resource; no AgentOS automation verified |
 | Cursor free quota | User-reported | Josh reports available free quota | Manual IDE coding resource; no AgentOS automation verified |
+| Groq API | Candidate only | Official docs show free API key/free-plan limits and paid token pricing | Guarded free-plan chat-window candidate; not wired into Hermes default |
+| OpenRouter API | Candidate only | Official FAQ documents free models with low rate limits and credit-based billing | Guarded free-model-only backup candidate; not wired into Hermes default |
+| Kimi API | Deferred | Kimi web/app free use exists with limits, but API no-extra-cost automation is not verified | Manual web only for now |
+| Cloudflare Workers AI | Deferred | Free-plan inclusion exists, but unit pricing also exists | Not treated as guaranteed zero-cost automation |
 
 ## Ollama Local Models
 
@@ -144,6 +148,27 @@ Recommended role for now:
 - Outputs should be copied into tracked AgentOS artifacts if they affect decisions.
 - Not part of Hermes automated orchestration until a tested CLI/API/workflow handoff exists.
 
+### Free Cloud Chat Window Candidates
+
+Current state:
+
+- Groq and OpenRouter are candidates only.
+- AgentOS has a free-only guard config at `config\free_model_providers.json`.
+- AgentOS has a dry-run-first guard script at `scripts\free_model_window.ps1`.
+- No provider is wired into Hermes default Telegram chat yet.
+- Kimi API and Cloudflare Workers AI are excluded from automation until
+  no-extra-cost status is verified.
+
+Recommended role:
+
+1. Groq: primary candidate for routine chat, short summaries, and typed request
+   normalization, only while free-plan/no-extra-cost use is confirmed.
+2. OpenRouter: backup candidate using `openrouter/free` or `:free` model slugs
+   only.
+3. Both candidates must obey the local daily attempted-request cap of 30.
+4. Neither candidate may use paid tools, auto top-up, paid model slugs, or
+   automatic Gemini fallback.
+
 ## Routing Rules
 
 Use the cheapest reliable resource that fits the task:
@@ -153,6 +178,8 @@ Use the cheapest reliable resource that fits the task:
 - Perplexity: current web research with sources.
 - Codex: repo edits, scripts, tests, debugging, implementation artifacts.
 - Claude: automated high-assurance review (tripartite bridge) or manual complex reasoning.
+- Groq: guarded routine cloud chat candidate, not yet wired into Hermes default.
+- OpenRouter: guarded free-model backup candidate, not yet wired into Hermes default.
 - Antigravity / Perplexity IDE / VSCode Cline / Cursor: manual IDE work, not yet automated.
 Escalate resource choice when:
 

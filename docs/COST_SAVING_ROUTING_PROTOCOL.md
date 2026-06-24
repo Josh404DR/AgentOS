@@ -40,6 +40,8 @@ matching prompt template, and hand the task to the assigned worker.
 | Codex CLI | subscription | Build, edit, verify, inspect files, run tests |
 | Claude CLI | subscription | Risk review, architecture critique, checklist work, parallel analysis |
 | Ollama | local | Intake classification, format checks, low-risk summaries |
+| Groq | free-plan limited / guarded | Routine chat window candidate and short classification only |
+| OpenRouter | free-model-only / guarded | Backup chat window candidate through `openrouter/free` or `:free` models only |
 | Gemini API | api_metered | Premium synthesis, proposal-quality writing, high-value lead reasoning |
 | Perplexity / IDEs | manual | Manual research or coding assistance until automation is verified |
 
@@ -94,6 +96,30 @@ gemini_use_request:
 
 If approval is not explicit, `approval_source` must be `not_approved` and
 Gemini must not be used.
+
+## Free Cloud Window Guard
+
+Groq and OpenRouter may be tested as routine cloud chat-window candidates, but
+only through the free-only guard:
+
+```text
+config\free_model_providers.json
+scripts\free_model_window.ps1
+```
+
+Rules:
+
+- default daily attempted-request cap is `30` per provider;
+- paid models are not allowed;
+- paid tools are not allowed;
+- auto top-up is not allowed;
+- failed free-window attempts must not automatically fall back to Gemini;
+- Kimi API and Cloudflare Workers AI are excluded until no-extra-cost automation
+  is verified.
+
+One Josh message usually maps to one provider request, but retries, tool calls,
+or multi-step workflows can consume more. Therefore local caps count attempted
+provider calls, not Telegram messages.
 
 ## Context Shrinking
 
