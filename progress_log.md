@@ -1,4 +1,21 @@
 
+## 2026-06-24: Evidence Cleanup Manifest Incremental Correction
+### [STATUS: SUCCESS / VERIFIED]
+- **Action**: Performed incremental correction to manifest based on Codex verification.
+- **Results**:
+  - **Manifest Correction**: Added "Post-Manifest Untracked Items" section (6 items).
+  - **Inspector Review Correction**: Fixed "No Staging" to "No unrelated evidence staged".
+  - **Summary Update**: Integrated incremental counts and flags.
+- **Findings**:
+  - Codex verified the initial manifest was real (`f934145`).
+  - 6 new untracked items were detected post-manifest (e.g., `scrape_upwork.py`, `leads.json`).
+  - These 6 items are excluded from the current cleanup plan and require a separate review.
+- **Constraints**:
+  - **NO files were deleted or moved.**
+  - **NO .gitignore modification.**
+  - **NO unrelated evidence staged.**
+- **Next Step**: Josh to review the original manifest (49 items) plus the incremental section (6 items).
+
 ## 2026-06-24: Evidence Cleanup Manifest - Real Run
 ### [STATUS: SUCCESS / VERIFIED]
 - **Action**: Re-executed Evidence Cleanup Manifest task after previous run failed verification (no files created, fake commit).

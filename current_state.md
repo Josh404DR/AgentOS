@@ -42,9 +42,13 @@ Last Updated: 2026-06-23 19:30 Asia/Taipei
 ### 4. Evidence Cleanup
 - **Evidence Cleanup Status**:
   - `manifest_created=true`
+  - `manifest_verified_by_codex=true`
   - `manifest_path=E:\AgentOS\data\codex_tasks\2026-06-24-evidence-cleanup-manifest\OUTPUTS\EVIDENCE_CLEANUP_MANIFEST.md`
   - `cleanup_executed=false`
   - `approval_required_before_cleanup=true`
+  - `post_manifest_untracked_items=true`
+  - `post_manifest_untracked_items_count=6`
+  - `post_manifest_items_require_review=true`
   - `notebooklm_sync_not_deletion_authority=true`
   - `classification_conservative=true`
 

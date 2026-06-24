@@ -40,3 +40,21 @@ Refer to `E:\AgentOS\data\codex_tasks\2026-06-24-evidence-cleanup-manifest\OUTPU
 - **Cleanup requires Josh approval.**
 - **NotebookLM sync status is not used as deletion authority.**
 - **Security Check:** `scripts/env_manager.py` identified as a Medium risk; contents were not read into the manifest.
+
+## Post-Manifest Untracked Items
+- **generated_after_initial_manifest:** true
+- **cleanup_action_allowed:** false
+- **requires_incremental_review:** true
+
+### Items (needs_incremental_classification)
+- `data\leads\2026-06-24.md`
+- `leads.json`
+- `page_source.html`
+- `scrape_upwork.py`
+- `upwork_debug.png`
+- `upwork_utf8.html`
+
+### Incremental Constraints
+- These items were detected after the initial manifest.
+- They are not covered by the original 49-item cleanup classification.
+- They must not be deleted, moved, archived, or ignored until reviewed.
