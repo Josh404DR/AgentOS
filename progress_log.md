@@ -57,6 +57,16 @@
   - post_manifest_items_included_in_stage_1_execution=false
 - **Caveat**: This is still an approval artifact only. No cleanup action is authorized until Josh explicitly approves the relevant checklist items.
 
+## 2026-06-24: Knowledge Intake - Claude Code Resume (CCR)
+### [STATUS: artifact_created]
+- **Action**: Recorded the "CCR" (Claude Code Resume) project.
+- **Entry Created**: `data\knowledge_pool\2026-06-24-claude-code-resume.md`
+- **Significance**: A tool to track Claude Code CLI workdirs and perform cross-folder history queries. Highly useful for multi-project AgentOS management.
+- **Constraints**: 
+  - NO governance files modified.
+  - cleanup_executed=false.
+- **Verification**: Pending Codex verification and future NotebookLM sync.
+
 ## 2026-06-24: Knowledge Intake - OpenHands Software Agent SDK
 ### [STATUS: artifact_created]
 - **Action**: Recorded the "software-agent-sdk" project from OpenHands.
