@@ -6,7 +6,9 @@ Hermes reports are the primary evidence for operational decision-making in Agent
 ## Principle 1: Precision over Optimism
 Do not claim success based on intent or partial execution. Reports must use specific status terms supported by evidence.
 
-- **verified**: Evidence fully supports the claim and the task result is complete.
+**Authoritative Source:** All status labels and reporting formats must follow the [EVIDENCE_AND_REPORTING_CONTRACT.md](EVIDENCE_AND_REPORTING_CONTRACT.md).
+
+- **verified**: Evidence fully supports the claim and the task result is complete. (Note: use `verified_by_codex` for independent proof).
 - **partial**: Artifact exists, but the capability is not fully proven or is limited in scope.
 - **observing**: Monitoring or long-duration testing has started, but the duration proof (e.g., 24h uptime) is incomplete.
 - **not_verified**: No sufficient evidence exists to support the claim.

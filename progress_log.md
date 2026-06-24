@@ -1,4 +1,23 @@
 
+## 2026-06-24: Establish Unified Evidence and Reporting Contract
+### [STATUS: SUCCESS / VERIFIED_BY_HERMES]
+- **Action**: Created the AgentOS Unified Evidence and Reporting Contract to align Hermes, Codex, and Claude on status definitions and reporting formats.
+- **Rationale**: Resolve recurring mismatch between optimistic summaries and strict evidence verification.
+- **Files Modified**:
+  - `docs\EVIDENCE_AND_REPORTING_CONTRACT.md` (Created)
+  - `docs\HERMES_REPORTING_PRINCIPLES.md` (Linked contract)
+  - `docs\ARCHITECTURE.md` (Added contract section)
+  - `agents\roles\hermes.md` (Added obligations)
+  - `agents\roles\codex.md` (Added obligations)
+  - `agents\roles\claude.md` (Added obligations)
+  - `current_state.md` (Updated status)
+- **Constraints**:
+  - No cleanup/delete/archive executed.
+  - No .gitignore changes.
+  - Future contract changes require Josh approval.
+- **Verification**: Confirmed file existence and cross-references.
+- **Next Step**: Pending Codex verification of documentation integrity.
+
 ## 2026-06-24: Evidence Cleanup Approval Plan - Stage 1
 ### [STATUS: SUCCESS / VERIFIED]
 - **Action**: Created Stage 1 cleanup approval plan for Josh Hsu.

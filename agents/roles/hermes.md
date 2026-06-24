@@ -33,6 +33,9 @@ Responsibilities:
 - Report current task status.
 - Enforce hard boundaries: no client messages, installs, destructive cleanup,
   or credential changes without Josh approval.
+- Follow the [EVIDENCE_AND_REPORTING_CONTRACT.md](../../docs/EVIDENCE_AND_REPORTING_CONTRACT.md).
+- Must distinguish between `claimed_by_hermes` and `verified_by_codex`.
+- Must not overclaim remote success from local-only evidence.
 
 Preferred model:
 - Ollama for routine status and formatting.

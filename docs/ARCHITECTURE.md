@@ -106,6 +106,15 @@ AgentOS uses a 3-Layer Memory Model to ensure cost-efficiency and data integrity
 | **Layer 2** | Canonical | `E:\AgentOS\*.md` | **Source of Truth.** The master record of all architecture and decisions. |
 | **Layer 3** | Retrieval | NotebookLM | **Synthesis.** High-speed retrieval and cross-document analysis. |
 
+---
+
+## Unified Evidence and Reporting Contract
+AgentOS operates under a unified reporting contract to ensure alignment between Hermes, Codex, Claude, and Josh. This contract defines authoritative status labels and requires independent verification (the "fourth-party verification channel") by Codex to confirm claims.
+
+**See:** [docs\EVIDENCE_AND_REPORTING_CONTRACT.md](EVIDENCE_AND_REPORTING_CONTRACT.md)
+
+---
+
 ### Synchronization Policy
 - Files in Layer 2 are the ground truth.
 - Layer 3 is updated via `E:\AgentOS\scripts\sync_notebooklm.py`.

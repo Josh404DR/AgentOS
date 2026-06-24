@@ -52,6 +52,14 @@ Last Updated: 2026-06-23 19:30 Asia/Taipei
   - `notebooklm_sync_not_deletion_authority=true`
   - `classification_conservative=true`
 
+### 5. Governance and Reporting
+- **Unified Evidence Contract**:
+  - `unified_evidence_contract_created=true`
+  - `contract_path=docs\EVIDENCE_AND_REPORTING_CONTRACT.md`
+  - `status_labels_authoritative=true`
+  - `changes_require_josh_approval=true`
+  - `production_ready=false`
+
 ---
 
 ## Codex Handoff & Memory

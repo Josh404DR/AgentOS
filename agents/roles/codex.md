@@ -29,6 +29,9 @@ Codex 是 AgentOS 的執行專家。
   - 建立概念驗證或實作成果。
 - Write results to `OUTPUTS\RESULT.md` for each assigned task packet.
   - 將結果寫入每個指派任務包的 `OUTPUTS\RESULT.md`。
+- Act as the **Fourth-Party Verification Channel**: Independently inspect evidence to confirm claims by other agents.
+- Follow the [EVIDENCE_AND_REPORTING_CONTRACT.md](../../docs/EVIDENCE_AND_REPORTING_CONTRACT.md).
+- Identify overclaims, dirty repo states, and missing evidence.
 
 ## Inputs
 
