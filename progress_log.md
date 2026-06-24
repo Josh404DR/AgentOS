@@ -151,6 +151,25 @@
 - **Verification**: Pending Codex verification and future NotebookLM sync.
 
 
+## 2026-06-24: Prepare P0a Gitignore Update Task Packet
+### [STATUS: artifact_created]
+- **Action**: Prepared a formal Codex task packet for the P0a Gitignore update.
+- **Results**:
+  - **Task Directory**: `data\codex_tasks\2026-06-24-p0a-gitignore-update\` (Created).
+  - **Task Definition**: `TASK.md` created with strict scope and safety constraints.
+- **Status Flags**:
+  - p0a_gitignore_task_packet_created=true
+  - cleanup_executed=false
+  - files_deleted=false
+  - files_moved=false
+  - archive_executed=false
+  - gitignore_modified_by_hermes=false
+  - pending_codex_execution=true
+- **Constraints**: 
+  - NO direct modification of `.gitignore` by Hermes.
+  - NO deletion, movement, or archiving of files.
+- **Next Step**: Pending Codex execution of the Gitignore update.
+
 ## 2026-06-24: Knowledge Pool Intake Hardening
 ### [STATUS: artifact_created]
 - **Action**: Performed process hardening for the knowledge pool by triaging all 12 entries.
