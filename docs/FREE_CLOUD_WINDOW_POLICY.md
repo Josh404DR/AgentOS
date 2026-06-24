@@ -63,6 +63,28 @@ adds retries, follow-up calls, tool calls, or multi-step workflows.
 AgentOS therefore uses a conservative local cap of 30 attempted requests per
 provider per day before any provider is allowed to become a default window.
 
+## Cron Must Be Controlled First
+
+Free provider limits are unsafe if background cron jobs can spend requests
+without Josh sending a message.
+
+`Daily-Token-Cost-Summary` is therefore required to run as a Hermes `no-agent`
+job through:
+
+```text
+scripts\daily_token_cost_summary_noagent.py
+```
+
+This cron path must report:
+
+```text
+models_invoked=false
+external_services_invoked=false
+```
+
+No free cloud window should be wired into ordinary Telegram chat until this cron
+path remains no-agent.
+
 ## Not Yet Allowed
 
 - Do not wire Groq or OpenRouter into Hermes normal Telegram chat automatically.

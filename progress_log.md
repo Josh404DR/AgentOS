@@ -1874,3 +1874,54 @@ Status Labels:
 - free_cloud_window_live_invocation_enabled=false
 - kimi_api_automation=deferred_not_verified_free
 - cloudflare_workers_ai_automation=deferred_not_guaranteed_zero_cost
+
+## 2026-06-25 Asia/Taipei - Throttled Daily Token Cost Cron and Reverified Typed Dispatch
+Executor: Codex
+Action:
+- Josh identified two root blockers before switching ordinary Telegram chat to
+  any free provider:
+  1. `Daily-Token-Cost-Summary` cron must not call an LLM every loop.
+  2. Typed dispatch must be confirmed to skip Hermes normal model dispatch.
+- Confirmed Hermes cron job `fa238a5e2542` was active and its previous run hit
+  Gemini spend cap with `RESOURCE_EXHAUSTED`.
+- Created no-agent local summary script:
+  `scripts\daily_token_cost_summary_noagent.py`.
+- The script reads Hermes `state.db` aggregate session counters only, writes a
+  local report when counters changed, and is silent when there is no new data.
+- Installed the same script into active Hermes user scripts:
+  `C:\Users\brian\AppData\Local\hermes\scripts\daily_token_cost_summary_noagent.py`.
+- Edited existing cron job `fa238a5e2542` in place:
+  - Name: `Daily-Token-Cost-Summary`
+  - Schedule: `0 0 * * *`
+  - Script: `daily_token_cost_summary_noagent.py`
+  - Mode: `no-agent`
+  - Workdir: `E:\AgentOS`
+
+Verification:
+- First no-agent run wrote:
+  `data\usage\daily_token_cost_summary\2026-06-25.md`.
+- First run reported `models_invoked=false` and
+  `external_services_invoked=false`.
+- Second no-agent run reported `daily_token_cost_summary_status=no_change`,
+  `models_invoked=false`, and `external_services_invoked=false`.
+- Re-ran typed dispatch local entrypoint with dispatch id
+  `verify-typed-dispatch-no-model-20260625`; it wrote a routing decision with
+  `models_invoked=false`.
+- Read the installed Hermes plugin at
+  `C:\Users\brian\AppData\Local\hermes\plugins\agentos-typed-dispatch\__init__.py`
+  and confirmed typed messages return `{"action": "skip", ...}` after the local
+  dispatch entrypoint runs.
+
+Findings:
+- `Daily-Token-Cost-Summary` is now a no-agent metadata report, not a Gemini
+  synthesis job.
+- Typed dispatch remains a zero-model routing path.
+- Ordinary non-typed Telegram messages still use Hermes normal model flow until
+  a guarded free cloud window is explicitly wired.
+
+Status Labels:
+- daily_token_cost_summary_cron_throttled=true
+- daily_token_cost_summary_cron_mode=no_agent
+- daily_token_cost_summary_throttle_verified=true
+- daily_token_cost_summary_models_invoked=false
+- typed_dispatch_hook_skip_verified_from_installed_plugin=true

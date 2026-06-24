@@ -132,6 +132,14 @@ Last Updated: 2026-06-24 23:40 Asia/Taipei
   - `free_cloud_window_live_invocation_enabled=false`
   - `kimi_api_automation=deferred_not_verified_free`
   - `cloudflare_workers_ai_automation=deferred_not_guaranteed_zero_cost`
+  - `daily_token_cost_summary_cron_throttled=true`
+  - `daily_token_cost_summary_cron_mode=no_agent`
+  - `daily_token_cost_summary_script=scripts\daily_token_cost_summary_noagent.py`
+  - `daily_token_cost_summary_hermes_script=C:\Users\brian\AppData\Local\hermes\scripts\daily_token_cost_summary_noagent.py`
+  - `daily_token_cost_summary_models_invoked=false`
+  - `daily_token_cost_summary_no_change_silent=true`
+  - `daily_token_cost_summary_throttle_verified=true`
+  - `typed_dispatch_hook_skip_verified_from_installed_plugin=true`
 
 ### 7. Role File Hygiene
 - **Role Definitions**:

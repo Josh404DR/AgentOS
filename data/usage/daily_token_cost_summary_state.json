@@ -1,0 +1,11 @@
+{
+  "updated_at": "2026-06-25 01:12:22 +0800",
+  "fingerprint": "041a3057d86d7a026c36f61812cddd6d12ce16bc8f08388febbd5438c47e1c70",
+  "session_count": 124,
+  "api_call_count": 2036,
+  "non_cache_tokens": 24446743,
+  "total_tokens": 140367355,
+  "report_path": "E:\\AgentOS\\data\\usage\\daily_token_cost_summary\\2026-06-25.md",
+  "models_invoked": false,
+  "external_services_invoked": false
+}

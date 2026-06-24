@@ -121,6 +121,24 @@ One Josh message usually maps to one provider request, but retries, tool calls,
 or multi-step workflows can consume more. Therefore local caps count attempted
 provider calls, not Telegram messages.
 
+## Cron Cost Throttle
+
+Scheduled jobs are independent cost paths. A Telegram typed-dispatch hook does
+not protect cron jobs.
+
+`Daily-Token-Cost-Summary` must run in Hermes `no-agent` mode and use:
+
+```text
+scripts\daily_token_cost_summary_noagent.py
+```
+
+The script reads Hermes `state.db` metadata, fingerprints aggregate usage
+counters, and writes a local report only when counters changed. It does not read
+message content, invoke Gemini, invoke any model, or call external services.
+
+When there is no new usage data, default stdout is empty so Hermes has nothing
+to deliver.
+
 ## Context Shrinking
 
 Agents must not pass full conversation history unless Josh explicitly asks.
