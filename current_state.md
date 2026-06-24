@@ -1,5 +1,5 @@
 # AgentOS Current State Snapshot
-Last Updated: 2026-06-24 21:20 Asia/Taipei
+Last Updated: 2026-06-24 21:45 Asia/Taipei
 
 ## Status Overview (Evidence-Based)
 
@@ -74,6 +74,13 @@ Last Updated: 2026-06-24 21:20 Asia/Taipei
   - `use_existing_bridge_scripts=true`
   - `josh_contact_only_for_approval_or_blocker=true`
   - `new_queue_or_database_created=false`
+
+### 7. Role File Hygiene
+- **Role Definitions**:
+  - `codex_role_mojibake_cleaned=true`
+  - `codex_dual_mode_documented=true`
+  - `claude_review_rating_disambiguated=true`
+  - `routing_plan_date_updated=true`
 
 ---
 

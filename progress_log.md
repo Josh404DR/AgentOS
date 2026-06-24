@@ -170,6 +170,27 @@
   - NO deletion, movement, or archiving of files.
 - **Next Step**: Pending Codex execution of the Gitignore update.
 
+## 2026-06-24: Clean Role Definitions and Codex Dual Mode
+### [STATUS: locally_verified]
+- **Action**: Cleaned role definition drift after reviewing the current AgentOS role plan.
+- **Files Modified**:
+  - `agents\roles\codex.md`
+  - `agents\roles\claude.md`
+  - `docs\EVIDENCE_AND_REPORTING_CONTRACT.md`
+  - `docs\AGENT_ROUTING_PLAN.md`
+  - `current_state.md`
+  - `progress_log.md`
+- **Changes**:
+  - Rewrote `agents\roles\codex.md` to remove mojibake and document Codex Builder vs Codex Fourth-Party Verifier modes.
+  - Clarified that Codex Builder cannot independently verify its own current-turn work.
+  - Clarified that Codex Verifier may set `verified_by_codex=true` only for specific independently inspected claims.
+  - Changed Claude review wording from `RATING=[VERIFIED|PARTIAL|FAILED]` to `REVIEW_RATING=[PASS|CONCERNS|FAIL]`.
+  - Updated `docs\AGENT_ROUTING_PLAN.md` timestamp.
+- **Constraints**:
+  - cleanup_executed=false
+  - business_rules_changed=false
+  - no evidence files were moved, deleted, archived, or ignored.
+
 ## 2026-06-24: Add Autonomous Agent Coordination Rule
 ### [STATUS: locally_verified]
 - **Action**: Added operating rules so Hermes coordinates Codex and Claude directly instead of asking Josh to manually relay prompts and outputs.

@@ -123,8 +123,10 @@ Execution threshold:
 - **No Overclaims**: Do not claim remote success based only on local evidence.
 
 ### Codex (Builder/Technical Executor)
-- Technical execution specialist and independent verifier.
+- Technical execution specialist and fourth-party verifier.
 - Read repo/files, modify code/scripts/docs, and run tests.
+- **Builder Mode**: Execute assigned implementation or documentation work. Builder mode may report `locally_verified=true` after self-checks, but must not mark its own current-turn work as `verified_by_codex=true`.
+- **Verifier Mode**: Independently inspect claims made by Hermes, Claude, tools, commits, or prior task reports. Verifier mode may set `verified_by_codex=true` only for specific claims actually inspected.
 - **Independent Verification**: Inspect files/diffs/logs to identify overclaims or drift.
 - **Evidence Reporting**: Must report exact files changed and verification commands used.
 - **No Business Decisions**: Do not own client communication or pricing decisions.

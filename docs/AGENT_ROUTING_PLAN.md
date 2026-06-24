@@ -1,6 +1,6 @@
 # AgentOS Agent Routing Plan
 
-Updated: 2026-06-21 22:33 Asia/Taipei
+Updated: 2026-06-24 21:45 Asia/Taipei
 Purpose: Minimal routing rules for assigning work across Hermes, Codex, Gemini, Claude, Perplexity, Ollama, and manual IDE resources without adding a new agent framework.
 
 ## Routing Principle
