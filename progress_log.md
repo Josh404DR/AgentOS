@@ -57,6 +57,20 @@
   - post_manifest_items_included_in_stage_1_execution=false
 - **Caveat**: This is still an approval artifact only. No cleanup action is authorized until Josh explicitly approves the relevant checklist items.
 
+## 2026-06-24: Dispatch Gitignore Update Task
+### [STATUS: artifact_created]
+- **Action**: Dispatched Codex task packet for approved Gitignore update (P0a).
+- **Scope**:
+  - `**/__pycache__/`
+  - `scripts/fan_control/fan_control.log`
+  - `**/.venv_notebooklm_poc/`
+- **Files Created**:
+  - `data\codex_tasks\2026-06-24-gitignore-update\TASK.md`
+- **Constraints**:
+  - **NO deletion, NO archive, NO debug artifact deletion approved.**
+  - Cleanup executed: false.
+- **Verification**: Pending Codex execution and verification.
+
 ## 2026-06-24: Record Governance Owner Rule Adoption
 ### [STATUS: artifact_created]
 - **Action**: Recorded the adoption of the "Governance Owner Rule" as mandated by Josh.
