@@ -43,29 +43,25 @@ Last Updated: 2026-06-24 22:05 Asia/Taipei
 - **Evidence Cleanup Status**:
   - `manifest_created=true`
   - `manifest_verified_by_codex=true`
-  - `manifest_path=E:\AgentOS\data\codex_tasks\2026-06-24-evidence-cleanup-manifest\OUTPUTS\EVIDENCE_CLEANUP_MANIFEST.md`
+  - `drift_check_performed=true`
+  - `drift_report_path=data\codex_tasks\2026-06-24-evidence-drift-check\OUTPUTS\CODEX_EVIDENCE_DRIFT_REPORT.md`
   - `cleanup_executed=false`
   - `approval_required_before_cleanup=true`
-  - `post_manifest_untracked_items=true`
-  - `post_manifest_untracked_items_count=6`
-  - `post_manifest_items_classified_by_codex=true`
-  - `post_manifest_classification_path=data\codex_tasks\2026-06-24-post-manifest-incremental-classification\OUTPUTS\INCREMENTAL_CLASSIFICATION.md`
-  - `post_manifest_items_require_review=true`
-  - `notebooklm_sync_not_deletion_authority=true`
-  - `classification_conservative=true`
 
 ### 5. Governance and Reporting
 - **Unified Evidence Contract**:
   - `unified_evidence_contract_created=true`
-  - `contract_path=docs\EVIDENCE_AND_REPORTING_CONTRACT.md`
   - `status_labels_authoritative=true`
-  - `legacy_status_terms_deprecated=true`
-  - `contract_precision_fix_applied=true`
   - `josh_message_classification_required=true`
-  - `telegram_text_context_by_default=true`
-  - `quoted_text_executable_only_when_explicit=true`
-  - `changes_require_josh_approval=true`
+  - `resource_contribution_summary_required=true`
   - `production_ready=false`
+
+### 6. Risk and Security Review
+- **Script Review Status**:
+  - `scrape_upwork_risk=high_tos_violation`
+  - `env_manager_risk=medium_plaintext_secrets`
+  - `monitor_ui_risk=low`
+  - `review_report_path=data\codex_tasks\2026-06-24-risk-review\OUTPUTS\CLAUDE_RISK_REVIEW.md`
 
 ### 6. Agent Coordination
 - **Autonomous Coordination Mode**:

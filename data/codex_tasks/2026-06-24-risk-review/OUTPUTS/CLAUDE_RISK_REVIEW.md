@@ -1,0 +1,53 @@
+# Risk Review Report: Claude Inspector
+
+## Executive Summary
+This report evaluates the security and platform risks of three scripts: `scrape_upwork.py`, `scripts/env_manager.py`, and `scripts/monitor_ui.py`. The primary risks identified are platform policy violations in the scraping script and potential secret leakage via console output in the environment manager.
+
+## File-by-File Analysis
+
+### 1. `scrape_upwork.py`
+This script uses Playwright to scrape job listings from Upwork.
+
+*   **Platform Policy Risk (High):** Scraping Upwork's public search results is a direct violation of their Terms of Service. Upwork actively detects and blocks automated scraping. Continued use may lead to IP blacklisting or account suspension.
+*   **External Requests:** Makes requests to `https://www.upwork.com/nx/search/jobs/`.
+*   **File Writing:** 
+    *   Writes `leads.json` containing scraped data.
+    *   Writes `page_source.html` and `upwork_debug.png` for debugging when a selector is not found.
+*   **Security Risk:** None identified in the code itself, but the use of headless browsers for scraping can be flagged by security systems as bot behavior.
+*   **Installation Behavior:** Requires `playwright` and corresponding browser binaries.
+
+### 2. `scripts/env_manager.py`
+A utility for reading and writing keys in a `.env` file.
+
+*   **Credential/Secrets Risk (Medium):** 
+    *   The `get` command prints the secret value directly to `stdout`. In CI/CD environments or shared terminals, this can lead to secrets being logged in plaintext.
+    *   The `set` command takes the value as a command-line argument, which may be stored in shell history (e.g., `.bash_history`).
+*   **File Writing:** Modifies the `.env` file in the current working directory.
+*   **Source-of-truth Drift:** The script's `set_key` function reconstructs the `.env` file, potentially altering comments or formatting not handled by the simple parser.
+
+### 3. `scripts/monitor_ui.py`
+A helper script for displaying task progress with markdown formatting.
+
+*   **Security/Platform Risk (Low):** No significant risks identified.
+*   **Overclaim:** The script performs as described, providing a visual progress bar and status message for console or telegram output.
+*   **External Requests:** None.
+*   **File Writing:** None.
+
+## Review Summary Table
+
+| Item | `scrape_upwork.py` | `env_manager.py` | `monitor_ui.py` |
+| :--- | :--- | :--- | :--- |
+| **Platform Policy** | High Risk (ToS Violation) | N/A | N/A |
+| **Credentials/Secrets** | Low Risk | Medium Risk (Log leakage) | Low Risk |
+| **External Requests** | Upwork Search | None | None |
+| **File Writing** | `leads.json`, Debug files | `.env` | None |
+| **Installation** | Playwright required | Standard library | Standard library |
+| **Source-of-truth Drift** | N/A | Minor (Formatting) | N/A |
+
+## Recommendations
+
+1.  **Upwork Integration:** Replace `scrape_upwork.py` with an implementation using the official [Upwork API](https://www.upwork.com/developer/) to ensure compliance with platform policies.
+2.  **Secret Handling:** 
+    *   Modify `env_manager.py` to avoid printing secrets to `stdout` in sensitive environments.
+    *   Avoid passing sensitive values as command-line arguments; consider using a secure prompt or reading from a temporary file/stdin.
+3.  **Data Management:** Add `leads.json` to `.gitignore` if it contains sensitive or proprietary job data that should not be committed to the repository.
