@@ -57,6 +57,16 @@
   - post_manifest_items_included_in_stage_1_execution=false
 - **Caveat**: This is still an approval artifact only. No cleanup action is authorized until Josh explicitly approves the relevant checklist items.
 
+## 2026-06-24: Knowledge Intake - Odin EngineIO Case Study
+### [STATUS: artifact_created]
+- **Action**: Recorded a technical case study on building a high-performance backend using Claude Code and the Odin language.
+- **Entry Created**: `data\knowledge_pool\2026-06-24-odin-engineio-case-study.md`
+- **Key Finding**: AI agents can build optimized systems software (~4xx KB binary) in 2 days without prior language expertise.
+- **Constraints**: 
+  - NO governance files modified.
+  - cleanup_executed=false.
+- **Verification**: Pending Codex verification and future NotebookLM sync.
+
 ## 2026-06-24: Knowledge Intake - agent-skills (Addy Osmani)
 ### [STATUS: artifact_created]
 - **Action**: Recorded the "agent-skills" project, a high-rigor operational framework for AI agents.
