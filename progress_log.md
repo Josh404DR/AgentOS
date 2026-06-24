@@ -57,6 +57,16 @@
   - post_manifest_items_included_in_stage_1_execution=false
 - **Caveat**: This is still an approval artifact only. No cleanup action is authorized until Josh explicitly approves the relevant checklist items.
 
+## 2026-06-24: Knowledge Intake - Yuri Relay Shortener
+### [STATUS: artifact_created]
+- **Action**: Recorded a new AI/Open-source insight from Josh's Threads share.
+- **Entry Created**: `data\knowledge_pool\2026-06-24-yuri-relay-shortener.md`
+- **Content**: Yuri Relay - Privacy-first self-hosted shortener on Cloudflare Workers + D1.
+- **Constraints**: 
+  - NO governance files modified.
+  - cleanup_executed=false.
+- **Verification**: Pending Codex verification and future NotebookLM sync.
+
 ## 2026-06-24: Setup Knowledge Pool and Initial Intake
 ### [STATUS: artifact_created]
 - **Action**: Established the `data/knowledge_pool/` directory and recorded two initial AI knowledge entries from Josh's Threads shares.
