@@ -97,8 +97,13 @@ Last Updated: 2026-06-24 23:40 Asia/Taipei
   - `telegram_hook_path=C:\Users\brian\AppData\Local\hermes\plugins\agentos-typed-dispatch`
   - `telegram_hook_type=pre_gateway_dispatch`
   - `telegram_hook_local_smoke_verified=true`
-  - `telegram_hook_plain_messages_allow=true`
+  - `telegram_hook_plain_messages_allow=false_replaced_by_lite_chat`
   - `telegram_hook_typed_messages_skip_model_dispatch=true`
+  - `telegram_hook_plain_messages_lite_chat=true`
+  - `telegram_hook_plain_messages_skip_full_hermes_agent=true`
+  - `telegram_hook_lite_chat_provider=groq_via_free_model_window`
+  - `telegram_hook_lite_chat_tools_invoked=false`
+  - `telegram_hook_slash_commands_allow=true`
   - `telegram_hook_live_gateway_restart_required=false`
   - `telegram_hook_live_gateway_restarted=true`
   - `telegram_hook_live_gateway_restarted_at=2026-06-25 00:16 Asia/Taipei`
@@ -149,6 +154,10 @@ Last Updated: 2026-06-24 23:40 Asia/Taipei
   - `hermes_live_model_status_runtime=C:\Users\brian\AppData\Local\hermes\hermes-agent\gateway\run.py`
   - `hermes_live_model_status_no_switch=true`
   - `hermes_gateway_restarted_after_model_status_hotfix=true`
+  - `groq_full_hermes_agent_blocked_by_tpm=true`
+  - `groq_full_hermes_agent_tpm_limit=6000`
+  - `groq_full_hermes_agent_requested_tokens_approx=21000`
+  - `plain_chat_lite_hook_restarted=true`
   - `hermes_default_chat_switched_to_free_window=false`
   - `kimi_api_automation=deferred_not_verified_free`
   - `cloudflare_workers_ai_automation=deferred_not_guaranteed_zero_cost`

@@ -2105,3 +2105,52 @@ Status Labels:
 - hermes_live_model_status_hotfix_applied=true
 - hermes_live_model_status_no_switch=true
 - hermes_gateway_restarted_after_model_status_hotfix=true
+
+## 2026-06-25 Asia/Taipei - Routed Plain Telegram Chat Through Lite Free-Window Hook
+Executor: Codex
+Action:
+- Josh reported repeated `Request payload too large (413)` after switching to
+  Groq and resetting the Telegram session.
+- Inspected Hermes logs and request dumps.
+- Confirmed two separate failure modes:
+  - Gemini default sessions fail with monthly spending-cap `429`.
+  - Groq full Hermes agent sessions fail with `413` because the complete
+    Hermes request includes the system prompt plus 30 tool schemas.
+- Groq on-demand/free TPM limit observed in logs: `6000`.
+- Full Hermes/Groq request observed in logs: approximately `21000` requested
+  tokens.
+- Conclusion: Groq can handle short no-tools chat, but cannot be used as the
+  full Hermes agent backend while Hermes sends all tool schemas.
+- Updated the installed Telegram hook at:
+  `C:\Users\brian\AppData\Local\hermes\plugins\agentos-typed-dispatch\__init__.py`
+- New routing behavior:
+  - `[TYPE: ...]` messages still route through AgentOS typed dispatch and skip
+    Hermes model dispatch.
+  - Telegram slash commands such as `/model status` still pass through to
+    Hermes.
+  - Ordinary non-command Telegram messages now route through
+    `scripts\free_model_window.ps1` with the guarded Groq no-tools wrapper and
+    skip full Hermes agent dispatch.
+- Restarted Hermes gateway.
+
+Verification:
+- Ran syntax validation on the installed plugin with the active Hermes venv.
+- Ran `scripts\free_model_window.ps1 -Provider groq -Message "ping lite"
+  -MaxTokens 40 -Invoke`; result returned `Pong`.
+- Ran local hook decision tests:
+  - ordinary text -> `action=skip`, `reason=agentos_lite_chat:free_window`
+  - `/model status` -> `action=allow`
+  - `[TYPE: CODEX_VERIFY]` -> `action=skip`, typed dispatch reason
+- Confirmed a new live `hermes.exe` process started after restart.
+
+Boundaries:
+- This does not make Groq a full Hermes brain.
+- This does not enable paid tools, paid models, or Gemini fallback.
+- This consumes the guarded free-window request counter for ordinary chat.
+
+Status Labels:
+- telegram_hook_plain_messages_lite_chat=true
+- telegram_hook_plain_messages_skip_full_hermes_agent=true
+- telegram_hook_slash_commands_allow=true
+- groq_full_hermes_agent_blocked_by_tpm=true
+- plain_chat_lite_hook_restarted=true
