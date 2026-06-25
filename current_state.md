@@ -145,6 +145,10 @@ Last Updated: 2026-06-24 23:40 Asia/Taipei
   - `hermes_free_window_aliases_use_key_env=true`
   - `hermes_free_window_switch_warning_resolved_by_core_check=true`
   - `hermes_gateway_restarted_after_free_window_aliases=true`
+  - `hermes_live_model_status_hotfix_applied=true`
+  - `hermes_live_model_status_runtime=C:\Users\brian\AppData\Local\hermes\hermes-agent\gateway\run.py`
+  - `hermes_live_model_status_no_switch=true`
+  - `hermes_gateway_restarted_after_model_status_hotfix=true`
   - `hermes_default_chat_switched_to_free_window=false`
   - `kimi_api_automation=deferred_not_verified_free`
   - `cloudflare_workers_ai_automation=deferred_not_guaranteed_zero_cost`

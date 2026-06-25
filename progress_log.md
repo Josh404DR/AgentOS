@@ -2068,3 +2068,40 @@ Status Labels:
 - hermes_free_window_user_providers_added=agentos-groq,agentos-openrouter-free
 - hermes_free_window_aliases_use_key_env=true
 - hermes_free_window_switch_warning_resolved_by_core_check=true
+
+## 2026-06-25 Asia/Taipei - Patched Live Hermes `/model status` Runtime Handler
+Executor: Codex
+Action:
+- Josh confirmed `/model groq` now switches successfully to
+  `llama-3.1-8b-instant` on provider `agentos-groq`.
+- Josh then reported `/model status` still failed because the live Telegram
+  gateway treated `status` as a model name and attempted a model switch.
+- Diagnosis: the older external Hermes repo had previously received
+  `/model status` handling, but the active runtime under
+  `C:\Users\brian\AppData\Local\hermes\hermes-agent` did not contain that
+  handler.
+- Patched the active live runtime:
+  `C:\Users\brian\AppData\Local\hermes\hermes-agent\gateway\run.py`
+- Added a guarded status branch before the model switch path. The command now
+  reports current model/provider/session state and explicitly says no model
+  switch was performed.
+- Kept token usage and rate-limit remaining as `not_available_in_gateway`
+  because the gateway does not have a reliable usage counter for that field.
+- Restarted Hermes gateway with `gateway run --accept-hooks`.
+
+Verification:
+- Ran syntax validation with the active Hermes venv Python:
+  `python -m py_compile gateway\run.py`
+- Confirmed the inserted branch is in `_handle_model_command`.
+- Confirmed a new live `hermes.exe` and Hermes venv `python.exe` process
+  started after the restart.
+
+Boundaries:
+- No API keys were printed or written.
+- No model alias values were changed in this step.
+- No Cursor-owned analysis artifacts were modified.
+
+Status Labels:
+- hermes_live_model_status_hotfix_applied=true
+- hermes_live_model_status_no_switch=true
+- hermes_gateway_restarted_after_model_status_hotfix=true
