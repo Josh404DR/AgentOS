@@ -115,6 +115,9 @@ Last Updated: 2026-06-24 23:40 Asia/Taipei
   - `hermes_lite_url_auto_intake_route_to=Codex`
   - `hermes_lite_url_auto_task_packet_created=true`
   - `hermes_lite_url_auto_task_packet_script=scripts\url_intake_task_packet.ps1`
+  - `hermes_lite_url_auto_worker_script=scripts\url_intake_worker.ps1`
+  - `hermes_lite_url_auto_worker_status_field=codex_execution_status`
+  - `hermes_lite_url_auto_worker_success_status=completed`
   - `hermes_lite_url_auto_task_packet_external_access=false`
   - `hermes_lite_url_auto_intake_models_invoked=false`
   - `hermes_lite_url_auto_intake_external_services_invoked=false`

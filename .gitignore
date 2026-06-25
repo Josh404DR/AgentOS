@@ -18,6 +18,7 @@ machine2_hermes_config/.env
 **/__pycache__/
 scripts/fan_control/fan_control.log
 **/.venv_notebooklm_poc/
+data/codex_tasks/**/OUTPUTS/CODEX_CONSOLE.log
 
 # OS/editor noise
 Thumbs.db

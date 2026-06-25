@@ -2312,3 +2312,45 @@ Status Labels:
 - hermes_lite_url_auto_task_packet_external_access=false
 - hermes_lite_url_auto_task_packet_models_invoked=false
 - source_not_verified=true
+
+## 2026-06-25 Asia/Taipei - Completed URL Intake Worker Execution Loop
+Executor: Codex
+Action:
+- Josh clarified that URL intake must reach the actual target result:
+  Hermes Lite should not only create a task packet, but should also trigger
+  Codex to consume it and write `OUTPUTS\RESULT.md`.
+- Added `scripts\url_intake_worker.ps1`.
+  - Reads a URL intake `TASK.md`.
+  - Calls Codex CLI with `--sandbox read-only`.
+  - Sends the task prompt through stdin.
+  - Clears inherited `OPENAI_API_KEY` and `CODEX_API_KEY` from the child
+    process so Codex uses its authenticated desktop/session state instead of
+    stale API keys.
+  - Writes `OUTPUTS\RESULT.md`, `OUTPUTS\WORKER_STATUS.md`,
+    `OUTPUTS\CODEX_PROMPT.md`, and `OUTPUTS\CODEX_CONSOLE.log`.
+- Patched the installed Hermes Telegram hook:
+  - After URL routing and task packet creation, it now calls the URL intake
+    worker.
+  - Telegram summaries include `codex_execution_status`, `result_path`, and
+    `status_path`.
+
+Verification:
+- First worker attempt correctly exposed a blocker:
+  `codex_exit_1` caused by an inherited invalid OpenAI API key.
+- After clearing child-process API key environment variables, the real Threads
+  URL task completed:
+  `data\codex_tasks\2026-06-25-url-intake-telegram-telegram-1449022024-1007-20260625-192901\OUTPUTS\RESULT.md`
+- Result contained:
+  - `codex_execution_status: completed`
+  - `source_not_verified: true`
+  - `external_access_required: true`
+  - `josh_approval_required: true`
+  - `live_external_action_executed: false`
+- Full fake Telegram hook test also completed:
+  `data\codex_tasks\2026-06-25-url-intake-telegram-telegram-test-chat-url-worker-msg-worker-20260625-194706\OUTPUTS\RESULT.md`
+
+Status Labels:
+- url_intake_worker_created=true
+- url_intake_worker_verified_with_codex_cli=true
+- url_intake_success_gate=codex_execution_status_completed
+- url_external_read_still_requires_josh_approval=true
