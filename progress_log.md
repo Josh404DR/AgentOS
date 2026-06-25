@@ -2154,3 +2154,31 @@ Status Labels:
 - telegram_hook_slash_commands_allow=true
 - groq_full_hermes_agent_blocked_by_tpm=true
 - plain_chat_lite_hook_restarted=true
+
+## 2026-06-25 Asia/Taipei - Renamed Plain Chat Path to Hermes Lite
+Executor: Codex
+Action:
+- Josh correctly objected that bypassing Hermes entirely makes the project lose
+  its point.
+- Clarified architecture: ordinary Telegram chat should still be Hermes as the
+  user-facing intake/coordinator, but it must run in a no-tools "Hermes Lite"
+  mode to avoid Gemini spend and Groq full-agent TPM failures.
+- Updated `scripts\free_model_window.ps1` system prompt:
+  - identity: `Hermes Lite`
+  - role: low-cost Telegram intake voice for AgentOS
+  - behavior: brief Traditional Chinese answers, route real work to typed
+    dispatch/Codex/Claude, do not claim tool/file/external actions
+- Updated the installed Telegram hook reply prefix from generic
+  `AgentOS lite chat` to `Hermes Lite (AgentOS intake, no tool payload)`.
+- Restarted Hermes gateway.
+
+Verification:
+- Ran syntax validation on the installed plugin.
+- Ran local hook decision test without a provider call; ordinary chat now
+  returns `reason=hermes_lite_chat:free_window`.
+- Confirmed a new live `hermes.exe` process started after restart.
+
+Status Labels:
+- telegram_hook_lite_chat_identity=Hermes Lite
+- hermes_lite_identity_patch_applied=true
+- plain_chat_full_hermes_agent=false_until_explicit_full_mode

@@ -103,6 +103,8 @@ Last Updated: 2026-06-24 23:40 Asia/Taipei
   - `telegram_hook_plain_messages_skip_full_hermes_agent=true`
   - `telegram_hook_lite_chat_provider=groq_via_free_model_window`
   - `telegram_hook_lite_chat_tools_invoked=false`
+  - `telegram_hook_lite_chat_identity=Hermes Lite`
+  - `telegram_hook_lite_chat_role=AgentOS Telegram intake and routing voice`
   - `telegram_hook_slash_commands_allow=true`
   - `telegram_hook_live_gateway_restart_required=false`
   - `telegram_hook_live_gateway_restarted=true`
@@ -158,6 +160,7 @@ Last Updated: 2026-06-24 23:40 Asia/Taipei
   - `groq_full_hermes_agent_tpm_limit=6000`
   - `groq_full_hermes_agent_requested_tokens_approx=21000`
   - `plain_chat_lite_hook_restarted=true`
+  - `hermes_lite_identity_patch_applied=true`
   - `hermes_default_chat_switched_to_free_window=false`
   - `kimi_api_automation=deferred_not_verified_free`
   - `cloudflare_workers_ai_automation=deferred_not_guaranteed_zero_cost`

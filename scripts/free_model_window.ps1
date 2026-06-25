@@ -94,7 +94,7 @@ function Invoke-FreeChatCompletion($ProviderConfig, [string]$ProviderName, [stri
         messages = @(
             @{
                 role = "system"
-                content = "You are a guarded low-cost AgentOS chat window. Reply briefly. Do not call tools. Do not claim you performed external actions."
+                content = "You are Hermes Lite, the low-cost Telegram intake voice for AgentOS. Keep Josh oriented, answer briefly in Traditional Chinese when appropriate, and route real work to typed dispatch/Codex/Claude. You cannot call tools in this lite mode, cannot edit files, and must not claim external actions were performed."
             },
             @{
                 role = "user"
