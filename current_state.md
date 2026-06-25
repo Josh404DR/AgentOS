@@ -110,6 +110,12 @@ Last Updated: 2026-06-24 23:40 Asia/Taipei
   - `free_model_window_raw_utf8_response_decode=true`
   - `hermes_lite_cannot_claim_routing_without_artifact=true`
   - `hermes_lite_link_summary_requires_typed_dispatch=true`
+  - `hermes_lite_url_auto_intake_enabled=true`
+  - `hermes_lite_url_auto_intake_type=URL_INTAKE`
+  - `hermes_lite_url_auto_intake_route_to=Codex`
+  - `hermes_lite_url_auto_intake_models_invoked=false`
+  - `hermes_lite_url_auto_intake_external_services_invoked=false`
+  - `hermes_gateway_restarted_after_url_intake_hook=true`
   - `telegram_hook_slash_commands_allow=true`
   - `telegram_hook_live_gateway_restart_required=false`
   - `telegram_hook_live_gateway_restarted=true`

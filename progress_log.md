@@ -2241,3 +2241,43 @@ Status Labels:
 - hermes_lite_routed_to_codex=false
 - hermes_lite_routing_overclaim_fixed=true
 - hermes_lite_link_summary_requires_typed_dispatch=true
+
+## 2026-06-25 Asia/Taipei - Added Hermes Lite Automatic URL Intake
+Executor: Codex
+Action:
+- Josh requested that pasting a URL to Hermes Lite should trigger a work-order
+  format automatically instead of requiring a full manual typed block.
+- Added `URL_INTAKE` to `scripts\typed_dispatch.ps1`.
+  - route_to: Codex
+  - context_pack: minimal
+  - gemini_allowed: false
+  - approval_required: false for artifact-only intake
+- Patched the installed Hermes Telegram hook:
+  - Ordinary Telegram messages containing `http://` or `https://` now create a
+    deterministic `URL_INTAKE` typed-dispatch artifact.
+  - The hook does not open the URL, fetch content, summarize the URL, call
+    Gemini/Groq, or invoke external services.
+  - Slash commands still pass through to Hermes.
+  - Explicit `[TYPE: ...]` blocks still use the existing typed-dispatch path.
+- Restarted Hermes gateway.
+
+Verification:
+- Local hook test with `https://example.com/a?b=1` produced:
+  - `action=skip`
+  - `reason=hermes_lite_url_intake:<dispatch_id>`
+  - reply prefix: `Hermes Lite URL intake created.`
+- Verified artifact:
+  `data\routing_decisions\telegram-telegram-test-chat-url-msg-20260625-185644\ROUTING_DECISION.md`
+- Artifact status:
+  - type: URL_INTAKE
+  - route_to: Codex
+  - dispatch_status: ready_to_route
+  - models_invoked: false
+  - live_external_action_executed: false
+- Confirmed a new live `hermes.exe` process started after restart.
+
+Status Labels:
+- hermes_lite_url_auto_intake_enabled=true
+- hermes_lite_url_auto_intake_route_to=Codex
+- hermes_lite_url_auto_intake_models_invoked=false
+- hermes_gateway_restarted_after_url_intake_hook=true

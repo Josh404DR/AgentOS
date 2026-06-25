@@ -42,6 +42,7 @@ function Get-RouteSpec([string]$Type) {
         "CODEX_VERIFY"  = @{ route_to = "Codex"; template = "prompts\task_templates\codex_verify.md"; role_header = "prompts\role_headers\codex_verifier.md"; context_pack = "evidence_verification"; gemini_allowed = $false; approval_required = $false }
         "CLAUDE_REVIEW" = @{ route_to = "Claude"; template = "prompts\task_templates\claude_review.md"; role_header = "prompts\role_headers\claude_inspector.md"; context_pack = "evidence_verification"; gemini_allowed = $false; approval_required = $false }
         "CLAUDE_WORKER" = @{ route_to = "Claude"; template = "prompts\task_templates\claude_worker.md"; role_header = "prompts\role_headers\claude_worker.md"; context_pack = "minimal"; gemini_allowed = $false; approval_required = $false }
+        "URL_INTAKE" = @{ route_to = "Codex"; template = "prompts\task_templates\codex_verify.md"; role_header = "prompts\role_headers\codex_verifier.md"; context_pack = "minimal"; gemini_allowed = $false; approval_required = $false }
         "OLLAMA_TRIAGE" = @{ route_to = "Ollama"; template = "prompts\task_templates\ollama_triage.md"; role_header = ""; context_pack = "minimal"; gemini_allowed = $false; approval_required = $false }
         "JOSH_APPROVAL" = @{ route_to = "Hermes"; template = ""; role_header = ""; context_pack = "approval_target_only"; gemini_allowed = $false; approval_required = $false }
         "GEMINI_PREMIUM" = @{ route_to = "Gemini"; template = ""; role_header = ""; context_pack = "minimal_targeted"; gemini_allowed = $true; approval_required = $true }
