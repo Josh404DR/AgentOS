@@ -141,6 +141,9 @@ Last Updated: 2026-06-24 23:40 Asia/Taipei
   - `hermes_model_alias_groq_base_url=https://api.groq.com/openai`
   - `hermes_model_alias_openrouter_base_url=https://openrouter.ai/api`
   - `hermes_model_alias_custom_endpoint_listing_fix=true`
+  - `hermes_free_window_user_providers_added=agentos-groq,agentos-openrouter-free`
+  - `hermes_free_window_aliases_use_key_env=true`
+  - `hermes_free_window_switch_warning_resolved_by_core_check=true`
   - `hermes_gateway_restarted_after_free_window_aliases=true`
   - `hermes_default_chat_switched_to_free_window=false`
   - `kimi_api_automation=deferred_not_verified_free`

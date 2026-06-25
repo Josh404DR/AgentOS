@@ -2034,3 +2034,37 @@ Status Labels:
 - hermes_model_alias_groq_base_url=https://api.groq.com/openai
 - hermes_model_alias_openrouter_base_url=https://openrouter.ai/api
 - hermes_gateway_restarted_after_free_window_alias_base_fix=true
+
+## 2026-06-25 Asia/Taipei - Converted Free Window Aliases to Hermes User Providers
+Executor: Codex
+Action:
+- Josh reported `/model groq` still warned after changing base URLs:
+  Hermes probed `https://api.groq.com/openai/models`.
+- Diagnosis: bare `custom` aliases do not carry provider-specific `key_env`, so
+  Hermes custom endpoint listing can fail even when guarded live calls work.
+- Added active Hermes user providers:
+  - `agentos-groq`
+    - `base_url=https://api.groq.com/openai/v1`
+    - `key_env=GROQ_API_KEY`
+    - `default_model=llama-3.1-8b-instant`
+  - `agentos-openrouter-free`
+    - `base_url=https://openrouter.ai/api/v1`
+    - `key_env=OPENROUTER_API_KEY`
+    - `default_model=openrouter/free`
+- Updated aliases to target these user providers instead of bare `custom`.
+- Verified Hermes core `switch_model()` resolves:
+  - `groq` -> provider `agentos-groq`, model `llama-3.1-8b-instant`, no warning.
+  - `openrouter-free` -> provider `agentos-openrouter-free`, model
+    `openrouter/free`, no warning.
+- Restarted Hermes gateway.
+
+Boundaries:
+- API keys were not written into AgentOS files.
+- API keys were not written into Hermes config; only `key_env` names are stored.
+- Ordinary Telegram chat still requires Josh to explicitly switch with
+  `/model groq` or `/model openrouter-free`.
+
+Status Labels:
+- hermes_free_window_user_providers_added=agentos-groq,agentos-openrouter-free
+- hermes_free_window_aliases_use_key_env=true
+- hermes_free_window_switch_warning_resolved_by_core_check=true
