@@ -2182,3 +2182,62 @@ Status Labels:
 - telegram_hook_lite_chat_identity=Hermes Lite
 - hermes_lite_identity_patch_applied=true
 - plain_chat_full_hermes_agent=false_until_explicit_full_mode
+
+## 2026-06-25 Asia/Taipei - Patched Hermes Lite UTF-8 Response Handling
+Executor: Codex
+Action:
+- Josh observed Hermes Lite replied with question marks / mojibake:
+  `????? ?? ?????? ?????? ???????.`
+- Diagnosis: this is an encoding issue, not a language-selection issue.
+- Updated `scripts\free_model_window.ps1`:
+  - Force console/output encoding to UTF-8.
+  - Send provider request body as UTF-8 bytes.
+  - Read provider HTTP response as raw bytes and decode as UTF-8 before JSON
+    parsing.
+  - Emit response content as base64 in addition to the human-readable
+    `response_begin` block.
+  - Updated Hermes Lite system prompt to answer in the same language Josh uses
+    unless another language is explicitly requested.
+- Patched the installed Hermes Telegram hook to decode the base64 response
+  block before sending the Telegram reply.
+
+Verification:
+- A live Groq test before the raw-byte response patch confirmed the previous
+  PowerShell response path was producing mojibake.
+- The source fix has been applied, but the running Hermes gateway still needs
+  a restart to load the installed hook decoder.
+
+Remaining Action:
+- Restart Hermes gateway with `gateway run --accept-hooks` before the next
+  Telegram plain-chat test.
+
+Status Labels:
+- telegram_hook_lite_chat_utf8_fix_pending_gateway_restart=true
+- telegram_hook_lite_chat_response_base64_enabled=true
+- free_model_window_raw_utf8_response_decode=true
+
+## 2026-06-25 Asia/Taipei - Corrected Hermes Lite Routing Overclaim
+Executor: Codex
+Action:
+- Josh asked whether Hermes Lite had actually received and routed a request
+  after it replied that it would summarize a Threads link and route it to Codex.
+- Verified local evidence:
+  - No new `data\routing_decisions\telegram-*` artifact was created after the
+    latest typed dispatch tests.
+  - No new `data\codex_tasks\*\TASK.md` was created after 2026-06-24.
+  - The free-window usage counter increased, proving Hermes Lite received and
+    answered ordinary chat through the lightweight model path.
+- Conclusion: Hermes Lite received the ordinary Telegram message, but did not
+  create a Codex task or route work. The statement "I'll route this to Codex"
+  was an overclaim.
+- Tightened `scripts\free_model_window.ps1` Hermes Lite system prompt:
+  - Hermes Lite cannot claim it will route, has routed, will summarize a link,
+    or has performed external/file actions unless a typed dispatch result or
+    artifact exists.
+  - Hermes Lite should ask Josh to send a typed dispatch block for real work.
+
+Status Labels:
+- hermes_lite_received_plain_chat=true
+- hermes_lite_routed_to_codex=false
+- hermes_lite_routing_overclaim_fixed=true
+- hermes_lite_link_summary_requires_typed_dispatch=true

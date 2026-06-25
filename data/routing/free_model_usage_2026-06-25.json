@@ -2,8 +2,8 @@
   "date": "2026-06-25",
   "providers": {
     "groq": {
-      "attempted_requests": 4,
-      "completed_requests": 4,
+      "attempted_requests": 19,
+      "completed_requests": 19,
       "blocked_requests": 0
     },
     "openrouter": {

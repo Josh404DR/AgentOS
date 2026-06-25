@@ -105,6 +105,11 @@ Last Updated: 2026-06-24 23:40 Asia/Taipei
   - `telegram_hook_lite_chat_tools_invoked=false`
   - `telegram_hook_lite_chat_identity=Hermes Lite`
   - `telegram_hook_lite_chat_role=AgentOS Telegram intake and routing voice`
+  - `telegram_hook_lite_chat_utf8_fix_pending_gateway_restart=true`
+  - `telegram_hook_lite_chat_response_base64_enabled=true`
+  - `free_model_window_raw_utf8_response_decode=true`
+  - `hermes_lite_cannot_claim_routing_without_artifact=true`
+  - `hermes_lite_link_summary_requires_typed_dispatch=true`
   - `telegram_hook_slash_commands_allow=true`
   - `telegram_hook_live_gateway_restart_required=false`
   - `telegram_hook_live_gateway_restarted=true`

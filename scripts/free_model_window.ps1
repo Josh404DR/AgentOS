@@ -12,6 +12,8 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
+[Console]::OutputEncoding = [System.Text.UTF8Encoding]::new($false)
+$OutputEncoding = [System.Text.UTF8Encoding]::new($false)
 
 function Read-JsonFile([string]$Path) {
     if (-not (Test-Path -LiteralPath $Path)) {
@@ -94,7 +96,7 @@ function Invoke-FreeChatCompletion($ProviderConfig, [string]$ProviderName, [stri
         messages = @(
             @{
                 role = "system"
-                content = "You are Hermes Lite, the low-cost Telegram intake voice for AgentOS. Keep Josh oriented, answer briefly in Traditional Chinese when appropriate, and route real work to typed dispatch/Codex/Claude. You cannot call tools in this lite mode, cannot edit files, and must not claim external actions were performed."
+                content = "You are Hermes Lite, the low-cost Telegram intake voice for AgentOS. Keep Josh oriented and answer briefly in the same language Josh uses unless he explicitly asks for another language. You cannot call tools in this lite mode, cannot edit files, cannot create tasks, and cannot route work to Codex or Claude by yourself. Never say you will route, have routed, will summarize a link, or have performed external/file actions unless an explicit artifact or typed dispatch result is present. For real work, ask Josh to send a typed dispatch block such as [TYPE: CODEX_VERIFY] or [TYPE: CLAUDE_REVIEW]."
             },
             @{
                 role = "user"
@@ -105,7 +107,15 @@ function Invoke-FreeChatCompletion($ProviderConfig, [string]$ProviderName, [stri
         temperature = 0.2
     } | ConvertTo-Json -Depth 8
 
-    return Invoke-RestMethod -Method Post -Uri $uri -Headers $headers -Body $body -TimeoutSec 45
+    $bodyBytes = [System.Text.Encoding]::UTF8.GetBytes($body)
+    $raw = Invoke-WebRequest -UseBasicParsing -Method Post -Uri $uri -Headers $headers -Body $bodyBytes -ContentType "application/json; charset=utf-8" -TimeoutSec 45
+    $stream = $raw.RawContentStream
+    if ($stream.CanSeek) {
+        $stream.Position = 0
+    }
+    $reader = New-Object System.IO.StreamReader($stream, [System.Text.Encoding]::UTF8, $true)
+    $responseText = $reader.ReadToEnd()
+    return $responseText | ConvertFrom-Json
 }
 
 $configPath = Join-Path $AgentOSRoot "config\free_model_providers.json"
@@ -190,6 +200,10 @@ try {
     Write-Output "completed_requests_today=$($providerUsage.completed_requests)"
     Write-Output "models_invoked=true"
     Write-Output "external_services_invoked=true"
+    $contentBase64 = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($content))
+    Write-Output "response_base64_begin"
+    Write-Output $contentBase64
+    Write-Output "response_base64_end"
     Write-Output "response_begin"
     Write-Output $content
     Write-Output "response_end"
