@@ -37,6 +37,37 @@ function Get-EnvValue([string]$Name) {
     return ""
 }
 
+function New-UsageState([string]$Date) {
+    return [pscustomobject]@{
+        date = $Date
+        providers = [pscustomobject]@{}
+    }
+}
+
+function Ensure-UsageShape($Usage, [string]$Date) {
+    if (-not $Usage) {
+        return New-UsageState $Date
+    }
+    if (-not $Usage.PSObject.Properties["date"]) {
+        $Usage | Add-Member -NotePropertyName "date" -NotePropertyValue $Date
+    }
+    if (-not $Usage.PSObject.Properties["providers"] -or -not $Usage.providers) {
+        $Usage | Add-Member -NotePropertyName "providers" -NotePropertyValue ([pscustomobject]@{}) -Force
+    }
+    return $Usage
+}
+
+function Get-ProviderUsage($Usage, [string]$ProviderName) {
+    if (-not $Usage.providers.PSObject.Properties[$ProviderName]) {
+        $Usage.providers | Add-Member -NotePropertyName $ProviderName -NotePropertyValue ([pscustomobject]@{
+            attempted_requests = 0
+            completed_requests = 0
+            blocked_requests = 0
+        })
+    }
+    return $Usage.providers.$ProviderName
+}
+
 function Invoke-FreeChatCompletion($ProviderConfig, [string]$ProviderName, [string]$ApiKey, [string]$Message, [int]$MaxTokens) {
     $model = [string]$ProviderConfig.default_model
     if ($ProviderName -eq "openrouter") {
@@ -92,21 +123,11 @@ $usagePath = Join-Path $usageDir ("free_model_usage_" + $today + ".json")
 if (Test-Path -LiteralPath $usagePath) {
     $usage = Read-JsonFile $usagePath
 } else {
-    $usage = [ordered]@{
-        date = $today
-        providers = [ordered]@{}
-    }
+    $usage = New-UsageState $today
 }
 
-if (-not $usage.providers.$Provider) {
-    $usage.providers | Add-Member -NotePropertyName $Provider -NotePropertyValue ([ordered]@{
-        attempted_requests = 0
-        completed_requests = 0
-        blocked_requests = 0
-    })
-}
-
-$providerUsage = $usage.providers.$Provider
+$usage = Ensure-UsageShape $usage $today
+$providerUsage = Get-ProviderUsage $usage $Provider
 $cap = [int]$providerConfig.daily_request_cap
 $apiKeyName = [string]$providerConfig.api_key_env
 $apiKey = Get-EnvValue $apiKeyName

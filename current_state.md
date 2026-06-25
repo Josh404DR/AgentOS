@@ -129,7 +129,13 @@ Last Updated: 2026-06-24 23:40 Asia/Taipei
   - `free_cloud_window_auto_top_up_allowed=false`
   - `free_cloud_window_fallback_to_gemini=false`
   - `free_cloud_window_dry_run_verified=true`
-  - `free_cloud_window_live_invocation_enabled=false`
+  - `free_cloud_window_live_invocation_enabled=true_guarded_only`
+  - `free_cloud_window_live_test_verified=true`
+  - `free_cloud_window_groq_live_test=completed`
+  - `free_cloud_window_openrouter_live_test=completed`
+  - `free_cloud_window_usage_counter_fixed=true`
+  - `free_cloud_window_usage_today_path=data\routing\free_model_usage_2026-06-25.json`
+  - `free_cloud_window_usage_today=groq:1,openrouter:1`
   - `kimi_api_automation=deferred_not_verified_free`
   - `cloudflare_workers_ai_automation=deferred_not_guaranteed_zero_cost`
   - `daily_token_cost_summary_cron_throttled=true`

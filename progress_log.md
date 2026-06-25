@@ -1925,3 +1925,40 @@ Status Labels:
 - daily_token_cost_summary_throttle_verified=true
 - daily_token_cost_summary_models_invoked=false
 - typed_dispatch_hook_skip_verified_from_installed_plugin=true
+
+## 2026-06-25 Asia/Taipei - Verified Groq and OpenRouter Guarded Live Calls
+Executor: Codex
+Action:
+- Josh confirmed Groq/OpenRouter API keys were ready.
+- Initial sandbox-level environment check returned missing keys, but guarded
+  live invocation through the approved execution path could access the keys.
+- Ran one minimal Groq live request through `scripts\free_model_window.ps1`.
+- Ran one minimal OpenRouter live request through `scripts\free_model_window.ps1`.
+- Both tests used `MaxTokens=60`.
+- Both tests prohibited paid tools and Gemini fallback.
+
+Evidence:
+- Groq response matched requested marker:
+  `groq_free_window_ok`.
+- OpenRouter response matched requested marker:
+  `openrouter_free_window_ok`.
+- `models_invoked=true` only for the explicit guarded provider tests.
+- `fallback_to_gemini=false` in both outputs.
+- `paid_models_allowed=false` and `paid_tools_allowed=false` in both outputs.
+
+Fix:
+- Found that the usage JSON counter did not persist provider-level counts after
+  the live calls.
+- Fixed `scripts\free_model_window.ps1` to store provider usage as JSON object
+  properties instead of an empty nested ordered dictionary.
+- Backfilled today's measured live tests into:
+  `data\routing\free_model_usage_2026-06-25.json`.
+- Verified dry-run now reports `attempted_requests_today=1` for both Groq and
+  OpenRouter.
+
+Status Labels:
+- free_cloud_window_groq_live_test=completed
+- free_cloud_window_openrouter_live_test=completed
+- free_cloud_window_usage_counter_fixed=true
+- free_cloud_window_usage_today=groq:1,openrouter:1
+- hermes_default_chat_not_switched=true
