@@ -136,6 +136,10 @@ Last Updated: 2026-06-24 23:40 Asia/Taipei
   - `free_cloud_window_usage_counter_fixed=true`
   - `free_cloud_window_usage_today_path=data\routing\free_model_usage_2026-06-25.json`
   - `free_cloud_window_usage_today=groq:1,openrouter:1`
+  - `hermes_model_alias_groq_added=true`
+  - `hermes_model_alias_openrouter_free_added=true`
+  - `hermes_gateway_restarted_after_free_window_aliases=true`
+  - `hermes_default_chat_switched_to_free_window=false`
   - `kimi_api_automation=deferred_not_verified_free`
   - `cloudflare_workers_ai_automation=deferred_not_guaranteed_zero_cost`
   - `daily_token_cost_summary_cron_throttled=true`

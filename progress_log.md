@@ -1962,3 +1962,29 @@ Status Labels:
 - free_cloud_window_usage_counter_fixed=true
 - free_cloud_window_usage_today=groq:1,openrouter:1
 - hermes_default_chat_not_switched=true
+
+## 2026-06-25 Asia/Taipei - Added Hermes Free Window Model Aliases
+Executor: Codex
+Action:
+- Added direct Hermes model aliases in the active AppData Hermes runtime:
+  - `/model groq` -> `custom`, `llama-3.1-8b-instant`,
+    `https://api.groq.com/openai/v1`
+  - `/model groq-fast` -> same as `/model groq`
+  - `/model openrouter` -> `custom`, `openrouter/free`,
+    `https://openrouter.ai/api/v1`
+  - `/model openrouter-free` -> same as `/model openrouter`
+- Verified aliases load through `hermes_cli.model_switch`.
+- Restarted Hermes gateway with `gateway run --accept-hooks`.
+- Confirmed gateway is running manually after restart.
+
+Boundaries:
+- API keys were not written into Hermes config.
+- Ordinary Telegram chat was not automatically switched.
+- These aliases are manual/operator switches only until a live Telegram model
+  switch is tested by Josh.
+
+Status Labels:
+- hermes_model_alias_groq_added=true
+- hermes_model_alias_openrouter_free_added=true
+- hermes_gateway_restarted_after_free_window_aliases=true
+- hermes_default_chat_switched_to_free_window=false
