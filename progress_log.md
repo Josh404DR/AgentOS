@@ -2012,3 +2012,25 @@ Status Labels:
 - cursor_owned_external_analysis_artifacts=PROJECT_ANALYSIS.md,RECOMMENDATIONS.md
 - cursor_owned_artifacts_non_cursor_editing_allowed=false
 - cursor_owned_artifacts_cleanup_policy=keep_external_cursor_owned
+
+## 2026-06-25 Asia/Taipei - Fixed Hermes Custom Endpoint Base URLs for Free Window Aliases
+Executor: Codex
+Action:
+- Josh reported Hermes `/model groq` warning:
+  `could not reach this custom endpoint's model listing at https://api.groq.com/openai/v1/models`
+- Diagnosis: Hermes appends its model-listing path to the custom base URL, so
+  aliases should use the provider API root before `/v1`.
+- Updated active Hermes aliases:
+  - `/model groq` and `/model groq-fast` base URL:
+    `https://api.groq.com/openai`
+  - `/model openrouter` and `/model openrouter-free` base URL:
+    `https://openrouter.ai/api`
+- API keys were not written into Hermes config.
+- Restarted Hermes gateway with `gateway run --accept-hooks`.
+- Confirmed gateway is running manually after restart.
+
+Status Labels:
+- hermes_model_alias_custom_endpoint_listing_fix=true
+- hermes_model_alias_groq_base_url=https://api.groq.com/openai
+- hermes_model_alias_openrouter_base_url=https://openrouter.ai/api
+- hermes_gateway_restarted_after_free_window_alias_base_fix=true
