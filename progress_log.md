@@ -1988,3 +1988,27 @@ Status Labels:
 - hermes_model_alias_openrouter_free_added=true
 - hermes_gateway_restarted_after_free_window_aliases=true
 - hermes_default_chat_switched_to_free_window=false
+
+## 2026-06-25 Asia/Taipei - Recorded Cursor-Owned External Analysis Artifacts
+Executor: Codex
+Action:
+- Josh clarified that `PROJECT_ANALYSIS.md` and `RECOMMENDATIONS.md` are
+  fully maintained by Cursor.
+- These files are third-party AI analysis artifacts and are valuable as
+  external reference material.
+- Updated the evidence/reporting contract to protect these files from
+  non-Cursor edits.
+- Updated the resource inventory and current state to record the ownership
+  boundary.
+
+Rules:
+- Codex, Hermes, Claude, and other agents may read and cite the files.
+- Non-Cursor agents must not edit, reformat, clean, archive, or delete them.
+- Cleanup manifests must classify them as `keep_external_cursor_owned`.
+- If the files conflict with AgentOS source-of-truth documents, create a
+  separate note or task packet instead of modifying them.
+
+Status Labels:
+- cursor_owned_external_analysis_artifacts=PROJECT_ANALYSIS.md,RECOMMENDATIONS.md
+- cursor_owned_artifacts_non_cursor_editing_allowed=false
+- cursor_owned_artifacts_cleanup_policy=keep_external_cursor_owned

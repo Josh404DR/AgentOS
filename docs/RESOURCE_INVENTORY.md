@@ -139,6 +139,8 @@ Current state:
 - Perplexity IDE is user-reported.
 - VSCode + Cline free is user-reported.
 - Cursor free quota is user-reported.
+- Cursor maintains protected third-party analysis artifacts:
+  `PROJECT_ANALYSIS.md` and `RECOMMENDATIONS.md`.
 - No AgentOS automation interface has been verified for these resources.
 
 Recommended role for now:
@@ -147,6 +149,8 @@ Recommended role for now:
 - Useful for interactive work when Josh chooses to spend free or subscribed quota.
 - Outputs should be copied into tracked AgentOS artifacts if they affect decisions.
 - Not part of Hermes automated orchestration until a tested CLI/API/workflow handoff exists.
+- Cursor-owned artifacts may be read and cited, but must not be modified,
+  reformatted, cleaned, archived, or deleted by non-Cursor agents.
 
 ### Free Cloud Chat Window Candidates
 

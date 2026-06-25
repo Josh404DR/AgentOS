@@ -150,6 +150,9 @@ Last Updated: 2026-06-24 23:40 Asia/Taipei
   - `daily_token_cost_summary_no_change_silent=true`
   - `daily_token_cost_summary_throttle_verified=true`
   - `typed_dispatch_hook_skip_verified_from_installed_plugin=true`
+  - `cursor_owned_external_analysis_artifacts=PROJECT_ANALYSIS.md,RECOMMENDATIONS.md`
+  - `cursor_owned_artifacts_non_cursor_editing_allowed=false`
+  - `cursor_owned_artifacts_cleanup_policy=keep_external_cursor_owned`
 
 ### 7. Role File Hygiene
 - **Role Definitions**:

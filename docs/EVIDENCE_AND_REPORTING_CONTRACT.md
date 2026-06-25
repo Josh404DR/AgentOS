@@ -174,4 +174,31 @@ Execution threshold:
 - Final authority for destructive actions, client messages, installs, and production rollout.
 
 ---
+
+## 8. External Analysis Asset Ownership
+
+Some files are maintained by external/manual tools and must be treated as
+third-party analysis artifacts.
+
+Current protected Cursor-owned artifacts:
+
+```text
+PROJECT_ANALYSIS.md
+RECOMMENDATIONS.md
+```
+
+Rules:
+
+- These files are maintained by Cursor only.
+- Codex, Hermes, Claude, and other agents may read and cite them as
+  third-party analysis context.
+- Codex, Hermes, Claude, and other agents must not edit, reformat, summarize
+  in-place, auto-clean, archive, or delete these files.
+- If their content appears stale or conflicts with AgentOS source-of-truth
+  files, create a separate note or task packet instead of modifying them.
+- Cleanup manifests must mark these files as `keep_external_cursor_owned`.
+- Josh approval is required before any non-Cursor actor changes this ownership
+  rule.
+
+---
 *Unified Evidence and Reporting Contract - Established 2026-06-24*
