@@ -2281,3 +2281,34 @@ Status Labels:
 - hermes_lite_url_auto_intake_route_to=Codex
 - hermes_lite_url_auto_intake_models_invoked=false
 - hermes_gateway_restarted_after_url_intake_hook=true
+
+## 2026-06-25 Asia/Taipei - Auto-Created Codex Task Packet for URL Intake
+Executor: Codex
+Action:
+- Josh clarified that URL intake should not stop at `ready_to_route`; Hermes
+  Lite should send the work into the next AgentOS artifact automatically.
+- Added `scripts\url_intake_task_packet.ps1`.
+  - Converts a `URL_INTAKE` routing decision into a Codex `TASK.md`.
+  - Does not fetch URLs, invoke models, run Codex, or call external services.
+  - Keeps URL content marked as `source_not_verified`.
+- Patched the installed Hermes Telegram hook:
+  - After URL routing succeeds, it automatically calls the task packet script.
+  - Telegram replies now include task packet status and paths.
+- Re-generated the task packet for Josh's live Threads URL intake dispatch:
+  `telegram-telegram-1449022024-1005-20260625-190750`.
+
+Verification:
+- `python -m py_compile` passed for the installed Hermes hook.
+- Direct script run created:
+  `data\codex_tasks\2026-06-25-url-intake-telegram-telegram-1449022024-1005-20260625-190750\TASK.md`.
+- Fake Telegram URL event created both:
+  - routing artifact:
+    `data\routing_decisions\telegram-telegram-test-chat-url-packet-msg-packet-20260625-191730\ROUTING_DECISION.md`
+  - task packet:
+    `data\codex_tasks\2026-06-25-url-intake-telegram-telegram-test-chat-url-packet-msg-packet-20260625-191730\TASK.md`
+
+Status Labels:
+- hermes_lite_url_auto_task_packet_created=true
+- hermes_lite_url_auto_task_packet_external_access=false
+- hermes_lite_url_auto_task_packet_models_invoked=false
+- source_not_verified=true
