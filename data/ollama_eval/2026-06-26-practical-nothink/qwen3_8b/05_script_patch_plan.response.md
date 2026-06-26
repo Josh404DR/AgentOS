@@ -1,0 +1,5 @@
+- Use `try/catch` block to handle exceptions from `Invoke-Thing`  
+- Set `$ErrorActionPreference = 'Stop'` to make all errors terminating  
+- Use `Write-Output` or `Write-Host` with a status code for clarity  
+- Ensure `Invoke-Thing` throws an exception on failure  
+- Use `exit` with a non-zero code to indicate failure

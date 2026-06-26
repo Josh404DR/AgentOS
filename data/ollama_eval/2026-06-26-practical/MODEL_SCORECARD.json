@@ -1,0 +1,42 @@
+[
+  {
+    "model": "qwen2.5-coder:7b",
+    "practical_score": 3.5,
+    "usable": true,
+    "recommended_role": "local_structured_worker",
+    "best_for": ["TASK.md drafts", "code patch plan drafts", "simple evidence audits", "copy-paste structured outputs"],
+    "blocked_for": ["final safety decisions", "external access approval", "customer-facing messages"],
+    "required_options": {},
+    "needs_validator": true
+  },
+  {
+    "model": "qwen3:8b",
+    "practical_score": 3.5,
+    "usable": true,
+    "recommended_role": "evidence_audit_draft_or_url_intake_draft",
+    "best_for": ["evidence audit drafts", "URL intake drafts", "safety boundary reminders", "report hygiene first pass"],
+    "blocked_for": ["first-pass routing without stricter schema", "final approval decisions", "customer-facing messages"],
+    "required_options": {"think": false},
+    "needs_validator": true
+  },
+  {
+    "model": "qwen3.5:9b",
+    "practical_score": 2.5,
+    "usable": "limited",
+    "recommended_role": "long_context_rewrite_only",
+    "best_for": ["long-context copy-paste condensation when speed is not important"],
+    "blocked_for": ["routine routing", "URL approval decisions", "script patch recommendations", "final safety decisions"],
+    "required_options": {"think": false},
+    "needs_validator": true
+  },
+  {
+    "model": "llama3.2:3b",
+    "practical_score": 1.5,
+    "usable": "trivial_formatting_only",
+    "recommended_role": "cheap_format_smoke_test",
+    "best_for": ["trivial rewrite", "format normalization", "copy text into a fixed template", "smoke tests"],
+    "blocked_for": ["routing", "evidence audit", "approval logic", "security review", "URL safety decisions"],
+    "required_options": {},
+    "needs_validator": true
+  }
+]

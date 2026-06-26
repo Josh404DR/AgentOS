@@ -1,0 +1,182 @@
+[
+    {
+        "model":  "qwen3:8b",
+        "task_id":  "01_route_intake",
+        "ok":  true,
+        "elapsed_seconds":  22.73,
+        "response_chars":  173,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical\\qwen3_8b\\01_route_intake.response.md"
+    },
+    {
+        "model":  "qwen3:8b",
+        "task_id":  "02_url_intake_result",
+        "ok":  true,
+        "elapsed_seconds":  7.37,
+        "response_chars":  597,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical\\qwen3_8b\\02_url_intake_result.response.md"
+    },
+    {
+        "model":  "qwen3:8b",
+        "task_id":  "03_report_audit",
+        "ok":  true,
+        "elapsed_seconds":  9.75,
+        "response_chars":  0,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical\\qwen3_8b\\03_report_audit.response.md"
+    },
+    {
+        "model":  "qwen3:8b",
+        "task_id":  "04_telegram_format",
+        "ok":  true,
+        "elapsed_seconds":  6.08,
+        "response_chars":  159,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical\\qwen3_8b\\04_telegram_format.response.md"
+    },
+    {
+        "model":  "qwen3:8b",
+        "task_id":  "05_script_patch_plan",
+        "ok":  true,
+        "elapsed_seconds":  9.62,
+        "response_chars":  0,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical\\qwen3_8b\\05_script_patch_plan.response.md"
+    },
+    {
+        "model":  "qwen2.5-coder:7b",
+        "task_id":  "01_route_intake",
+        "ok":  true,
+        "elapsed_seconds":  8.25,
+        "response_chars":  179,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical\\qwen2.5-coder_7b\\01_route_intake.response.md"
+    },
+    {
+        "model":  "qwen2.5-coder:7b",
+        "task_id":  "02_url_intake_result",
+        "ok":  true,
+        "elapsed_seconds":  3.56,
+        "response_chars":  777,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical\\qwen2.5-coder_7b\\02_url_intake_result.response.md"
+    },
+    {
+        "model":  "qwen2.5-coder:7b",
+        "task_id":  "03_report_audit",
+        "ok":  true,
+        "elapsed_seconds":  2.23,
+        "response_chars":  476,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical\\qwen2.5-coder_7b\\03_report_audit.response.md"
+    },
+    {
+        "model":  "qwen2.5-coder:7b",
+        "task_id":  "04_telegram_format",
+        "ok":  true,
+        "elapsed_seconds":  0.81,
+        "response_chars":  90,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical\\qwen2.5-coder_7b\\04_telegram_format.response.md"
+    },
+    {
+        "model":  "qwen2.5-coder:7b",
+        "task_id":  "05_script_patch_plan",
+        "ok":  true,
+        "elapsed_seconds":  1.98,
+        "response_chars":  277,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical\\qwen2.5-coder_7b\\05_script_patch_plan.response.md"
+    },
+    {
+        "model":  "qwen3.5:9b",
+        "task_id":  "01_route_intake",
+        "ok":  true,
+        "elapsed_seconds":  35.46,
+        "response_chars":  0,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical\\qwen3.5_9b\\01_route_intake.response.md"
+    },
+    {
+        "model":  "qwen3.5:9b",
+        "task_id":  "02_url_intake_result",
+        "ok":  true,
+        "elapsed_seconds":  21.38,
+        "response_chars":  0,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical\\qwen3.5_9b\\02_url_intake_result.response.md"
+    },
+    {
+        "model":  "qwen3.5:9b",
+        "task_id":  "03_report_audit",
+        "ok":  true,
+        "elapsed_seconds":  21.05,
+        "response_chars":  0,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical\\qwen3.5_9b\\03_report_audit.response.md"
+    },
+    {
+        "model":  "qwen3.5:9b",
+        "task_id":  "04_telegram_format",
+        "ok":  true,
+        "elapsed_seconds":  21.12,
+        "response_chars":  0,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical\\qwen3.5_9b\\04_telegram_format.response.md"
+    },
+    {
+        "model":  "qwen3.5:9b",
+        "task_id":  "05_script_patch_plan",
+        "ok":  true,
+        "elapsed_seconds":  20.84,
+        "response_chars":  0,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical\\qwen3.5_9b\\05_script_patch_plan.response.md"
+    },
+    {
+        "model":  "llama3.2:3b",
+        "task_id":  "01_route_intake",
+        "ok":  true,
+        "elapsed_seconds":  6.91,
+        "response_chars":  145,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical\\llama3.2_3b\\01_route_intake.response.md"
+    },
+    {
+        "model":  "llama3.2:3b",
+        "task_id":  "02_url_intake_result",
+        "ok":  true,
+        "elapsed_seconds":  1.84,
+        "response_chars":  692,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical\\llama3.2_3b\\02_url_intake_result.response.md"
+    },
+    {
+        "model":  "llama3.2:3b",
+        "task_id":  "03_report_audit",
+        "ok":  true,
+        "elapsed_seconds":  1.57,
+        "response_chars":  623,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical\\llama3.2_3b\\03_report_audit.response.md"
+    },
+    {
+        "model":  "llama3.2:3b",
+        "task_id":  "04_telegram_format",
+        "ok":  true,
+        "elapsed_seconds":  0.66,
+        "response_chars":  163,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical\\llama3.2_3b\\04_telegram_format.response.md"
+    },
+    {
+        "model":  "llama3.2:3b",
+        "task_id":  "05_script_patch_plan",
+        "ok":  true,
+        "elapsed_seconds":  4.29,
+        "response_chars":  1530,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical\\llama3.2_3b\\05_script_patch_plan.response.md"
+    }
+]

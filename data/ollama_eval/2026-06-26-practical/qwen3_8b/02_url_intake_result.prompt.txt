@@ -1,0 +1,18 @@
+You are processing an AgentOS URL_INTAKE task. Do not fetch the URL.
+
+URL:
+https://www.threads.com/@laxima.tech/post/DaAZHSGFCk_
+
+Raw Josh message:
+https://www.threads.com/@laxima.tech/post/DaAZHSGFCk_
+
+Return a RESULT.md style answer with these exact fields:
+codex_execution_status: completed
+source_not_verified: true
+external_access_required: true|false
+josh_approval_required: true|false
+recommended_next_action: ...
+claude_review_needed: true|false
+risk_level: low|medium|high
+
+Then add short sections: Classification, Boundary.

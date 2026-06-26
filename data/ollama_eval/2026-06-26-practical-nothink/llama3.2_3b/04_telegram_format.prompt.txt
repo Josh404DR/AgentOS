@@ -1,0 +1,9 @@
+Rewrite this into a concise Telegram-safe status update. No table. No nested code blocks. Use key=value lines where possible.
+
+Messy input:
+"Great news!!! We totally completed the thing, probably. Codex maybe ran? Claude looked at stuff. There might be dirty files but it's basically production ready ????. Also external URL may or may not have been read."
+
+Required:
+- Must distinguish claimed vs verified.
+- Must include production_ready=false unless evidence proves otherwise.
+- Must say external_url_read=false.

@@ -154,6 +154,20 @@ Last Updated: 2026-06-24 23:40 Asia/Taipei
   - `free_cloud_window_fallback_to_gemini=false`
   - `free_cloud_window_dry_run_verified=true`
   - `free_cloud_window_live_invocation_enabled=true_guarded_only`
+
+### 7. Ollama Practical Model Evaluation
+- **Evaluation Status**:
+  - `ollama_practical_eval_completed=true`
+  - `ollama_eval_primary_run=data\ollama_eval\2026-06-26-practical`
+  - `ollama_eval_nothink_run=data\ollama_eval\2026-06-26-practical-nothink`
+  - `ollama_eval_report=docs\OLLAMA_MODEL_PRACTICAL_EVALUATION.md`
+  - `ollama_scorecard=data\ollama_eval\2026-06-26-practical\MODEL_SCORECARD.json`
+- **Routing Recommendation**:
+  - `ollama_default_structured_worker=qwen2.5-coder:7b`
+  - `ollama_evidence_draft_worker=qwen3:8b`
+  - `ollama_qwen_thinking_models_require_think_false=true`
+  - `ollama_llama3_2_3b_role=trivial_formatting_only`
+  - `ollama_final_authority_allowed=false`
   - `free_cloud_window_live_test_verified=true`
   - `free_cloud_window_groq_live_test=completed`
   - `free_cloud_window_openrouter_live_test=completed`

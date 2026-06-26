@@ -2354,3 +2354,52 @@ Status Labels:
 - url_intake_worker_verified_with_codex_cli=true
 - url_intake_success_gate=codex_execution_status_completed
 - url_external_read_still_requires_josh_approval=true
+
+## 2026-06-26 Asia/Taipei - Ollama Practical Model Evaluation
+Executor: Codex
+Action:
+- Josh requested practical testing of all installed Ollama models to determine
+  what they can actually do for AgentOS.
+- Queried local Ollama API at `http://localhost:11434/api/tags`.
+- Found 4 installed models:
+  - `qwen3:8b`
+  - `qwen2.5-coder:7b`
+  - `qwen3.5:9b`
+  - `llama3.2:3b`
+- Added reusable runner:
+  `scripts\ollama_practical_eval.ps1`.
+- Ran 5 practical AgentOS tasks per model:
+  - route Telegram URL instruction
+  - produce URL intake result
+  - audit Hermes overclaim report
+  - format Telegram-safe status
+  - produce simple PowerShell patch plan
+- Recorded raw prompts, raw responses, metadata, and run summaries.
+- Discovered Qwen thinking models require `think=false` for short AgentOS
+  worker tasks; otherwise response output can be empty because the token budget
+  is spent in the `thinking` field.
+- Created practical evaluation report:
+  `docs\OLLAMA_MODEL_PRACTICAL_EVALUATION.md`.
+- Created machine-readable routing scorecard:
+  `data\ollama_eval\2026-06-26-practical\MODEL_SCORECARD.json`.
+
+Evidence:
+- Primary run:
+  `data\ollama_eval\2026-06-26-practical\`
+- No-thinking run:
+  `data\ollama_eval\2026-06-26-practical-nothink\`
+
+Conclusion:
+- `qwen2.5-coder:7b`: best practical local structured worker.
+- `qwen3:8b`: usable with `think=false` for evidence-audit and URL-intake drafts.
+- `qwen3.5:9b`: limited; large context but slow and not reliable for routine routing.
+- `llama3.2:3b`: trivial formatting/smoke tests only.
+- Ollama should not be final authority for approval, safety, customer-facing,
+  deletion, production-ready, or external URL decisions.
+
+Status Labels:
+- ollama_practical_eval_completed=true
+- ollama_raw_outputs_recorded=true
+- ollama_qwen_thinking_models_require_think_false=true
+- ollama_default_structured_worker=qwen2.5-coder:7b
+- ollama_final_authority_allowed=false

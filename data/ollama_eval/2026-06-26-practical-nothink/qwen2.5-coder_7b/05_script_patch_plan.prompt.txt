@@ -1,0 +1,8 @@
+You are reviewing this PowerShell pseudo-code:
+
+$result = Invoke-Thing
+Write-Output "status=success"
+
+Problem: Invoke-Thing may fail but the script still prints success if errors are non-terminating.
+
+Return a minimal patch plan in 5 bullets or fewer. Include exact PowerShell concepts to use. Do not write a full script.

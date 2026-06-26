@@ -1,0 +1,182 @@
+[
+    {
+        "model":  "qwen3:8b",
+        "task_id":  "01_route_intake",
+        "ok":  true,
+        "elapsed_seconds":  1.81,
+        "response_chars":  173,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical-nothink\\qwen3_8b\\01_route_intake.response.md"
+    },
+    {
+        "model":  "qwen3:8b",
+        "task_id":  "02_url_intake_result",
+        "ok":  true,
+        "elapsed_seconds":  4.62,
+        "response_chars":  887,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical-nothink\\qwen3_8b\\02_url_intake_result.response.md"
+    },
+    {
+        "model":  "qwen3:8b",
+        "task_id":  "03_report_audit",
+        "ok":  true,
+        "elapsed_seconds":  4.11,
+        "response_chars":  697,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical-nothink\\qwen3_8b\\03_report_audit.response.md"
+    },
+    {
+        "model":  "qwen3:8b",
+        "task_id":  "04_telegram_format",
+        "ok":  true,
+        "elapsed_seconds":  1.87,
+        "response_chars":  270,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical-nothink\\qwen3_8b\\04_telegram_format.response.md"
+    },
+    {
+        "model":  "qwen3:8b",
+        "task_id":  "05_script_patch_plan",
+        "ok":  true,
+        "elapsed_seconds":  2.43,
+        "response_chars":  320,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical-nothink\\qwen3_8b\\05_script_patch_plan.response.md"
+    },
+    {
+        "model":  "qwen2.5-coder:7b",
+        "task_id":  "01_route_intake",
+        "ok":  true,
+        "elapsed_seconds":  8.61,
+        "response_chars":  179,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical-nothink\\qwen2.5-coder_7b\\01_route_intake.response.md"
+    },
+    {
+        "model":  "qwen2.5-coder:7b",
+        "task_id":  "02_url_intake_result",
+        "ok":  true,
+        "elapsed_seconds":  4.71,
+        "response_chars":  965,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical-nothink\\qwen2.5-coder_7b\\02_url_intake_result.response.md"
+    },
+    {
+        "model":  "qwen2.5-coder:7b",
+        "task_id":  "03_report_audit",
+        "ok":  true,
+        "elapsed_seconds":  2.5,
+        "response_chars":  478,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical-nothink\\qwen2.5-coder_7b\\03_report_audit.response.md"
+    },
+    {
+        "model":  "qwen2.5-coder:7b",
+        "task_id":  "04_telegram_format",
+        "ok":  true,
+        "elapsed_seconds":  0.84,
+        "response_chars":  90,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical-nothink\\qwen2.5-coder_7b\\04_telegram_format.response.md"
+    },
+    {
+        "model":  "qwen2.5-coder:7b",
+        "task_id":  "05_script_patch_plan",
+        "ok":  true,
+        "elapsed_seconds":  1.75,
+        "response_chars":  259,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical-nothink\\qwen2.5-coder_7b\\05_script_patch_plan.response.md"
+    },
+    {
+        "model":  "qwen3.5:9b",
+        "task_id":  "01_route_intake",
+        "ok":  true,
+        "elapsed_seconds":  21.47,
+        "response_chars":  169,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical-nothink\\qwen3.5_9b\\01_route_intake.response.md"
+    },
+    {
+        "model":  "qwen3.5:9b",
+        "task_id":  "02_url_intake_result",
+        "ok":  true,
+        "elapsed_seconds":  17.87,
+        "response_chars":  1882,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical-nothink\\qwen3.5_9b\\02_url_intake_result.response.md"
+    },
+    {
+        "model":  "qwen3.5:9b",
+        "task_id":  "03_report_audit",
+        "ok":  true,
+        "elapsed_seconds":  7.54,
+        "response_chars":  700,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical-nothink\\qwen3.5_9b\\03_report_audit.response.md"
+    },
+    {
+        "model":  "qwen3.5:9b",
+        "task_id":  "04_telegram_format",
+        "ok":  true,
+        "elapsed_seconds":  2.62,
+        "response_chars":  155,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical-nothink\\qwen3.5_9b\\04_telegram_format.response.md"
+    },
+    {
+        "model":  "qwen3.5:9b",
+        "task_id":  "05_script_patch_plan",
+        "ok":  true,
+        "elapsed_seconds":  8.97,
+        "response_chars":  679,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical-nothink\\qwen3.5_9b\\05_script_patch_plan.response.md"
+    },
+    {
+        "model":  "llama3.2:3b",
+        "task_id":  "01_route_intake",
+        "ok":  true,
+        "elapsed_seconds":  7.03,
+        "response_chars":  145,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical-nothink\\llama3.2_3b\\01_route_intake.response.md"
+    },
+    {
+        "model":  "llama3.2:3b",
+        "task_id":  "02_url_intake_result",
+        "ok":  true,
+        "elapsed_seconds":  1.89,
+        "response_chars":  746,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical-nothink\\llama3.2_3b\\02_url_intake_result.response.md"
+    },
+    {
+        "model":  "llama3.2:3b",
+        "task_id":  "03_report_audit",
+        "ok":  true,
+        "elapsed_seconds":  1.57,
+        "response_chars":  615,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical-nothink\\llama3.2_3b\\03_report_audit.response.md"
+    },
+    {
+        "model":  "llama3.2:3b",
+        "task_id":  "04_telegram_format",
+        "ok":  true,
+        "elapsed_seconds":  0.6,
+        "response_chars":  107,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical-nothink\\llama3.2_3b\\04_telegram_format.response.md"
+    },
+    {
+        "model":  "llama3.2:3b",
+        "task_id":  "05_script_patch_plan",
+        "ok":  true,
+        "elapsed_seconds":  4.26,
+        "response_chars":  1510,
+        "error":  "",
+        "response_path":  "E:\\AgentOS\\data\\ollama_eval\\2026-06-26-practical-nothink\\llama3.2_3b\\05_script_patch_plan.response.md"
+    }
+]

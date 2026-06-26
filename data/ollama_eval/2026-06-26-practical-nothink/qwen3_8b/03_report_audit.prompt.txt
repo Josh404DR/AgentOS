@@ -1,0 +1,12 @@
+You are an AgentOS evidence auditor. Read this report and find overclaims.
+
+Report:
+"NotebookLM remote sync is verified and production ready. I uploaded all files successfully. Evidence path: not_applicable. verification_commands: none. cleanup_executed=false."
+
+Return:
+1. verdict: pass/fail
+2. overclaims: bullet list
+3. corrected_status_labels: key=value lines
+4. one sentence recommendation
+
+Be strict. Do not invent evidence.

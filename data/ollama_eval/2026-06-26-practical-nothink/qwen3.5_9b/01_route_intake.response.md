@@ -1,0 +1,1 @@
+{"intent_type":"external_link_share","route_to":"Hermes","needs_josh_approval":true,"external_access_allowed":false,"next_action":"forward_for_review","confidence":0.95}
