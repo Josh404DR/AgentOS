@@ -2442,3 +2442,24 @@ Status Labels:
 - ollama_fastest_formatter=llama3.2:3b
 - ollama_best_warm_worker=qwen2.5-coder:7b
 - ollama_routine_qwen3_5_9b_use=false
+## 2026-06-26 - NotebookLM Conveyor Setup
+- Added deterministic NotebookLM conveyor scripts:
+  - `scripts\export_notebooklm_sources.ps1`
+  - `scripts\notebooklm_conveyor.ps1`
+  - `scripts\register_notebooklm_conveyor_task.ps1`
+- Added `docs\NOTEBOOKLM_CONVEYOR.md`.
+- Updated `scripts\sync_notebooklm.py`:
+  - default notebook ID now points to the verified fresh notebook `79ef4683-f7d2-43da-b8d3-7298858949e5`
+  - fixed Markdown discovery indentation bug that caused dry-runs to report 0 files
+  - added `--title-mode relpath-hash` for changed-document upload titles
+- DryRun verification:
+  - export source count: 43
+  - sync dry-run discovered Markdown count: 44
+  - models invoked: false
+  - live external upload executed: false
+- Registered local-only Windows Scheduled Task:
+  - task name: `AgentOS NotebookLM Conveyor`
+  - schedule: daily at `03:30`
+  - mode: `DryRun`
+- Attempted Live scheduled upload registration was blocked by policy because it would automate future external upload of private workspace documents. Final schedule is therefore DryRun only; Live NotebookLM upload remains manual via:
+  - `powershell -ExecutionPolicy Bypass -File scripts\notebooklm_conveyor.ps1 -Mode Live`

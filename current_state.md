@@ -19,6 +19,21 @@ Last Updated: 2026-06-24 23:40 Asia/Taipei
 - **Remote Sync**: `verified_fresh_notebook`
 - **NotebookLM Role**: Layer 3 (Retrieval-Only, not Source of Truth)
 - **Sync/Cleanup Decoupling**: `true` (Cleanup does not depend on Sync)
+- **NotebookLM Conveyor**:
+  - `notebooklm_conveyor_created=true`
+  - `notebooklm_conveyor_doc=docs\NOTEBOOKLM_CONVEYOR.md`
+  - `notebooklm_export_script=scripts\export_notebooklm_sources.ps1`
+  - `notebooklm_conveyor_script=scripts\notebooklm_conveyor.ps1`
+  - `notebooklm_scheduler_script=scripts\register_notebooklm_conveyor_task.ps1`
+  - `notebooklm_conveyor_schedule=03:30_daily`
+  - `notebooklm_conveyor_scheduled_mode=DryRun`
+  - `notebooklm_conveyor_live_schedule_blocked_by_policy=true`
+  - `notebooklm_conveyor_manual_live_command=powershell -ExecutionPolicy Bypass -File scripts\notebooklm_conveyor.ps1 -Mode Live`
+  - `notebooklm_conveyor_dry_run_verified=true`
+  - `notebooklm_conveyor_export_source_count=43`
+  - `notebooklm_conveyor_dry_run_discovered_markdown=44`
+  - `notebooklm_conveyor_models_invoked=false`
+  - `notebooklm_conveyor_external_upload_from_schedule=false`
 
 ### 3. Device Maintenance Project
 - **Project Index**: `data\projects\device_maintenance.md`

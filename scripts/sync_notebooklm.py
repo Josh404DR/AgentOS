@@ -2,12 +2,30 @@ import asyncio
 import os
 import argparse
 import datetime
+import hashlib
 from pathlib import Path
 
 # Default Configuration
-DEFAULT_NOTEBOOK_ID = "9af31a16-7984-428a-85ff-2d648d858560"
+DEFAULT_NOTEBOOK_ID = "79ef4683-f7d2-43da-b8d3-7298858949e5"
 DEFAULT_EXPORT_DIR = "E:/AgentOS/exports/notebooklm_v1"
 DEFAULT_LOG_DIR = "E:/AgentOS/data/memory/sync_logs"
+
+
+def build_source_title(export_path, file_rel, mode):
+    file_path = export_path / file_rel
+    rel_title = Path(file_rel).as_posix()
+
+    if mode == "name":
+        return file_path.name
+
+    if mode == "relpath":
+        return rel_title
+
+    if mode == "relpath-hash":
+        digest = hashlib.sha256(file_path.read_bytes()).hexdigest()[:10]
+        return f"{rel_title} [{digest}]"
+
+    raise ValueError(f"Unsupported title mode: {mode}")
 
 async def sync_files(args):
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H%M%S")
@@ -41,10 +59,10 @@ async def sync_files(args):
         return
 
     # Find all markdown files
-    for root, _, files in os.walk(args.export_dir):
+    for root, _, files in os.walk(export_path):
         for file in files:
             if file.endswith(".md"):
-                rel_path = Path(root).relative_to(args.export_dir) / file
+                rel_path = Path(root).relative_to(export_path) / file
                 log_data["files_discovered"].append(str(rel_path))
 
     print(f"Discovered {len(log_data['files_discovered'])} markdown files.")
@@ -75,7 +93,7 @@ async def sync_files(args):
 
             for file_rel in log_data["files_discovered"]:
                 file_path = export_path / file_rel
-                title = file_path.name
+                title = build_source_title(export_path, file_rel, args.title_mode)
                 
                 if title in existing_titles:
                     log_data["files_skipped"].append(title)
@@ -142,6 +160,12 @@ if __name__ == "__main__":
     parser.add_argument("--export-dir", default=DEFAULT_EXPORT_DIR, help="Directory containing markdown files to sync.")
     parser.add_argument("--notebook-id", default=DEFAULT_NOTEBOOK_ID, help="Target NotebookLM notebook ID.")
     parser.add_argument("--log-dir", default=DEFAULT_LOG_DIR, help="Directory to save sync logs.")
+    parser.add_argument(
+        "--title-mode",
+        choices=["name", "relpath", "relpath-hash"],
+        default="name",
+        help="How source titles are generated. relpath-hash uploads changed files as new versions.",
+    )
     
     args = parser.parse_args()
     asyncio.run(sync_files(args))
