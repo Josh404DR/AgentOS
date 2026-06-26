@@ -1,0 +1,1 @@
+Convert to key=value only, no markdown: task done, verified by codex false, production ready false, external url read false.

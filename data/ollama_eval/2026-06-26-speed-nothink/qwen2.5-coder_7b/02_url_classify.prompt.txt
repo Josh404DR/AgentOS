@@ -1,0 +1,1 @@
+Classify this URL intake in compact JSON only: https://www.threads.com/@demo/post/abc . Keys: domain, task_type, external_access_required, josh_approval_required, route_to.

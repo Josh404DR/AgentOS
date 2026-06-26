@@ -1,0 +1,2 @@
+Condense these notes into 8 bullets and preserve caveats:
+Hermes Lite receives Telegram messages. Typed dispatch should avoid Gemini. URL intake should create a routing artifact, create a Codex task packet, then Codex worker writes RESULT.md. External URL reading still requires Josh approval. Ollama models are cheap but not final authority. Qwen thinking models require think=false. Claude is reviewer. Codex is executor. Cursor owns PROJECT_ANALYSIS.md and RECOMMENDATIONS.md. Do not edit Cursor-owned files. Evidence must be written to disk. Do not overclaim production ready.

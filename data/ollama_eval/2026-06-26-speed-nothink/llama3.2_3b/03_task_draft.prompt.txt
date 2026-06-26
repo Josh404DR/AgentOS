@@ -1,0 +1,5 @@
+Create a short AgentOS TASK.md draft for this work:
+Goal: normalize 5 messy Telegram reports into key=value status.
+Constraints: no external access, no cleanup, no customer messages.
+Output: RESULT.md.
+Keep it under 180 words.

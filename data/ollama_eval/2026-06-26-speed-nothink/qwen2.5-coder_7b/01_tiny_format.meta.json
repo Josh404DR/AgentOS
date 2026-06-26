@@ -1,0 +1,17 @@
+{
+    "ok":  true,
+    "error":  "",
+    "started_at":  "2026-06-26T19:08:13.0252732+08:00",
+    "finished_at":  "2026-06-26T19:08:53.1696592+08:00",
+    "wall_seconds":  40.14,
+    "load_seconds":  39.67,
+    "prompt_eval_count":  56,
+    "prompt_eval_seconds":  0.12,
+    "eval_count":  19,
+    "eval_seconds":  0.34,
+    "tokens_per_second":  56.02,
+    "response_chars":  92,
+    "response":  "task_done=false  \nverified_by_codex=false  \nproduction_ready=false  \nexternal_url_read=false",
+    "done_reason":  "stop",
+    "raw":  "{\r\n    \"model\":  \"qwen2.5-coder:7b\",\r\n    \"created_at\":  \"2026-06-26T11:08:53.1675515Z\",\r\n    \"response\":  \"task_done=false  \\nverified_by_codex=false  \\nproduction_ready=false  \\nexternal_url_read=false\",\r\n    \"done\":  true,\r\n    \"done_reason\":  \"stop\",\r\n    \"context\":  [\r\n                    151644,\r\n                    8948,\r\n                    198,\r\n                    2610,\r\n                    525,\r\n                    1207,\r\n                    16948,\r\n                    11,\r\n                    3465,\r\n                    553,\r\n                    54364,\r\n                    14817,\r\n                    13,\r\n                    1446,\r\n                    525,\r\n                    264,\r\n                    10950,\r\n                    17847,\r\n                    13,\r\n                    151645,\r\n                    198,\r\n                    151644,\r\n                    872,\r\n                    198,\r\n                    12012,\r\n                    311,\r\n                    1376,\r\n                    46538,\r\n                    1172,\r\n                    11,\r\n                    902,\r\n                    50494,\r\n                    25,\r\n                    3383,\r\n                    2814,\r\n                    11,\r\n                    23933,\r\n                    553,\r\n                    20329,\r\n                    327,\r\n                    895,\r\n                    11,\r\n                    5670,\r\n                    5527,\r\n                    895,\r\n                    11,\r\n                    9250,\r\n                    2515,\r\n                    1349,\r\n                    895,\r\n                    13,\r\n                    151645,\r\n                    198,\r\n                    151644,\r\n                    77091,\r\n                    198,\r\n                    8202,\r\n                    24390,\r\n                    12219,\r\n                    2303,\r\n                    21037,\r\n                    3710,\r\n                    55290,\r\n                    327,\r\n                    12219,\r\n                    2303,\r\n                    22627,\r\n                    35456,\r\n                    12219,\r\n                    2303,\r\n                    20921,\r\n                    2903,\r\n                    6443,\r\n                    12219\r\n                ],\r\n    \"total_duration\":  40141307000,\r\n    \"load_duration\":  39668936100,\r\n    \"prompt_eval_count\":  56,\r\n    \"prompt_eval_duration\":  121703000,\r\n    \"eval_count\":  19,\r\n    \"eval_duration\":  339193000\r\n}"
+}

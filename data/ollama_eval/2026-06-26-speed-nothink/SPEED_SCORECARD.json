@@ -1,0 +1,46 @@
+﻿[
+    {
+        "model":  "llama3.2:3b",
+        "calls":  5,
+        "first_call_seconds":  7.67,
+        "avg_all_seconds":  2.75,
+        "avg_warm_seconds":  1.52,
+        "max_seconds":  7.67,
+        "avg_tokens_per_second":  103.73,
+        "avg_warm_tokens_per_second":  103.64,
+        "total_wall_seconds":  13.73
+    },
+    {
+        "model":  "qwen2.5-coder:7b",
+        "calls":  5,
+        "first_call_seconds":  40.14,
+        "avg_all_seconds":  9.95,
+        "avg_warm_seconds":  2.41,
+        "max_seconds":  40.14,
+        "avg_tokens_per_second":  56.49,
+        "avg_warm_tokens_per_second":  56.61,
+        "total_wall_seconds":  49.77
+    },
+    {
+        "model":  "qwen3:8b",
+        "calls":  5,
+        "first_call_seconds":  0.99,
+        "avg_all_seconds":  2.68,
+        "avg_warm_seconds":  3.11,
+        "max_seconds":  4.68,
+        "avg_tokens_per_second":  51.35,
+        "avg_warm_tokens_per_second":  50.3,
+        "total_wall_seconds":  13.42
+    },
+    {
+        "model":  "qwen3.5:9b",
+        "calls":  5,
+        "first_call_seconds":  19.18,
+        "avg_all_seconds":  11.89,
+        "avg_warm_seconds":  10.07,
+        "max_seconds":  19.18,
+        "avg_tokens_per_second":  22.75,
+        "avg_warm_tokens_per_second":  22.63,
+        "total_wall_seconds":  59.46
+    }
+]

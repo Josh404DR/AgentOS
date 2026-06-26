@@ -1,0 +1,4 @@
+task_done=false  
+verified_by_codex=false  
+production_ready=false  
+external_url_read=false

@@ -162,8 +162,12 @@ Last Updated: 2026-06-24 23:40 Asia/Taipei
   - `ollama_eval_nothink_run=data\ollama_eval\2026-06-26-practical-nothink`
   - `ollama_eval_report=docs\OLLAMA_MODEL_PRACTICAL_EVALUATION.md`
   - `ollama_scorecard=data\ollama_eval\2026-06-26-practical\MODEL_SCORECARD.json`
+  - `ollama_speed_eval_completed=true`
+  - `ollama_speed_eval_run=data\ollama_eval\2026-06-26-speed-nothink`
+  - `ollama_speed_eval_report=docs\OLLAMA_SPEED_EVALUATION.md`
 - **Routing Recommendation**:
   - `ollama_default_structured_worker=qwen2.5-coder:7b`
+  - `ollama_fastest_formatter=llama3.2:3b`
   - `ollama_evidence_draft_worker=qwen3:8b`
   - `ollama_qwen_thinking_models_require_think_false=true`
   - `ollama_llama3_2_3b_role=trivial_formatting_only`

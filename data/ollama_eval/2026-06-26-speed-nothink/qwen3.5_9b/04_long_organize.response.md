@@ -1,0 +1,8 @@
+- Hermes Lite serves as the entry point for receiving Telegram messages, acting as the initial ingestion layer.
+- Typed dispatch workflows should explicitly avoid using Gemini models to prevent potential compatibility or accuracy issues.
+- URL intake processes must generate a routing artifact and subsequently create a Codex task packet before execution begins.
+- The Codex worker is responsible for writing final outputs directly to RESULT.md after processing assigned tasks.
+- Reading external URLs remains restricted and requires explicit approval from Josh prior to any access attempts.
+- While Ollama models offer cost-effective options, they are not considered the final authority on critical decisions or data validation.
+- Qwen thinking models must be configured with think=false parameters to ensure efficient operation within this pipeline.
+- Claude functions strictly as a reviewer; Cursor owns PROJECT_ANALYSIS.md and RECOMMENDATIONS.md, which must never be edited directly by other agents.

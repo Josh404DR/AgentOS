@@ -1,0 +1,11 @@
+Classify each item as format, draft, audit, risky, or skip. Return one line per item.
+1. Turn messy report into key=value.
+2. Decide whether to delete old evidence folders.
+3. Draft TASK.md from fixed template.
+4. Detect unsupported production_ready=true.
+5. Send customer a proposal.
+6. Summarize 20 pasted notes.
+7. Decide whether to read an external URL.
+8. Convert list into Markdown bullets.
+9. Patch PowerShell error handling.
+10. Approve API spending.

@@ -2403,3 +2403,42 @@ Status Labels:
 - ollama_qwen_thinking_models_require_think_false=true
 - ollama_default_structured_worker=qwen2.5-coder:7b
 - ollama_final_authority_allowed=false
+
+## 2026-06-26 Asia/Taipei - Ollama Practical Speed Evaluation
+Executor: Codex
+Action:
+- Josh requested speed testing for the installed Ollama models using simulated
+  AgentOS tasks.
+- Added reusable runner:
+  `scripts\ollama_speed_eval.ps1`.
+- Ran 4 local models across 5 simulated worker tasks:
+  - tiny key-value formatting
+  - URL intake classification
+  - short `TASK.md` draft
+  - long-note organization
+  - batch classification
+- Used `DisableThinking=true` to match the recommended AgentOS local-worker
+  mode for Qwen thinking models.
+- Recorded raw speed outputs:
+  `data\ollama_eval\2026-06-26-speed-nothink\`.
+- Created speed report:
+  `docs\OLLAMA_SPEED_EVALUATION.md`.
+
+Measured Results:
+- `llama3.2:3b`: warm avg 1.52s, avg warm 103.64 tokens/sec.
+- `qwen2.5-coder:7b`: warm avg 2.41s, avg warm 56.61 tokens/sec.
+- `qwen3:8b`: warm avg 3.11s, avg warm 50.30 tokens/sec.
+- `qwen3.5:9b`: warm avg 10.07s, avg warm 22.63 tokens/sec.
+
+Conclusion:
+- Fastest formatter: `llama3.2:3b`.
+- Best useful local worker after warmup: `qwen2.5-coder:7b`.
+- Acceptable audit/format worker: `qwen3:8b` with `think=false`.
+- Too slow for routine task queues: `qwen3.5:9b`.
+
+Status Labels:
+- ollama_speed_eval_completed=true
+- ollama_speed_raw_outputs_recorded=true
+- ollama_fastest_formatter=llama3.2:3b
+- ollama_best_warm_worker=qwen2.5-coder:7b
+- ollama_routine_qwen3_5_9b_use=false

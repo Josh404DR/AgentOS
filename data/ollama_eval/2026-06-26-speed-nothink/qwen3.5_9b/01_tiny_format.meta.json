@@ -1,0 +1,17 @@
+{
+    "ok":  true,
+    "error":  "",
+    "started_at":  "2026-06-26T19:09:02.9067430+08:00",
+    "finished_at":  "2026-06-26T19:09:22.0874101+08:00",
+    "wall_seconds":  19.18,
+    "load_seconds":  17.98,
+    "prompt_eval_count":  39,
+    "prompt_eval_seconds":  0.37,
+    "eval_count":  19,
+    "eval_seconds":  0.82,
+    "tokens_per_second":  23.25,
+    "response_chars":  80,
+    "response":  "task=done;verified_by_codex=false;production_ready=false;external_url_read=false",
+    "done_reason":  "stop",
+    "raw":  "{\r\n    \"model\":  \"qwen3.5:9b\",\r\n    \"created_at\":  \"2026-06-26T11:09:22.0847947Z\",\r\n    \"response\":  \"task=done;verified_by_codex=false;production_ready=false;external_url_read=false\",\r\n    \"done\":  true,\r\n    \"done_reason\":  \"stop\",\r\n    \"context\":  [\r\n                    248045,\r\n                    846,\r\n                    198,\r\n                    11670,\r\n                    310,\r\n                    1328,\r\n                    44984,\r\n                    1132,\r\n                    11,\r\n                    874,\r\n                    48794,\r\n                    25,\r\n                    3274,\r\n                    2725,\r\n                    11,\r\n                    23185,\r\n                    539,\r\n                    19712,\r\n                    325,\r\n                    867,\r\n                    11,\r\n                    5492,\r\n                    5354,\r\n                    867,\r\n                    11,\r\n                    8976,\r\n                    2435,\r\n                    1301,\r\n                    867,\r\n                    13,\r\n                    248046,\r\n                    198,\r\n                    248045,\r\n                    74455,\r\n                    198,\r\n                    248068,\r\n                    271,\r\n                    248069,\r\n                    271,\r\n                    7945,\r\n                    28,\r\n                    10128,\r\n                    26,\r\n                    20392,\r\n                    3584,\r\n                    53433,\r\n                    325,\r\n                    11871,\r\n                    26,\r\n                    21924,\r\n                    34283,\r\n                    11871,\r\n                    26,\r\n                    20282,\r\n                    2809,\r\n                    6241,\r\n                    11871\r\n                ],\r\n    \"total_duration\":  19177168800,\r\n    \"load_duration\":  17981514400,\r\n    \"prompt_eval_count\":  39,\r\n    \"prompt_eval_duration\":  370805000,\r\n    \"eval_count\":  19,\r\n    \"eval_duration\":  817334000\r\n}"
+}
