@@ -2463,3 +2463,12 @@ Status Labels:
   - mode: `DryRun`
 - Attempted Live scheduled upload registration was blocked by policy because it would automate future external upload of private workspace documents. Final schedule is therefore DryRun only; Live NotebookLM upload remains manual via:
   - `powershell -ExecutionPolicy Bypass -File scripts\notebooklm_conveyor.ps1 -Mode Live`
+## 2026-06-29 - NotebookLM auxiliary retrieval landing
+
+- Reclassified NotebookLM as an optional human retrieval tool; local files and
+  Git remain authoritative.
+- Replaced the per-file export with six exclusive fixed bundles.
+- Changed the scheduled conveyor to weekly Sunday 03:30 DryRun.
+- Verified `BUNDLE_COUNT=6`, sync discovery count `6`, and no live upload.
+- Added local LLM and NotebookLM landing reports under `docs/reports/`.
+- Next: use manual Live mode only when Josh explicitly requests an upload.

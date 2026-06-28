@@ -25,6 +25,10 @@ def build_source_title(export_path, file_rel, mode):
         digest = hashlib.sha256(file_path.read_bytes()).hexdigest()[:10]
         return f"{rel_title} [{digest}]"
 
+    if mode == "bundle-hash":
+        digest = hashlib.sha256(file_path.read_bytes()).hexdigest()[:12]
+        return f"{file_path.stem} [{digest}]"
+
     raise ValueError(f"Unsupported title mode: {mode}")
 
 async def sync_files(args):
@@ -46,6 +50,7 @@ async def sync_files(args):
         "files_planned": [],
         "files_uploaded": [],
         "files_skipped": [],
+        "old_versions_deleted": [],
         "errors": [],
         "final_status": "in_progress"
     }
@@ -104,9 +109,26 @@ async def sync_files(args):
                 print(f"Uploading {title}...")
                 try:
                     content = file_path.read_text(encoding="utf-8")
-                    await client.sources.add_text(args.notebook_id, title, content)
+                    uploaded = await client.sources.add_text(
+                        args.notebook_id,
+                        title,
+                        content,
+                        wait=True,
+                        wait_timeout=180.0,
+                    )
                     log_data["files_uploaded"].append(title)
                     print(f"Successfully uploaded {title}")
+
+                    if args.title_mode == "bundle-hash":
+                        prefix = f"{file_path.stem} ["
+                        old_versions = [
+                            source for source in existing_sources
+                            if source.title != title and source.title.startswith(prefix)
+                        ]
+                        for old_source in old_versions:
+                            await client.sources.delete(args.notebook_id, old_source.id)
+                            log_data["old_versions_deleted"].append(old_source.title)
+                            print(f"Deleted old ready version {old_source.title}")
                 except Exception as e:
                     err_msg = f"Failed to upload {title}: {e}"
                     log_data["errors"].append(err_msg)
@@ -140,6 +162,7 @@ def write_log(path, data):
 - **Planned**: {len(data['files_planned'])}
 - **Uploaded**: {len(data['files_uploaded'])}
 - **Skipped**: {len(data['files_skipped'])}
+- **Old Ready Versions Deleted**: {len(data['old_versions_deleted'])}
 - **Final Status**: `{data['final_status']}`
 
 ## Files Discovered
@@ -162,7 +185,7 @@ if __name__ == "__main__":
     parser.add_argument("--log-dir", default=DEFAULT_LOG_DIR, help="Directory to save sync logs.")
     parser.add_argument(
         "--title-mode",
-        choices=["name", "relpath", "relpath-hash"],
+        choices=["name", "relpath", "relpath-hash", "bundle-hash"],
         default="name",
         help="How source titles are generated. relpath-hash uploads changed files as new versions.",
     )

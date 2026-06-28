@@ -31,7 +31,7 @@ $args = @(
     "--export-dir", $exportDir,
     "--notebook-id", $NotebookId,
     "--log-dir", $logDir,
-    "--title-mode", "relpath-hash"
+    "--title-mode", "bundle-hash"
 )
 
 if ($Mode -eq "DryRun") {
@@ -49,7 +49,9 @@ $summary = @"
 - notebook_id: $NotebookId
 - export_dir: $exportDir
 - python_path: $PythonPath
-- title_mode: relpath-hash
+- title_mode: bundle-hash
+- bundle_count: 6
+- notebooklm_role: human_auxiliary_retrieval
 - models_invoked: false
 - external_services_invoked: $($Mode -eq "Live")
 - live_external_action_executed: $($Mode -eq "Live")
