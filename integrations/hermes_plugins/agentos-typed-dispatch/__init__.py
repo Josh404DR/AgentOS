@@ -12,6 +12,7 @@ from typing import Any, Optional
 
 logger = logging.getLogger(__name__)
 
+PLUGIN_VERSION = "0.2.1"
 AGENTOS_ROOT = Path(r"E:\AgentOS")
 ENTRYPOINT = AGENTOS_ROOT / "scripts" / "telegram_typed_dispatch_entry.ps1"
 THREADS_PIPELINE = AGENTOS_ROOT / "scripts" / "threads_url_intake.ps1"
@@ -305,3 +306,8 @@ async def _pre_gateway_dispatch(
 
 def register(ctx) -> None:
     ctx.register_hook("pre_gateway_dispatch", _pre_gateway_dispatch)
+    logger.info(
+        "AgentOS typed dispatch plugin v%s registered from %s",
+        PLUGIN_VERSION,
+        __file__,
+    )

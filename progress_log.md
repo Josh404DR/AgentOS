@@ -2501,3 +2501,11 @@ Status Labels:
 - Confirmed the active runtime copy remains at `%LOCALAPPDATA%\hermes\plugins\agentos-typed-dispatch`.
 - Confirmed the Hermes Gateway remained running after deletion.
 - Canonical source remains `E:\AgentOS\integrations\hermes_plugins\agentos-typed-dispatch`.
+
+## 2026-06-29 - Diagnose Telegram 413 after plugin cleanup
+
+- Confirmed the Threads URL bypassed the intake hook and reached Groq.
+- Groq rejected the request because its free-tier TPM limit was 6,000 while the assembled Hermes request was 21,635 tokens.
+- The Gateway had been started before the inactive plugin duplicate was removed, so deleting the file did not unload the already-imported Python module.
+- Added plugin version and source-path logging, deployed v0.2.1, and required a fresh Gateway restart.
+- Groq `llama-3.1-8b-instant` remains unsuitable for ordinary Hermes conversation while the baseline prompt exceeds its free-tier TPM limit; deterministic typed dispatch must avoid that model call.

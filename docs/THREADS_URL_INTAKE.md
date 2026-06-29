@@ -62,7 +62,7 @@ Installed copy:
 %LOCALAPPDATA%\hermes\plugins\agentos-typed-dispatch\
 ```
 
-Version: `0.2.0`
+Version: `0.2.1`
 
 Hermes Gateway must be restarted after plugin updates.
 
