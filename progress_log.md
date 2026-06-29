@@ -2494,3 +2494,10 @@ Status Labels:
 - Verified Hermes reports `agentos-typed-dispatch` version `0.2.0`.
 - Re-ran the submitted Threads URL through the full pipeline: fetch succeeded, Codex completed, and the UTF-8 result is readable on disk.
 - Added `scripts\deploy_hermes_typed_dispatch_plugin.ps1` so future deployments resolve the active Hermes home deterministically.
+
+## 2026-06-29 - Remove inactive Hermes plugin duplicate
+
+- Deleted the inactive duplicate at `C:\Users\brian\.hermes\plugins\agentos-typed-dispatch` after explicit Josh approval.
+- Confirmed the active runtime copy remains at `%LOCALAPPDATA%\hermes\plugins\agentos-typed-dispatch`.
+- Confirmed the Hermes Gateway remained running after deletion.
+- Canonical source remains `E:\AgentOS\integrations\hermes_plugins\agentos-typed-dispatch`.
