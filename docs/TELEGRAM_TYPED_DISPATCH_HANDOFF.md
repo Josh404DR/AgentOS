@@ -31,7 +31,7 @@ call Gemini, Codex, Claude, Ollama, Telegram, or external services.
 Hermes plugin installed:
 
 ```text
-C:\Users\brian\AppData\Local\hermes\plugins\agentos-typed-dispatch\
+C:\Users\brian\.hermes\plugins\agentos-typed-dispatch\
 ```
 
 The plugin registers:

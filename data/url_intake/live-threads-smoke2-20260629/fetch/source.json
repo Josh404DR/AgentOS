@@ -1,0 +1,13 @@
+{
+  "fetch_status": "success",
+  "url": "https://www.threads.net/@tototal999/post/DZ7X5-QmcML",
+  "final_url": "https://www.threads.com/@tototal999/post/DZ7X5-QmcML",
+  "http_status": 200,
+  "text": "tototal999\n5天\ngithub.com/addyo…\n架構概覽：\n想像你有一隻非常聰明但做事很粗心、喜歡抄捷徑的「AI 機器人助手」。如果你直接叫牠蓋一棟樂高城堡，牠可能一分鐘就亂疊出一座看起來很漂亮的城堡，但你輕輕一碰，城堡就塌了，因為牠沒打地基，也沒檢查積木有沒有卡緊。\nGoogle 的厲害工程師 Addy Osmani 寫出的 \"agent-skills\"（機器人技能包），就像是**一本給 AI 機器人專用的「乖乖工作守則」**。這本守則規定：AI 做事不能只求快，必須像人類最厲害的資深工程師一樣，一步一步照規矩來，而且絕對不准找藉口偷懶！\n這套守則裡有 8 個超級命令（Slash Commands，也就是斜槓打頭的指令），就像是蓋城堡的 8 個大步驟：\n1. /spec（定計劃書）\n👉 蓋城堡前，先拿張紙畫出城堡要多高、要有幾個窗戶。不准直接動手！\n（對應開發：寫出需求說明書，確定目標和規格）\n2. /plan（拆解小任務）\n👉 把蓋城堡這件大工程，拆成「第一步找紅色積木」、「第二步蓋地基」、「第三步蓋城牆」等小任務，一關一關過。  \n翻譯\ngithub.com\nGitHub - addyosmani/agent-skills: Production-grade engineering skills for AI coding agents.\n54\n5\n6\n117",
+  "images": [
+    "E:\\AgentOS\\data\\url_intake\\live-threads-smoke2-20260629\\fetch\\images\\image_01.jpg",
+    "E:\\AgentOS\\data\\url_intake\\live-threads-smoke2-20260629\\fetch\\images\\image_02.png"
+  ],
+  "screenshot": "E:\\AgentOS\\data\\url_intake\\live-threads-smoke2-20260629\\fetch\\screenshot.png",
+  "source_untrusted": true
+}

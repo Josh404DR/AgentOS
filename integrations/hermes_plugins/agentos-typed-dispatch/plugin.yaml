@@ -1,0 +1,6 @@
+﻿name: agentos-typed-dispatch
+version: 0.2.0
+description: "Route typed requests and run background Threads URL intake before Hermes model dispatch."
+author: "AgentOS"
+hooks:
+  - pre_gateway_dispatch

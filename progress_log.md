@@ -2472,3 +2472,17 @@ Status Labels:
 - Verified `BUNDLE_COUNT=6`, sync discovery count `6`, and no live upload.
 - Added local LLM and NotebookLM landing reports under `docs/reports/`.
 - Next: use manual Live mode only when Josh explicitly requests an upload.
+## 2026-06-29 - Hermes Threads URL intake v0.2.0
+
+- Added bare `threads.com` / `threads.net` URL detection before Hermes model
+  dispatch.
+- Added background accepted/completed Telegram replies so gateway intake is
+  not blocked by fetch or Codex execution.
+- Added per-dispatch fetch evidence under `data\url_intake\<dispatch_id>`.
+- Updated `fetch_threads.py` for headless operation, hostname validation,
+  UTF-8 output, correct media paths, and `source.json`.
+- Connected typed dispatch, task packet creation, and Codex worker execution.
+- Added untrusted-content boundaries and blocked-result behavior on fetch
+  failure.
+- Verified a public Threads URL end to end; Codex produced RESULT.md after
+  fetching text and two images.
