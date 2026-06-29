@@ -2486,3 +2486,11 @@ Status Labels:
   failure.
 - Verified a public Threads URL end to end; Codex produced RESULT.md after
   fetching text and two images.
+## 2026-06-29 - Correct Hermes plugin deployment root
+
+- Verified dispatch `telegram-telegram-1449022024-1021-20260629-142415` used the legacy URL intake hook and failed because `source_fetch_status=not_attempted`.
+- Found that the active Hermes home is `%LOCALAPPDATA%\hermes`, while the v0.2.0 plugin had been copied only to `C:\Users\brian\.hermes`.
+- Deployed the canonical plugin to `%LOCALAPPDATA%\hermes\plugins\agentos-typed-dispatch`, removed only that plugin's bytecode cache, and restarted the Gateway.
+- Verified Hermes reports `agentos-typed-dispatch` version `0.2.0`.
+- Re-ran the submitted Threads URL through the full pipeline: fetch succeeded, Codex completed, and the UTF-8 result is readable on disk.
+- Added `scripts\deploy_hermes_typed_dispatch_plugin.ps1` so future deployments resolve the active Hermes home deterministically.

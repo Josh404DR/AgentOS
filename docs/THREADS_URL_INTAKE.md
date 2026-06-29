@@ -59,7 +59,7 @@ E:\AgentOS\integrations\hermes_plugins\agentos-typed-dispatch\
 Installed copy:
 
 ```text
-C:\Users\brian\.hermes\plugins\agentos-typed-dispatch\
+%LOCALAPPDATA%\hermes\plugins\agentos-typed-dispatch\
 ```
 
 Version: `0.2.0`
