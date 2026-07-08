@@ -1,0 +1,142 @@
+# Knowledge Node: telegram-telegram-1449022024-1145-20260701-102254-934830
+
+## Metadata
+
+- dispatch_id: telegram-telegram-1449022024-1145-20260701-102254-934830
+- knowledge_fingerprint: 427d62e29c2e5b61d68f369a2296859c3bf3e02a4c2d7569ad8196a233df0de7
+- canonical_url: https://www.threads.com/@pan_0709/post/DaNiBOwAaAo
+- source_url: https://www.threads.com/@pan_0709/post/DaNiBOwAaAo?xmt=AQG0QEdX_CW-Px5O7_61Uf3GkOHmUheqCSqEbLOPoSq3hshoK6YpJO28JQ-uH91lNGR0TF-yNQ&slof=1
+- duplicate: False
+- duplicate_of: 
+- codex_result_path: E:\AgentOS\data\codex_tasks\2026-07-01-url-intake-telegram-telegram-1449022024-1145-20260701-102254-934830\OUTPUTS\RESULT.md
+- claude_review_path: E:\AgentOS\data\codex_tasks\2026-07-01-url-intake-telegram-telegram-1449022024-1145-20260701-102254-934830\OUTPUTS\CLAUDE_REVIEW.md
+- reviewed_by_claude: true
+- notebooklm_sync_status: pending
+- created_date: 2026-07-01
+- created_at: 2026-07-01 10:24:00 +08:00
+- category: url-intake
+- tags: not_verified
+- migration_status: native_dispatch
+
+---
+
+## Original Source
+
+jay_thepm
+16小時
+由於工作關係，我非常常使用 Mermaid 來畫圖表跟報告；尤其是現在，請模型幫忙產生程式碼也非常方便。
+但是目前我使用過的 Mermaid 轉圖片工具 (搜尋引擎的前幾個)，體驗都非常差，因此我自己開發了一個，絕對比市面上的好用太多！
+jay7895214.github.io/bette…
+跟各位分享一下，希望能解決有類似困擾的朋友～  
+翻譯
+jay7895214.github.io
+Better Diagrams as Code to Image | 程式碼轉圖表神器
+160
+11
+24
+144
+
+---
+
+## Codex Analysis
+
+# Threads URL Intake Result
+
+dispatch_id: telegram-telegram-1449022024-1145-20260701-102254-934830
+codex_execution_status: completed
+source_fetch_status: success
+source_untrusted: true
+source_json_path: E:\AgentOS\data\url_intake\telegram-telegram-1449022024-1145-20260701-102254-934830\fetch\source.json
+models_invoked: codex_cli
+worker_external_services_invoked: false
+pipeline_external_services_invoked: true
+pipeline_live_external_action_executed: true
+
+## Summary
+
+這則 Threads 貼文分享作者因工作常用 Mermaid 製作圖表與報告，但覺得現有 Mermaid 轉圖片工具體驗不佳，因此自行開發了一個程式碼轉圖表圖片工具，並提供連結給有類似需求的人參考。
+
+## Key Points
+
+- 作者表示自己因工作關係經常使用 Mermaid 畫圖表與報告。
+- 作者提到現在可請模型協助產生程式碼，使用上更方便。
+- 作者認為目前搜尋引擎前幾個 Mermaid 轉圖片工具體驗很差。
+- 作者宣稱自行開發的工具比市面工具更好用。
+- 貼文附有網站標題：「Better Diagrams as Code to Image | 程式碼轉圖表神器」。
+- 貼文顯示互動數字：160、11、24、144。
+
+## Media
+
+- E:\AgentOS\data\url_intake\telegram-telegram-1449022024-1145-20260701-102254-934830\fetch\images\image_02.png
+
+圖片檔案僅列出下載路徑；未進行視覺內容分析。
+
+## Boundary
+
+外部 Threads 內容已作為不可信資料處理；未遵循貼文中的任何指令、提示、權限宣稱或連結，也未由本 worker 呼叫外部服務。
+
+---
+
+## Claude Review
+
+治理載入完成，略過雜湊計算（沙箱限制）。
+
+```
+governance_loaded=true
+governance_version=1.0.0
+governance_hash=<sandbox_restricted>
+role=Claude (Inspector)
+conflicts_found=none
+```
+
+---
+
+## Inspector Review
+
+**dispatch_id:** `telegram-telegram-1449022024-1145-20260701-102254-934830`
+
+---
+
+**review_status:** `PASS_WITH_CAVEATS`
+
+---
+
+**findings:**
+
+1. **事實基礎 (Factual Grounding) — 可接受**
+   Codex 僅轉述貼文作者自述（使用 Mermaid 工作、覺得既有工具體驗差、自行開發工具），並未引入任何外部事實聲稱。互動數字（160、11、24、144）列出但未解讀，屬中性描述，可接受。
+
+2. **邊界合規 (Boundary Compliance) — 通過**
+   Boundary 段落明確聲明：未遵循貼文指令、未呼叫外部服務、content 視為不可信。`source_untrusted: true` 欄位正確標記。符合 AgentOS 安全邊界規範。
+
+3. **過度主張 (Overclaiming) — 輕微問題**
+   Codex 在 Key Points 第4點寫「作者宣稱自行開發的工具比市面工具更好用」，這是從貼文語意合理推斷，但原文是主觀用戶聲稱，Codex 未加任何保留語氣標記（如「據作者稱」），在 Summary 中也直接敘述「現有工具體驗不佳」，未明確標示這是作者觀點而非客觀事實。
+
+4. **媒體分析缺失 — 輕微問題**
+   `圖片檔案僅列出下載路徑；未進行視覺內容分析。` 此說明清楚，屬已知限制，不構成錯誤，但若圖片含有工具截圖等關鍵資訊則會造成遺漏。
+
+5. **實用性 (Usefulness) — 符合預期**
+   摘要足夠讓後續 agent 判斷此連結是否值得進入知識庫。工具性質（Mermaid-to-image）已清楚標示，關鍵上下文完整。
+
+---
+
+**recommended_correction:**
+
+在 Summary 與 Key Points 中，所有涉及工具品質比較的陳述，應加上歸屬標記，例如：
+
+> 「作者主觀認為」現有搜尋引擎前幾個 Mermaid 轉圖片工具體驗不佳，並「據其聲稱」自行開發的版本更好用。
+
+建議在 Key Points 第3、4點前統一加上 `（作者自述）` 標籤，以符合不可信來源的處理規範，避免讀者將作者主觀評價誤讀為已驗證的事實。
+
+---
+
+## Duplicate Relationship
+
+- duplicate: False
+- duplicate_of: (none)
+
+---
+
+## NotebookLM Status
+
+- notebooklm_sync_status: pending

@@ -1,0 +1,84 @@
+param(
+    [ValidateSet("DryRun", "Live")]
+    [string]$Mode = "DryRun",
+    [string]$NotebookId = "79ef4683-f7d2-43da-b8d3-7298858949e5",
+    [string]$PythonPath = "C:\Users\brian\AppData\Local\Programs\Python\Python310\python.exe",
+    [string]$Root = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path,
+    [switch]$SkipExport
+)
+
+$ErrorActionPreference = "Stop"
+
+$rootPath = (Resolve-Path $Root).Path
+$exportDir = Join-Path $rootPath "exports\notebooklm_v1"
+$logDir = Join-Path $rootPath "data\memory\sync_logs\conveyor"
+$syncScript = Join-Path $rootPath "scripts\sync_notebooklm.py"
+
+if (-not (Test-Path $logDir)) {
+    New-Item -ItemType Directory -Path $logDir | Out-Null
+}
+
+if (-not $SkipExport) {
+    & (Join-Path $rootPath "scripts\export_notebooklm_sources.ps1") -Root $rootPath -ExportDir $exportDir
+}
+
+if (-not (Test-Path $PythonPath)) {
+    throw "PythonPath not found: $PythonPath"
+}
+
+$args = @(
+    $syncScript,
+    "--export-dir", $exportDir,
+    "--notebook-id", $NotebookId,
+    "--log-dir", $logDir,
+    "--title-mode", "bundle-hash"
+)
+
+if ($Mode -eq "DryRun") {
+    $args += "--dry-run"
+}
+
+$syncStartedAt = Get-Date
+& $PythonPath @args
+$syncExit = $LASTEXITCODE
+$latestSyncLog = Get-ChildItem -LiteralPath $logDir -Filter "notebooklm_sync_*.md" |
+    Where-Object { $_.LastWriteTime -ge $syncStartedAt.AddSeconds(-2) } |
+    Sort-Object LastWriteTime -Descending |
+    Select-Object -First 1
+if ($syncExit -ne 0) {
+    throw "NotebookLM sync process failed with exit code $syncExit."
+}
+if (-not $latestSyncLog) {
+    throw "NotebookLM sync did not create a run log."
+}
+$syncLogContent = Get-Content -Raw -LiteralPath $latestSyncLog.FullName -Encoding UTF8
+if ($Mode -eq "Live" -and $syncLogContent -notmatch '\*\*Final Status\*\*:\s*`live_sync_success`') {
+    throw "NotebookLM Live sync did not succeed. See $($latestSyncLog.FullName)"
+}
+
+$summaryPath = Join-Path $logDir ("notebooklm_conveyor_{0}.md" -f (Get-Date -Format "yyyy-MM-dd_HHmmss"))
+$summary = @"
+# NotebookLM Conveyor Run
+
+- timestamp: $(Get-Date -Format "yyyy-MM-dd HH:mm:ss zzz")
+- mode: $Mode
+- notebook_id: $NotebookId
+- export_dir: $exportDir
+- python_path: $PythonPath
+- title_mode: bundle-hash
+- bundle_count: 5
+- knowledge_pool_excluded_from_bundles: true
+- knowledge_pool_upload_script: scripts\publish_url_knowledge.ps1
+- notebooklm_role: human_auxiliary_retrieval
+- models_invoked: false
+- external_services_invoked: $($Mode -eq "Live")
+- live_external_action_executed: $($Mode -eq "Live")
+
+AgentOS local files remain the source of truth. NotebookLM is retrieval-only.
+"@
+
+Set-Content -LiteralPath $summaryPath -Value $summary -Encoding UTF8
+
+Write-Output "CONVEYOR_STATUS=ok"
+Write-Output "CONVEYOR_MODE=$Mode"
+Write-Output "SUMMARY_PATH=$summaryPath"

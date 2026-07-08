@@ -1,0 +1,61 @@
+product_id,product_name,category,unit_cost,unit_price,quality_flag
+PRD-0001,Classic Lamp,,76.78,208.93,True
+PRD-0002,Mini Headphones,Beauty,147.2,317.64,False
+PRD-0003,Essential Headphones,Beauty,33.74,48.91,False
+PRD-0004,Eco Chair,Electronics,14.44,37.34,False
+PRD-0005,Ergo Serum,Home & Kitchen,121.42,283.26,False
+prod_0006,Classic Headphones,,7.06,19.43,True
+PRD-0007,Max Charger,Sports,166.99,257.12,False
+PRD-0008,Smart Lamp,Sports,38.82,57.98,False
+PRD-0009,Portable Backpack,Beauty,62.94,128.37,False
+PRD-0010,Ultra Bottle,Apparel,88.09,146.75,False
+PRD-0011,Smart Headphones,Beauty,123.54,175.82,False
+PRD-0012,Max Serum,Apparel,60.55,108.15,False
+PRD-0013,Mini Keyboard,Toys,92.85,228.07,False
+PRD-0014,Mini Backpack,Electronics,42.34,85.64,False
+PRD-0015,Ultra Bottle,Grocery,119.71,152.55,False
+PRD-0016,Ultra Blender,Home & Kitchen,122.69,180.7,False
+PRD-0017,Mini Headphones,Beauty,15.82,43.0,False
+PRD-0018,Max Headphones,Sports,193.23,481.81,False
+PRD-0019,Portable Mat,Apparel,63.01,85.46,False
+PRD-0020,Ergo Mug,Home & Kitchen,137.79,262.39,False
+PRD-0021,Max Jacket,Apparel,27.04,53.87,False
+PRD-0022,Pro Serum,Electronics,9.77,25.94,False
+PRD-0023,Ultra Bottle,Home & Kitchen,53.98,122.0,False
+PRD-0024,Max Mouse,Electronics,64.41,130.89,False
+PRD-0025,Portable Serum,Toys,110.7,165.58,False
+PRD-0026,Pro Charger,Grocery,194.01,473.43,False
+prod_0027,Eco Keyboard,Grocery,188.08,494.97,True
+PRD-0028,Wireless Mat,Apparel,120.79,323.11,False
+PRD-0029,Eco Lamp,Beauty,20.43,30.92,False
+PRD-0030,Smart Blender,Electronics,11.91,20.49,False
+PRD-0031,Max Mug,Beauty,79.57,130.03,False
+PRD-0032,Ergo Mug,Electronics,166.26,294.41,False
+PRD-0033,Classic Lamp,Electronics,58.34,120.67,False
+PRD-0034,Deluxe Charger,Toys,30.76,76.39,False
+PRD-0035,Wireless Blender,Home & Kitchen,17.69,49.16,False
+PRD-0036,Deluxe Serum,Electronics,155.13,0.0,True
+PRD-0037,Mini Keyboard,,4.09,10.24,True
+PRD-0038,Classic Mat,Sports,142.25,336.62,False
+PRD-0039,Deluxe Jacket,Grocery,154.94,204.28,False
+PRD-0040,Portable Speaker,Beauty,73.62,101.99,False
+PRD-0041,Eco Serum,Grocery,173.03,380.19,False
+PRD-0042,Deluxe Speaker,Apparel,68.19,88.76,False
+PRD-0043,Deluxe Mat,Electronics,64.26,110.55,False
+PRD-0044,Deluxe Headphones,Electronics,146.73,325.75,False
+PRD-0045,Mini Charger,Home & Kitchen,177.78,347.66,False
+PRD-0046,Max Charger,Electronics,26.56,62.18,False
+PRD-0047,Pro Jacket,Home & Kitchen,152.87,-31.78,True
+PRD-0048,Portable Keyboard,Home & Kitchen,154.88,308.22,False
+PRD-0049,Wireless Speaker,Beauty,105.98,199.67,False
+PRD-0050,Ultra Mat,Beauty,8.01,10.99,False
+PRD-0051,Max Mouse,Home & Kitchen,9.19,20.39,False
+PRD-0052,Max Headphones,Apparel,64.93,130.75,False
+PRD-0053,Ultra Mug,Beauty,181.79,290.66,False
+PRD-0054,Ergo Charger,Home & Kitchen,83.85,201.98,False
+PRD-0055,Max Chair,Grocery,48.07,63.6,False
+PRD-0056,Essential Mat,Toys,60.08,87.59,False
+PRD-0057,Mini Speaker,Electronics,186.15,464.07,False
+PRD-0058,Portable Jacket,Toys,127.78,331.5,False
+PRD-0059,Pro Serum,Grocery,161.32,241.74,False
+PRD-0060,Pro Keyboard,Electronics,178.83,368.92,False

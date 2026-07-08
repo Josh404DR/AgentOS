@@ -1,0 +1,156 @@
+alert_type,severity,entity,metric,details
+data_quality,medium,orders,1,Duplicate order IDs removed during transform.
+order_status_anomaly,high,order:170,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:373,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:500,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:896,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:997,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:998,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:1028,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:1087,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:1129,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:1368,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:1474,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:1511,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:1517,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:1539,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:1661,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:1746,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:1774,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:1825,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:1859,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:1877,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:1939,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:2056,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:2190,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:2201,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:2226,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:2289,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:2481,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:2571,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:2606,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:2635,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:2933,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:3016,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:3038,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:3088,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:3209,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:3220,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:3615,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:3666,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:3710,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:3816,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:3926,unknown_status,Status is outside the approved operational values.
+order_status_anomaly,high,order:3934,unknown_status,Status is outside the approved operational values.
+delayed_shipment,high,order:2,2025-01-05,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:3,2025-01-04,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:8,2025-01-05,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:11,2025-01-04,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:14,2025-01-03,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:15,2025-01-05,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:16,2025-01-03,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:18,2025-01-05,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:19,2025-01-04,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:20,2025-01-05,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:22,2025-01-04,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:23,2025-01-03,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:32,2025-01-03,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:39,2025-01-04,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:40,2025-01-04,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:45,2025-01-04,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:56,2025-01-04,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:60,2025-01-04,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:69,2025-01-06,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:72,2025-01-04,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:78,2025-01-05,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:84,2025-01-07,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:92,2025-01-07,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:96,2025-01-05,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:97,2025-01-06,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:102,2025-01-05,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:107,2025-01-06,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:115,2025-01-05,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:118,2025-01-05,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:119,2025-01-05,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:120,2025-01-07,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:121,2025-01-06,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:122,2025-01-08,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:126,2025-01-07,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:128,2025-01-07,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:130,2025-01-06,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:131,2025-01-07,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:136,2025-01-06,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:140,2025-01-06,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:141,2025-01-06,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:147,2025-01-07,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:154,2025-01-08,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:155,2025-01-07,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:160,2025-01-07,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:167,2025-01-07,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:180,2025-01-07,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:182,2025-01-09,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:183,2025-01-09,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:184,2025-01-09,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:186,2025-01-07,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:190,2025-01-07,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:202,2025-01-09,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:204,2025-01-08,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:206,2025-01-07,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:207,2025-01-09,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:208,2025-01-08,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:214,2025-01-07,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:217,2025-01-08,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:219,2025-01-08,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:220,2025-01-09,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:228,2025-01-08,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:231,2025-01-08,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:235,2025-01-10,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:236,2025-01-08,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:240,2025-01-09,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:243,2025-01-08,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:249,2025-01-08,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:259,2025-01-10,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:262,2025-01-09,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:265,2025-01-09,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:268,2025-01-11,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:273,2025-01-09,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:278,2025-01-11,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:283,2025-01-10,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:287,2025-01-09,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:288,2025-01-09,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:289,2025-01-10,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:291,2025-01-10,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:297,2025-01-10,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:301,2025-01-12,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:302,2025-01-10,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:305,2025-01-11,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:307,2025-01-10,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:309,2025-01-11,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:314,2025-01-11,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:325,2025-01-11,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:326,2025-01-10,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:328,2025-01-12,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:332,2025-01-11,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:333,2025-01-13,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:336,2025-01-11,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:338,2025-01-12,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:340,2025-01-12,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:341,2025-01-12,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:343,2025-01-12,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:346,2025-01-12,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:349,2025-01-12,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:351,2025-01-11,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:352,2025-01-11,Shipment missed or is projected to miss its promised ship date.
+delayed_shipment,high,order:355,2025-01-12,Shipment missed or is projected to miss its promised ship date.
+low_inventory,high,product:10,2/29,Stock on hand is at or below reorder point.
+low_inventory,high,product:11,11/23,Stock on hand is at or below reorder point.
+low_inventory,high,product:12,4/26,Stock on hand is at or below reorder point.
+low_inventory,high,product:13,46/47,Stock on hand is at or below reorder point.
+low_inventory,high,product:19,25/34,Stock on hand is at or below reorder point.
+low_inventory,high,product:22,27/49,Stock on hand is at or below reorder point.
+low_inventory,high,product:32,7/46,Stock on hand is at or below reorder point.
+low_inventory,high,product:33,1/24,Stock on hand is at or below reorder point.
+low_inventory,high,product:41,0/28,Stock on hand is at or below reorder point.
+product_data_missing,medium,product:48,required_field,One or more required product fields are missing.
+sales_amount_anomaly,high,order:25/product:40,2429.76,Unit price is materially above the product baseline.
+sales_drop,medium,product:17,-53.0%,Recent 14-day average GMV fell at least 35% versus the prior period.

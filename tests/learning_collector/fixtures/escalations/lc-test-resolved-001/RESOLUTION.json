@@ -1,0 +1,11 @@
+{
+  "task_id": "lc-test-resolved-001",
+  "resolution_type": "josh_decision",
+  "decision": "approve",
+  "resolved_at": "2026-07-04T14:00:00+08:00",
+  "resolved_by": "Josh",
+  "summary": "test fixture: resolved escalation for learning collector tests",
+  "evidence": ["tests/learning_collector/fixtures/escalations/lc-test-resolved-001/20260704-100000-000.json"],
+  "josh_action_required": false,
+  "recommended_status": "resolved"
+}

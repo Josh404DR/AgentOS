@@ -1,0 +1,301 @@
+# AgentOS Agent Routing Plan
+
+Updated: 2026-06-24 23:40 Asia/Taipei
+Purpose: Minimal routing rules for assigning work across Hermes, Codex, Gemini, Claude, Perplexity, Ollama, and manual IDE resources without adding a new agent framework.
+
+## Routing Principle
+
+Use file artifacts first. Hermes coordinates, then assigns explicit work packets or review notes to the cheapest reliable resource for the task.
+
+Cost-saving typed dispatch is defined in:
+
+```text
+docs\COST_SAVING_ROUTING_PROTOCOL.md
+```
+
+When Josh provides a recognized `[TYPE: ...]`, Hermes should route by the
+protocol table and prompt pack instead of using Gemini for free-form task
+interpretation.
+
+## Resource Roles
+
+| Resource | Role | Current automation status |
+|---|---|---|
+| Hermes | Coordinator, Telegram brain, lead/proposal owner | Active coordinator, file-based handoff |
+| Codex | Repo edits, scripts, tests, implementation, technical validation | Active through task packets |
+| Gemini | Research, summaries, proposal second opinion | Available, not separate state owner |
+| Claude | Inspector, high-context review, architecture critique | Active Inspector via tripartite bridge for tested review handoffs |
+| Perplexity | Current web research with sources | Subscription user-reported, integration not verified |
+| Ollama | Local low-cost classification, draft summaries, fallback reasoning | Local models available |
+| Antigravity IDE | Manual desktop coding resource | Subscription user-reported, not automated |
+| Perplexity IDE | Manual research/coding assistant | User-reported, not automated |
+| VSCode + Cline free | Manual IDE/agent support | User-reported, not automated |
+| Cursor free quota | Manual IDE coding support | User-reported, not automated |
+
+## Hermes Internal Load Split
+
+Hermes is the coordinator, but not every Hermes task deserves Gemini quota.
+Split Hermes work by mode:
+
+| Hermes mode | Main work | Preferred model/resource |
+|---|---|---|
+| Operator Interface | Telegram intake, status replies, approval boundaries | Ollama by default; Gemini only for ambiguity |
+| Orchestrator / Planner | Routing decisions, Codex task packets, escalation calls | Gemini Flash normally; Ollama for low-risk drafts |
+| Scout / Research Coordinator | Lead discovery, lead summaries, source-backed research | Gemini or Perplexity/manual research |
+| Watchtower / Monitor | Checkpoints, process/Git/security status | Ollama by default |
+| Notes Curator | Durable insight classification and append-only notes | Ollama by default; Gemini for synthesis |
+| Proposal Coordinator | Proposal drafts, client-facing preparation | Gemini; Claude review for high-risk cases |
+
+When Gemini is rate-limited, Hermes must enter degraded mode:
+
+```text
+/model ollama
+```
+
+Allowed in degraded mode:
+
+- Telegram status replies.
+- Health checks and checkpoint summaries.
+- Formatting, classification, and durable-note triage.
+- Creating low-risk routing drafts for Josh review.
+
+Deferred in degraded mode unless Josh explicitly approves:
+
+- Proposal-quality writing.
+- Real lead analysis that affects business decisions.
+- High-impact architecture planning.
+- Repeated Gemini retry loops.
+
+Exit degraded mode with:
+
+```text
+/model gemini-flash
+/model status
+```
+
+## Minimal Dispatch Flow
+
+Typed requests should use this shape whenever possible:
+
+```text
+[TYPE: CODEX_VERIFY]
+[GOAL: Verify a claim or artifact]
+[TARGET: commit, file, or report path]
+[CONSTRAINTS: no cleanup, no external calls]
+[OUTPUT: verifier report path]
+```
+
+Recognized v0.1 types:
+
+- `CODEX_BUILD`
+- `CODEX_VERIFY`
+- `CLAUDE_REVIEW`
+- `CLAUDE_WORKER`
+- `OLLAMA_TRIAGE`
+- `JOSH_APPROVAL`
+- `GEMINI_PREMIUM`
+- `STOP`
+
+Unknown types must be treated as context until Josh clarifies.
+
+```text
+Hermes defines decision
+  -> data\routing_decisions\YYYY-MM-DD-<task>.md
+  -> if technical: data\codex_tasks\YYYY-MM-DD-<task>\TASK.md
+  -> assigned resource writes result artifact
+  -> Hermes updates routing decision and summarizes to Josh
+```
+
+## Live Hermes-Codex CLI Bridge
+
+For direct CLI communication, use:
+
+```powershell
+.\scripts\hermes_codex_bridge.ps1
+```
+
+Typed dispatch should happen before invoking a bridge when Josh provides a
+`[TYPE: ...]` request:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\typed_dispatch.ps1 -InputText "<TYPED_REQUEST>"
+```
+
+The typed dispatch runner only creates routing artifacts and assembled prompts.
+It does not call Gemini, Codex, Claude, Ollama, or external services.
+
+## Live Hermes-Codex-Claude Tripartite Bridge
+
+For high-assurance coordination where Codex implementation is reviewed by Claude, use:
+
+```powershell
+.\scripts\hermes_tripartite_bridge.ps1
+```
+
+The tripartite bridge runs a full cycle:
+
+```text
+Hermes CLI (Brain)
+  -> Dispatches TASK.md packet
+  -> Codex CLI (Builder)
+    -> Executes and writes RESULT.md
+    -> Claude CLI (Inspector)
+      -> Reviews RESULT.md and provides RATING
+      -> Hermes CLI
+        -> Summarizes the verified outcome for Josh
+```
+
+Outputs are stored under:
+
+```text
+E:\AgentOS\data\live_bridge\tripartite_<id>\
+  01_HERMES_DISPATCH.md
+  02_CODEX_OUTPUT.md
+  03_CLAUDE_REVIEW.md
+  04_HERMES_FINAL_SUMMARY.md
+  TRANSCRIPT.md
+```
+
+## Autonomous Coordination Mode
+
+Default operating target: Josh should not act as the relay between Hermes,
+Codex, and Claude.
+
+Hermes must coordinate other agents directly through the existing bridge
+scripts and file artifacts whenever the next step does not require Josh
+approval.
+
+```text
+Josh intent / approval boundary
+  -> Hermes classifies and routes
+  -> Hermes creates task or review packet
+  -> Hermes invokes Codex and/or Claude bridge where available
+  -> Codex/Claude write evidence artifacts
+  -> Hermes reads artifacts and updates Josh only when useful or required
+```
+
+Allowed autonomous coordination:
+
+- Hermes creates Codex task packets for read-only review, implementation, or
+  verification work.
+- Hermes invokes Codex through `scripts\hermes_codex_bridge.ps1` when the task
+  is within an approved/non-destructive scope.
+- Hermes invokes Claude through `scripts\hermes_claude_bridge.ps1` for
+  inspector reviews or risk analysis.
+- Hermes invokes `scripts\hermes_tripartite_bridge.ps1` when Codex output
+  should be reviewed by Claude before summarizing to Josh.
+- Hermes records all results under `data\codex_tasks\...`, `data\live_bridge\...`,
+  or the relevant workflow/project artifact.
+
+Josh approval is required before Hermes or any worker executes:
+
+- deletion, archive, or cleanup actions;
+- `.gitignore` changes unless Josh already approved the exact scope;
+- governance or role-boundary changes;
+- install/update commands;
+- credential, token, OAuth, or auth-profile changes;
+- client-facing messages or proposal submission;
+- live external operations that spend money, contact third parties, or may
+  violate platform rules.
+
+If a bridge fails, Hermes must not ask Josh to manually relay every intermediate
+message. Hermes should:
+
+1. write a blocked artifact with the failing command, error, and attempted
+   bridge path;
+2. retry only if the failure is transient and within the task rules;
+3. ask Josh for help only when approval, credentials, provider quota, or manual
+   desktop interaction is required.
+
+## Resource Contribution and Cost Routing
+
+AgentOS should route work with both quality and resource economics in mind.
+
+Codex and Claude are subscription/capacity resources. Gemini API is metered
+usage. Ollama is local zero-cost compute. Perplexity and IDE tools are manual
+subscription resources until their automation paths are verified.
+
+Routing principles:
+
+- Do not burn Gemini API quota on work that Codex, Claude, or Ollama can do
+  reliably.
+- Keep Gemini API frozen for routine work unless Josh uses
+  `[TYPE: GEMINI_PREMIUM]` or an explicit premium-use approval is recorded.
+- Do not force Codex or Claude usage just to consume quota; route useful work
+  that matches their strengths.
+- Prefer Codex for implementation, file inspection, scripts, tests, and
+  independent claim verification.
+- Prefer Claude for parallel review, risk analysis, acceptance checklist
+  preparation, architecture critique, and overclaim detection.
+- Prefer Ollama for low-risk classification, formatting, watchtower summaries,
+  and routine status triage.
+- Use Gemini for Hermes planning, proposal-quality language, nuanced lead
+  analysis, and synthesis where cheaper resources are insufficient.
+- Use Perplexity/manual tools only when fresh external sources or manual
+  subscription capabilities are actually needed.
+- Assemble Codex and Claude prompts from the prompt pack under `prompts\`
+  rather than improvising long prompts.
+
+Every multi-agent task should end with a contribution distribution summary:
+
+```text
+resource_contribution_summary:
+  - resource: Hermes
+    role: coordinator
+    contribution:
+    artifacts:
+    cost_class: api_metered | subscription | local | manual | unknown
+    usage_basis: measured | estimated | not_available
+  - resource: Codex
+    role: builder_or_verifier
+    contribution:
+    artifacts:
+    cost_class: subscription
+    usage_basis: measured | estimated | not_available
+  - resource: Claude
+    role: inspector_or_worker
+    contribution:
+    artifacts:
+    cost_class: subscription
+    usage_basis: measured | estimated | not_available
+  - resource: Gemini
+    role: brain_or_synthesis
+    contribution:
+    artifacts:
+    cost_class: api_metered
+    usage_basis: measured | estimated | not_available
+next_allocation_recommendation:
+underused_resources:
+overused_resources:
+api_cost_reduction_opportunities:
+```
+
+This summary is not a billing statement unless real usage counters exist. If
+usage is estimated or unavailable, reports must say so explicitly.
+
+## Escalation Rules
+
+- Use Ollama for cheap local rough classification.
+- Use Gemini for lead/proposal summarization and second opinions.
+- Use Perplexity only when current external facts or sources matter.
+- Use Codex when local files, code, scripts, tests, or implementation are involved.
+- Use Claude (via Tripartite Bridge) for automated high-assurance review after Codex output exists.
+- Use Claude manually for interactive architecture critique or complex reasoning.
+- Use IDE resources manually when Josh chooses to spend desktop/free quota; copy meaningful output back into tracked artifacts.
+- Ask Josh before client-facing commitments, paid API use, credentials, or proposal submission.
+
+## Pre-Flight Plan
+
+Canonical staged test plan:
+
+```text
+E:\AgentOS\docs\PRE_FLIGHT_TEST_PLAN.md
+```
+
+Do not start real client task knowledge accumulation until the pre-flight plan records acceptable results for Hermes 24h operation and the first safe multi-resource tests.
+
+## Current Non-Goals
+
+- Do not build a new daemon or queue yet.
+- Do not make Claude, Perplexity, Ollama, Antigravity, Perplexity IDE, VSCode Cline, or Cursor automatic workers until their handoff is tested.
+- Do not bypass the `data\codex_tasks\...\OUTPUTS\RESULT.md` return contract for Codex work.

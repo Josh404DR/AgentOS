@@ -1,0 +1,15 @@
+﻿{"root_dispatch_id":"telegram-telegram-1449022024-1205-20260704-124313-811074","action":"pause","state":"pause_requested","created_at":"2026-07-04T20:59:57.1196694+08:00","actor":"Josh"}
+{"root_dispatch_id":"telegram-telegram-1449022024-1205-20260704-124313-811074","action":"resume","state":"running","created_at":"2026-07-04T20:59:57.7226661+08:00","actor":"Josh"}
+{"root_dispatch_id":"telegram-telegram-1449022024-1197-20260704-124221-339891","action":"retry","state":"running","created_at":"2026-07-04T22:11:25.8393458+08:00","actor":"Josh"}
+{"root_dispatch_id":"telegram-telegram-1449022024-1197-20260704-124221-339891","action":"resume","state":"running","created_at":"2026-07-04T22:11:56.3638397+08:00","actor":"Josh"}
+{"root_dispatch_id":"telegram-telegram-1449022024-1205-20260704-124313-811074","action":"resume","state":"running","created_at":"2026-07-04T22:12:06.8696690+08:00","actor":"Josh"}
+{"root_dispatch_id":"telegram-telegram-1449022024-1189-20260703-185037-401113","action":"resume","state":"running","created_at":"2026-07-04T22:12:09.0519751+08:00","actor":"Josh"}
+{"root_dispatch_id":"telegram-telegram-1449022024-1201-20260704-124303-247742","action":"resume","state":"running","created_at":"2026-07-04T22:31:38.2172503+08:00","actor":"Josh"}
+{"root_dispatch_id":"telegram-telegram-1449022024-1199-20260704-124256-865159","action":"resume","state":"running","created_at":"2026-07-04T22:31:40.8033892+08:00","actor":"Josh"}
+{"root_dispatch_id":"telegram-telegram-1449022024-1189-20260703-185037-401113","action":"resume","state":"running","created_at":"2026-07-04T22:31:51.1768816+08:00","actor":"Josh"}
+{"root_dispatch_id":"telegram-telegram-1449022024-1197-20260704-124221-339891","action":"resume","state":"running","created_at":"2026-07-04T22:33:30.2069938+08:00","actor":"Josh"}
+{"root_dispatch_id":"telegram-telegram-1449022024-1189-20260703-185037-401113","action":"pause","state":"pause_requested","created_at":"2026-07-04T22:51:56.4468321+08:00","actor":"Josh"}
+{"root_dispatch_id":"telegram-telegram-1449022024-1197-20260704-124221-339891","action":"pause","state":"pause_requested","created_at":"2026-07-04T22:51:57.1132812+08:00","actor":"Josh"}
+{"root_dispatch_id":"telegram-telegram-1449022024-1201-20260704-124303-247742","action":"pause","state":"pause_requested","created_at":"2026-07-04T22:51:58.3512460+08:00","actor":"Josh"}
+{"root_dispatch_id":"telegram-telegram-1449022024-1205-20260704-124313-811074","action":"pause","state":"pause_requested","created_at":"2026-07-04T22:51:59.0310554+08:00","actor":"Josh"}
+{"root_dispatch_id":"telegram-telegram-1449022024-1214-20260706-081242-561685","action":"resume","state":"running","created_at":"2026-07-06T09:51:35.3802158+08:00","actor":"Josh"}

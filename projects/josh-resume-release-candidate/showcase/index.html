@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Josh Hsu | Project Showcase</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary: #00d2ff;
+            --secondary: #3a7bd5;
+            --bg-dark: #0a0e14;
+            --text-main: #e0e0e0;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .gradient-mesh {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(at 0% 0%, rgba(0, 210, 255, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(58, 123, 213, 0.15) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(10, 14, 20, 1) 0px, transparent 100%);
+            z-index: -1;
+        }
+
+        .showcase-container {
+            width: 90vw;
+            height: 85vh;
+            max-width: 1200px;
+            position: relative;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 60px;
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            pointer-events: none;
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: all;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #fff;
+        }
+
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            max-width: 700px;
+            margin-bottom: 2rem;
+            color: #b0b0b0;
+        }
+
+        .highlight-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .highlight-list li {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 1.1rem;
+        }
+
+        .highlight-list li i {
+            color: var(--primary);
+            flex-shrink: 0;
+            margin-top: 4px;
+        }
+
+        .controls {
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            display: flex;
+            gap: 20px;
+            z-index: 100;
+        }
+
+        .btn-nav {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: #fff;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-nav:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .progress-dots {
+            position: absolute;
+            bottom: 40px;
+            left: 40px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--glass-border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: var(--primary);
+            width: 30px;
+            border-radius: 5px;
+        }
+
+        .interactive-container {
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 20px;
+            font-family: monospace;
+            color: #4ade80;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+            z-index: 100;
+        }
+
+        .close-btn:hover {
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 40px 20px;
+            }
+            h1 { font-size: 2.2rem; }
+            h2 { font-size: 1.5rem; }
+            p { font-size: 1rem; }
+            .showcase-container { width: 95vw; height: 90vh; }
+        }
+    </style>
+</head>
+<body>
+    <div class="gradient-mesh"></div>
+
+    <div class="showcase-container">
+        <a href="../index.html" class="close-btn"><i data-lucide="x"></i> 關閉展示</a>
+
+        <!-- Slide 1: Hero -->
+        <div class="slide active" id="slide-1">
+            <h1>Josh Hsu</h1>
+            <h2>AI & Automation Showcase</h2>
+            <p>Bridging Logic and Execution with Agentic Systems.</p>
+            <div class="interactive-container">
+                > system.init()<br>
+                > agents.status(): healthy<br>
+                > showcase.ready(): true
+            </div>
+        </div>
+
+        <!-- Slide 2: My Second Brain -->
+        <div class="slide" id="slide-2">
+            <h2>My Second Brain (Core OS)</h2>
+            <p>A unified RAG-based personal intelligence system that captures, organizes, and retrieves knowledge autonomously.</p>
+            <ul class="highlight-list">
+                <li><i data-lucide="zap"></i> Multi-source ingestion pipeline (Web, Files, Telegram)</li>
+                <li><i data-lucide="search"></i> Semantic search powered by ChromaDB & Gemini</li>
+                <li><i data-lucide="cpu"></i> Agentic recall: The system "remembers" context between sessions</li>
+            </ul>
+        </div>
+
+        <!-- Slide 3: Smart Gmail Bot -->
+        <div class="slide" id="slide-3">
+            <h2>Smart Gmail Bot</h2>
+            <p>High-reliability transaction handler that processes unstructured emails into structured business actions.</p>
+            <ul class="highlight-list">
+                <li><i data-lucide="message-square"></i> LLM-powered intent classification (98% accuracy)</li>
+                <li><i data-lucide="shopping-cart"></i> Automated order extraction and processor integration</li>
+                <li><i data-lucide="shield-check"></i> Checkpointing & recovery for failed network calls</li>
+            </ul>
+        </div>
+
+        <!-- Slide 4: Real-Estate & Job Scrapers -->
+        <div class="slide" id="slide-4">
+            <h2>Market Insights Scrapers</h2>
+            <p>Deep data collection systems for rental (591) and remote job (Upwork/104) markets.</p>
+            <ul class="highlight-list">
+                <li><i data-lucide="mouse-pointer-2"></i> Hybrid crawling: Handles SPA and dynamic content</li>
+                <li><i data-lucide="bar-chart-3"></i> Automated Ranking: Custom algorithms for "Quality Score"</li>
+                <li><i data-lucide="file-text"></i> Daily PDF/CSV reports pushed to Telegram/Email</li>
+            </ul>
+        </div>
+
+        <!-- Slide 5: Apps Script Automation -->
+        <div class="slide" id="slide-5">
+            <h2>Apps Script Automation Suite</h2>
+            <p>Enterprise-grade Google Workspace extensions for mass data management and reporting.</p>
+            <ul class="highlight-list">
+                <li><i data-lucide="git-merge"></i> Multi-source consolidation (100+ sheets to master)</li>
+                <li><i data-lucide="users"></i> Load-balanced task distribution for human teams</li>
+                <li><i data-lucide="mail"></i> Automated HTML report generation with conditional styling</li>
+            </ul>
+        </div>
+
+        <!-- Slide 6: AI_Projects_Hub -->
+        <div class="slide" id="slide-6">
+            <h2>AI_Projects_Hub Architecture</h2>
+            <p>The agentic runtime managing this very interaction.</p>
+            <ul class="highlight-list">
+                <li><i data-lucide="activity"></i> OpenClaw: Local-first agent runtime and gateway</li>
+                <li><i data-lucide="share-2"></i> Multi-agent orchestration (Codex, Jamie, Hermes)</li>
+                <li><i data-lucide="lock"></i> Security-gated execution (L0-L5 safety layers)</li>
+            </ul>
+        </div>
+
+        <!-- Slide 7: Contact -->
+        <div class="slide" id="slide-7">
+            <h1>Let's Build.</h1>
+            <p>Ready to automate the future? Connect with me on LinkedIn or GitHub.</p>
+            <div class="contact-bar">
+                <!-- Links here if needed -->
+            </div>
+        </div>
+
+        <div class="progress-dots" id="dots"></div>
+
+        <div class="controls">
+            <button class="btn-nav" id="prev"><i data-lucide="chevron-left"></i></button>
+            <button class="btn-nav" id="next"><i data-lucide="chevron-right"></i></button>
+        </div>
+    </div>
+
+    <script>
+        if (window.lucide && typeof window.lucide.createIcons === 'function') {
+            try {
+                window.lucide.createIcons();
+            } catch (error) {
+                console.warn('Icon initialization skipped:', error);
+            }
+        }
+
+        const slides = document.querySelectorAll('.slide');
+        const dotsContainer = document.getElementById('dots');
+        let currentSlide = 0;
+
+        // Create dots
+        slides.forEach((_, i) => {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goToSlide(i));
+            dotsContainer.appendChild(dot);
+        });
+
+        const dots = document.querySelectorAll('.dot');
+
+        function updateSlides() {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === currentSlide);
+            });
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentSlide);
+            });
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateSlides();
+        }
+
+        // Handle hash navigation
+        function handleHash() {
+            const hash = window.location.hash;
+            if (hash.startsWith('#slide-')) {
+                const slideNum = parseInt(hash.replace('#slide-', '')) - 1;
+                if (slideNum >= 0 && slideNum < slides.length) {
+                    goToSlide(slideNum);
+                }
+            }
+        }
+
+        window.addEventListener('load', handleHash);
+        window.addEventListener('hashchange', handleHash);
+
+        document.getElementById('next').addEventListener('click', () => {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateSlides();
+        });
+
+        document.getElementById('prev').addEventListener('click', () => {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            updateSlides();
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') document.getElementById('next').click();
+            if (e.key === 'ArrowLeft') document.getElementById('prev').click();
+        });
+    </script>
+</body>
+</html>

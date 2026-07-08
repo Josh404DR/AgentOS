@@ -1,0 +1,30 @@
+# Runtime logs
+logs/*.log
+*.stdout.log
+*.stderr.log
+
+# Secrets and local environment
+.env
+*.env
+*.env.local
+machine2_hermes_config/.env
+
+# Temporary files
+*.tmp
+*.bak
+~$*
+
+# Python and local tool runtime artifacts
+**/__pycache__/
+scripts/fan_control/fan_control.log
+**/.venv_notebooklm_poc/
+**/.venv_perplexity_poc/
+**/.venv*/
+data/codex_tasks/**/OUTPUTS/CODEX_CONSOLE.log
+
+# Root-level personal and temp files
+/OUTPUTS/
+/人生計畫/
+/新增 文字文件.txt
+
+# OS/ed

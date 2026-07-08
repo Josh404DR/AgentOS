@@ -1,0 +1,140 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "schema_version": "1.0.0",
+  "title": "LEARNING_CANDIDATE",
+  "description": "AgentOS 學習候選項目 artifact schema。由 collect_learning_candidates.ps1 確定性產生，不得由模型自行產生或修改。",
+  "type": "object",
+  "required": [
+    "candidate_id",
+    "schema_version",
+    "created_at",
+    "collector_version",
+    "governance_version",
+    "governance_hash",
+    "source_task_ids",
+    "source_evidence_paths",
+    "failure_reason_key",
+    "failure_reason_examples",
+    "frequency",
+    "threshold",
+    "retry_evidence",
+    "resolved_evidence",
+    "impact",
+    "recommendation",
+    "change_class",
+    "josh_approval_status",
+    "dedupe_key",
+    "status"
+  ],
+  "properties": {
+    "candidate_id": {
+      "type": "string",
+      "description": "唯一識別碼，格式：LC-YYYYMMDD-<dedupe_key前8碼>"
+    },
+    "schema_version": {
+      "type": "string",
+      "description": "schema 版本，目前為 1.0.0"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "候選項目建立時間（ISO 8601）"
+    },
+    "collector_version": {
+      "type": "string",
+      "description": "collect_learning_candidates.ps1 版本"
+    },
+    "governance_version": {
+      "type": "string",
+      "description": "建立時的 AGENTS.md governance_version"
+    },
+    "governance_hash": {
+      "type": "string",
+      "description": "建立時的 AGENTS.md SHA-256 雜湊"
+    },
+    "source_task_ids": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "提供證據的 task_id 清單（排序後）"
+    },
+    "source_evidence_paths": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "佐證此候選的原始 artifact 路徑清單"
+    },
+    "failure_reason_key": {
+      "type": "string",
+      "description": "正規化後的失敗原因鍵值（小寫、去除前後空白）"
+    },
+    "failure_reason_examples": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "原始失敗原因文字範例（最多5個）"
+    },
+    "frequency": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "在來源 artifact 中出現的次數"
+    },
+    "threshold": {
+      "type": "integer",
+      "minimum": 2,
+      "description": "觸發建立候選的門檻次數（預設2）"
+    },
+    "retry_evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "task_id": { "type": "string" },
+          "retry_count": { "type": "integer" },
+          "fail_reason": { "type": "string" },
+          "recorded_at": { "type": "string" }
+        }
+      },
+      "description": "有重試記錄的 metrics 事件清單"
+    },
+    "resolved_evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "task_id": { "type": "string" },
+          "reason": { "type": "string" },
+          "resolution_path": { "type": "string" },
+          "resolved_at": { "type": "string" }
+        }
+      },
+      "description": "已解決的 escalation 事件清單"
+    },
+    "impact": {
+      "type": "string",
+      "enum": ["low", "medium", "high"],
+      "description": "預估影響等級：low / medium / high"
+    },
+    "recommendation": {
+      "type": "string",
+      "description": "人工可讀的改善建議（繁體中文）"
+    },
+    "change_class": {
+      "type": "string",
+      "enum": ["implementation_change", "governance_change"],
+      "description": "implementation_change：一般工單；governance_change：需 Josh 核准並建立 escalation artifact"
+    },
+    "josh_approval_status": {
+      "type": "string",
+      "enum": ["pending", "approved", "rejected", "escalated"],
+      "description": "Josh 核准狀態"
+    },
+    "dedupe_key": {
+      "type": "string",
+      "description": "SHA-256(failure_reason_key + \":\" + sorted_task_ids joined by \",\")；用於防止重複建立"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["open", "in_review", "accepted", "rejected", "implemented"],
+      "description": "候選狀態"
+    }
+  },
+  "additionalProperties": false
+}

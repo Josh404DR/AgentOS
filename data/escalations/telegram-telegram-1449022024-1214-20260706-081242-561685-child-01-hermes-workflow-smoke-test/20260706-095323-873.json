@@ -1,0 +1,26 @@
+{
+    "task_id":  "telegram-telegram-1449022024-1214-20260706-081242-561685-child-01-hermes-workflow-smoke-test",
+    "source":  "complex_fail",
+    "reason":  "revision_limit_reached",
+    "decision_type":  "accept_partial_delivery",
+    "summary_for_josh":  "Task telegram-telegram-1449022024-1214-20260706-081242-561685-child-01-hermes-workflow-smoke-test failed Codex Verify after two Claude revisions.",
+    "options":  [
+                    {
+                        "label":  "Approve",
+                        "effect":  "?迂?冽???蝜潛??瑁?"
+                    },
+                    {
+                        "label":  "Modify",
+                        "effect":  "隤踵?瘙???"
+                    },
+                    {
+                        "label":  "Stop",
+                        "effect":  "?迫隞餃?"
+                    }
+                ],
+    "evidence":  [
+                     "E:\\AgentOS\\data\\codex_tasks\\telegram-telegram-1449022024-1214-20260706-081242-561685-child-01-hermes-workflow-smoke-test\\OUTPUTS\\REVIEW_FLOW_STATUS.md"
+                 ],
+    "created_at":  "2026-07-06T09:53:23.8738538+08:00",
+    "status":  "awaiting_josh"
+}

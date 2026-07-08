@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commerce Operations Automation Pipeline | Josh Hsu Portfolio</title>
+    <meta name="description" content="Python + Pandas + SQL + Airflow 打造的電商營運自動化管線：每日 KPI、履約與庫存警示、資料品質檢核、Dashboard-ready 資料層。">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;700;800&display=swap"
+        rel="stylesheet">
+
+    <script src="https://unpkg.com/lucide@1.23.0/dist/umd/lucide.min.js" defer></script>
+    <link rel="stylesheet" href="../index.css">
+</head>
+
+<body>
+    <div class="bg-overlay"></div>
+    <div class="gradient-mesh"></div>
+
+    <div class="container">
+        <nav class="site-nav">
+            <div class="role-switcher" aria-label="Resume focus">
+                <a href="../index.html" class="role-link">
+                    <i data-lucide="workflow"></i> AI PM
+                </a>
+                <a href="../da.html" class="role-link">
+                    <i data-lucide="database"></i> Data Analyst
+                </a>
+            </div>
+            <input type="checkbox" id="nav-toggle" class="nav-toggle">
+            <label for="nav-toggle" class="nav-toggle-label">
+                <span></span>
+            </label>
+            <div class="nav-links">
+                <a href="index.html">Portfolio</a>
+                <a href="../da.html#contact">Contact</a>
+            </div>
+        </nav>
+
+        <header class="page-header reveal">
+            <a href="index.html" class="eyebrow"><i data-lucide="arrow-left"></i> All Case Studies</a>
+            <span class="data-badge"><i data-lucide="workflow"></i> Operations Automation</span>
+            <h1>E-commerce Operations Automation Pipeline</h1>
+            <p class="subtitle">
+                把每日零散的訂單、商品、庫存、出貨來源檔案，自動化轉換成驗證過的 KPI、營運警示、每日報告
+                與 Dashboard-ready 資料層，並附上 Airflow 排程範例。
+            </p>
+            <div class="hero-actions" style="margin-top: 0;">
+                <a href="https://github.com/Josh404DR/ecommerce-operations-automation-pipeline" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                    <i data-lucide="github"></i>&nbsp; View on GitHub
+                </a>
+                <a href="index.html" class="btn btn-secondary">All Case Studies</a>
+            </div>
+        </header>
+
+        <section class="reveal">
+            <h3><i data-lucide="bar-chart-3"></i> Key Metrics</h3>
+            <div class="kpi-grid">
+                <div class="kpi-tile"><span class="kpi-value">$6,384.63</span><span class="kpi-label">Daily GMV</span></div>
+                <div class="kpi-tile"><span class="kpi-value">52</span><span class="kpi-label">Daily Orders</span></div>
+                <div class="kpi-tile"><span class="kpi-value">96.1%</span><span class="kpi-label">Fulfillment Rate</span></div>
+                <div class="kpi-tile"><span class="kpi-value">9</span><span class="kpi-label">Low-Inventory Alerts</span></div>
+                <div class="kpi-tile"><span class="kpi-value">45</span><span class="kpi-label">Data Errors Caught</span></div>
+            </div>
+        </section>
+
+        <section class="reveal">
+            <h3><i data-lucide="target"></i> Business Problem</h3>
+            <div class="card">
+                <p>電商團隊常收到分散的訂單、商品、庫存與出貨匯出檔案。人工整理容易延誤決策，也讓重複訂單、無效狀態、缺失商品屬性或延遲出貨等問題悄悄扭曲報表。這個專案回答：雜亂的來源資料，如何變成穩定、可重複、Dashboard-ready 的營運流程？</p>
+            </div>
+        </section>
+
+        <section class="reveal">
+            <h3><i data-lucide="workflow"></i> Methodology</h3>
+            <div class="card">
+                <p>1. 用固定亂數種子產生 orders / order_items / products / inventory / shipments / campaign_calendar 六張來源表，並刻意注入重複訂單、無效狀態、缺失商品欄位與極端交易金額。</p>
+                <p>2. Pipeline：Raw Data → Clean Data → Validate Data → KPI Output → Alert Report → Dashboard-ready Dataset。</p>
+                <p>3. 用規則型自動化警示：無效訂單狀態、延遲/缺失出貨、庫存低於回補點、商品 GMV 下滑 ≥35%、缺失商品欄位、極端商品單價、重複訂單 ID。</p>
+                <p>4. 每個洞察用 Metric → Observation → Possible Cause → Recommended Action 結構，適合作為每日營運會議的檢視素材。</p>
+                <p>5. 附上簡化版 Airflow DAG 範例，展示排程化落地的方向（本地 MVP 不需要真的安裝 Airflow）。</p>
+            </div>
+        </section>
+
+        <section class="reveal">
+            <h3><i data-lucide="search"></i> Key Findings</h3>
+
+            <div class="finding-card">
+                <h4>Insight 2 — 履約健康度</h4>
+                <p><strong style="color:#ff6b6b;">Observation：</strong>履約率 96.1%，有 1,018 筆延遲或未出貨的合格訂單。</p>
+                <p><strong style="color:#51cf66;">Recommended Action：</strong>依承諾出貨日與客戶影響程度，優先處理高嚴重度延遲出貨佇列，並每日核對缺失的出貨掃描紀錄。</p>
+            </div>
+
+            <div class="finding-card">
+                <h4>Insight 3 — 庫存風險</h4>
+                <p><strong style="color:#ff6b6b;">Observation：</strong>9 個商品觸發低庫存警示。</p>
+                <p><strong style="color:#51cf66;">Recommended Action：</strong>優先補貨排名較高的商品，並用前置時間加上近期銷售速度重新設定回補點。</p>
+            </div>
+
+            <div class="finding-card">
+                <h4>Insight 5 — 資料可靠性</h4>
+                <p><strong style="color:#ff6b6b;">Observation：</strong>驗證流程找出 45 筆資料錯誤，並產生共 155 筆品質與營運警示。</p>
+                <p><strong style="color:#51cf66;">Recommended Action：</strong>在發布主管 KPI 之前，先隔離無效紀錄、指派警示負責人，並依來源系統追蹤重複發生率。</p>
+            </div>
+        </section>
+
+        <section class="reveal">
+            <h3><i data-lucide="briefcase"></i> Business Impact</h3>
+            <div class="card">
+                <p>· 減少每日人工彙整的重複工作。</p>
+                <p>· 統一 KPI 定義，避免各部門各自定義造成的落差。</p>
+                <p>· 防止資料品質問題悄悄污染決策。</p>
+                <p>· 讓履約與庫存例外情況被優先處理。</p>
+                <p>· 產出可直接餵給 BI dashboard 的 CSV 資料契約。</p>
+            </div>
+        </section>
+
+        <section class="reveal">
+            <h3><i data-lucide="layers"></i> Tech Stack</h3>
+            <div class="tags">
+                <span class="tag">Python</span>
+                <span class="tag">Pandas &amp; NumPy</span>
+                <span class="tag">SQL</span>
+                <span class="tag">CSV</span>
+                <span class="tag">Airflow (DAG Example)</span>
+                <span class="tag">Markdown Reporting</span>
+            </div>
+        </section>
+
+        <section class="reveal">
+            <h3><i data-lucide="quote"></i> Resume Highlight</h3>
+            <div class="card">
+                <p style="font-style: italic; color: var(--text-main);">
+                    "Built an automated e-commerce operations data pipeline using Python, Pandas and SQL, transforming six synthetic source tables into validated daily KPIs, product rankings, fulfillment and inventory alerts, a dashboard-ready data layer, and an Airflow scheduling example."
+                </p>
+            </div>
+        </section>
+
+        <footer class="page-footer">
+            &copy; 2026 Josh Hsu. Built with AI and Modern Web Tech.
+        </footer>
+    </div>
+
+    <script>
+        if (window.lucide && typeof window.lucide.createIcons === 'function') {
+            try {
+                window.lucide.createIcons();
+            } catch (error) {
+                console.warn('Icon initialization skipped:', error);
+            }
+        }
+
+        const revealElements = document.querySelectorAll('.reveal');
+        if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.documentElement.classList.add('js-reveal-enabled');
+
+            const revealCallback = (entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            };
+
+            const revealObserver = new IntersectionObserver(revealCallback, {
+                threshold: 0.15,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            revealElements.forEach(el => revealObserver.observe(el));
+            window.setTimeout(() => {
+                revealElements.forEach(el => el.classList.add('active'));
+            }, 1500);
+        } else {
+            revealElements.forEach(el => el.classList.add('active'));
+        }
+    </script>
+</body>
+
+</html>

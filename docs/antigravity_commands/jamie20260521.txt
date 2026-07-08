@@ -1,0 +1,11 @@
+# schtasks /Create /TN "AgentOS_Antigravity_free-b" /TR "powershell.exe -NoProfile -ExecutionPolicy Bypass -File E:\AgentOS\scripts\poll_antigravity_worker.ps1 -WorkerAlias free-b -Once" /SC MINUTE /MO 5 /RL LIMITED /F
+# 已建立成功，不用再跑。
+
+# 檢查排程狀態、上次執行結果：
+schtasks /Query /TN "AgentOS_Antigravity_free-b" /V /FO LIST
+
+# 看目前為止的執行紀錄：
+type E:\AgentOS\logs\antigravity_poll_free-b.log
+
+# 手動測試一次，直接看錯誤訊息（不用等排程觸發）：
+powershell -NoProfile -ExecutionPolicy Bypass -File E:\AgentOS\scripts\poll_antigravity_worker.ps1 -WorkerAlias free-b -Once -DryRun

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>許秉桂 Josh Hsu | Data Automation & AI Product Implementation</title>
+    <meta name="description" content="許秉桂 Josh Hsu 的個人履歷網站。5 年以上電商營運、數據分析、流程優化與 AI 自動化經驗，擅長 SQL、Airflow、Google Apps Script、AI 產品落地與跨部門專案推進。">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
+    <link rel="preconnect" href="https://assets.mixkit.co" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;700;800&display=swap"
+        rel="stylesheet">
+
+    <script src="https://unpkg.com/lucide@1.23.0/dist/umd/lucide.min.js" defer></script>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div class="bg-overlay"></div>
+    <div class="gradient-mesh"></div>
+
+    <div class="hero-video-container" aria-hidden="true">
+        <div class="hero-video-overlay"></div>
+        <video autoplay muted loop playsinline webkit-playsinline class="hero-video" preload="auto" poster="./assets/background.png">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-technology-connection-background-4416-large.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div class="container">
+        <nav class="site-nav">
+            <div class="role-switcher" aria-label="Resume focus">
+                <a href="index.html" class="role-link active" aria-current="page">
+                    <i data-lucide="workflow"></i> AI PM
+                </a>
+                <a href="da.html" class="role-link">
+                    <i data-lucide="database"></i> Data Analyst
+                </a>
+            </div>
+            <input type="checkbox" id="nav-toggle" class="nav-toggle">
+            <label for="nav-toggle" class="nav-toggle-label">
+                <span></span>
+            </label>
+            <div class="nav-links">
+                <a href="#summary">About</a>
+                <a href="#tech-stack">Skills</a>
+                <a href="#experience">Experience</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </nav>
+
+        <header class="hero">
+            <div class="hero-content">
+                <div class="badge">Open for AI Product, Automation & Data Operations Roles</div>
+                <h1>Hi, I'm Josh Hsu.<br>I turn messy operations into reliable automation systems.</h1>
+                <h2>Data Automation Specialist · AI Product Implementation · Workflow Optimizer</h2>
+                <p class="hero-subtitle">
+                    5+ years in e-commerce operations, data analysis, workflow optimization, and AI automation.
+                    I connect business teams, data workflows, and practical AI tools so operations run faster with less manual work.
+                </p>
+
+                <div class="contact-bar">
+                    <a href="mailto:pkg0530hsu@gmail.com" class="contact-link">
+                        <i data-lucide="mail"></i> pkg0530hsu@gmail.com
+                    </a>
+                    <a href="https://www.linkedin.com/in/pingkuei-737560281/" target="_blank" rel="noopener noreferrer" class="contact-link">
+                        <i data-lucide="external-link"></i> LinkedIn
+                    </a>
+                    <a href="https://github.com/Josh404DR" target="_blank" rel="noopener noreferrer" class="contact-link">
+                        <i data-lucide="code-2"></i> GitHub
+                    </a>
+                </div>
+
+                <div class="hero-actions">
+                    <a href="#projects" class="btn btn-primary">View Projects</a>
+                    <a href="#contact" class="btn btn-secondary">Let's Talk</a>
+                </div>
+
+                <div style="margin-top: 1.5rem; display: flex; justify-content: center;">
+                    <a href="resume/Josh_Hsu_ATS_Resume_EN.pdf" target="_blank" rel="noopener noreferrer" class="contact-link" style="text-decoration: underline; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 0.35rem;">
+                        <i data-lucide="file-text" style="width: 18px; height: 18px;"></i> Download Resume (PDF)
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <div class="credibility-strip">
+            <div class="credibility-card">
+                <i data-lucide="briefcase"></i>
+                <span>5+ Years E-commerce Ops</span>
+            </div>
+            <div class="credibility-card">
+                <i data-lucide="bar-chart-3"></i>
+                <span>SQL / Airflow / GAS Reporting</span>
+            </div>
+            <div class="credibility-card">
+                <i data-lucide="sparkles"></i>
+                <span>10,000+ Images / Hour AI Pipeline</span>
+            </div>
+            <div class="credibility-card">
+                <i data-lucide="trending-up"></i>
+                <span>90% Manual Work Reduction</span>
+            </div>
+        </div>
+
+        <section id="summary" class="reveal">
+            <h3><i data-lucide="user"></i> Professional Summary</h3>
+            <p class="section-description">
+                我擁有 5 年以上電商產業經驗，核心能力集中在數據分析、流程優化、AI 導入與自動化落地。
+                我的強項不是只做技術展示，而是把真實營運現場的混亂流程，轉成可追蹤、可維護、能被業務團隊採用的系統。
+            </p>
+            <div class="card">
+                <div class="highlight-grid">
+                    <div class="feature-card">
+                        <h4>AI 產品落地</h4>
+                        <p>主導 AI 內容自動化平台規劃，定義功能、品質標準、Audit 規格與發布流程，讓 AI 工具能在高流量電商環境中穩定使用。</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>數據與報表自動化</h4>
+                        <p>使用 SQL、Airflow、Google Apps Script 與 Dashboard 工具，建立定時報表與資料流，降低手動工時與資料錯誤。</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>跨部門專案推進</h4>
+                        <p>能協調營運、法務、設計、QA 與技術資源，把模糊需求拆成可執行的流程、規格與驗收標準。</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>從現場到系統</h4>
+                        <p>從物流、商品建檔、圖片 Audit、報表交付一路走到 AI 工具產品化，理解第一線痛點，也能把痛點轉成系統方案。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tech-stack" class="reveal">
+            <h3><i data-lucide="cpu"></i> Skills & Tools</h3>
+            <div class="skill-grid">
+                <div class="card skill-category">
+                    <h4>AI Product & Automation</h4>
+                    <div class="tags">
+                        <span class="tag">AI Product Management</span>
+                        <span class="tag">LLMOps</span>
+                        <span class="tag">Prompt Engineering</span>
+                        <span class="tag">RAG Architecture</span>
+                        <span class="tag">Workflow Design</span>
+                        <span class="tag">SOP Automation</span>
+                    </div>
+                </div>
+                <div class="card skill-category">
+                    <h4>Data Analytics & Reporting</h4>
+                    <div class="tags">
+                        <span class="tag">SQL</span>
+                        <span class="tag">Hive</span>
+                        <span class="tag">Oracle SQL</span>
+                        <span class="tag">Airflow</span>
+                        <span class="tag">Tableau</span>
+                        <span class="tag">Looker Studio</span>
+                        <span class="tag">Power BI</span>
+                        <span class="tag">Google Analytics</span>
+                    </div>
+                </div>
+                <div class="card skill-category">
+                    <h4>Implementation Tools</h4>
+                    <div class="tags">
+                        <span class="tag">Google Apps Script</span>
+                        <span class="tag">Google Sheets</span>
+                        <span class="tag">Python</span>
+                        <span class="tag">FastAPI</span>
+                        <span class="tag">Docker</span>
+                        <span class="tag">GitHub Actions</span>
+                        <span class="tag">REST APIs</span>
+                        <span class="tag">Playwright</span>
+                    </div>
+                </div>
+                <div class="card skill-category">
+                    <h4>Operations & Project Management</h4>
+                    <div class="tags">
+                        <span class="tag">E-commerce Operations</span>
+                        <span class="tag">Process Optimization</span>
+                        <span class="tag">Cross-functional Coordination</span>
+                        <span class="tag">Dashboard Planning</span>
+                        <span class="tag">Training Design</span>
+                        <span class="tag">Compliance Workflow</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="reveal">
+            <h3><i data-lucide="briefcase"></i> 工作經歷 Work Experience</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <h4>數據分析與自動化專員</h4>
+                        <span class="timeline-date">2024.07 - Present</span>
+                    </div>
+                    <p class="timeline-overview">酷澎股份有限公司 Coupang Taiwan · 台北市松山區 · 全職</p>
+                    <div class="card">
+                        <div class="timeline-content">
+                            <h5>Role Scope: AI Product Planning / AI PM</h5>
+                            <ul>
+                                <li>主導 AI 內容自動化平台的產品規劃與功能定義，設計適用於高流量電商的影像生成與文案自動化工作流。</li>
+                                <li>規劃並管理 12 個共享服務端點的營運與使用者體驗，降低非技術業務同仁使用 AI 工具的技術門檻。</li>
+                                <li>定義商品圖片上架後的 Audit 規格，引入 AI 檢測機制以確保上架影像的合規性與品質。</li>
+                                <li>規劃一鍵安裝桌面端 AI 工具與自動更新驗證流程，提升部署便利性與工具穩定性。</li>
+                            </ul>
+
+                            <h5>Business Impact</h5>
+                            <ul>
+                                <li>規劃並導入 AI 內容生成管線，達成每小時 10,000+ 張圖像的自動化處理能力，縮短商品上架週期。</li>
+                                <li>設計 Retry / Backoff 與錯誤隔離邏輯，降低大規模批次生成中的中斷風險。</li>
+                                <li>協調法務與合規團隊，在 AI 工作流中導入風險防範與過濾機制，降低潛在法律與侵權風險。</li>
+                            </ul>
+
+                            <h5>Role Scope: Data Analytics & Workflow Automation</h5>
+                            <ul>
+                                <li>使用 SQL、Airflow 與 Google Apps Script 優化資料流、多層級自動化排程與報表定時產出。</li>
+                                <li>整合 AI 解決方案與商業 Dashboard，加速商品資料建檔、報表開發與跨部門決策。</li>
+                                <li>以自動化與串流技術降低 90% 手動工時、提升 50% 處理效率，並透過校驗機制降低 80% 資料錯誤率。</li>
+                                <li>設計模組化培訓機制，使新人從入職到獨立作業的時間縮短 50%。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <h4>專案營運組長</h4>
+                        <span class="timeline-date">2022.04 - 2023.05</span>
+                    </div>
+                    <p class="timeline-overview">酷澎股份有限公司 Coupang Taiwan · 台北市信義區 · 全職</p>
+                    <div class="card">
+                        <div class="timeline-content">
+                            <ul>
+                                <li>負責新品建檔後的商品圖片流程檢核與上架 Audit，確保視覺素材符合平台規範與上架標準。</li>
+                                <li>擔任圖片建檔流程負責人，負責 30 人以上營運團隊的培訓、工作分配與進度追蹤。</li>
+                                <li>跨部門協調法務、設計、QA 等單位，處理合規性問題與流程優化。</li>
+                                <li>一個月內完成 80% 以上侵權圖片替換，維持 95% 每日完成率。</li>
+                                <li>建立自動化資料驗證機制，使資料錯誤能即時偵測與修正，將錯誤處理縮短至 1 小時內。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <h4>電商物流專員</h4>
+                        <span class="timeline-date">2021.03 - 2022.03</span>
+                    </div>
+                    <p class="timeline-overview">化石先生股份有限公司 Mr. Fossil · 新北市土城區 · 全職</p>
+                    <div class="card">
+                        <div class="timeline-content">
+                            <ul>
+                                <li>操作電商後台系統，管理商品上下架、訂單狀態追蹤、基本資料與價格維護。</li>
+                                <li>規劃倉儲儲位配置與標籤系統，建立商品庫存清單並執行定期盤點。</li>
+                                <li>負責理貨、包裝、出貨、門市補貨與展覽會場支援，串接前後端物流需求。</li>
+                                <li>導入快捷出貨 SOP、儲位數位化標籤與即時庫存管理表單，提升整體出貨效率 50%。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="reveal">
+            <h3><i data-lucide="layers"></i> Selected Projects</h3>
+            <p class="section-description">
+                這些專案分成兩類：一類是與 104 履歷一致的工作成果；另一類是個人研發專案，用來展示我對 AI 工作流、Agent OS 與自動化治理的持續實作能力。
+            </p>
+            <div class="project-grid">
+                <div class="project-card reveal">
+                    <div>
+                        <h4 style="color: var(--primary); margin-bottom: 1rem;">AI Content Automation Platform</h4>
+                        <p><strong style="color: #ff6b6b;">Problem:</strong> 高流量電商內容流程需要大量圖片生成、文案處理、品質檢核與合規控管，人工流程容易慢、易中斷、難以擴大。</p>
+                        <p><strong style="color: #4dadf7;">Solution:</strong> 規劃 AI 內容生成管線、共享服務端點、Audit 規格、自動更新部署與錯誤隔離機制。</p>
+                        <p><strong style="color: #51cf66;">Outcome:</strong> 達成每小時 10,000+ 張圖像處理能力，降低非技術團隊採用 AI 工具的門檻，並強化品質與合規控管。</p>
+                    </div>
+                    <div class="project-tags">
+                        <span class="tag">AI Product</span>
+                        <span class="tag">LLMOps</span>
+                        <span class="tag">Workflow Automation</span>
+                    </div>
+                </div>
+
+                <div class="project-card reveal">
+                    <div>
+                        <h4 style="color: var(--primary); margin-bottom: 1rem;">Data Automation & Reporting System</h4>
+                        <p><strong style="color: #ff6b6b;">Problem:</strong> 營運報表與資料交付高度依賴人工重複操作，容易造成延遲、版本混亂與資料錯誤。</p>
+                        <p><strong style="color: #4dadf7;">Solution:</strong> 使用 SQL、Airflow、Google Apps Script 與 Dashboard 工具建立自動化排程、資料校驗與視覺化報表。</p>
+                        <p><strong style="color: #51cf66;">Outcome:</strong> 降低 90% 手動工時、提升 50% 處理效率、降低 80% 資料錯誤率，讓跨部門決策更快取得可靠資料。</p>
+                    </div>
+                    <div class="project-tags">
+                        <span class="tag">SQL</span>
+                        <span class="tag">Airflow</span>
+                        <span class="tag">Google Apps Script</span>
+                    </div>
+                </div>
+
+                <div class="project-card reveal">
+                    <div>
+                        <h4 style="color: var(--primary); margin-bottom: 1rem;">AI Hub / OpenClaw Personal R&D Workspace</h4>
+                        <p><strong style="color: #ff6b6b;">Problem:</strong> 個人 AI 專案容易散落在聊天紀錄、文件、任務與實驗中，缺乏一致的記憶、交接與治理方式。</p>
+                        <p><strong style="color: #4dadf7;">Solution:</strong> 建立 AI Hub 作為個人研發工作區，整理 Agent OS 文件、任務台帳、記憶摘要、資源審查與自動化治理流程。</p>
+                        <p><strong style="color: #51cf66;">Outcome:</strong> 展示我對 AI 工作流設計、Agent 協作、長期記憶、文件治理與實務自動化系統的持續實作能力。</p>
+                    </div>
+                    <div class="project-tags">
+                        <span class="tag">Personal Project</span>
+                        <span class="tag">Agent OS</span>
+                        <span class="tag">Knowledge Workflow</span>
+                    </div>
+                </div>
+
+                <div class="project-card reveal">
+                    <div>
+                        <h4 style="color: var(--primary); margin-bottom: 1rem;">Private SQL RAG Assistant</h4>
+                        <p><strong style="color: #ff6b6b;">Problem:</strong> 非技術使用者需要快速理解資料與 SQL 查詢邏輯，但直接存取資料庫存在安全與準確性風險。</p>
+                        <p><strong style="color: #4dadf7;">Solution:</strong> 設計私有 SQL RAG 助理概念，結合檢索、schema 約束與安全防護欄，協助查詢理解與資料分析流程。</p>
+                        <p><strong style="color: #51cf66;">Outcome:</strong> 用於探索安全的自助式資料分析介面，強調 controlled context、query safety 與內部生產力提升。</p>
+                    </div>
+                    <div class="project-tags">
+                        <span class="tag">RAG</span>
+                        <span class="tag">SQL Assistant</span>
+                        <span class="tag">Data Safety</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="reveal">
+            <h3><i data-lucide="mail"></i> Contact</h3>
+            <div class="card contact-card">
+                <h4 style="color: var(--primary); margin-bottom: 0.75rem; text-align: center; text-transform: uppercase; letter-spacing: 0.05em; font-size: 1.25rem;">Let's Discuss AI Product & Automation Work</h4>
+                <p style="text-align: center; margin-bottom: 2rem;">
+                    我適合需要把營運流程、數據報表與 AI 工具真正落地的團隊。若你正在尋找 AI 專案經理、產品經理、數據自動化或 workflow automation 相關角色，歡迎聯絡我。
+                </p>
+                <div class="contact-grid">
+                    <div>
+                        <strong>Email</strong>
+                        <p><a href="mailto:pkg0530hsu@gmail.com">pkg0530hsu@gmail.com</a></p>
+                    </div>
+                    <div>
+                        <strong>LinkedIn</strong>
+                        <p><a href="https://www.linkedin.com/in/pingkuei-737560281/" target="_blank" rel="noopener noreferrer">linkedin.com/in/pingkuei-737560281</a></p>
+                    </div>
+                    <div>
+                        <strong>GitHub</strong>
+                        <p><a href="https://github.com/Josh404DR" target="_blank" rel="noopener noreferrer">github.com/Josh404DR</a></p>
+                    </div>
+                </div>
+                <a href="resume/Josh_Hsu_ATS_Resume_EN.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="margin-top: 2rem;">下載完整履歷 (PDF)</a>
+            </div>
+        </section>
+
+        <footer class="page-footer">
+            &copy; 2026 Josh Hsu. Built with AI and Modern Web Tech.
+        </footer>
+    </div>
+
+    <script>
+        if (window.lucide && typeof window.lucide.createIcons === 'function') {
+            try {
+                window.lucide.createIcons();
+            } catch (error) {
+                console.warn('Icon initialization skipped:', error);
+            }
+        }
+
+        const revealElements = document.querySelectorAll('.reveal');
+        if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.documentElement.classList.add('js-reveal-enabled');
+
+            const revealCallback = (entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            };
+
+            const revealObserver = new IntersectionObserver(revealCallback, {
+                threshold: 0.15,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            revealElements.forEach(el => revealObserver.observe(el));
+            window.setTimeout(() => {
+                revealElements.forEach(el => el.classList.add('active'));
+            }, 1500);
+        } else {
+            revealElements.forEach(el => el.classList.add('active'));
+        }
+
+        const heroContent = document.querySelector('.hero-content');
+        document.addEventListener('mousemove', (e) => {
+            if (heroContent && window.innerWidth > 768) {
+                const x = (window.innerWidth / 2 - e.pageX) / 50;
+                const y = (window.innerHeight / 2 - e.pageY) / 50;
+                heroContent.style.transform = `rotateY(${x}deg) rotateX(${-y}deg) translateY(${y}px)`;
+            }
+        });
+
+        const video = document.querySelector('.hero-video');
+        if (video) {
+            const playVideo = () => video.play().catch(() => {});
+            playVideo();
+            ['touchstart', 'click', 'scroll'].forEach(evt =>
+                document.addEventListener(evt, playVideo, { once: true })
+            );
+        }
+    </script>
+</body>
+
+</html>

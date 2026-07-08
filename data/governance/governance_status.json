@@ -1,0 +1,21 @@
+{
+    "governance_status":  "review_required",
+    "governance_version":  "1.2.0",
+    "canonical_path":  "E:\\AgentOS\\AGENTS.md",
+    "canonical_hash":  "AD20E91AFB53EF06800077F420F8F441E57EEEA0E906794FF219E63F0FFE39C3",
+    "checked_at":  "2026-07-08T12:51:56.0243766+08:00",
+    "token_cost":  0,
+    "model_calls":  0,
+    "deletion_executed":  false,
+    "governed_file_count":  71,
+    "drift_count":  4,
+    "drift":  [
+                  {
+                      "path":  "current_state.md",
+                      "reason":  "hash_changed"
+                  },
+                  {
+                      "path":  "dashboard\\DASHBOARD_SCOPE.md",
+                      "reason":  "hash_changed"
+                  },
+                 

@@ -1,0 +1,72 @@
+{
+  "collapse-filter": true,
+  "search": "-path:\"工單\" OR path:\"視圖節點\"",
+  "showTags": false,
+  "showAttachments": false,
+  "hideUnresolved": true,
+  "showOrphans": false,
+  "collapse-color-groups": true,
+  "colorGroups": [
+    {
+      "query": "[status:\"進行中\"]",
+      "color": {
+        "a": 1,
+        "rgb": 16096779
+      }
+    },
+    {
+      "query": "[status:\"受阻\"]",
+      "color": {
+        "a": 1,
+        "rgb": 15680580
+      }
+    },
+    {
+      "query": "[status:\"等待中\"]",
+      "color": {
+        "a": 1,
+        "rgb": 3908342
+      }
+    },
+    {
+      "query": "[status:\"已完成\"]",
+      "color": {
+        "a": 1,
+        "rgb": 1095921
+      }
+    },
+    {
+      "query": "path:\"角色\"",
+      "color": {
+        "a": 1,
+        "rgb": 11032055
+      }
+    },
+    {
+      "query": "path:\"視圖節點\"",
+      "color": {
+        "a": 1,
+        "rgb": 3908342
+      }
+    },
+    {
+      "query": "file:\"共同治理 v1.1.0\" OR file:\"AgentOS 工單宇宙\"",
+      "color": {
+        "a": 1,
+        "rgb": 16777215
+      }
+    }
+  ],
+  "collapse-display": true,
+  "showArrow": true,
+  "textFadeMultiplier": 0.7,
+  "nodeSizeMultiplier": 0.85,
+  "lineSizeMultiplier": 0.65,
+  "collapse-forces": true,
+  "centerStrength": 0.42,
+  "repelStrength": 18,
+  "linkStrength": 0.75,
+  "linkDistance": 115,
+  "scale": 0.25883865621815666,
+  "close": true
+}

@@ -1,0 +1,7 @@
+{
+    "task_id":  "2026-07-06-learning-collector-dedupe-fix",
+    "decision":  "approve",
+    "note":  "Josh 接受 Codex Verify 證明之核心修復：55/55 PASS、正式 DryRun 無 SHA-256 collision；缺失的 SCOPED_DIFF.patch 與 TEST_RESULT.md 改列獨立 artifact-format 修復，不再重跑 Claude。",
+    "decided_by":  "Josh",
+    "decided_at":  "2026-07-06T07:10:58.4849090+08:00"
+}

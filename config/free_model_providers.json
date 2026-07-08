@@ -1,0 +1,78 @@
+{
+  "updated": "2026-06-25",
+  "policy": {
+    "purpose": "Free or no-extra-cost cloud window candidates for routine AgentOS chat and routing.",
+    "default_daily_request_cap": 30,
+    "allow_paid_models": false,
+    "allow_auto_top_up": false,
+    "allow_paid_tools": false,
+    "fallback_to_gemini": false,
+    "notes": [
+      "Request caps count local attempted provider calls, not provider-side billing records.",
+      "One Josh message usually maps to one API request, but retries or multi-step workflows can consume more.",
+      "Provider pricing and free-tier limits can change; keep this file conservative."
+    ]
+  },
+  "providers": {
+    "groq": {
+      "status": "candidate_free_plan_limited",
+      "base_url": "https://api.groq.com/openai/v1",
+      "api_key_env": "GROQ_API_KEY",
+      "default_model": "llama-3.1-8b-instant",
+      "daily_request_cap": 30,
+      "free_only_guard": "Use only while account is on free plan or explicitly no-extra-cost quota. Do not enable paid tools.",
+      "allowed_use": [
+        "routine_chat_window",
+        "typed_request_normalization",
+        "short_summary",
+        "classification"
+      ],
+      "blocked_use": [
+        "paid_tools",
+        "web_search",
+        "code_execution",
+        "client_facing_send",
+        "governance_edit"
+      ]
+    },
+    "openrouter": {
+      "status": "candidate_free_models_only",
+      "base_url": "https://openrouter.ai/api/v1",
+      "api_key_env": "OPENROUTER_API_KEY",
+      "default_model": "openrouter/free",
+      "daily_request_cap": 30,
+      "free_only_guard": "Use only free models or openrouter/free. Do not use paid model slugs or paid tools.",
+      "allowed_model_patterns": [
+        "openrouter/free",
+        "*:free"
+      ],
+      "allowed_use": [
+        "backup_chat_window",
+        "typed_request_normalization",
+        "short_summary",
+        "classification"
+      ],
+      "blocked_use": [
+        "paid_model",
+        "web_search",
+        "image_generation",
+        "client_facing_send",
+        "governance_edit"
+      ]
+    }
+  },
+  "excluded_for_now": {
+    "kimi_api": {
+      "reason": "Kimi web may be free with limits, but API free/no-extra-cost status is not verified for AgentOS automation.",
+      "allowed_mode": "manual_web_only"
+    },
+    "cloudflare_workers_ai": {
+      "reason": "Workers AI has free-plan inclusion but also unit pricing; not treated as guaranteed zero-cost automation.",
+      "allowed_mode": "deferred"
+    },
+    "ollama": {
+      "reason": "Local models are available but Josh does not want them as the normal chat window because they are too slow.",
+      "allowed_mode": "offline_fallback_only"
+    }
+  }
+}

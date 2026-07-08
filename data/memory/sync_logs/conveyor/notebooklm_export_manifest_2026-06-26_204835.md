@@ -1,0 +1,51 @@
+﻿# NotebookLM Export Manifest
+
+- generated_at: 2026-06-26 20:48:35 +08:00
+- export_dir: E:\AgentOS\exports\notebooklm_v1
+- source_count: 43
+- cursor_owned_files_copied_read_only: true
+
+## Sources
+- agents\roles\claude.md
+- agents\roles\codex.md
+- agents\roles\gemini.md
+- agents\roles\hermes.md
+- current_state.md
+- data\knowledge_pool\2026-06-24-addy-osmani-agent-skills.md
+- data\knowledge_pool\2026-06-24-baidu-unlimited-ocr.md
+- data\knowledge_pool\2026-06-24-bazi-mcp-server.md
+- data\knowledge_pool\2026-06-24-calesthio-cicd-tool.md
+- data\knowledge_pool\2026-06-24-claude-code-resume.md
+- data\knowledge_pool\2026-06-24-hermes-starter-pack.md
+- data\knowledge_pool\2026-06-24-insane-search-tool.md
+- data\knowledge_pool\2026-06-24-lazycodex-research-tool.md
+- data\knowledge_pool\2026-06-24-odin-engineio-case-study.md
+- data\knowledge_pool\2026-06-24-openhands-software-agent-sdk.md
+- data\knowledge_pool\2026-06-24-slides-grab-tool.md
+- data\knowledge_pool\2026-06-24-yuri-relay-shortener.md
+- data\memory\HERMES_CORE_MEMORY.md
+- data\memory\NOTEBOOKLM_SOURCE_INDEX.md
+- docs\24H_STABILITY_MONITOR_PLAN.md
+- docs\AGENT_ROUTING_PLAN.md
+- docs\ARCHITECTURE.md
+- docs\COST_SAVING_ROUTING_PROTOCOL.md
+- docs\EVIDENCE_AND_REPORTING_CONTRACT.md
+- docs\EVIDENCE_HYGIENE_PLAN.md
+- docs\FREE_CLOUD_WINDOW_POLICY.md
+- docs\HERMES_REPORTING_PRINCIPLES.md
+- docs\MEMORY_ARCHITECTURE.md
+- docs\OLLAMA_MODEL_PRACTICAL_EVALUATION.md
+- docs\OLLAMA_SPEED_EVALUATION.md
+- docs\overnight_report.md
+- docs\PRE_FLIGHT_TEST_PLAN.md
+- docs\RESOURCE_INVENTORY.md
+- docs\SECURITY_REVIEW_AVIRA_INSTALL_PS1.md
+- docs\SETUP_STATUS.md
+- docs\TELEGRAM_TYPED_DISPATCH_HANDOFF.md
+- PROJECT_ANALYSIS.md
+- README.md
+- RECOMMENDATIONS.md
+- workflows\ai_freelancer_os.md
+- workflows\client_project.md
+- workflows\daily_lead_scout.md
+- workflows\hermes_to_codex.md
