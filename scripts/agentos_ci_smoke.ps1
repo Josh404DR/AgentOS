@@ -172,6 +172,10 @@ Invoke-CiCommand -Name "powershell_syntax_core" -Command "PowerShell AST parse c
     )
 }
 
+Invoke-CiCommand -Name "script_registry" -Command "tests\validate_script_registry.ps1" -Script {
+    & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $root "tests\validate_script_registry.ps1") -AgentOSRoot $root
+}
+
 Invoke-CiCommand -Name "verify_prompt_fixture" -Command "tests\fixtures\test_verify_prompt_verdict_injection.ps1" -Script {
     & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $root "tests\fixtures\test_verify_prompt_verdict_injection.ps1")
 }
