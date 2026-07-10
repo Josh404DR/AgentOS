@@ -11,6 +11,7 @@ import GovernanceStatus from "@/components/GovernanceStatus";
 import TaskUniverse from "@/components/TaskUniverse";
 import WorkflowSupervisor from "@/components/WorkflowSupervisor";
 import ApprovalQueue from "@/components/ApprovalQueue";
+import RuntimeStatus from "@/components/RuntimeStatus";
 import { Bot, GitBranch, LayoutDashboard, Radar, UserCheck, Workflow } from "lucide-react";
 
 type Tab = "dashboard" | "decisions" | "tasks" | "supervisor" | "approvals";
@@ -95,6 +96,8 @@ export default function Home() {
           <span className="text-xs text-zinc-400">即時</span>
         </div>
       </header>
+
+      {tab === "dashboard" && <RuntimeStatus />}
 
       {/* ── Tab: Dashboard ── */}
       {tab === "dashboard" && (

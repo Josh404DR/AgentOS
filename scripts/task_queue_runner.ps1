@@ -40,6 +40,36 @@ function Write-QueueEvent([string]$DispatchId, [string]$Status, [string]$Detail)
     $line = "$(Get-Date -Format o) dispatch_id=$DispatchId status=$Status detail=$Detail"
     Add-Content -LiteralPath $QueueLog -Value $line -Encoding UTF8
     Write-Output $line
+    try {
+        $eventDir = Join-Path $AgentOSRoot "data\observability\events"
+        New-Item -ItemType Directory -Force -Path $eventDir | Out-Null
+        $result = if ($Status -in @("blocked", "state_update_failed", "escalation_required")) { "error" } elseif ($Status -eq "idle") { "warn" } else { "ok" }
+        $exitCode = $null
+        if ($Detail -match "dispatcher_exit_(\d+)") { $exitCode = [int]$Matches[1] }
+        $event = [ordered]@{
+            event_id = "evt-$((Get-Date).ToString('yyyyMMdd-HHmmssfff'))-$([Guid]::NewGuid().ToString('N').Substring(0, 6))"
+            ts = (Get-Date).ToString('o')
+            actor = "queue_runner"
+            runtime_id = "task-queue-runner"
+            pid = $PID
+            dispatch_id = $DispatchId
+            parent_event_id = $null
+            script = "scripts\task_queue_runner.ps1"
+            action = $Status
+            input_ref = if ($DispatchId -eq "queue") { $null } else { "data\codex_tasks\$DispatchId\TASK.md" }
+            output_ref = if ($DispatchId -eq "queue") { $null } else { "data\codex_tasks\$DispatchId\OUTPUTS\RESULT.md" }
+            next_step = $Detail
+            result = $result
+            exit_code = $exitCode
+            error_class = if ($Status -eq "state_update_failed") { "STATE_UPDATE_FAILED" } else { $null }
+            severity_basis = if ($null -ne $exitCode) { "exit_code" } else { "state_transition" }
+            duration_ms = $null
+        }
+        $eventPath = Join-Path $eventDir "task-queue-runner-$((Get-Date).ToString('yyyyMM')).jsonl"
+        [IO.File]::AppendAllText($eventPath, (($event | ConvertTo-Json -Compress -Depth 6) + [Environment]::NewLine), [Text.UTF8Encoding]::new($false))
+    } catch {
+        Write-Warning "Observability event write failed: $($_.Exception.Message)"
+    }
 }
 
 function Set-QueueRunState([string]$Status, [string]$Detail = "") {

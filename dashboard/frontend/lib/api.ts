@@ -1,8 +1,24 @@
 const BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
+async function readJson(res: Response) {
+  if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+  return res.json();
+}
+
 export async function fetchUsage() {
   const res = await fetch(`${BASE}/api/usage`);
-  return res.json();
+  return readJson(res);
+}
+
+export async function fetchRuntimes() {
+  const res = await fetch(`${BASE}/api/runtimes`, { cache: "no-store" });
+  return readJson(res);
+}
+
+export async function fetchRuntimeEvents(runtimeId?: string) {
+  const query = runtimeId ? `?runtime_id=${encodeURIComponent(runtimeId)}` : "";
+  const res = await fetch(`${BASE}/api/events${query}`, { cache: "no-store" });
+  return readJson(res);
 }
 
 export async function fetchGovernance() {

@@ -47,6 +47,10 @@ USAGE_DIR = AGENTOS_ROOT / "data" / "usage"
 OBSIDIAN_VAULT_DIR = AGENTOS_ROOT / "exports" / "obsidian_agentos"
 GOVERNANCE_STATUS = AGENTOS_ROOT / "data" / "governance" / "governance_status.json"
 GOVERNANCE_SYNC = AGENTOS_ROOT / "scripts" / "sync_shared_governance.ps1"
+RUNTIME_REGISTRY = AGENTOS_ROOT / "config" / "runtime_registry.json"
+RUNTIME_STATUS = AGENTOS_ROOT / "data" / "observability" / "runtime_status.json"
+OBSERVABILITY_EVENTS_DIR = AGENTOS_ROOT / "data" / "observability" / "events"
+RUNTIME_COLLECTOR = AGENTOS_ROOT / "scripts" / "observability" / "collect-runtime-status.ps1"
 
 app = FastAPI(title="AgentOS Dashboard API", version="1.0.0")
 
@@ -1072,7 +1076,98 @@ async def _tail_live_source(source: str, websocket: WebSocket, lines: int = 60):
 
 @app.get("/api/health")
 def health():
-    return {"status": "ok", "agentos_root": str(AGENTOS_ROOT)}
+    runtime_age_seconds = None
+    if RUNTIME_STATUS.exists():
+        runtime_age_seconds = round(
+            datetime.now(timezone.utc).timestamp() - RUNTIME_STATUS.stat().st_mtime,
+            1,
+        )
+    return {
+        "status": "ok",
+        "agentos_root": str(AGENTOS_ROOT),
+        "runtime_evidence": {
+            "available": RUNTIME_STATUS.exists(),
+            "age_seconds": runtime_age_seconds,
+        },
+    }
+
+
+@app.get("/api/runtimes")
+def runtimes():
+    """Return deterministic registry data merged with the latest collector evidence."""
+    try:
+        registry = json.loads(RUNTIME_REGISTRY.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise HTTPException(status_code=503, detail=f"runtime registry unavailable: {exc}") from exc
+
+    evidence: dict = {}
+    evidence_error = None
+    evidence_age = (
+        datetime.now(timezone.utc).timestamp() - RUNTIME_STATUS.stat().st_mtime
+        if RUNTIME_STATUS.exists()
+        else None
+    )
+    if RUNTIME_COLLECTOR.exists() and (evidence_age is None or evidence_age > 15):
+        try:
+            completed = subprocess.run(
+                [
+                    "powershell.exe",
+                    "-NoProfile",
+                    "-ExecutionPolicy",
+                    "Bypass",
+                    "-File",
+                    str(RUNTIME_COLLECTOR),
+                    "-AgentOSRoot",
+                    str(AGENTOS_ROOT),
+                ],
+                cwd=str(AGENTOS_ROOT),
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                timeout=15,
+            )
+            if completed.returncode != 0:
+                evidence_error = f"collector exit {completed.returncode}: {completed.stderr[-500:]}"
+        except (OSError, subprocess.SubprocessError) as exc:
+            evidence_error = f"collector failed: {exc}"
+    if RUNTIME_STATUS.exists():
+        try:
+            evidence = json.loads(RUNTIME_STATUS.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as exc:
+            evidence_error = str(exc)
+    else:
+        evidence_error = evidence_error or "runtime collector has not produced evidence"
+
+    statuses = {item.get("runtime_id"): item for item in evidence.get("runtimes", [])}
+    merged = []
+    for item in registry.get("runtimes", []):
+        merged.append({**item, "status": statuses.get(item.get("runtime_id"), {"state": "unknown"})})
+    return {
+        "schema_version": registry.get("schema_version"),
+        "collected_at": evidence.get("collected_at"),
+        "evidence_error": evidence_error,
+        "runtimes": merged,
+    }
+
+
+@app.get("/api/events")
+def runtime_events(runtime_id: str | None = None, dispatch_id: str | None = None, limit: int = 200):
+    """Read the newest structured runtime events without model interpretation."""
+    rows = []
+    for path in sorted(OBSERVABILITY_EVENTS_DIR.glob("*.jsonl"), reverse=True):
+        for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+            try:
+                row = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            if runtime_id and row.get("runtime_id") != runtime_id:
+                continue
+            if dispatch_id and row.get("dispatch_id") != dispatch_id:
+                continue
+            rows.append(row)
+    rows.sort(key=lambda row: row.get("ts", ""), reverse=True)
+    return {"events": rows[: max(1, min(limit, 1000))]}
 
 
 @app.get("/api/governance")
