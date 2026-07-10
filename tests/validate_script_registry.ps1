@@ -24,15 +24,16 @@ foreach ($entry in $entries) {
     }
 }
 
-$executables = @(Get-ChildItem -LiteralPath (Join-Path $root "scripts") -File |
+$scriptsRoot = Join-Path $root "scripts"
+$executables = @(Get-ChildItem -LiteralPath $scriptsRoot -Recurse -File |
     Where-Object Extension -in @(".ps1", ".py", ".js", ".mjs", ".bat", ".cmd") |
-    ForEach-Object { "scripts/$($_.Name)" })
+    ForEach-Object { "scripts/" + $_.FullName.Substring($scriptsRoot.Length + 1).Replace('\', '/') })
 $registered = @($entries.implementation_path)
 foreach ($path in $executables) {
     if ($path -notin $registered) { $errors.Add("unregistered executable: $path") }
 }
 foreach ($path in $registered) {
-    if ($path -like "scripts/*" -and $path -notin $executables) { $errors.Add("registry path is not a root executable: $path") }
+    if ($path -like "scripts/*" -and $path -notin $executables) { $errors.Add("registry path is not executable: $path") }
 }
 
 if ($errors.Count) {
