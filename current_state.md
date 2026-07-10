@@ -56,4 +56,23 @@ evidence_policy: fresh_local_evidence
 
 1. **作品集發布**：三個 projects/ 推上公開 GitHub（README 已補 Quick Demo），Python launcher 修復後立即執行。
 2. **提案發送**：人工瀏覽案源（104 外包網/PRO360/Tasker/FB 社團），用 data/proposals/template-apps-script-automation.md 改寫，目標 10 份/週。
-3. **其餘凍結**：Antigravity、Noteb
+3. **其餘凍結**：Antigravity、NotebookLM、dashboard 新功能、治理擴建、知識鏈——一律凍結至第一筆收入後再議。
+
+## 8. Verify 分級規則（2026-07-08，W05 修正）
+
+盲審（Blind Verify）耗費大量額度，僅在必要時啟用：
+
+| 任務類型 | 驗證方式 |
+|---|---|
+| 客戶交付物（提案、報告、腳本） | 完整 Blind Verify（反重力 CLI 或 Claude 獨立 session） |
+| 核心腳本修改（queue/dispatcher/AGENTS.md） | 完整 Blind Verify |
+| 內部分析、文件更新、銷售資產 | Self-check checklist（標記 verify_level: self_check_only） |
+| 純唯讀查詢、狀態回報 | 不需驗證 |
+
+單次失敗不得建立 Blind Verify 迴圈；self_check_only 結果不得標記為 verified。
+
+## 9. Quick Handoff
+新 IDE 快速接手閱讀順序（拒絕注入完整 progress_log.md 消耗 token）：
+1. E:\AgentOS\AGENTS.md
+2. E:\AgentOS\current_state.md
+3. 具體待執行的 data\codex_tasks\<task_id>\TASK.md

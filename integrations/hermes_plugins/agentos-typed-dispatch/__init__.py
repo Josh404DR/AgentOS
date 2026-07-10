@@ -14,7 +14,7 @@ from typing import Any, Optional
 
 logger = logging.getLogger(__name__)
 
-PLUGIN_VERSION = "0.7.0"
+PLUGIN_VERSION = "0.7.1"
 PLUGIN_MODE = os.getenv("AGENTOS_PLUGIN_MODE", "task_dispatch").strip().lower()
 AGENTOS_ROOT = Path(r"E:\AgentOS")
 ENTRYPOINT = AGENTOS_ROOT / "scripts" / "telegram_typed_dispatch_entry.ps1"
@@ -49,6 +49,9 @@ LOCAL_FILE_PATTERN = re.compile(
     r"[^\r\n<>:\"|?*]+\.(?:md|txt))",
     re.IGNORECASE,
 )
+# Fixed-prefix shortcuts from hermes_intake_menu.md
+WORK_ORDER_PATTERN = re.compile(r"^\s*\[工單\]", re.IGNORECASE)
+RAW_INTAKE_PATTERN = re.compile(r"^\s*\[成形\]", re.IGNORECASE)
 MAX_REPLY_CHARS = 3200
 _background_tasks: set[asyncio.Task] = set()
 
@@ -227,6 +230,54 @@ def _run_local_file_task(message_text: str, dispatch_id: str) -> tuple[bool, str
         ],
         timeout=720,
     )
+
+
+def _run_raw_intake(message_text: str, dispatch_id: str) -> tuple[bool, str]:
+    """Create a raw intake draft with status: awaiting_josh_approval.
+
+    Does not invoke any AI model or script.  The draft is the artefact that
+    a future Claude shaping session (36_RAW_INTAKE.md §2) will work from.
+    """
+    stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+    is_fixture = "is_fixture" in message_text.lower()
+    prefix = "fixture" if is_fixture else "draft"
+    safe_id = re.sub(r"[^A-Za-z0-9_.-]+", "-", dispatch_id)[:40]
+    draft_dir = AGENTOS_ROOT / "data" / "tasks" / f"{prefix}-{stamp}-{safe_id}"
+    try:
+        draft_dir.mkdir(parents=True, exist_ok=True)
+        task_path = draft_dir / "TASK.md"
+        draft_id = draft_dir.name
+        task_path.write_text(
+            "\n".join([
+                "status: awaiting_josh_approval",
+                f"draft_created_at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
+                f"dispatch_id: {dispatch_id}",
+                f"draft_id: {draft_id}",
+                f"is_fixture: {'true' if is_fixture else 'false'}",
+                "intake_type: raw_intake",
+                "shaping_ref: docs\\claude_ops\\36_RAW_INTAKE.md",
+                "",
+                "## 原始毛坯（Josh 原文）",
+                "",
+                message_text,
+                "",
+                "## 待成形步驟",
+                "",
+                "依 docs\\claude_ops\\36_RAW_INTAKE.md §2 由 Claude 執行五步成形後回報。",
+                "Josh 明確核准前不得進入實作。",
+            ]),
+            encoding="utf-8",
+        )
+        return True, (
+            f"task_intake_status=raw_intake_accepted\n"
+            f"draft_path={task_path}\n"
+            f"status=awaiting_josh_approval\n"
+            f"is_fixture={'true' if is_fixture else 'false'}\n"
+            f"models_invoked=false\n"
+            f"dispatch_id={dispatch_id}"
+        )
+    except OSError as exc:
+        return False, f"task_intake_status=blocked\nreason=draft_write_failed:{exc}"
 
 
 def _run_workflow_supervisor(dispatch_id: str) -> tuple[bool, str]:
@@ -462,6 +513,24 @@ def _local_file_completion_reply(
     return "\n".join(lines)[:MAX_REPLY_CHARS]
 
 
+def _raw_intake_completion_reply(ok: bool, raw: str, dispatch_id: str = "") -> str:
+    draft_path = _output_field(raw, "draft_path")
+    lines = [
+        "AgentOS [成形] 需求成形草稿已建立，待 Josh 核准。" if ok else "AgentOS [成形] 需求成形草稿建立失敗。",
+        f"task_intake_status={'raw_intake_accepted' if ok else 'blocked'}",
+        f"dispatch_id={dispatch_id or _output_field(raw, 'dispatch_id') or 'unknown'}",
+        "status=awaiting_josh_approval",
+        "models_invoked=false",
+    ]
+    if draft_path:
+        lines.append(f"draft_path={draft_path}")
+    if not ok:
+        reason = _output_field(raw, "reason")
+        lines.append(f"reason={reason or 'draft_creation_failed'}")
+    lines.append("Josh 明確回覆核准前不進入實作。")
+    return "\n".join(lines)[:MAX_REPLY_CHARS]
+
+
 async def _send_reply(gateway: Any, event: Any, text: str) -> None:
     source = getattr(event, "source", None)
     if source is None:
@@ -575,6 +644,20 @@ async def _complete_local_file_task(
         logger.warning("AgentOS local file task blocked: %s output=%s", dispatch_id, output[:500])
 
 
+async def _complete_raw_intake(
+    gateway: Any,
+    event: Any,
+    text: str,
+    dispatch_id: str,
+) -> None:
+    ok, output = await asyncio.to_thread(_run_raw_intake, text, dispatch_id)
+    await _send_reply(gateway, event, _raw_intake_completion_reply(ok, output, dispatch_id))
+    if ok:
+        logger.info("AgentOS raw intake draft created: %s", dispatch_id)
+    else:
+        logger.warning("AgentOS raw intake blocked: %s output=%s", dispatch_id, output[:500])
+
+
 async def _monitor_workflow_completion(
     gateway: Any,
     event: Any,
@@ -634,6 +717,49 @@ async def _pre_gateway_dispatch_async(
             task = asyncio.create_task(_complete_lite_chat(gateway, event, text))
             _retain_background_task(task)
         return {"action": "skip", "reason": "hermes_lite_chat:chat_only"}
+
+    # [工單] fixed prefix → executable work order (same path as 請執行 AgentOS 工單：)
+    if WORK_ORDER_PATTERN.match(text):
+        if gateway is not None:
+            await _send_reply(
+                gateway,
+                event,
+                "\n".join(
+                    [
+                        "AgentOS [工單] 已接受。",
+                        f"dispatch_id={dispatch_id}",
+                        "task_status=processing",
+                        "route_to=RuleBasedClassifier",
+                    ]
+                ),
+            )
+            task = asyncio.create_task(
+                _complete_local_file_task(gateway, event, text, dispatch_id)
+            )
+            _retain_background_task(task)
+        return {"action": "skip", "reason": f"agentos_work_order:{dispatch_id}"}
+
+    # [成形] fixed prefix → raw intake draft, awaiting_josh_approval, no implementation
+    if RAW_INTAKE_PATTERN.match(text):
+        if gateway is not None:
+            await _send_reply(
+                gateway,
+                event,
+                "\n".join(
+                    [
+                        "AgentOS [成形] 需求成形已接受。",
+                        f"dispatch_id={dispatch_id}",
+                        "task_intake_status=raw_intake_processing",
+                        "status=awaiting_josh_approval",
+                        "models_invoked=false",
+                    ]
+                ),
+            )
+            task = asyncio.create_task(
+                _complete_raw_intake(gateway, event, text, dispatch_id)
+            )
+            _retain_background_task(task)
+        return {"action": "skip", "reason": f"agentos_raw_intake:{dispatch_id}"}
 
     if CODEX_NATURAL_PATTERN.search(text) or WORK_TASK_PATTERN.search(text):
         if gateway is not None:
@@ -732,7 +858,7 @@ async def _pre_gateway_dispatch_async(
                     [
                         "AgentOS 工單入口未識別為可執行工單。",
                         "task_intake_status=not_recognized",
-                        "action=請使用「請執行 AgentOS 工單：」開頭，或改到 @TWLunaXBot 一般聊天。",
+                        "action=請使用「[工單]」、「[成形]」或「請執行 AgentOS 工單：」開頭，或改到 @TWLunaXBot 一般聊天。",
                         "models_invoked=false",
                     ]
                 ),
@@ -799,7 +925,11 @@ def _pre_gateway_dispatch(
     )
     _retain_background_task(task)
 
-    if CODEX_NATURAL_PATTERN.search(text) or WORK_TASK_PATTERN.search(text):
+    if WORK_ORDER_PATTERN.match(text):
+        reason = f"agentos_work_order:{dispatch_id}"
+    elif RAW_INTAKE_PATTERN.match(text):
+        reason = f"agentos_raw_intake:{dispatch_id}"
+    elif CODEX_NATURAL_PATTERN.search(text) or WORK_TASK_PATTERN.search(text):
         reason = f"agentos_local_file_task:{dispatch_id}"
     elif is_threads and threads_url:
         reason = f"agentos_threads_intake:{dispatch_id}"

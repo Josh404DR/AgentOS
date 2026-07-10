@@ -65,7 +65,10 @@ $dashboardFiles = Get-ChildItem -LiteralPath (Join-Path $root "dashboard") -Recu
         $_.Name -ne "next-env.d.ts"
     } |
     ForEach-Object { $_.FullName.Substring($root.Length + 1) }
-$governed = @($governed + $promptFiles + $dashboardFiles | Sort-Object -Unique)
+$claudeOpsFiles = Get-ChildItem -LiteralPath (Join-Path $root "docs\claude_ops") -Recurse -File |
+    Where-Object { $_.Extension -in @(".md") } |
+    ForEach-Object { $_.FullName.Substring($root.Length + 1) }
+$governed = @($governed + $promptFiles + $dashboardFiles + $claudeOpsFiles | Sort-Object -Unique)
 
 if (-not (Test-Path -LiteralPath $canonical -PathType Leaf)) {
     throw "Canonical governance file missing: $canonical"

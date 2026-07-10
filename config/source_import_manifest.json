@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "source_root": "E:\\AgentOS",
+  "target_root": "E:\\AgentOS\\scratch\\release-a-cleanup",
+  "basis": "Option A approved by Josh on 2026-07-11",
+  "imported_paths": [
+    "docs/AGENTOS_CI_SMOKE.md",
+    "docs/agentos_runtime_observability_roadmap_2026-07-10.md",
+    "docs/hermes_ecosystem_inventory_and_optimization_proposal_2026-07-10.md",
+    "docs/reports/2026-07-11_AGENTOS_REPOSITORY_AND_RUNTIME_INVENTORY.md",
+    "docs/reports/2026-07-11_PHASE0_GIT_ALIGNMENT_DECISION_PACKET.md",
+    "docs/roadmap/AGENTOS_CLEAN_REPO_CICD_AND_OBSERVABILITY_ROADMAP.md",
+    "integrations/antigravity/AGENTOS_ROLE.md",
+    "scripts/agentos_ci_smoke.ps1",
+    "scripts/invoke_antigravity_subagent.ps1",
+    "scripts/promote_draft.ps1",
+    "scripts/register_hermes_lite_autostart.ps1",
+    "tests/fixtures/test_verify_prompt_verdict_injection.ps1",
+    "tools/threads/clone_threads.bat",
+    "tools/threads/fetch_threads.py",
+    "tools/upwork/README.md",
+    "tools/upwork/scrape_upwork.py",
+    "tools/upwork/upwork_api_search.py",
+    "tools/upwork/upwork_capture_auth.py"
+  ],
+  "excluded_paths": [
+    "dashboard/frontend/.env.local",
+    "dashboard/frontend/next-env.d.ts",
+    "dashboard/frontend/tsconfig.tsbuildinfo",
+    "scripts/fan_control/fan_control.log"
+  ],
+  "notes": [
+    "The original verification fixture lives under live data/tasks and is imported into tests/fixtures instead.",
+    "No runtime artifact, secret file, log, task output, archive item, or project directory is imported by this manifest."
+  ]
+}

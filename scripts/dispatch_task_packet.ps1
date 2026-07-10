@@ -92,6 +92,43 @@ $safeCaveats
     Write-Utf8File -Path $ResultPath -Content $content
 }
 
+function Invoke-GitDiffText {
+    param([Parameter(Mandatory = $true)][string]$RelativePath)
+
+    $psi = [System.Diagnostics.ProcessStartInfo]::new()
+    $psi.FileName = "git"
+    foreach ($arg in @("-c", "safe.directory=E:/AgentOS", "diff", "--", $RelativePath)) {
+        [void]$psi.ArgumentList.Add($arg)
+    }
+    $psi.WorkingDirectory = $AgentOSRoot
+    $psi.UseShellExecute = $false
+    $psi.RedirectStandardOutput = $true
+    $psi.RedirectStandardError = $true
+
+    $process = [System.Diagnostics.Process]::Start($psi)
+    $stdout = $process.StandardOutput.ReadToEnd()
+    $stderr = $process.StandardError.ReadToEnd()
+    $process.WaitForExit()
+
+    $nonWarningStderr = @(
+        $stderr -split "`r?`n" |
+            Where-Object {
+                $_ -and
+                $_ -notmatch '^warning:' -and
+                $_ -notmatch 'LF will be replaced by CRLF' -and
+                $_ -notmatch 'CRLF will be replaced by LF'
+            }
+    )
+
+    if ($process.ExitCode -ne 0 -and $nonWarningStderr.Count -gt 0) {
+        return "diff_status: git_diff_failed path=$RelativePath exit_code=$($process.ExitCode)`n$($nonWarningStderr -join [Environment]::NewLine)`n"
+    }
+    if ($nonWarningStderr.Count -gt 0) {
+        return "$stdout`ndiff_stderr:`n$($nonWarningStderr -join [Environment]::NewLine)`n"
+    }
+    return $stdout
+}
+
 function Find-ExistingVerifyDispatch {
     param([string]$ParentDispatchId)
     foreach ($task in Get-ChildItem -LiteralPath $TasksRoot -Filter "TASK.md" -File -Recurse -ErrorAction SilentlyContinue) {
@@ -143,7 +180,7 @@ function New-CodexVerifyTask {
         }
         if ($candidate.StartsWith($AgentOSRoot, [StringComparison]::OrdinalIgnoreCase)) {
             $relative = $candidate.Substring($AgentOSRoot.Length).TrimStart('\')
-            $diffText += (& git -c safe.directory=E:/AgentOS diff -- $relative 2>$null | Out-String)
+            $diffText += Invoke-GitDiffText -RelativePath $relative
         }
     }
     if (-not $diffText) { $diffText = "diff_status: missing_or_empty" }
@@ -326,7 +363,24 @@ if ($approvalRequired -and [string]::IsNullOrWhiteSpace($approval)) {
 }
 
 $promptPath = Join-Path $OutputDir "DISPATCH_PROMPT.md"
-Write-Utf8File -Path $promptPath -Content $taskText
+$promptContent = $taskText
+if ($RouteTo -eq "Codex" -and $codexMode -eq "verify" -and
+    -not ([regex]::IsMatch($promptContent, '(?m)^verify_verdict\s*:\s*PASS\s*$'))) {
+    $promptContent += @"
+
+## Required Machine-Readable Verdict
+
+Your response must include exactly one machine-readable verdict line:
+verify_verdict: PASS
+or
+verify_verdict: FAIL
+or
+verify_verdict: NEEDS_HUMAN_DECISION
+
+Then include findings, evidence, and required changes in Traditional Chinese.
+"@
+}
+Write-Utf8File -Path $promptPath -Content $promptContent
 $commandDescription = ""
 $rawOutput = ""
 $exitCode = 0

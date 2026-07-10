@@ -1,6 +1,0 @@
-check_name,error_count
-raw_duplicate_order_ids,1
-invalid_order_status_rows,42
-missing_product_rows,1
-sales_amount_anomalies,1
-total_data_errors,45

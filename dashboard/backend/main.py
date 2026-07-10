@@ -1222,10 +1222,19 @@ def decide_approval(
         ],
     )
     if body.decision in {"approve", "modify"}:
-        _run_control_script(
-            "workflow_supervisor.ps1",
-            ["-RootDispatchId", task_id],
-        )
+        escalations = _list_escalations()
+        esc = next((e for e in escalations if e["task_id"] == task_id), None)
+        esc_source = esc.get("source", "") if esc else ""
+        if esc_source == "raw_intake_approval":
+            _run_control_script(
+                "promote_draft.ps1",
+                ["-DraftId", task_id],
+            )
+        else:
+            _run_control_script(
+                "workflow_supervisor.ps1",
+                ["-RootDispatchId", task_id],
+            )
     return result
 
 

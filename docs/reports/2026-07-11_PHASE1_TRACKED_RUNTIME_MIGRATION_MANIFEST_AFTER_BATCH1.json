@@ -1,0 +1,1547 @@
+{
+    "generated_at":  "2026-07-11T07:06:01.9697427+08:00",
+    "repository_root":  "E:\\AgentOS\\scratch\\release-a-cleanup",
+    "report_only":  true,
+    "tracked_file_count":  278,
+    "untracked_candidate_count":  39,
+    "candidate_file_count":  317,
+    "error_count":  90,
+    "warning_count":  0,
+    "unique_path_count":  90,
+    "proposed_action":  "untrack_from_cleanup_branch_only",
+    "live_workspace_effect":  "none",
+    "findings":  [
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/data-quality-audit-toolkit/.gitignore",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/data-quality-audit-toolkit/assets/.gitkeep",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/data-quality-audit-toolkit/docs/audit_rules.md",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/data-quality-audit-toolkit/docs/business_use_case.md",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/data-quality-audit-toolkit/outputs/data_quality_report.md",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/data-quality-audit-toolkit/outputs/data_quality_score.csv",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/data-quality-audit-toolkit/outputs/issue_log.csv",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/data-quality-audit-toolkit/README.md",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/data-quality-audit-toolkit/requirements.txt",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/data-quality-audit-toolkit/sql/duplicate_check.sql",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/data-quality-audit-toolkit/sql/missing_value_check.sql",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/data-quality-audit-toolkit/sql/outlier_check.sql",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/data-quality-audit-toolkit/sql/referential_integrity_check.sql",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/data-quality-audit-toolkit/src/audit_report_generator.py",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/data-quality-audit-toolkit/src/data_quality_checks.py",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/data-quality-audit-toolkit/src/generate_mock_data.py",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/data-quality-audit-toolkit/src/main.py",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/.gitignore",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/assets/README.md",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/dashboard/dashboard_data.js",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/dashboard/dashboard_mockup.md",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/dashboard/dashboard_spec.md",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/dashboard/index.html",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/outputs/campaign_effectiveness.csv",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/outputs/category_growth.csv",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/outputs/charts/monthly_gmv_trend.svg",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/outputs/customer_segment_performance.csv",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/outputs/kpi_summary.csv",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/outputs/monthly_performance.csv",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/outputs/product_sales_anomalies.csv",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/outputs/summary_report.md",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/outputs/top_10_products.csv",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/README.md",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/requirements.txt",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/sql/campaign_effectiveness_analysis.sql",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/sql/category_growth_analysis.sql",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/sql/customer_segment_analysis.sql",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/sql/product_performance_analysis.sql",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/sql/sales_trend_analysis.sql",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/src/analyze_data.py",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/src/clean_data.py",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/src/generate_mock_data.py",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/.gitignore",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/dags/airflow_dag_example.py",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/docs/automation_use_case.md",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/docs/dashboard_spec.md",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/docs/pipeline_design.md",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/outputs/alert_log.csv",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/outputs/campaign_period_comparison.csv",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/outputs/daily_operations_report.md",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/outputs/daily_sales_summary.csv",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/outputs/data_quality_summary.csv",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/outputs/product_operation_metrics.csv",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/README.md",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/requirements.txt",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/sql/daily_sales_summary.sql",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/sql/inventory_risk_check.sql",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/sql/order_status_monitoring.sql",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/sql/product_operation_metrics.sql",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/src/extract_data.py",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/src/generate_mock_data.py",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/src/generate_report.py",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/src/main.py",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/src/transform_data.py",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/src/validate_data.py",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "projects/josh-resume-portfolio-update/.fuse_hidden0000002600000001",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "projects/josh-resume-portfolio-update/.fuse_hidden0000002700000001",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "projects/josh-resume-portfolio-update/.fuse_hidden0000002700000002",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "projects/josh-resume-portfolio-update/.fuse_hidden0000002800000003",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "projects/josh-resume-portfolio-update/.fuse_hidden0000002900000002",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "projects/josh-resume-portfolio-update/.fuse_hidden0000002a00000004",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "projects/josh-resume-portfolio-update/.fuse_hidden0000002b00000005",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "projects/josh-resume-portfolio-update/.fuse_hidden0000002c00000006",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "projects/josh-resume-portfolio-update/.fuse_hidden0000003300000007",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "projects/josh-resume-portfolio-update/.fuse_hidden0000003400000008",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "projects/josh-resume-portfolio-update/da.html",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "projects/josh-resume-portfolio-update/index.css",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "projects/josh-resume-portfolio-update/index.html",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "projects/josh-resume-portfolio-update/NOTES.md",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "projects/josh-resume-portfolio-update/portfolio/.fuse_hidden0000002700000001",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "projects/josh-resume-portfolio-update/portfolio/.fuse_hidden0000002900000002",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "projects/josh-resume-portfolio-update/portfolio/.fuse_hidden0000002c00000003",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "projects/josh-resume-portfolio-update/portfolio/.fuse_hidden0000002e00000004",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "projects/josh-resume-portfolio-update/portfolio/.fuse_hidden0000003000000005",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "projects/josh-resume-portfolio-update/portfolio/.fuse_hidden0000003200000006",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "projects/josh-resume-portfolio-update/portfolio/data-quality-audit-toolkit.html",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "projects/josh-resume-portfolio-update/portfolio/ecommerce-market-intelligence-dashboard.html",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "projects/josh-resume-portfolio-update/portfolio/ecommerce-operations-automation-pipeline.html",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "projects/josh-resume-portfolio-update/portfolio/index.html",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     },
+                     {
+                         "severity":  "error",
+                         "code":  "FORBIDDEN_PATH_TRACKED",
+                         "path":  "projects/staging_site/README.md",
+                         "detail":  "Path matches a machine-local, generated, or runtime exclusion."
+                     }
+                 ],
+    "migration_entries":  [
+                              {
+                                  "path":  "assets/github-ready/data-quality-audit-toolkit/.gitignore",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  106,
+                                  "sha256":  "A35936046AA13C947C0646808946FB83A8E51D2EFB7B72676B3253EAE4795C25",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/data-quality-audit-toolkit/.gitignore\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/data-quality-audit-toolkit/assets/.gitkeep",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  2,
+                                  "sha256":  "7EB70257593DA06F682A3DDDA54A9D260D4FC514F645237F5CA74B08F8DA61A6",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/data-quality-audit-toolkit/assets/.gitkeep\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/data-quality-audit-toolkit/docs/audit_rules.md",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  3742,
+                                  "sha256":  "5B43BB4348AA32004A460D29C61010CBEA2145E1B38421E8E0CE36C436C25AC4",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/data-quality-audit-toolkit/docs/audit_rules.md\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/data-quality-audit-toolkit/docs/business_use_case.md",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  3920,
+                                  "sha256":  "BC0686F976AC23A1A7E65AD42FC010E7372B14771AB49BBAED80FE0B3E5035AA",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/data-quality-audit-toolkit/docs/business_use_case.md\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/data-quality-audit-toolkit/outputs/data_quality_report.md",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  15165,
+                                  "sha256":  "80ABDDAB5DAC430FA717C6D2D484BA9A0DD60AF310C5870A19F964B6B34F6D31",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/data-quality-audit-toolkit/outputs/data_quality_report.md\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/data-quality-audit-toolkit/outputs/data_quality_score.csv",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  346,
+                                  "sha256":  "6D96BEC40A65C5243E332653F7E0AC7919AB6BCAF60CC2CAE8FC52EE188681FC",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/data-quality-audit-toolkit/outputs/data_quality_score.csv\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/data-quality-audit-toolkit/outputs/issue_log.csv",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  7325,
+                                  "sha256":  "6EED9981864F3DA21ED527D816F58666E07CF3EEF73AF68FF6D7CB8D2BD7C922",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/data-quality-audit-toolkit/outputs/issue_log.csv\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/data-quality-audit-toolkit/README.md",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  11138,
+                                  "sha256":  "5360FE28551126B883BA58D9AD26F65E616D1EC46100B5B7F8A7DB1C426A36AA",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/data-quality-audit-toolkit/README.md\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/data-quality-audit-toolkit/requirements.txt",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  26,
+                                  "sha256":  "40ACC775A6A399370F62603982B589AB02E6C371A8DECEE54303B05365512B96",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/data-quality-audit-toolkit/requirements.txt\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/data-quality-audit-toolkit/sql/duplicate_check.sql",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  1264,
+                                  "sha256":  "7A75D31B2CEB2A803C08DE1EE2ECD310EDA6CA0ADDEF91DB037E365577FAFEDF",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/data-quality-audit-toolkit/sql/duplicate_check.sql\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/data-quality-audit-toolkit/sql/missing_value_check.sql",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  1691,
+                                  "sha256":  "90EDEFC7598E979945C89A802E6F3EF1C495E3CAD5DBCBC935D5A1018A2A3D5E",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/data-quality-audit-toolkit/sql/missing_value_check.sql\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/data-quality-audit-toolkit/sql/outlier_check.sql",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  1984,
+                                  "sha256":  "2C740E302BE93ADBBDED8C13D3C0B3414AD2CC58B6C102652CF48C43A13F99CA",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/data-quality-audit-toolkit/sql/outlier_check.sql\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/data-quality-audit-toolkit/sql/referential_integrity_check.sql",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  1393,
+                                  "sha256":  "375D9E8539FBF7994E59C5D8785BAA3C78B295F6ADD25CE7535D90014F612F54",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/data-quality-audit-toolkit/sql/referential_integrity_check.sql\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/data-quality-audit-toolkit/src/audit_report_generator.py",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  7526,
+                                  "sha256":  "7C93EDA368D87E1CEE46AB02D8476D01A998D7E94730464A129379C177584F4E",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/data-quality-audit-toolkit/src/audit_report_generator.py\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/data-quality-audit-toolkit/src/data_quality_checks.py",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  22980,
+                                  "sha256":  "89CBD6076874661B0D62E9FB5C90AF8314E49E693A3B648C2A3099D7D47E42F5",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/data-quality-audit-toolkit/src/data_quality_checks.py\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/data-quality-audit-toolkit/src/generate_mock_data.py",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  11293,
+                                  "sha256":  "BDCB15BB2850C7A4B0D2908A4A5A6B6D4260FD5D48A2D157AE917BF020099F3E",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/data-quality-audit-toolkit/src/generate_mock_data.py\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/data-quality-audit-toolkit/src/main.py",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  2796,
+                                  "sha256":  "0868995B97362470B33CAA0E09B4752815D1350ED543520F39E0BC99C7D576F7",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/data-quality-audit-toolkit/src/main.py\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/.gitignore",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  106,
+                                  "sha256":  "A35936046AA13C947C0646808946FB83A8E51D2EFB7B72676B3253EAE4795C25",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-market-intelligence-dashboard/.gitignore\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/assets/README.md",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  1088,
+                                  "sha256":  "2AE00C175D8C88A2059E444D7278EF1A41D47D99F0D389E51473DB8CC585F11B",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-market-intelligence-dashboard/assets/README.md\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/dashboard/dashboard_data.js",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  6524,
+                                  "sha256":  "85E8B52C4A0FA3A7F7441190B4F553D1EEA90392B23BC06A275BFB7ABBFF7D49",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-market-intelligence-dashboard/dashboard/dashboard_data.js\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/dashboard/dashboard_mockup.md",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  2132,
+                                  "sha256":  "45602BF5DAE1034B40B7C2DE06DA9A9D4D26D4F723E5796531F06822306E1B16",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-market-intelligence-dashboard/dashboard/dashboard_mockup.md\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/dashboard/dashboard_spec.md",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  1604,
+                                  "sha256":  "87AF04851F617B1702413F1F627166D4DEDAF0361003FE4C32FEB751A91B08A6",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-market-intelligence-dashboard/dashboard/dashboard_spec.md\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/dashboard/index.html",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  11158,
+                                  "sha256":  "3011511A634FADEA1A796DDA414591E3C8A20DA218D54E4EAF4333D537CD62CE",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-market-intelligence-dashboard/dashboard/index.html\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/outputs/campaign_effectiveness.csv",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  522,
+                                  "sha256":  "C5CDC1EA35853BDE3B9B157933D1CF5A356513E2AF17D752CF1B14868AC20579",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-market-intelligence-dashboard/outputs/campaign_effectiveness.csv\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/outputs/category_growth.csv",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  359,
+                                  "sha256":  "7504A0950F38B7C794B010C2C5A44DB8378DB769398387D26D5E41D66995212B",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-market-intelligence-dashboard/outputs/category_growth.csv\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/outputs/charts/monthly_gmv_trend.svg",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  2553,
+                                  "sha256":  "1E1A13B0509EF25347B8F1690F9AB1A87B316EB94842CB13722AC234619A0665",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-market-intelligence-dashboard/outputs/charts/monthly_gmv_trend.svg\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/outputs/customer_segment_performance.csv",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  908,
+                                  "sha256":  "4AB5255D6271C12F2C56B8B5624ABD01A70D0BF7BB84BC0A75ED605298A2CAE9",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-market-intelligence-dashboard/outputs/customer_segment_performance.csv\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/outputs/kpi_summary.csv",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  288,
+                                  "sha256":  "DF196EE4B87840119F2F9173E9181AE5313E7385B9D16127EB6DA0D1F18FB613",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-market-intelligence-dashboard/outputs/kpi_summary.csv\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/outputs/monthly_performance.csv",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  772,
+                                  "sha256":  "C254FF0D14502C916855DB73B0BC59C3180C1F818CF319F3ACCA9CEF5D62485F",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-market-intelligence-dashboard/outputs/monthly_performance.csv\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/outputs/product_sales_anomalies.csv",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  13692,
+                                  "sha256":  "C93BFF8719936D8CD0B371E9E39C5F6B88F23547FA933FFD254E724ED685AD06",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-market-intelligence-dashboard/outputs/product_sales_anomalies.csv\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/outputs/summary_report.md",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  4429,
+                                  "sha256":  "8243E9D015245BD99AA65E43ABE112E2407B085E6B5F2FF269050E3272B4D8EA",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-market-intelligence-dashboard/outputs/summary_report.md\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/outputs/top_10_products.csv",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  445,
+                                  "sha256":  "40AAD7BDC96469DE76ED9C60CDD22B38D63C21749559AA158CFB4DC4D784546D",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-market-intelligence-dashboard/outputs/top_10_products.csv\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/README.md",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  7897,
+                                  "sha256":  "DD0F9BA2A85478C71F0E353FB8C0DCF4D0C45EDEEEE8CF2A86892CBD5F019CEF",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-market-intelligence-dashboard/README.md\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/requirements.txt",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  36,
+                                  "sha256":  "FE6FC916E2030A88703CC5D4A2FF9F32F251AA6E5F0210364F4E55B9B07E344A",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-market-intelligence-dashboard/requirements.txt\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/sql/campaign_effectiveness_analysis.sql",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  730,
+                                  "sha256":  "9D54CEF9E0DD6D6410AEC10EED7D00BD64FC81CEEC02C4B2565B1ACB05DF2C80",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-market-intelligence-dashboard/sql/campaign_effectiveness_analysis.sql\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/sql/category_growth_analysis.sql",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  1016,
+                                  "sha256":  "7754B11DE670E80B87E6649FEFC074B940CA58567878E13598B3F131D8A50F91",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-market-intelligence-dashboard/sql/category_growth_analysis.sql\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/sql/customer_segment_analysis.sql",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  2200,
+                                  "sha256":  "7D4051D3EDF90B7EA9638FA4A62D85025CC9688C96BD9669B46788701A4B7E85",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-market-intelligence-dashboard/sql/customer_segment_analysis.sql\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/sql/product_performance_analysis.sql",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  639,
+                                  "sha256":  "08A5C1A471EFF395C96A9174E498D4E675D062EA6698442F935F1DEDBF7E9F65",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-market-intelligence-dashboard/sql/product_performance_analysis.sql\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/sql/sales_trend_analysis.sql",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  595,
+                                  "sha256":  "3CAF97FF5641C56E6981FC174243C4ADF5BD3557214CECD2D669CFD11DD72323",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-market-intelligence-dashboard/sql/sales_trend_analysis.sql\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/src/analyze_data.py",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  16189,
+                                  "sha256":  "52601C698333286260D584D1B4415E167B1E511E5168A052981CCC4E6D20B6F4",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-market-intelligence-dashboard/src/analyze_data.py\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/src/clean_data.py",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  3067,
+                                  "sha256":  "2A42C55FC9EC071F77792BF61CFA8EEE383A557A2B2BEC52EB1DAEEF3D808717",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-market-intelligence-dashboard/src/clean_data.py\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-market-intelligence-dashboard/src/generate_mock_data.py",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  6613,
+                                  "sha256":  "43A4F72991895788E546DCA0E2744D739C299F82C0FCDD57FE44C0C247F48EA3",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-market-intelligence-dashboard/src/generate_mock_data.py\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/.gitignore",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  106,
+                                  "sha256":  "A35936046AA13C947C0646808946FB83A8E51D2EFB7B72676B3253EAE4795C25",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-operations-automation-pipeline/.gitignore\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/dags/airflow_dag_example.py",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  1486,
+                                  "sha256":  "8C249904052C76CD0706FA02EEF0C644151CC8CE85375C143FA5932C5F4C2F5A",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-operations-automation-pipeline/dags/airflow_dag_example.py\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/docs/automation_use_case.md",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  1122,
+                                  "sha256":  "AE1A961BBD54A76773DD68461790EFA9820D56B5979F9EB7303B6F0BA4A03716",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-operations-automation-pipeline/docs/automation_use_case.md\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/docs/dashboard_spec.md",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  1042,
+                                  "sha256":  "5DC3B9AF7FA24B418C14FFE86D8D445A55DF2A449E3A79A67295B804B80747FA",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-operations-automation-pipeline/docs/dashboard_spec.md\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/docs/pipeline_design.md",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  3169,
+                                  "sha256":  "5D75C8706F3FABAD9643E5CFB27EC8C07418B5FA4A9BBD8898E025ED45D4E344",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-operations-automation-pipeline/docs/pipeline_design.md\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/outputs/alert_log.csv",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  16295,
+                                  "sha256":  "166989FD8C75550A703123E909C99AC3700FEC258506B6B2A91DA011544C6940",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-operations-automation-pipeline/outputs/alert_log.csv\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/outputs/campaign_period_comparison.csv",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  104,
+                                  "sha256":  "58C7E9CE47339901E97A3C9C07B6BDB507DF908C80915665064B40EB7A69FD7F",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-operations-automation-pipeline/outputs/campaign_period_comparison.csv\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/outputs/daily_operations_report.md",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  3097,
+                                  "sha256":  "7888E671898231B6B93C1577E250F7341C6480CD518444E41FADB553EE748E93",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-operations-automation-pipeline/outputs/daily_operations_report.md\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/outputs/daily_sales_summary.csv",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  3859,
+                                  "sha256":  "241677C525B24EA40D1E9DAB5F8095894A392B3D3B592E2039E268F11DB6F067",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-operations-automation-pipeline/outputs/daily_sales_summary.csv\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/outputs/data_quality_summary.csv",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  153,
+                                  "sha256":  "73FDF26DDB742CE083F8F58D884937FE181DBEB08B8BC7AD7030A27F97B4C258",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-operations-automation-pipeline/outputs/data_quality_summary.csv\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/outputs/product_operation_metrics.csv",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  2357,
+                                  "sha256":  "EE9793743438BF8FCD1F99404325ABBCF3FE60AF9F2AD3237FEB0AC9DF8FC594",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-operations-automation-pipeline/outputs/product_operation_metrics.csv\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/README.md",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  4776,
+                                  "sha256":  "7C9C77AE2BDBFBF356A9A3D5AC857FECBB62D9338AB79EB79DC14B37A9C61EA4",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-operations-automation-pipeline/README.md\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/requirements.txt",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  36,
+                                  "sha256":  "1E4E2410FD5A770FD012D7393AA444EA268B1D0F6496057E39FB886F5D695FC0",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-operations-automation-pipeline/requirements.txt\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/sql/daily_sales_summary.sql",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  645,
+                                  "sha256":  "9B4DE487DA4252AB40933498A13CFACBE7D44C41EB9314BA887363AFC21528C2",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-operations-automation-pipeline/sql/daily_sales_summary.sql\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/sql/inventory_risk_check.sql",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  800,
+                                  "sha256":  "7D3678C599DFF3B78E0204B02BC52F9EF239100E5E6E83882883656793ACF1DC",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-operations-automation-pipeline/sql/inventory_risk_check.sql\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/sql/order_status_monitoring.sql",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  606,
+                                  "sha256":  "D6357AA2DE4CE7968006440D40A614E077B06E42319EF17E40EBB66CAD264C07",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-operations-automation-pipeline/sql/order_status_monitoring.sql\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/sql/product_operation_metrics.sql",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  598,
+                                  "sha256":  "EAC45AF792465936ED345C7B3D47B4C043C106FDDC3F7F7F1DC1C244B312C09F",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-operations-automation-pipeline/sql/product_operation_metrics.sql\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/src/extract_data.py",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  905,
+                                  "sha256":  "83DF655CA79FD4342DDF03F84D9C2296B1DB86BB24BB75B52F10A34600D09AB2",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-operations-automation-pipeline/src/extract_data.py\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/src/generate_mock_data.py",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  5373,
+                                  "sha256":  "5C7BCC4BCAA0E7C162CCD6EC7EC192058D93D21A64FF97E159C125A595BC2868",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-operations-automation-pipeline/src/generate_mock_data.py\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/src/generate_report.py",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  7167,
+                                  "sha256":  "00D77D76FA802DF177D3F26D536A4C49554F569EF6C775DA625F9CD9241BC91F",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-operations-automation-pipeline/src/generate_report.py\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/src/main.py",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  1237,
+                                  "sha256":  "59110B947D09EFB80B74C70C14AEF92D05593204A2868C7D095225F25FE3DEF5",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-operations-automation-pipeline/src/main.py\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/src/transform_data.py",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  2675,
+                                  "sha256":  "824B9DB0B387A61E565556F9AF26D1197B265244282D85795AAF33A12DC3F11F",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-operations-automation-pipeline/src/transform_data.py\""
+                              },
+                              {
+                                  "path":  "assets/github-ready/ecommerce-operations-automation-pipeline/src/validate_data.py",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  5322,
+                                  "sha256":  "8CF40967E7651B7DF49F37A7B0E7B712CB7345BF94B691811BEAB4B5BBD4E3D4",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"assets/github-ready/ecommerce-operations-automation-pipeline/src/validate_data.py\""
+                              },
+                              {
+                                  "path":  "projects/josh-resume-portfolio-update/.fuse_hidden0000002600000001",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  24677,
+                                  "sha256":  "0A4F67EE093D2E8FA8B8E48E4E7DD7539670FAD150F07D959B0F7E792A617C01",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"projects/josh-resume-portfolio-update/.fuse_hidden0000002600000001\""
+                              },
+                              {
+                                  "path":  "projects/josh-resume-portfolio-update/.fuse_hidden0000002700000001",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  24538,
+                                  "sha256":  "25C0F80AC1C4EADDCA5A99025025BDBC31C8899DF1367A2722C42B532F342660",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"projects/josh-resume-portfolio-update/.fuse_hidden0000002700000001\""
+                              },
+                              {
+                                  "path":  "projects/josh-resume-portfolio-update/.fuse_hidden0000002700000002",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  24669,
+                                  "sha256":  "7EBC296F225B3C0850EBA6A877015A996B46931D4A62D654C1D737D13A9D8102",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"projects/josh-resume-portfolio-update/.fuse_hidden0000002700000002\""
+                              },
+                              {
+                                  "path":  "projects/josh-resume-portfolio-update/.fuse_hidden0000002800000003",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  24665,
+                                  "sha256":  "C25DD77FBC948DBBAC920BC4DB9E5E0CD8AE77A87B4DD8E25D1D4A67AE10E17F",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"projects/josh-resume-portfolio-update/.fuse_hidden0000002800000003\""
+                              },
+                              {
+                                  "path":  "projects/josh-resume-portfolio-update/.fuse_hidden0000002900000002",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  29488,
+                                  "sha256":  "C3AEC95662FB3C0CD7342EAFD263D215F907821E47DBACE3A4ED4E1C73851D7C",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"projects/josh-resume-portfolio-update/.fuse_hidden0000002900000002\""
+                              },
+                              {
+                                  "path":  "projects/josh-resume-portfolio-update/.fuse_hidden0000002a00000004",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  29627,
+                                  "sha256":  "35B0ED0BC6F46D9BD2BC0F550078C8AEFA40F7E149E8CAF90A86946C0A8D13E4",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"projects/josh-resume-portfolio-update/.fuse_hidden0000002a00000004\""
+                              },
+                              {
+                                  "path":  "projects/josh-resume-portfolio-update/.fuse_hidden0000002b00000005",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  29613,
+                                  "sha256":  "C30C9606408A1EF7EA5CB828C1F1C4E73720A6F16A73E9767090517E834DCC0F",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"projects/josh-resume-portfolio-update/.fuse_hidden0000002b00000005\""
+                              },
+                              {
+                                  "path":  "projects/josh-resume-portfolio-update/.fuse_hidden0000002c00000006",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  29606,
+                                  "sha256":  "A43FFDEB1DF209D39F19B0127E8C03CBC3D0710B0B176F8C53BF91D21216900C",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"projects/josh-resume-portfolio-update/.fuse_hidden0000002c00000006\""
+                              },
+                              {
+                                  "path":  "projects/josh-resume-portfolio-update/.fuse_hidden0000003300000007",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  24604,
+                                  "sha256":  "AE33D28995FFBCD078C48D9511F6FA5034B9901ED8A62A3266004069DABC9608",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"projects/josh-resume-portfolio-update/.fuse_hidden0000003300000007\""
+                              },
+                              {
+                                  "path":  "projects/josh-resume-portfolio-update/.fuse_hidden0000003400000008",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  29554,
+                                  "sha256":  "6F78456DB4FE9A309B9692DDB09C37D7ED7171A7A18D1947D6543F68A3DB1D11",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"projects/josh-resume-portfolio-update/.fuse_hidden0000003400000008\""
+                              },
+                              {
+                                  "path":  "projects/josh-resume-portfolio-update/da.html",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  29592,
+                                  "sha256":  "2CC2F465C448C81F0DF344CF6A49ECBBE793D0C6A9865CD0CA1030DCEBAAAFF8",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"projects/josh-resume-portfolio-update/da.html\""
+                              },
+                              {
+                                  "path":  "projects/josh-resume-portfolio-update/index.css",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  23027,
+                                  "sha256":  "5552AB517E5F4EEA77C52CA83885DC6AC09D4DAEAD6A12EB19A06B19CF238C3C",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"projects/josh-resume-portfolio-update/index.css\""
+                              },
+                              {
+                                  "path":  "projects/josh-resume-portfolio-update/index.html",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  24657,
+                                  "sha256":  "972891314C6F15C1C336C70060B1783A65B7291F7C2CE226E6E241902D468054",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"projects/josh-resume-portfolio-update/index.html\""
+                              },
+                              {
+                                  "path":  "projects/josh-resume-portfolio-update/NOTES.md",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  4725,
+                                  "sha256":  "3E98B89F2592E47246FA9291AB2006E561FC1E812E0459D3E83E48896977BDD8",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"projects/josh-resume-portfolio-update/NOTES.md\""
+                              },
+                              {
+                                  "path":  "projects/josh-resume-portfolio-update/portfolio/.fuse_hidden0000002700000001",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  9148,
+                                  "sha256":  "C67E221574591C81747FBC315CCFD73C80877BA9A68200F7F53B0FE361C26B1D",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"projects/josh-resume-portfolio-update/portfolio/.fuse_hidden0000002700000001\""
+                              },
+                              {
+                                  "path":  "projects/josh-resume-portfolio-update/portfolio/.fuse_hidden0000002900000002",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  10618,
+                                  "sha256":  "8B6BB213C30F9FACE610A18825C526366125A8F010AF30B4DE156F167E07EA08",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"projects/josh-resume-portfolio-update/portfolio/.fuse_hidden0000002900000002\""
+                              },
+                              {
+                                  "path":  "projects/josh-resume-portfolio-update/portfolio/.fuse_hidden0000002c00000003",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  9082,
+                                  "sha256":  "CEEA4912F429016A54AD2A786E872797E7E035AB7F25182076EFB9AD28835B01",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"projects/josh-resume-portfolio-update/portfolio/.fuse_hidden0000002c00000003\""
+                              },
+                              {
+                                  "path":  "projects/josh-resume-portfolio-update/portfolio/.fuse_hidden0000002e00000004",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  10193,
+                                  "sha256":  "0046BC36619DE35ACAF9FDBBBB3A2AD975AF2D65466CC25365C87EE798187B67",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"projects/josh-resume-portfolio-update/portfolio/.fuse_hidden0000002e00000004\""
+                              },
+                              {
+                                  "path":  "projects/josh-resume-portfolio-update/portfolio/.fuse_hidden0000003000000005",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  10552,
+                                  "sha256":  "B09235279F50F508A22BC0D43F1CD72F72250D93D5B5FAB67A93DFABA11F8E5E",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"projects/josh-resume-portfolio-update/portfolio/.fuse_hidden0000003000000005\""
+                              },
+                              {
+                                  "path":  "projects/josh-resume-portfolio-update/portfolio/.fuse_hidden0000003200000006",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  9934,
+                                  "sha256":  "F9971A718AFC4C9AD71E531CFFAA251B09A3E722A35F2E1FDFF5F78E2C999EC5",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"projects/josh-resume-portfolio-update/portfolio/.fuse_hidden0000003200000006\""
+                              },
+                              {
+                                  "path":  "projects/josh-resume-portfolio-update/portfolio/data-quality-audit-toolkit.html",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  10259,
+                                  "sha256":  "BFCFCC8A9648B5CE1326A985547B2D89D1172168BA5E77F0D6C0E7914B7C148D",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"projects/josh-resume-portfolio-update/portfolio/data-quality-audit-toolkit.html\""
+                              },
+                              {
+                                  "path":  "projects/josh-resume-portfolio-update/portfolio/ecommerce-market-intelligence-dashboard.html",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  10638,
+                                  "sha256":  "4D2F54D188D05B1337FF7A408846E64C0957CE5FAB3F0B481F64C0A4142FB88F",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"projects/josh-resume-portfolio-update/portfolio/ecommerce-market-intelligence-dashboard.html\""
+                              },
+                              {
+                                  "path":  "projects/josh-resume-portfolio-update/portfolio/ecommerce-operations-automation-pipeline.html",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  10000,
+                                  "sha256":  "78CC62D079861C0DBF889B62ACEFD7FD3F886FB96EC9BF5032D672A5434837DD",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"projects/josh-resume-portfolio-update/portfolio/ecommerce-operations-automation-pipeline.html\""
+                              },
+                              {
+                                  "path":  "projects/josh-resume-portfolio-update/portfolio/index.html",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  9168,
+                                  "sha256":  "5577628FEB50A6A5B1D69DA2D5EC78305F52CED640C5EA8C2B68EF1486E78207",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"projects/josh-resume-portfolio-update/portfolio/index.html\""
+                              },
+                              {
+                                  "path":  "projects/staging_site/README.md",
+                                  "finding_codes":  [
+                                                        "FORBIDDEN_PATH_TRACKED"
+                                                    ],
+                                  "bytes":  279,
+                                  "sha256":  "52A40B30EFE62530EF264F07C7EE58CBA4D1DFBB4957537E6854A06C4B01BA73",
+                                  "proposed_action":  "untrack_from_cleanup_branch_only",
+                                  "live_workspace_effect":  "none",
+                                  "restore_command":  "git checkout origin/master -- \"projects/staging_site/README.md\""
+                              }
+                          ]
+}

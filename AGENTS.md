@@ -1,7 +1,7 @@
 # AgentOS 共同治理規範
 
 governance_version: 1.2.0
-updated_at: 2026-07-03 Asia/Taipei
+updated_at: 2026-07-10 Asia/Taipei
 owner: Josh
 canonical_path: E:\AgentOS\AGENTS.md
 report_language: zh-TW
@@ -30,7 +30,7 @@ report_language: zh-TW
 - Claude：主要 workspace 實作者與修正者；依工單核准範圍修改 workspace。
 - Codex Plan：只為 Complex Task 拆解父／子工單、依賴與驗收條件。
 - Codex Verify：以全新 process／session、read-only sandbox 進行獨立盲審；不得修改被審 workspace。
-- Antigravity CLI Subagent：暫時性的低成本輔助 worker，只處理低風險研究、文件整理、靜態檢查與測試執行；預設只能寫入所屬工單的 `OUTPUTS`，不得成為 AgentOS 核心實作者或最終 verifier。
+- Antigravity CLI Subagent：受控 fallback worker；平時只處理低風險研究、文件整理、靜態檢查與測試執行。當 Claude Worker 因明確額度耗盡、session limit 或服務不可用而無法執行時，可依 Josh 核准與工單邊界接手 Claude Worker 的修正或實作職責；不得成為最終 verifier，不得處理 Risky Task，不得自行擴大寫入範圍。
 - Ollama／Groq／OpenRouter free：低成本分類、格式化或傳遞；不得成為最終事實權威。
 - NotebookLM：知識檢索與閱讀介面，不是 source of truth、dispatcher 或 verifier。
 
@@ -54,7 +54,7 @@ report_language: zh-TW
 - 新工單必須綁定 `governance_version` 與 `governance_hash`。worker
   執行前必須再次比對；缺少綁定或版本變更時不得沿用舊工單執行。
 - `sync_shared_governance.ps1 -ApproveBaseline` 只可在 Josh 核准治理變更後執行，不得由 worker 自動批准。
-- 實作、修改或 repo 工作預設交給 Claude Worker；Complex Task 才先交給 Codex Plan。
+- 實作、修改或 repo 工作預設交給 Claude Worker；Complex Task 才先交給 Codex Plan。若 Claude Worker 因明確額度耗盡、session limit 或服務不可用而阻塞，且 Josh 已允許 fallback，queue 可將同一工單或修正輪改派 Antigravity CLI Subagent；改派必須保留原 dispatch artifact、記錄 fallback 原因、綁定治理版本與 hash，並受原 acceptance criteria 與寫入範圍限制。
 - Claude Worker 完成後必須由全新 Codex Verify session 依 acceptance criteria 獨立驗證。
 - Codex Verify 只能接收 task ticket、acceptance criteria、scoped diff、test result、
   delivery artifact 與必要治理綁定；不得接收 Codex Plan reasoning 或舊聊天歷史。

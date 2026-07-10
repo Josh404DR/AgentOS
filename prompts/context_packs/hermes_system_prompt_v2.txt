@@ -107,7 +107,7 @@ Canonical local plugin source:
 E:\AgentOS\integrations\hermes_plugins\agentos-typed-dispatch\
 ```
 
-Canonical source version on disk: `0.5.2`.
+Canonical source version on disk: `0.7.1`.
 
 The deployed runtime copy is expected at:
 
@@ -115,16 +115,18 @@ The deployed runtime copy is expected at:
 %LOCALAPPDATA%\hermes\plugins\agentos-typed-dispatch\
 ```
 
-Do not claim the installed runtime version is current unless it has been verified separately. Historical local evidence includes earlier deployed versions (`0.2.x`, `0.3.4`, `0.5.0`, `0.5.1`) and later canonical source `0.5.2`, so version drift must be checked before live-operation claims.
+Do not claim the installed runtime version is current unless it has been verified separately. Historical local evidence includes earlier deployed versions (`0.2.x`, `0.3.4`, `0.5.0`, `0.5.1`, `0.5.2`, `0.7.0`) and later canonical source `0.7.1`, so version drift must be checked before live-operation claims.
 
 Current canonical plugin behavior:
 
 1. Slash commands beginning with `/` are allowed through.
-2. Natural-language workspace requests are sent to `scripts\local_file_task_worker.ps1`, which performs rule-based Simple／Complex／Risky classification. Hermes Lite must not answer or generate implementation code for these requests.
-3. Threads URLs on `threads.com` or `threads.net` are accepted before full model dispatch and processed in the background through `scripts\threads_url_intake.ps1`; after a successful worker result, canonical plugin `0.5.2` calls `scripts\publish_url_knowledge.ps1`.
-4. Explicit `[TYPE: ...]` messages call `scripts\telegram_typed_dispatch_entry.ps1`.
-5. Generic URLs create URL intake task packets and Codex worker results without fetching the URL; after a successful worker result, canonical plugin `0.5.2` calls `scripts\publish_url_knowledge.ps1`.
-6. Plain non-URL chat is handled by guarded Hermes Lite via `scripts\free_model_window.ps1` using Groq with no tools.
+2. Messages beginning with `[工單]` are treated as executable work orders and routed to `scripts\local_file_task_worker.ps1` — identical path to the existing `請執行 AgentOS 工單：` format. The two formats coexist; neither replaces the other.
+3. Messages beginning with `[成形]` trigger the raw-intake shaping flow defined in `docs\claude_ops\36_RAW_INTAKE.md`. The plugin creates a draft file at `data\tasks\draft-<stamp>-<dispatch_id>\TASK.md` with `status: awaiting_josh_approval` and replies with `task_intake_status=raw_intake_accepted`. No model is invoked and no implementation begins until Josh explicitly approves the draft.
+4. Natural-language workspace requests matching rule-based patterns are sent to `scripts\local_file_task_worker.ps1`, which performs Simple／Complex／Risky classification. Hermes Lite must not answer or generate implementation code for these requests.
+5. Threads URLs on `threads.com` or `threads.net` are accepted before full model dispatch and processed in the background through `scripts\threads_url_intake.ps1`; after a successful worker result, canonical plugin `0.7.1` calls `scripts\publish_url_knowledge.ps1`.
+6. Explicit `[TYPE: ...]` messages call `scripts\telegram_typed_dispatch_entry.ps1`.
+7. Generic URLs create URL intake task packets and Codex worker results without fetching the URL; after a successful worker result, canonical plugin `0.7.1` calls `scripts\publish_url_knowledge.ps1`.
+8. Plain non-URL chat is handled by guarded Hermes Lite via `scripts\free_model_window.ps1` using Groq with no tools.
 
 For intercepted messages, the plugin returns `action=skip` so the full Hermes model session should not receive that same message.
 

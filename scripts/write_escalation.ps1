@@ -2,11 +2,11 @@
 param(
     [Parameter(Mandatory = $true)][string]$TaskId,
     [Parameter(Mandatory = $true)]
-    [ValidateSet("simple_fail","complex_fail","risky_task","classification_unclear","verify_needs_human")]
+    [ValidateSet("simple_fail","complex_fail","risky_task","classification_unclear","verify_needs_human","raw_intake","raw_intake_approval")]
     [string]$Source,
     [Parameter(Mandatory = $true)][string]$Reason,
     [Parameter(Mandatory = $true)]
-    [ValidateSet("approve_risky_action","clarify_requirement","accept_partial_delivery","stop_task","retry_with_changes")]
+    [ValidateSet("approve_risky_action","clarify_requirement","accept_partial_delivery","stop_task","retry_with_changes","raw_intake","raw_intake_approval")]
     [string]$DecisionType,
     [Parameter(Mandatory = $true)][string]$SummaryForJosh,
     [string[]]$Evidence = @(),
@@ -51,9 +51,9 @@ $payload = [ordered]@{
     decision_type = $DecisionType
     summary_for_josh = $SummaryForJosh
     options = @(
-        [ordered]@{ label = "Approve"; effect = "允許在核准範圍內繼續執行" },
-        [ordered]@{ label = "Modify"; effect = "調整需求後重跑" },
-        [ordered]@{ label = "Stop"; effect = "停止任務" }
+        [ordered]@{ label = "Approve"; effect = ([char[]]@(0x5141,0x8A31,0x5728,0x6838,0x51C6,0x7BC4,0x570D,0x5167,0x7E7C,0x7E8C,0x57F7,0x884C) -join '') },
+        [ordered]@{ label = "Modify"; effect = ([char[]]@(0x8ABF,0x6574,0x9700,0x6C42,0x5F8C,0x91CD,0x8DD1) -join '') },
+        [ordered]@{ label = "Stop"; effect = ([char[]]@(0x505C,0x6B62,0x4EFB,0x52D9) -join '') }
     )
     evidence = @($Evidence)
     created_at = $createdAt
