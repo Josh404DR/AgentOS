@@ -21,6 +21,11 @@ export async function fetchRuntimeEvents(runtimeId?: string) {
   return readJson(res);
 }
 
+export async function askStatus(question: string) {
+  const res = await fetch(`${BASE}/api/status-assistant?q=${encodeURIComponent(question)}`, { cache: "no-store" });
+  return readJson(res);
+}
+
 export async function fetchGovernance() {
   const res = await fetch(`${BASE}/api/governance`, { cache: "no-store" });
   return res.json();

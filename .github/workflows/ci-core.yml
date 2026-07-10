@@ -23,3 +23,6 @@ jobs:
       - name: Validate repository boundary
         shell: pwsh
         run: ./scripts/repository_hygiene_check.ps1 -AgentOSRoot $PWD
+      - name: Build AgentOS Control Center
+        shell: pwsh
+        run: ./tools/AgentOS.ControlCenter/build.ps1

@@ -5,7 +5,8 @@ import UsagePanel from "@/components/UsagePanel";
 import WorkTrail from "@/components/WorkTrail";
 import LiveLogs from "@/components/LiveLogs";
 import TaskBoard from "@/components/TaskBoard";
-import HermesChat from "@/components/HermesChat";
+import StatusAssistant from "@/components/StatusAssistant";
+import EventTimeline from "@/components/EventTimeline";
 import DecisionMap from "@/components/DecisionMap";
 import GovernanceStatus from "@/components/GovernanceStatus";
 import TaskUniverse from "@/components/TaskUniverse";
@@ -14,7 +15,7 @@ import ApprovalQueue from "@/components/ApprovalQueue";
 import RuntimeStatus from "@/components/RuntimeStatus";
 import { Bot, GitBranch, LayoutDashboard, Radar, UserCheck, Workflow } from "lucide-react";
 
-type Tab = "dashboard" | "decisions" | "tasks" | "supervisor" | "approvals";
+type Tab = "dashboard" | "decisions" | "tasks" | "supervisor" | "approvals" | "events";
 
 export default function Home() {
   const [tab, setTab] = useState<Tab>("dashboard");
@@ -88,6 +89,15 @@ export default function Home() {
             <UserCheck size={12} />
             待我核准
           </button>
+          <button
+            onClick={() => setTab("events")}
+            className={`flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium transition-all ${
+              tab === "events" ? "bg-zinc-700 text-zinc-100" : "text-zinc-500 hover:text-zinc-300"
+            }`}
+          >
+            <Workflow size={12} />
+            Events
+          </button>
         </div>
 
         <div className="ml-auto flex items-center gap-2">
@@ -115,7 +125,7 @@ export default function Home() {
 
           {/* RIGHT: Hermes Chat 40% */}
           <div className="flex flex-col flex-[2] min-w-0 min-h-0">
-            <HermesChat />
+            <StatusAssistant />
           </div>
         </div>
       )}
@@ -142,6 +152,12 @@ export default function Home() {
       {tab === "approvals" && (
         <div className="flex-1 overflow-hidden">
           <ApprovalQueue />
+        </div>
+      )}
+
+      {tab === "events" && (
+        <div className="flex-1 overflow-hidden">
+          <EventTimeline />
         </div>
       )}
     </main>

@@ -28,12 +28,16 @@ $scriptsRoot = Join-Path $root "scripts"
 $executables = @(Get-ChildItem -LiteralPath $scriptsRoot -Recurse -File |
     Where-Object Extension -in @(".ps1", ".py", ".js", ".mjs", ".bat", ".cmd") |
     ForEach-Object { "scripts/" + $_.FullName.Substring($scriptsRoot.Length + 1).Replace('\', '/') })
+$toolExecutables = @(Get-ChildItem -LiteralPath (Join-Path $root "tools") -Recurse -File -ErrorAction SilentlyContinue |
+    Where-Object Extension -in @(".ps1", ".py", ".js", ".mjs", ".bat", ".cmd") |
+    ForEach-Object { $_.FullName.Substring($root.Length + 1).Replace('\', '/') })
+$executables += $toolExecutables
 $registered = @($entries.implementation_path)
 foreach ($path in $executables) {
     if ($path -notin $registered) { $errors.Add("unregistered executable: $path") }
 }
 foreach ($path in $registered) {
-    if ($path -like "scripts/*" -and $path -notin $executables) { $errors.Add("registry path is not executable: $path") }
+    if (($path -like "scripts/*" -or $path -like "tools/*") -and $path -notin $executables) { $errors.Add("registry path is not executable: $path") }
 }
 
 if ($errors.Count) {

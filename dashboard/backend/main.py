@@ -1170,6 +1170,51 @@ def runtime_events(runtime_id: str | None = None, dispatch_id: str | None = None
     return {"events": rows[: max(1, min(limit, 1000))]}
 
 
+@app.get("/api/status-assistant")
+def status_assistant(q: str):
+    """Answer status questions from local structured evidence, with source paths."""
+    query = q.strip().lower()
+    if not query:
+        raise HTTPException(status_code=400, detail="q is required")
+
+    runtime_data = runtimes()
+    runtime_matches = [
+        item for item in runtime_data["runtimes"]
+        if item.get("runtime_id", "").lower() in query
+        or item.get("display_name", "").lower() in query
+    ]
+    task_matches = [
+        item for item in _list_codex_tasks()
+        if item.get("dispatch_id", "").lower() in query
+        or query in item.get("dispatch_id", "").lower()
+        or (len(query) >= 4 and query in item.get("title", "").lower())
+    ][:5]
+
+    citations = []
+    lines = []
+    if runtime_matches:
+        for item in runtime_matches[:5]:
+            state = item.get("status", {}).get("state", "unknown")
+            lines.append(f"{item['display_name']}: {state}")
+        citations.append({"path": "data/observability/runtime_status.json", "timestamp": runtime_data.get("collected_at")})
+        citations.append({"path": "config/runtime_registry.json", "timestamp": None})
+    if task_matches:
+        for item in task_matches:
+            lines.append(f"{item.get('dispatch_id')}: {item.get('normalized_status', item.get('status', 'unknown'))}")
+            citations.append({"path": item.get("artifact_path"), "timestamp": item.get("mtime_str")})
+            if item.get("result_path"):
+                citations.append({"path": item.get("result_path"), "timestamp": item.get("mtime_str")})
+    if not lines:
+        counts: dict[str, int] = {}
+        for item in runtime_data["runtimes"]:
+            state = item.get("status", {}).get("state", "unknown")
+            counts[state] = counts.get(state, 0) + 1
+        lines.append("Runtime summary: " + ", ".join(f"{key}={value}" for key, value in sorted(counts.items())))
+        lines.append("No exact task or runtime match was found. Include a dispatch ID or runtime ID for a precise answer.")
+        citations.append({"path": "data/observability/runtime_status.json", "timestamp": runtime_data.get("collected_at")})
+    return {"answer": "\n".join(lines), "citations": citations, "models_invoked": False}
+
+
 @app.get("/api/governance")
 def governance():
     """Refresh and return local governance drift without invoking a model."""
