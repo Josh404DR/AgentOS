@@ -1,6 +1,6 @@
 {
     "governance_version":  "1.2.0",
-    "approved_at":  "2026-07-10T21:45:53.2629916+08:00",
+    "approved_at":  "2026-07-11T07:18:27.4653448+08:00",
     "approved_by":  "Josh-authorized Codex governance task",
     "files":  [
                   {
@@ -76,32 +76,32 @@
                   {
                       "path":  "dashboard\\frontend\\components\\GovernanceStatus.tsx",
                       "exists":  true,
-                      "sha256":  "8B11CEF1BEFF6A62689F4D099D27B465B9C7763199557D66EB3DDC8E7DFAD5D2"
+                      "sha256":  "A91E86CAAC213DD2F3EDF46691CF5BC64B480942997B8EDAE9520BAF49D0EEEC"
                   },
                   {
                       "path":  "dashboard\\frontend\\components\\HermesChat.tsx",
                       "exists":  true,
-                      "sha256":  "8E67354CE610D332162A37C939AD38E24C39C38A0522F04DEC3BDEDC252C3543"
+                      "sha256":  "691EA70FA1C2C5D01C1B678C371A9AACD51EEB3738FA5E7C461F623C867B26D3"
                   },
                   {
                       "path":  "dashboard\\frontend\\components\\LiveLogs.tsx",
                       "exists":  true,
-                      "sha256":  "FD2601CA8F9427418A4B44DB143F184A5BCE783E330344A132243BCE21255760"
+                      "sha256":  "37BCFC9FDCD0C4D74F5B39B1C4D46A6C1EB7369F17BB3A863F7452E14B302E6B"
                   },
                   {
                       "path":  "dashboard\\frontend\\components\\TaskBoard.tsx",
                       "exists":  true,
-                      "sha256":  "B884C030BCAB99AE533BF483667ECDA1B368E6FCE193FC224049753243CCD9A3"
+                      "sha256":  "F4FA763FF4D335948B2C6206970F5C47B2C8CF1BFF86CEEDF36A1E0FD2A96038"
                   },
                   {
                       "path":  "dashboard\\frontend\\components\\TaskUniverse.tsx",
                       "exists":  true,
-                      "sha256":  "FE4DD235C9137B605C0FA4D6EF98ADF64E0D0305F0F3FB1D78784C6045C98FD8"
+                      "sha256":  "F226E6C9B9E2D09CBF52672A771A182FD1C4AD22967F784A68D4597E15E3B584"
                   },
                   {
                       "path":  "dashboard\\frontend\\components\\UsagePanel.tsx",
                       "exists":  true,
-                      "sha256":  "CB5B353BD30F3768340489CA850D08913635D5B12D6E742150A89D25251DFD36"
+                      "sha256":  "C6B14867D8171448660FA4C7EF440E682C9427E65F0327DA254639B1794A625C"
                   },
                   {
                       "path":  "dashboard\\frontend\\components\\WorkflowSupervisor.tsx",
@@ -111,7 +111,7 @@
                   {
                       "path":  "dashboard\\frontend\\components\\WorkTrail.tsx",
                       "exists":  true,
-                      "sha256":  "F063347B2BBD53ECCC30B31BC0AE0BD83E2A5819ED0729F0FB6C50D09CDB1BF0"
+                      "sha256":  "E7BD15B67FED33E0513729D9C1852107B7839CF4B8DA519D3F4334427A7A2B1E"
                   },
                   {
                       "path":  "dashboard\\frontend\\lib\\api.ts",
@@ -136,7 +136,7 @@
                   {
                       "path":  "dashboard\\start.ps1",
                       "exists":  true,
-                      "sha256":  "C8D7497186E0BF18D23556B108E115CB4C2C0B7F8F8C7C8AF9B02C0E80A86869"
+                      "sha256":  "CD8F9378738F36CE7173A2C8A6AC8933D34AA1910CF928662CC9E575213F02FF"
                   },
                   {
                       "path":  "docs\\ARCHITECTURE.md",

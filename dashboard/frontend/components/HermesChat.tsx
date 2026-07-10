@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { wsUrl } from "@/lib/api";
 
 const BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
@@ -31,7 +30,6 @@ function fmt(n: number): string {
 
 function ContextBar({ ctx }: { ctx: ContextData }) {
   const pct = ctx.pct;
-  const color = pct >= 90 ? "bg-red-500" : pct >= 70 ? "bg-yellow-400" : "bg-blue-500";
   return (
     <div className="px-4 py-2 border-b border-zinc-800 bg-zinc-950">
       <div className="flex items-center justify-between text-[11px] text-zinc-400 mb-1">
@@ -123,7 +121,7 @@ export default function HermesChat() {
         }]);
         if (data.context) setCtx(data.context);
       }
-    } catch (e) {
+    } catch {
       setMessages(prev => [...prev, {
         id: Date.now().toString() + "err",
         role: "system",

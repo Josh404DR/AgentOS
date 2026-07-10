@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [string]$AgentOSRoot = "E:\AgentOS",
+    [string]$AgentOSRoot,
     [switch]$RequireDashboard,
     [switch]$NoDashboard,
     [string]$OutputDir
@@ -8,6 +8,9 @@ param(
 
 $ErrorActionPreference = "Stop"
 $Utf8NoBom = [Text.UTF8Encoding]::new($false)
+if ([string]::IsNullOrWhiteSpace($AgentOSRoot)) {
+    $AgentOSRoot = Split-Path -Parent $PSScriptRoot
+}
 $root = (Resolve-Path -LiteralPath $AgentOSRoot).Path
 if (-not $OutputDir) {
     $OutputDir = Join-Path $root "data\ci_health"

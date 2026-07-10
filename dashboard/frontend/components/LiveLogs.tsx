@@ -29,7 +29,7 @@ function AgentTerminal({
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setLines([]);
+    const resetTimer = window.setTimeout(() => setLines([]), 0);
     const ws = new WebSocket(wsUrl(`/ws/logs/${id}`));
     ws.onopen = () => setConnected(true);
     ws.onclose = () => setConnected(false);
@@ -48,7 +48,10 @@ function AgentTerminal({
         },
       ]);
     };
-    return () => ws.close();
+    return () => {
+      window.clearTimeout(resetTimer);
+      ws.close();
+    };
   }, [id]);
 
   useEffect(() => {

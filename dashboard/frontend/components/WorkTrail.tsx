@@ -85,7 +85,7 @@ export default function WorkTrail() {
   };
 
   useEffect(() => {
-    load();
+    const initial = window.setTimeout(() => void load(), 0);
     const ws = new WebSocket(wsUrl("/ws/bridge/latest"));
     wsRef.current = ws;
     ws.onmessage = (e) => {
@@ -103,11 +103,17 @@ export default function WorkTrail() {
         });
       }
     };
-    return () => ws.close();
+    return () => {
+      window.clearTimeout(initial);
+      ws.close();
+    };
   }, []);
 
   useEffect(() => {
-    if (!selected) { setDetail(null); return; }
+    if (!selected) {
+      const resetTimer = window.setTimeout(() => setDetail(null), 0);
+      return () => window.clearTimeout(resetTimer);
+    }
     fetchBridgeSession(selected).then(setDetail).catch(() => {});
   }, [selected]);
 

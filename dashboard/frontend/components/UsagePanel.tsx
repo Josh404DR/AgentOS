@@ -84,7 +84,6 @@ export default function UsagePanel() {
   const tokens5h = (w5?.input_tokens ?? 0) + (w5?.output_tokens ?? 0);
   const tokens7d = (w7?.input_tokens ?? 0) + (w7?.output_tokens ?? 0);
   const pct5h = Math.round((tokens5h / LIMIT_5H) * 100);
-  const pct7d = Math.round((tokens7d / LIMIT_7D) * 100);
   const warn5h = pct5h >= 70;
   const danger5h = pct5h >= 90;
 
