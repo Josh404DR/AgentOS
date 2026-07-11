@@ -14,7 +14,7 @@ $lines.Add("| --- | --- | --- | --- | --- | --- | --- |")
 foreach ($item in @($registry.entries | Sort-Object category,id)) {
     $lines.Add("| $($item.category) | `$($item.id)` | $($item.display_name) | `$($item.implementation_path)` | $($item.start_mode) | $($item.risk) | $($item.enabled.ToString().ToLowerInvariant()) |")
 }
-$expected = ($lines -join [Environment]::NewLine) + [Environment]::NewLine
+$expected = ($lines -join "`n") + "`n"
 $path = Join-Path $root "scripts\REGISTRY.md"
 if ($Check) {
     if (-not (Test-Path $path) -or [IO.File]::ReadAllText($path, [Text.Encoding]::UTF8) -ne $expected) { throw "scripts/REGISTRY.md is stale; run generate-registry-readme.ps1" }
