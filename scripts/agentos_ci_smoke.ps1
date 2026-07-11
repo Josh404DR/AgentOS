@@ -325,6 +325,10 @@ Write-Output "result_json=$runJson"
 Write-Output "result_markdown=$runMd"
 
 if ($failCount -gt 0) {
+    foreach ($failed in @($checks | Where-Object status -eq "FAIL")) {
+        Write-Output "failed_check=$($failed.name)"
+        Write-Output "failed_detail=$($failed.detail)"
+    }
     exit 1
 }
 exit 0
