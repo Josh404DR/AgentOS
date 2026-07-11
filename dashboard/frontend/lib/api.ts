@@ -10,6 +10,11 @@ export async function fetchUsage() {
   return readJson(res);
 }
 
+export async function fetchContext() {
+  const res = await fetch(`${BASE}/api/context`, { cache: "no-store" });
+  return readJson(res);
+}
+
 export async function fetchRuntimes() {
   const res = await fetch(`${BASE}/api/runtimes`, { cache: "no-store" });
   return readJson(res);

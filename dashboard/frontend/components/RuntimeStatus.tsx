@@ -8,13 +8,23 @@ interface RuntimeItem {
   runtime_id: string;
   display_name: string;
   kind: string;
-  status: { state: string; pids?: number[]; observed_identity?: string };
+  expected_identity?: string;
+  depends_on?: string[];
+  status: {
+    state: string; pids?: number[]; observed_identity?: string | null;
+    ports?: { port: number; listening: boolean }[];
+    http?: { ok: boolean; status_code?: number | null } | null;
+    logs?: { path: string; exists: boolean; last_write?: string | null }[];
+    heartbeat?: { source: string; observed_at: string; age_seconds: number } | null;
+    evidence_summary?: string;
+  };
 }
 
 const stateStyle: Record<string, string> = {
   healthy: "border-emerald-700 bg-emerald-950 text-emerald-200",
   running: "border-emerald-700 bg-emerald-950 text-emerald-200",
   idle: "border-zinc-700 bg-zinc-900 text-zinc-300",
+  degraded: "border-amber-800 bg-amber-950 text-amber-200",
   disabled: "border-zinc-800 bg-zinc-950 text-zinc-500",
   down: "border-red-800 bg-red-950 text-red-200",
   unknown: "border-amber-800 bg-amber-950 text-amber-200",
@@ -55,7 +65,7 @@ export default function RuntimeStatus() {
     <section className="border-b border-zinc-800 bg-zinc-950 px-4 py-3">
       <div className="mb-2 flex items-center gap-2">
         <Activity size={15} className="text-emerald-400" />
-        <h2 className="text-xs font-semibold text-zinc-200">Runtime health</h2>
+        <h2 className="text-xs font-semibold text-zinc-200">Runtime map</h2>
         <span className="text-[10px] text-zinc-500">{items.length} registered, {down} down</span>
         <button className="ml-auto text-zinc-500 hover:text-zinc-200" onClick={() => void refresh()} title="Refresh runtime evidence">
           <RefreshCw size={13} className={loading ? "animate-spin" : ""} />
@@ -66,14 +76,19 @@ export default function RuntimeStatus() {
           <AlertTriangle size={13} /> Evidence degraded: {error}
         </div>
       )}
-      <div className="grid grid-cols-2 gap-2 md:grid-cols-3 xl:grid-cols-5">
+      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 xl:grid-cols-3">
         {items.map((item) => (
           <div key={item.runtime_id} className={`min-w-0 border px-3 py-2 ${stateStyle[item.status.state] ?? stateStyle.unknown}`}>
             <div className="flex items-center gap-2">
               <CircleStop size={10} className="shrink-0" />
-              <p className="truncate text-[11px] font-medium">{item.display_name}</p>
+              <p className="break-words text-[11px] font-medium">{item.display_name}</p>
             </div>
-            <p className="mt-1 truncate font-mono text-[9px] opacity-70">{item.status.state} · {item.kind}</p>
+            <p className="mt-1 break-words font-mono text-[9px] opacity-70">{item.status.state} / {item.kind}</p>
+            <p className="mt-1 break-words font-mono text-[9px] opacity-60">identity: {item.status.observed_identity ?? "unknown"} / expected: {item.expected_identity ?? "unknown"}</p>
+            <p className="break-words font-mono text-[9px] opacity-60">depends: {item.depends_on?.join(", ") || "none"}</p>
+            <p className="break-words font-mono text-[9px] opacity-60">
+              evidence: {item.status.evidence_summary ?? "not collected"}
+            </p>
           </div>
         ))}
       </div>

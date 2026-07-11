@@ -1,6 +1,6 @@
 {
     "governance_version":  "1.2.0",
-    "approved_at":  "2026-07-11T16:46:20.9870029+08:00",
+    "approved_at":  "2026-07-11T17:38:47.2907893+08:00",
     "approved_by":  "Josh-authorized Codex governance task",
     "files":  [
                   {
@@ -41,7 +41,7 @@
                   {
                       "path":  "dashboard\\backend\\main.py",
                       "exists":  true,
-                      "sha256":  "E079A7A6CEA2C28B91DABAC97EDE51A31B1FD2B8CE8B31359414C8982070E7AE"
+                      "sha256":  "898D94D64B38251D765DA617254C63315BCD2644B00EE0EC6C0ECA0251B09D37"
                   },
                   {
                       "path":  "dashboard\\DASHBOARD_SCOPE.md",
@@ -71,7 +71,7 @@
                   {
                       "path":  "dashboard\\frontend\\components\\DecisionMap.tsx",
                       "exists":  true,
-                      "sha256":  "A72EAF0280FAB73207CE34EADB49803A103C4B38BE8DB9C5404BE55EAE3658FC"
+                      "sha256":  "3820FADE1947D29D93A2FADEA08D7C441EBA41255DE532CF9DD7D9AEA0C60063"
                   },
                   {
                       "path":  "dashboard\\frontend\\components\\EventTimeline.tsx",
@@ -81,7 +81,7 @@
                   {
                       "path":  "dashboard\\frontend\\components\\FailurePath.tsx",
                       "exists":  true,
-                      "sha256":  "C8979417EE3564BD275670ACA19DB6C5032824C5D59248B78B9C631D5B436C26"
+                      "sha256":  "903B3B6891C3CC26E9B623600604609F6214E6A4CEED518DD4C94439FB58A439"
                   },
                   {
                       "path":  "dashboard\\frontend\\components\\GovernanceStatus.tsx",
@@ -91,7 +91,7 @@
                   {
                       "path":  "dashboard\\frontend\\components\\RuntimeStatus.tsx",
                       "exists":  true,
-                      "sha256":  "4E6478626C2AA3F39C736E369625BCB2A4F81E0D82DA6175A8F2E04A0910457A"
+                      "sha256":  "63156DD4295E7A9793AB3D27AE465FC2CCBB9E21894648EA6B81063D45D312D9"
                   },
                   {
                       "path":  "dashboard\\frontend\\components\\StatusAssistant.tsx",
@@ -116,7 +116,7 @@
                   {
                       "path":  "dashboard\\frontend\\components\\UsagePanel.tsx",
                       "exists":  true,
-                      "sha256":  "6CF4B616DF7ABEB61085CFA61A3CE560DEF35ECFE0A0F493EAF180C97ED2CB2D"
+                      "sha256":  "B4899713BA9FFD72C4E51E1B209A8BB595DFBEF02300ABD72FC229D4B1F9B82F"
                   },
                   {
                       "path":  "dashboard\\frontend\\components\\WorkflowSupervisor.tsx",
@@ -126,7 +126,7 @@
                   {
                       "path":  "dashboard\\frontend\\lib\\api.ts",
                       "exists":  true,
-                      "sha256":  "5177D6FAE6DE5C6977138A411428AA98E3AF8905FF7ED2DF18505021D25C8D73"
+                      "sha256":  "4ABA0BB18D0FE8CE265E005E8A66558A1D4BC624D6EE1670A6DA3CB38013887D"
                   },
                   {
                       "path":  "dashboard\\frontend\\next.config.ts",
@@ -146,7 +146,7 @@
                   {
                       "path":  "dashboard\\start.ps1",
                       "exists":  true,
-                      "sha256":  "ECCDBC357E027A71A260E9C0E839E00EFC9D489381DE3CB3B8A09109B41712BE"
+                      "sha256":  "5EB2301ECF04CA1EF5FF1682C833991366C4E6F9B0D3DF891D9030417BA6D109"
                   },
                   {
                       "path":  "docs\\ARCHITECTURE.md",

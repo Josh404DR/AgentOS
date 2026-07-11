@@ -1,9 +1,11 @@
 # Phase 0 Git Alignment Decision Packet
 
 date: 2026-07-11 Asia/Taipei
-status: Phase 0 evidence complete; waiting for Josh decision; no Git/GitHub mutation performed
+status: resolved; Josh approved Option A and the isolated cleanup branch was created without force push
 governance_version: 1.2.0
 governance_hash: A29DDC3DE4701A07BECCCB95E9A7DA9A3B897D2C1C60FAD61416C6C85EED666F
+
+resolution: `codex/release-a-cleanup` was created from GitHub `master` in `E:\AgentOS\scratch\release-a-cleanup`; source was imported through explicit commits and PR #1. The original decision evidence below remains the pre-mutation record.
 
 ## Verdict
 

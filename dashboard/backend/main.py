@@ -12,7 +12,6 @@ import re
 import sqlite3
 import subprocess
 import sys
-import httpx
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import AsyncGenerator
@@ -1440,29 +1439,6 @@ async def ws_bridge_latest(websocket: WebSocket):
         pass
 
 
-# ---------------------------------------------------------------------------
-# Chat API — calls hermes.exe -z directly (independent of Telegram gateway)
-# ---------------------------------------------------------------------------
-
-class ChatRequest(BaseModel):
-    message: str
-
-
-def _snapshot_tokens() -> dict:
-    """Read current token totals from state.db for delta calculation."""
-    if not HERMES_DB.exists():
-        return {}
-    try:
-        con = sqlite3.connect(str(HERMES_DB))
-        cur = con.cursor()
-        cur.execute("SELECT SUM(input_tokens), SUM(output_tokens), SUM(cache_read_tokens) FROM sessions")
-        row = cur.fetchone()
-        con.close()
-        return {"input": row[0] or 0, "output": row[1] or 0, "cache": row[2] or 0}
-    except Exception:
-        return {}
-
-
 # Known context window limits by model keyword
 _MODEL_CONTEXT = {
     "llama-3.1-8b": 131_072,
@@ -1480,38 +1456,14 @@ _MODEL_CONTEXT = {
     "gpt-5": 128_000,
 }
 
-def _model_context_limit(model: str | None) -> int:
+def _model_context_limit(model: str | None) -> int | None:
     if not model:
-        return 128_000
+        return None
     m = (model or "").lower()
     for key, limit in _MODEL_CONTEXT.items():
         if key in m:
             return limit
-    return 128_000
-
-
-def _read_messages(limit: int = 50) -> list[dict]:
-    """Read recent messages from state.db — uses 'timestamp' column."""
-    if not HERMES_DB.exists():
-        return []
-    try:
-        con = sqlite3.connect(str(HERMES_DB))
-        con.row_factory = sqlite3.Row
-        cur = con.cursor()
-        cur.execute("""
-            SELECT m.id, m.session_id, m.role, m.content, m.timestamp,
-                   s.source, s.model
-            FROM messages m
-            LEFT JOIN sessions s ON m.session_id = s.id
-            ORDER BY m.timestamp DESC
-            LIMIT ?
-        """, (limit,))
-        rows = [dict(r) for r in cur.fetchall()]
-        con.close()
-        rows.reverse()
-        return rows
-    except Exception as e:
-        return [{"error": str(e)}]
+    return None
 
 
 def _context_window_pct() -> dict:
@@ -1520,7 +1472,7 @@ def _context_window_pct() -> dict:
     This is the best approximation without instrumenting the live session.
     """
     if not HERMES_DB.exists():
-        return {"pct": 0, "used": 0, "total": 128_000, "model": None}
+        return {"pct": None, "used": None, "total": None, "model": None, "note": "usage database unavailable"}
     try:
         con = sqlite3.connect(str(HERMES_DB))
         cur = con.cursor()
@@ -1533,13 +1485,15 @@ def _context_window_pct() -> dict:
         row = cur.fetchone()
         con.close()
         if not row:
-            return {"pct": 0, "used": 0, "total": 128_000, "model": None}
+            return {"pct": None, "used": None, "total": None, "model": None, "note": "no recorded session"}
         model = row[0]
         inp = row[1] or 0
         out = row[2] or 0
         cache = row[3] or 0
         used = inp + out + cache
         total = _model_context_limit(model)
+        if total is None:
+            return {"pct": None, "used": used, "total": None, "model": model, "note": "unknown model context limit"}
         pct = round(min(used / total * 100, 100), 1)
         return {
             "pct": pct, "used": used, "total": total,
@@ -1548,90 +1502,7 @@ def _context_window_pct() -> dict:
             "note": "last session"
         }
     except Exception:
-        return {"pct": 0, "used": 0, "total": 128_000, "model": None}
-
-
-@app.post("/api/chat")
-async def chat(req: ChatRequest):
-    """
-    Hermes Lite chat — calls Groq API directly.
-
-    Why not hermes.exe -z:
-    - Gemini: monthly cap hit (429)
-    - Groq via hermes.exe: full request with 30 tool schemas ~21K tokens,
-      exceeds Groq free-tier TPM limit of 6K → 413 every time.
-
-    Solution (same as scripts/free_model_window.ps1 for Telegram):
-    Call Groq API directly with a stripped system prompt, no tool schemas.
-    """
-    # Resolve GROQ_API_KEY from environment (user / machine level on Windows)
-    api_key = (
-        os.environ.get("GROQ_API_KEY")
-        or os.environ.get("GROQ_API_KEY".lower())
-        or ""
-    )
-    if not api_key:
-        return {
-            "error": "GROQ_API_KEY not set. Set it as a user environment variable.",
-            "response": None,
-            "mode": "hermes_lite",
-        }
-
-    HERMES_LITE_SYSTEM = (
-        "You are Hermes Lite, the AgentOS web dashboard chat interface.\n"
-        "Answer in the same language the user writes in.\n"
-        "You have no tools in this mode — do not claim file, routing, fetch, "
-        "model, or external actions unless the message contains explicit output.\n"
-        "For real work (code, tasks, file ops), tell the user to dispatch via Codex.\n"
-        "Be concise. Traditional Chinese preferred for short replies."
-    )
-
-    body = {
-        "model": "llama-3.1-8b-instant",
-        "messages": [
-            {"role": "system", "content": HERMES_LITE_SYSTEM},
-            {"role": "user", "content": req.message[:4000]},
-        ],
-        "max_tokens": 512,
-        "temperature": 0.3,
-    }
-
-    ts = datetime.now(timezone.utc).isoformat()
-
-    try:
-        async with httpx.AsyncClient(timeout=45) as client:
-            resp = await client.post(
-                "https://api.groq.com/openai/v1/chat/completions",
-                headers={
-                    "Authorization": f"Bearer {api_key}",
-                    "Content-Type": "application/json",
-                    "User-Agent": "AgentOS-Dashboard/1.0",
-                },
-                json=body,
-            )
-            resp.raise_for_status()
-            data = resp.json()
-
-        response_text = data["choices"][0]["message"]["content"].strip()
-        delta_tokens = data.get("usage", {}).get("total_tokens", 0)
-        return {
-            "response": response_text,
-            "sent_at": ts,
-            "delta_tokens": delta_tokens,
-            "context": _context_window_pct(),
-            "mode": "hermes_lite",
-            "model": data.get("model", "llama-3.1-8b-instant"),
-        }
-    except httpx.HTTPStatusError as e:
-        body_text = e.response.text[:300]
-        return {"error": f"Groq HTTP {e.response.status_code}: {body_text}", "response": None, "mode": "hermes_lite"}
-    except Exception as e:
-        return {"error": str(e), "response": None, "mode": "hermes_lite"}
-
-
-@app.get("/api/messages")
-def get_messages(limit: int = 50):
-    return _read_messages(limit)
+        return {"pct": None, "used": None, "total": None, "model": None, "note": "usage query failed"}
 
 
 @app.get("/api/context")

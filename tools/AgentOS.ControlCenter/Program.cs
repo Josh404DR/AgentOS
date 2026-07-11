@@ -28,11 +28,12 @@ namespace AgentOSControlCenter
                 var current = new DirectoryInfo(candidate);
                 while (current != null)
                 {
-                    if (File.Exists(Path.Combine(current.FullName, "config", "runtime_registry.json"))) return current.FullName;
+                    if (File.Exists(Path.Combine(current.FullName, "config", "runtime_registry.json")) &&
+                        File.Exists(Path.Combine(current.FullName, "config", "script_registry.json"))) return current.FullName;
                     current = current.Parent;
                 }
             }
-            throw new InvalidOperationException("Cannot locate AgentOS root containing config/runtime_registry.json.");
+            throw new InvalidOperationException("Cannot locate AgentOS root containing both runtime and script registries.");
         }
     }
 
@@ -79,8 +80,10 @@ namespace AgentOSControlCenter
             grid.Columns.Add("group", "Group");
             grid.Columns.Add("state", "State");
             grid.Columns.Add("scheduled", "Scheduled task");
+            grid.Columns.Add("expected_identity", "Expected identity");
             grid.Columns.Add("identity", "Observed identity");
             grid.Columns.Add("pids", "PIDs");
+            grid.Columns.Add("evidence", "Evidence");
 
             output.Dock = DockStyle.Bottom;
             output.Height = 150;
@@ -141,6 +144,7 @@ namespace AgentOSControlCenter
         private void LoadData()
         {
             var registry = (Dictionary<string, object>)json.DeserializeObject(File.ReadAllText(Path.Combine(root, "config", "runtime_registry.json")));
+            var scriptRegistry = (Dictionary<string, object>)json.DeserializeObject(File.ReadAllText(Path.Combine(root, "config", "script_registry.json")));
             var status = (Dictionary<string, object>)json.DeserializeObject(File.ReadAllText(Path.Combine(root, "data", "observability", "runtime_status.json")));
             runtimes = ((object[])registry["runtimes"]).Cast<Dictionary<string, object>>().ToList();
             var statuses = ((object[])status["runtimes"]).Cast<Dictionary<string, object>>().ToDictionary(x => Convert.ToString(x["runtime_id"]));
@@ -158,9 +162,10 @@ namespace AgentOSControlCenter
                 var enabled = Convert.ToBoolean(runtime["enabled"]);
                 var kind = Convert.ToString(runtime["kind"]);
                 var group = !enabled ? "retired / disabled" : kind == "per_event" ? "on-demand workflow" : kind == "scheduled" ? "maintenance" : "startup";
-                grid.Rows.Add(runtime["runtime_id"], runtime["display_name"], kind, group, observed == null ? "unknown" : observed["state"], scheduled, observed == null ? "" : observed["observed_identity"], pids);
+                grid.Rows.Add(runtime["runtime_id"], runtime["display_name"], kind, group, observed == null ? "unknown" : observed["state"], scheduled, runtime["expected_identity"], observed == null ? "" : observed["observed_identity"], pids, observed == null ? "" : observed["evidence_summary"]);
             }
-            summary.Text = string.Format("{0} runtimes · evidence {1}", runtimes.Count, status["collected_at"]);
+            var scripts = ((object[])scriptRegistry["entries"]).Length;
+            summary.Text = string.Format("{0} runtimes / {1} registered tools / evidence {2}", runtimes.Count, scripts, status["collected_at"]);
         }
 
         private Dictionary<string, object> SelectedRuntime()

@@ -12,18 +12,32 @@ if ($LASTEXITCODE -ne 0) { throw "AgentOS smoke gate failed." }
 if ($LASTEXITCODE -ne 0) { throw "Repository hygiene gate failed." }
 
 $frontend = Join-Path $root "dashboard\frontend"
-if (Test-Path (Join-Path $frontend "node_modules")) {
-    Push-Location $frontend
-    try {
-        & npm.cmd run lint
-        if ($LASTEXITCODE -ne 0) { throw "Frontend lint failed." }
-        & npm.cmd run build -- --webpack
-        if ($LASTEXITCODE -ne 0) { throw "Frontend production build failed." }
-    } finally {
-        Pop-Location
-    }
-} else {
-    Write-Warning "Frontend dependencies are absent; dashboard lint/build skipped. CI must run them."
+if (-not (Test-Path (Join-Path $frontend "node_modules"))) {
+    throw "Frontend dependencies are absent. Run dashboard\start.ps1 -Install before the local gate."
+}
+Push-Location $frontend
+try {
+    & npm.cmd run lint
+    if ($LASTEXITCODE -ne 0) { throw "Frontend lint failed." }
+    & npm.cmd run build -- --webpack
+    if ($LASTEXITCODE -ne 0) { throw "Frontend production build failed." }
+} finally {
+    Pop-Location
+}
+
+$backend = Join-Path $root "dashboard\backend"
+$python = Join-Path $backend ".venv\Scripts\python.exe"
+if (-not (Test-Path -LiteralPath $python -PathType Leaf)) {
+    throw "Backend virtual environment is absent. Run dashboard\start.ps1 -Install before the local gate."
+}
+& $python -m py_compile (Join-Path $backend "main.py")
+if ($LASTEXITCODE -ne 0) { throw "Backend Python compilation failed." }
+Push-Location $backend
+try {
+    & $python -c "import main"
+    if ($LASTEXITCODE -ne 0) { throw "Backend import failed." }
+} finally {
+    Pop-Location
 }
 
 Write-Output "agentos_check_status=PASS"

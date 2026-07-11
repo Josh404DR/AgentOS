@@ -33,7 +33,7 @@ export default function DecisionMap() {
           <div key={item.event_id} className="grid grid-cols-[24px_minmax(0,1fr)] gap-3">
             <div className="flex flex-col items-center"><span className={`mt-4 h-2.5 w-2.5 rounded-full ${item.result === "error" ? "bg-red-500" : "bg-emerald-500"}`} />{index < events.length - 1 && <span className="w-px flex-1 bg-zinc-700" />}</div>
             <article className="mb-3 border border-zinc-800 bg-zinc-900 p-3 text-[10px]">
-              <div className="flex gap-3"><strong className="text-zinc-200">{item.actor} · {item.action}</strong><span className="font-mono text-zinc-500">{item.ts}</span><span className="ml-auto text-zinc-400">{item.result}</span></div>
+              <div className="flex gap-3"><strong className="text-zinc-200">{item.actor} / {item.action}</strong><span className="font-mono text-zinc-500">{item.ts}</span><span className="ml-auto text-zinc-400">{item.result}</span></div>
               <div className="mt-2 grid gap-1 font-mono text-zinc-500 md:grid-cols-2"><p className="truncate">script: {item.script ?? "unknown"}</p><p className="truncate">runtime: {item.runtime_id}</p><p className="truncate">input: {item.input_ref ?? "none"}</p><p className="truncate">output: {item.output_ref ?? "none"}</p><p className="truncate md:col-span-2">next: {item.next_step ?? "none"}</p></div>
             </article>
           </div>

@@ -36,8 +36,12 @@ main.runtime_events(limit=10)
 main.failures(limit=10)
 main.governance()
 main.status_assistant("runtime status")
+main.get_context()
 after = snapshot(protected)
 if before != after:
     changed = sorted(set(before) ^ set(after) | {key for key in before.keys() & after.keys() if before[key] != after[key]})
     raise SystemExit("Dashboard read mutated protected state: " + ", ".join(changed))
+route_paths = {route.path for route in main.app.routes}
+if "/api/chat" in route_paths or "/api/messages" in route_paths:
+    raise SystemExit("Retired no-tool chat surface is still exposed")
 print("dashboard_readonly_contract=PASS")

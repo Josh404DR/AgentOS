@@ -16,6 +16,7 @@ try {
     $branch = ($branchOutput -join "").Trim()
     if (-not $branch) { throw "Detached HEAD is not supported." }
     if ($branch -in @("master", "main")) { throw "Direct commits to protected branch $branch are forbidden." }
+    if ($branch -notlike "codex/*") { throw "Task branch must use the approved codex/ prefix: $branch" }
     $status = @(git -c "safe.directory=$gitSafeRoot" status --porcelain)
     if ($LASTEXITCODE -ne 0) { throw "Cannot inspect Git worktree." }
     if (-not $status.Count) { throw "No changes to finish." }
@@ -26,12 +27,17 @@ try {
         if (-not $candidate.StartsWith($root + [IO.Path]::DirectorySeparatorChar, [StringComparison]::OrdinalIgnoreCase)) {
             throw "Path escapes repository: $file"
         }
+        Write-Output "--- scoped diff: $file ---"
+        git -c "safe.directory=$gitSafeRoot" diff -- $file
+        if ($LASTEXITCODE -ne 0) { throw "Failed to show scoped diff for $file." }
         git -c "safe.directory=$gitSafeRoot" add -- $file
         if ($LASTEXITCODE -ne 0) { throw "Failed to stage $file." }
     }
 
     $staged = @(git -c "safe.directory=$gitSafeRoot" diff --cached --name-only)
     if ($LASTEXITCODE -ne 0 -or -not $staged.Count) { throw "Explicit paths produced no staged changes." }
+    git -c "safe.directory=$gitSafeRoot" diff --cached --stat
+    if ($LASTEXITCODE -ne 0) { throw "Failed to show staged diff summary." }
     & powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts\entrypoints\agentos-check.ps1
     if ($LASTEXITCODE -ne 0) { throw "Pre-commit checks failed." }
     git -c "safe.directory=$gitSafeRoot" diff --cached --check

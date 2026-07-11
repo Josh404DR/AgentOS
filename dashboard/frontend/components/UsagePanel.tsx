@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { AlertTriangle, Calendar, Clock, Cpu, Database, Gauge } from "lucide-react";
-import { fetchUsage } from "@/lib/api";
+import { fetchContext, fetchUsage } from "@/lib/api";
 
 interface UsageWindow {
   session_count: number;
@@ -17,6 +17,7 @@ interface UsageData {
   window_7d?: UsageWindow;
   current_model?: string;
   error?: string;
+  context?: { pct: number | null; used: number | null; total: number | null; model: string | null; note?: string };
 }
 
 function fmt(value: number | null | undefined): string {
@@ -37,8 +38,8 @@ export default function UsagePanel() {
 
   const load = useCallback(async () => {
     try {
-      const incoming = await fetchUsage();
-      setData(incoming);
+      const [incoming, context] = await Promise.all([fetchUsage(), fetchContext()]);
+      setData({ ...incoming, context });
       setError(incoming.error ?? null);
       setLastSuccess(new Date().toLocaleTimeString("zh-TW", { hour12: false }));
     } catch (reason) {
@@ -81,6 +82,8 @@ export default function UsagePanel() {
       <div className="space-y-1 border-t border-zinc-800 pt-2 text-[10px]">
         <p className="flex items-center gap-2 text-zinc-400"><Database size={10} />Source: Hermes local session database</p>
         <p className="flex items-center gap-2 text-zinc-400"><Cpu size={10} />Current recorded model: <span className="font-mono text-zinc-200">{data.current_model ?? "unknown"}</span></p>
+        <p className="flex items-center gap-2 text-zinc-400"><Gauge size={10} />Latest recorded session context estimate: <span className="font-mono text-zinc-200">{fmt(data.context?.used)} / {fmt(data.context?.total)} ({data.context?.pct == null ? "unknown" : `${data.context.pct}%`})</span></p>
+        <p className="pl-5 text-[9px] text-zinc-600">Source: Hermes session database / {data.context?.note ?? "unknown"}</p>
         <p className="flex items-center gap-2 text-amber-300"><Gauge size={10} />Provider quota: unknown (no authoritative quota API)</p>
       </div>
     </section>

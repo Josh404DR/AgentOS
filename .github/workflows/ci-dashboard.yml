@@ -60,3 +60,8 @@ jobs:
         env:
           AGENTOS_ROOT: ${{ github.workspace }}
         run: python tests/status_assistant_contract.py
+      - name: Verify Dashboard reads and builds leave the clone clean
+        working-directory: .
+        run: |
+          test -z "$(git status --porcelain --untracked-files=all)" || { git status --short --untracked-files=all; exit 1; }
+          echo "post_dashboard_worktree=clean"

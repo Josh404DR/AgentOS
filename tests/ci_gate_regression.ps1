@@ -14,6 +14,7 @@ try {
         New-Item -ItemType Directory -Force -Path (Split-Path $path) | Out-Null
         [IO.File]::WriteAllText($path, "# fixture", [Text.UTF8Encoding]::new($false))
     }
+    Copy-Item (Join-Path $root "scripts\REGISTRY.md") (Join-Path $fixture "scripts\REGISTRY.md") -Force
     & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $fixture "tests\validate_script_registry.ps1") -AgentOSRoot $fixture | Out-Null
     if ($LASTEXITCODE -ne 0) { throw "Valid registry fixture did not pass." }
 

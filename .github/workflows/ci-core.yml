@@ -44,12 +44,24 @@ jobs:
       - name: Verify dashboard launcher fails on unhealthy occupied port
         shell: powershell
         run: ./tests/dashboard_start_contract.ps1 -AgentOSRoot $PWD
+      - name: Verify receipt-bound Dashboard stop
+        shell: powershell
+        run: ./tests/dashboard_stop_receipt.ps1 -AgentOSRoot $PWD
       - name: Prove valid and known-bad registry fixtures
         shell: powershell
         run: ./tests/ci_gate_regression.ps1 -AgentOSRoot $PWD
+      - name: Verify guarded local Git workflow contracts
+        shell: powershell
+        run: ./tests/workflow_guard_contract.ps1 -AgentOSRoot $PWD
       - name: Validate repository boundary
         shell: pwsh
         run: ./scripts/repository_hygiene_check.ps1 -AgentOSRoot $PWD
       - name: Build AgentOS Control Center
         shell: pwsh
         run: ./tools/AgentOS.ControlCenter/build.ps1
+      - name: Verify core checks leave the clone clean
+        shell: pwsh
+        run: |
+          $dirty = @(git status --porcelain --untracked-files=all)
+          if ($dirty.Count) { $dirty | ForEach-Object { Write-Error "CI generated repository debris: $_" }; exit 1 }
+          Write-Output "post_ci_worktree=clean"

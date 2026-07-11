@@ -40,6 +40,20 @@ foreach ($path in $registered) {
     if (($path -like "scripts/*" -or $path -like "tools/*") -and $path -notin $executables) { $errors.Add("registry path is not executable: $path") }
 }
 
+$readmePath = Join-Path $root "scripts\REGISTRY.md"
+if (-not (Test-Path -LiteralPath $readmePath -PathType Leaf)) {
+    $errors.Add("generated registry README is missing")
+} else {
+    $readme = [IO.File]::ReadAllText($readmePath, [Text.Encoding]::UTF8)
+    if ($readme.Contains('$(@{')) { $errors.Add("generated registry README contains an unevaluated PowerShell expression") }
+    foreach ($entry in $entries) {
+        if ($readme -notmatch [regex]::Escape("``$($entry.id)``") -or
+            $readme -notmatch [regex]::Escape("``$($entry.implementation_path)``")) {
+            $errors.Add("generated registry README does not describe: $($entry.id)")
+        }
+    }
+}
+
 if ($errors.Count) {
     $errors | ForEach-Object { Write-Error $_ }
     exit 1

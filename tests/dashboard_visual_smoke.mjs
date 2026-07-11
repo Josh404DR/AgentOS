@@ -22,12 +22,12 @@ try {
       scrollWidth: document.documentElement.scrollWidth,
       viewportWidth: window.innerWidth,
       headings: Array.from(document.querySelectorAll("h1,h2")).map((element) => element.textContent?.trim()).filter(Boolean),
-      runtimeCards: Array.from(document.querySelectorAll("section")).find((element) => element.textContent?.includes("Runtime health"))?.querySelectorAll(".grid > div").length ?? 0,
+      runtimeCards: Array.from(document.querySelectorAll("section")).find((element) => element.textContent?.includes("Runtime map"))?.querySelectorAll(".grid > div").length ?? 0,
     }));
     await page.screenshot({ path: path.join(outputDir, `dashboard-${viewport.name}.png`), fullPage: true });
     fs.writeFileSync(path.join(outputDir, `dashboard-${viewport.name}.json`), JSON.stringify({ ...evidence, consoleErrors: errors }, null, 2));
     if (evidence.overflow) throw new Error(`${viewport.name} has horizontal overflow: ${evidence.scrollWidth}/${evidence.viewportWidth}`);
-    if (!evidence.headings.includes("AgentOS") || !evidence.headings.includes("Runtime health")) throw new Error(`${viewport.name} missing primary headings`);
+    if (!evidence.headings.includes("AgentOS") || !evidence.headings.includes("Runtime map")) throw new Error(`${viewport.name} missing primary headings`);
     if (evidence.runtimeCards < 1) throw new Error(`${viewport.name} rendered no runtime cards`);
     if (errors.length) throw new Error(`${viewport.name} console errors: ${errors.join(" | ")}`);
     await page.close();

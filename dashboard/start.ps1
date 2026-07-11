@@ -21,6 +21,76 @@ $FrontendDir   = Join-Path $DashboardRoot "frontend"
 $BackendPython = Join-Path $BackendDir ".venv\Scripts\python.exe"
 $AgentOSRoot   = Split-Path $DashboardRoot
 $LogDir        = Join-Path $AgentOSRoot "logs"
+$ReceiptDir    = Join-Path $AgentOSRoot "data\runtime_receipts"
+
+function Get-PortOwnerIds([int]$Port) {
+    return @(netstat -ano | Select-String ":$Port\s+.*LISTENING" | ForEach-Object {
+        $candidate = ($_ -split "\s+")[-1]
+        if ($candidate -match "^\d+$" -and $candidate -ne "0") { [int]$candidate }
+    } | Sort-Object -Unique)
+}
+
+function Test-ProcessDescendsFrom([int]$ProcessId, [int]$AncestorId, [object[]]$Processes) {
+    $seen = @{}
+    $current = $ProcessId
+    while ($current -gt 0 -and -not $seen.ContainsKey($current)) {
+        if ($current -eq $AncestorId) { return $true }
+        $seen[$current] = $true
+        $match = @($Processes | Where-Object ProcessId -eq $current | Select-Object -First 1)
+        if (-not $match.Count) { return $false }
+        $current = [int]$match[0].ParentProcessId
+    }
+    return $false
+}
+
+function Write-DashboardReceipt([string]$Name, [Diagnostics.Process]$Process, [string]$CommandMatch, [int]$Port) {
+    New-Item -ItemType Directory -Force -Path $ReceiptDir | Out-Null
+    $receipt = [ordered]@{
+        runtime_id = $Name
+        status = "running"
+        process_id = $Process.Id
+        executable_path = $Process.Path
+        command_match = $CommandMatch
+        port = $Port
+        started_at = $Process.StartTime.ToString("o")
+        identity = [Security.Principal.WindowsIdentity]::GetCurrent().Name
+    }
+    [IO.File]::WriteAllText((Join-Path $ReceiptDir "$Name.json"), ($receipt | ConvertTo-Json -Depth 5), [Text.UTF8Encoding]::new($false))
+}
+
+function Stop-RegisteredDashboardProcess([string]$Name, [int]$Port) {
+    $receiptPath = Join-Path $ReceiptDir "$Name.json"
+    $portOwners = @(Get-PortOwnerIds $Port)
+    if (-not (Test-Path -LiteralPath $receiptPath -PathType Leaf)) {
+        if ($portOwners.Count) { throw "Port $Port is active without a trusted $Name receipt; refusing to stop it." }
+        Write-Host "  [$Name] Already stopped; no receipt or listener." -ForegroundColor DarkGray
+        return
+    }
+    $receipt = [IO.File]::ReadAllText($receiptPath, [Text.Encoding]::UTF8) | ConvertFrom-Json
+    if ($receipt.status -eq "stopped" -and -not $portOwners.Count) {
+        Write-Host "  [$Name] Already stopped according to preserved receipt." -ForegroundColor DarkGray
+        return
+    }
+    $pidValue = [int]$receipt.process_id
+    $native = Get-CimInstance Win32_Process -Filter "ProcessId=$pidValue" -ErrorAction Stop
+    $managed = Get-Process -Id $pidValue -ErrorAction Stop
+    if ([IO.Path]::GetFullPath([string]$native.ExecutablePath) -ne [IO.Path]::GetFullPath([string]$receipt.executable_path)) { throw "$Name executable path mismatch; refusing stop." }
+    if ([string]$native.CommandLine -notlike "*$($receipt.command_match)*") { throw "$Name command line mismatch; refusing stop." }
+    if ([math]::Abs(($managed.StartTime - [datetime]$receipt.started_at).TotalSeconds) -gt 5) { throw "$Name start time mismatch; refusing stop." }
+    $allProcesses = @(Get-CimInstance Win32_Process -ErrorAction Stop)
+    if (-not $portOwners.Count -or -not @($portOwners | Where-Object { Test-ProcessDescendsFrom $_ $pidValue $allProcesses }).Count) {
+        throw "$Name receipt does not own the listener on port $Port; refusing stop."
+    }
+    & taskkill.exe /PID $pidValue /T /F | Out-Null
+    if ($LASTEXITCODE -ne 0) { throw "Failed to stop registered $Name process tree PID $pidValue." }
+    $deadline = (Get-Date).AddSeconds(10)
+    while ((Get-Date) -lt $deadline -and @(Get-PortOwnerIds $Port).Count) { Start-Sleep -Milliseconds 250 }
+    if (@(Get-PortOwnerIds $Port).Count) { throw "$Name stopped process did not release port $Port." }
+    $receipt | Add-Member -NotePropertyName status -NotePropertyValue "stopped" -Force
+    $receipt | Add-Member -NotePropertyName stopped_at -NotePropertyValue (Get-Date).ToString("o") -Force
+    [IO.File]::WriteAllText($receiptPath, ($receipt | ConvertTo-Json -Depth 5), [Text.UTF8Encoding]::new($false))
+    Write-Host "  [$Name] Stopped registered process tree PID $pidValue." -ForegroundColor Green
+}
 
 # Ensure log directory exists
 if (-not (Test-Path $LogDir)) { New-Item -ItemType Directory -Path $LogDir | Out-Null }
@@ -29,31 +99,9 @@ if (-not (Test-Path $LogDir)) { New-Item -ItemType Directory -Path $LogDir | Out
 # STOP
 # ─────────────────────────────────────────
 if ($Stop) {
-    Write-Host "[Stop] Killing dashboard processes on ports 8000 / 3000..." -ForegroundColor Yellow
-    foreach ($port in @(8000, 3000)) {
-        $pids = (netstat -ano | Select-String ":$port\s") |
-            ForEach-Object { ($_ -split "\s+")[-1] } |
-            Where-Object { $_ -match "^\d+$" -and $_ -ne "0" } |
-            Sort-Object -Unique
-        foreach ($processId in $pids) {
-            $previousErrorActionPreference = $ErrorActionPreference
-            $ErrorActionPreference = "Continue"
-            $taskKillOutput = & taskkill.exe /PID $processId /T /F 2>&1
-            $taskKillExitCode = $LASTEXITCODE
-            $ErrorActionPreference = $previousErrorActionPreference
-            if ($taskKillExitCode -eq 0) {
-                Write-Host "  Killed process tree PID $processId (port $port)"
-            } else {
-                Write-Host "  Could not stop PID $processId (port $port): $($taskKillOutput -join ' ')" -ForegroundColor DarkYellow
-            }
-        }
-    }
-    $deadline = (Get-Date).AddSeconds(10)
-    while ((Get-Date) -lt $deadline) {
-        $stillListening = netstat -ano | Select-String ":(?:8000|3000)\s.*LISTENING"
-        if (-not $stillListening) { break }
-        Start-Sleep -Milliseconds 250
-    }
+    Write-Host "[Stop] Validating dashboard lifecycle receipts..." -ForegroundColor Yellow
+    if (-not $FrontendOnly) { Stop-RegisteredDashboardProcess -Name "dashboard-backend" -Port 8000 }
+    if (-not $BackendOnly) { Stop-RegisteredDashboardProcess -Name "dashboard-frontend" -Port 3000 }
     Write-Host "[Stop] Done." -ForegroundColor Green
     return
 }
@@ -175,6 +223,7 @@ if (-not $FrontendOnly) {
             -PassThru
 
         if (Wait-HttpReady -Uri "http://localhost:8000/api/health" -Process $proc -TimeoutSeconds 60) {
+            Write-DashboardReceipt -Name "dashboard-backend" -Process $proc -CommandMatch "uvicorn main:app" -Port 8000
             Write-Host "[Backend] Running PID=$($proc.Id)" -ForegroundColor Green
         } else {
             if (Test-Path $errLog) { Get-Content $errLog -Tail 20 }
@@ -226,6 +275,7 @@ if (-not $BackendOnly) {
         }
 
         if (Wait-HttpReady -Uri "http://localhost:3000" -Process $proc -TimeoutSeconds 60) {
+            Write-DashboardReceipt -Name "dashboard-frontend" -Process $proc -CommandMatch $frontendCommand -Port 3000
             Write-Host "[Frontend] Running PID=$($proc.Id)" -ForegroundColor Green
         } else {
             if (Test-Path $feErr) { Get-Content $feErr -Tail 20 }

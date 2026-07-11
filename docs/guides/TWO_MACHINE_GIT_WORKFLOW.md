@@ -2,6 +2,22 @@
 
 Each computer keeps its own ignored runtime state, credentials, virtual environments, and build output. Source changes travel through task branches and pull requests.
 
+## Machine Acceptance Drill
+
+On each computer, preview the isolated fresh-clone drill first:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\entrypoints\agentos-machine-acceptance.ps1 -MachineId machine-2
+```
+
+Run it only when the previewed target is correct. The explicit execution clones into a new directory, installs locked Dashboard dependencies, creates a fixture-only branch, runs the full local gate, explicitly commits that fixture, pushes the branch, and opens a PR. It never overwrites or deletes the clone.
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\entrypoints\agentos-machine-acceptance.ps1 -MachineId machine-2 -ExecuteExternalDrill
+```
+
+Machine-local evidence is written to `data\machine_acceptance\machine-2.json` inside the acceptance clone and remains excluded from Git.
+
 ## Bootstrap A Fresh Clone
 
 Run `scripts\entrypoints\agentos-bootstrap-check.ps1` first. It reports required tools and missing machine-local state without installing anything. When Dashboard dependencies are missing, explicitly run `dashboard\start.ps1 -Install`; this creates `dashboard\backend\.venv`, installs locked frontend dependencies, and builds the production frontend. Credentials remain machine-local and must be configured separately from `.env.example`.
