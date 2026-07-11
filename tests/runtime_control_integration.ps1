@@ -29,18 +29,15 @@ try {
         @{runtime_id="task-queue-runner";start_source=@{script="scripts/start_task_queue.ps1"};control=@{enabled=$true;mode="queue";requires_dispatch_id=$true}}
     )} | ConvertTo-Json -Depth 10
     [IO.File]::WriteAllText((Join-Path $fixture "config\runtime_registry.json"), $registry)
+    $controlScript = Join-Path $fixture "scripts\runtimes\control-runtime.ps1"
 
     foreach ($id in @("hermes-main-gateway", "hermes-lite-gateway")) {
-        & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $fixture "scripts\runtimes\control-runtime.ps1") -RuntimeId $id -Action start -AgentOSRoot $fixture | Out-Null
-        if ($LASTEXITCODE -ne 0) { throw "$id start failed." }
-        & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $fixture "scripts\runtimes\control-runtime.ps1") -RuntimeId $id -Action stop -AgentOSRoot $fixture | Out-Null
-        if ($LASTEXITCODE -ne 0) { throw "$id stop failed." }
+        & $controlScript -RuntimeId $id -Action start -AgentOSRoot $fixture
+        & $controlScript -RuntimeId $id -Action stop -AgentOSRoot $fixture
     }
-    & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $fixture "scripts\runtimes\control-runtime.ps1") -RuntimeId task-queue-runner -Action start -DispatchId queue-fixture -AgentOSRoot $fixture | Out-Null
-    if ($LASTEXITCODE -ne 0) { throw "Queue fixture start failed." }
+    & $controlScript -RuntimeId task-queue-runner -Action start -DispatchId queue-fixture -AgentOSRoot $fixture
     Start-Sleep -Milliseconds 500
-    & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $fixture "scripts\runtimes\control-runtime.ps1") -RuntimeId task-queue-runner -Action stop -DispatchId queue-fixture -AgentOSRoot $fixture | Out-Null
-    if ($LASTEXITCODE -ne 0) { throw "Queue fixture stop failed." }
+    & $controlScript -RuntimeId task-queue-runner -Action stop -DispatchId queue-fixture -AgentOSRoot $fixture
     "runtime_control_integration=PASS"; "hermes_main_start_stop=true"; "hermes_lite_start_stop=true"; "queue_fixture_start_stop=true"
 } finally {
     foreach ($receiptId in $receipts) {
