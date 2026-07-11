@@ -16,6 +16,9 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Review dependency changes
+        if: github.event_name == 'pull_request'
+        uses: actions/dependency-review-action@v4
       - name: Reject generated artifacts, oversized files, and literal secrets
         shell: pwsh
         run: ./scripts/repository_hygiene_check.ps1 -AgentOSRoot $PWD
