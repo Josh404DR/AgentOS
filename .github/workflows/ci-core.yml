@@ -26,6 +26,9 @@ jobs:
       - name: Validate runtime registry and control contracts
         shell: powershell
         run: ./tests/validate_runtime_registry.ps1 -AgentOSRoot $PWD
+      - name: Verify governance line-ending invariance
+        shell: powershell
+        run: ./tests/governance_line_endings.ps1 -AgentOSRoot $PWD
       - name: Validate generated registry documentation
         shell: pwsh
         run: ./scripts/maintenance/generate-registry-readme.ps1 -AgentOSRoot $PWD -Check

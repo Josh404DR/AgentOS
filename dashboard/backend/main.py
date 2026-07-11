@@ -1422,7 +1422,12 @@ async def ws_bridge_latest(websocket: WebSocket):
     known = set(d.name for d in LIVE_BRIDGE_DIR.iterdir() if d.is_dir()) if LIVE_BRIDGE_DIR.exists() else set()
     try:
         while True:
-            await asyncio.sleep(2)
+            try:
+                message = await asyncio.wait_for(websocket.receive(), timeout=2)
+                if message.get("type") == "websocket.disconnect":
+                    break
+            except TimeoutError:
+                pass
             if not LIVE_BRIDGE_DIR.exists():
                 continue
             current = set(d.name for d in LIVE_BRIDGE_DIR.iterdir() if d.is_dir())

@@ -1,6 +1,6 @@
 {
     "governance_version":  "1.2.0",
-    "approved_at":  "2026-07-11T13:27:05.8162712+08:00",
+    "approved_at":  "2026-07-11T16:46:20.9870029+08:00",
     "approved_by":  "Josh-authorized Codex governance task",
     "files":  [
                   {
@@ -41,7 +41,7 @@
                   {
                       "path":  "dashboard\\backend\\main.py",
                       "exists":  true,
-                      "sha256":  "13EC9AB390DC34B252E7C34980DAC5388E149058B17AF21D2C3C08117E73CADC"
+                      "sha256":  "E079A7A6CEA2C28B91DABAC97EDE51A31B1FD2B8CE8B31359414C8982070E7AE"
                   },
                   {
                       "path":  "dashboard\\DASHBOARD_SCOPE.md",
@@ -61,7 +61,7 @@
                   {
                       "path":  "dashboard\\frontend\\app\\page.tsx",
                       "exists":  true,
-                      "sha256":  "F8A9423206C1618D5F6CA88112B18BEBD8DF1CB5AFE1E38AA2C621ECF9074ED5"
+                      "sha256":  "1666E3FD1E418A308DBA77BED5D7F29062B2816C100DADCDFBDFD625E33E14BA"
                   },
                   {
                       "path":  "dashboard\\frontend\\components\\ApprovalQueue.tsx",
@@ -381,7 +381,7 @@
                   {
                       "path":  "scripts\\sync_shared_governance.ps1",
                       "exists":  true,
-                      "sha256":  "2FA148927CE170CDBD4BB8E426DA2757267E28BF76B0483A583AA8EE9B3F1641"
+                      "sha256":  "CB096E8107D8C0F80D545C8F1B395B02780D26F2040DA7F239FE386643139E1B"
                   },
                   {
                       "path":  "scripts\\task_queue_runner.ps1",

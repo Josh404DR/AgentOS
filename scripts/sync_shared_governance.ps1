@@ -76,6 +76,16 @@ if (-not (Test-Path -LiteralPath $canonical -PathType Leaf)) {
 
 New-Item -ItemType Directory -Path $statusDir -Force | Out-Null
 
+function Get-CanonicalTextHash([string]$Path) {
+    $text = [IO.File]::ReadAllText($Path, [Text.Encoding]::UTF8)
+    if ($text.Length -gt 0 -and $text[0] -eq [char]0xFEFF) { $text = $text.Substring(1) }
+    $text = $text.Replace("`r`n", "`n").Replace("`r", "`n")
+    $bytes = [Text.UTF8Encoding]::new($false).GetBytes($text)
+    $sha = [Security.Cryptography.SHA256]::Create()
+    try { return ([BitConverter]::ToString($sha.ComputeHash($bytes))).Replace("-", "") }
+    finally { $sha.Dispose() }
+}
+
 function Get-Entry([string]$relativePath) {
     $fullPath = Join-Path $root $relativePath
     if (-not (Test-Path -LiteralPath $fullPath -PathType Leaf)) {
@@ -84,7 +94,7 @@ function Get-Entry([string]$relativePath) {
     return [ordered]@{
         path = $relativePath
         exists = $true
-        sha256 = (Get-FileHash -LiteralPath $fullPath -Algorithm SHA256).Hash
+        sha256 = Get-CanonicalTextHash $fullPath
     }
 }
 
