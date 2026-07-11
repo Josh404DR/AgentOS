@@ -90,8 +90,8 @@ export default function TaskBoard() {
 
   useEffect(() => {
     if (!selected) {
-      setDetail(null);
-      return;
+      const resetTimer = window.setTimeout(() => setDetail(null), 0);
+      return () => window.clearTimeout(resetTimer);
     }
     fetchTask(selected).then(setDetail).catch(() => setDetail(null));
   }, [selected]);

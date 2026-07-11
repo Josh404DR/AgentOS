@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ShieldCheck, ShieldAlert, RefreshCw } from "lucide-react";
 import { fetchGovernance } from "@/lib/api";
 
@@ -22,7 +22,7 @@ export default function GovernanceStatus({ compact = false }: { compact?: boolea
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  async function refresh() {
+  const refresh = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -32,13 +32,16 @@ export default function GovernanceStatus({ compact = false }: { compact?: boolea
     } finally {
       setLoading(false);
     }
-  }
+  }, []);
 
   useEffect(() => {
-    refresh();
-    const timer = window.setInterval(refresh, 30000);
-    return () => window.clearInterval(timer);
-  }, []);
+    const initial = window.setTimeout(() => void refresh(), 0);
+    const timer = window.setInterval(() => void refresh(), 30000);
+    return () => {
+      window.clearTimeout(initial);
+      window.clearInterval(timer);
+    };
+  }, [refresh]);
 
   const aligned = data?.governance_status === "aligned";
   const color = aligned ? "text-emerald-300 border-emerald-800 bg-emerald-950/70" : "text-amber-300 border-amber-800 bg-amber-950/70";

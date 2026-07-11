@@ -1,0 +1,67 @@
+name: CI Dashboard
+
+on:
+  pull_request:
+    paths:
+      - "dashboard/**"
+      - ".github/workflows/ci-dashboard.yml"
+  push:
+    branches: [master]
+    paths:
+      - "dashboard/**"
+      - ".github/workflows/ci-dashboard.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  dashboard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: dashboard/frontend
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: dashboard/frontend/package-lock.json
+      - name: Install frontend dependencies
+        run: npm ci
+      - name: Lint frontend
+        run: npm run lint
+      - name: Build frontend
+        run: npm run build -- --webpack
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install backend dependencies
+        working-directory: dashboard/backend
+        run: pip install -r requirements.txt
+      - name: Compile and import backend
+        working-directory: dashboard/backend
+        env:
+          AGENTOS_ROOT: ${{ github.workspace }}
+        run: python -m py_compile main.py && python -c "import main; assert main.app is not None"
+      - name: Test production lifecycle with WebSocket
+        working-directory: .
+        env:
+          AGENTOS_ROOT: ${{ github.workspace }}
+        run: python tests/dashboard_lifecycle_smoke.py
+      - name: Prove dashboard reads do not mutate protected state
+        working-directory: .
+        env:
+          AGENTOS_ROOT: ${{ github.workspace }}
+        run: python tests/dashboard_readonly_contract.py
+      - name: Verify evidence-backed status assistant contract
+        working-directory: .
+        env:
+          AGENTOS_ROOT: ${{ github.workspace }}
+        run: python tests/status_assistant_contract.py
+      - name: Verify Dashboard reads and builds leave the clone clean
+        working-directory: .
+        run: |
+          test -z "$(git status --porcelain --untracked-files=all)" || { git status --short --untracked-files=all; exit 1; }
+          echo "post_dashboard_worktree=clean"

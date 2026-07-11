@@ -12,7 +12,6 @@ import re
 import sqlite3
 import subprocess
 import sys
-import httpx
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import AsyncGenerator
@@ -47,6 +46,10 @@ USAGE_DIR = AGENTOS_ROOT / "data" / "usage"
 OBSIDIAN_VAULT_DIR = AGENTOS_ROOT / "exports" / "obsidian_agentos"
 GOVERNANCE_STATUS = AGENTOS_ROOT / "data" / "governance" / "governance_status.json"
 GOVERNANCE_SYNC = AGENTOS_ROOT / "scripts" / "sync_shared_governance.ps1"
+RUNTIME_REGISTRY = AGENTOS_ROOT / "config" / "runtime_registry.json"
+RUNTIME_STATUS = AGENTOS_ROOT / "data" / "observability" / "runtime_status.json"
+OBSERVABILITY_EVENTS_DIR = AGENTOS_ROOT / "data" / "observability" / "events"
+RUNTIME_COLLECTOR = AGENTOS_ROOT / "scripts" / "observability" / "collect-runtime-status.ps1"
 
 app = FastAPI(title="AgentOS Dashboard API", version="1.0.0")
 
@@ -1072,14 +1075,38 @@ async def _tail_live_source(source: str, websocket: WebSocket, lines: int = 60):
 
 @app.get("/api/health")
 def health():
-    return {"status": "ok", "agentos_root": str(AGENTOS_ROOT)}
+    runtime_age_seconds = None
+    if RUNTIME_STATUS.exists():
+        runtime_age_seconds = round(
+            datetime.now(timezone.utc).timestamp() - RUNTIME_STATUS.stat().st_mtime,
+            1,
+        )
+    return {
+        "status": "ok",
+        "agentos_root": str(AGENTOS_ROOT),
+        "runtime_evidence": {
+            "available": RUNTIME_STATUS.exists(),
+            "age_seconds": runtime_age_seconds,
+        },
+    }
 
 
-@app.get("/api/governance")
-def governance():
-    """Refresh and return local governance drift without invoking a model."""
-    refresh_error = None
-    if GOVERNANCE_SYNC.exists():
+@app.get("/api/runtimes")
+def runtimes():
+    """Return deterministic registry data merged with the latest collector evidence."""
+    try:
+        registry = json.loads(RUNTIME_REGISTRY.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise HTTPException(status_code=503, detail=f"runtime registry unavailable: {exc}") from exc
+
+    evidence: dict = {}
+    evidence_error = None
+    evidence_age = (
+        datetime.now(timezone.utc).timestamp() - RUNTIME_STATUS.stat().st_mtime
+        if RUNTIME_STATUS.exists()
+        else None
+    )
+    if RUNTIME_COLLECTOR.exists() and (evidence_age is None or evidence_age > 15):
         try:
             completed = subprocess.run(
                 [
@@ -1088,28 +1115,133 @@ def governance():
                     "-ExecutionPolicy",
                     "Bypass",
                     "-File",
-                    str(GOVERNANCE_SYNC),
+                    str(RUNTIME_COLLECTOR),
+                    "-AgentOSRoot",
+                    str(AGENTOS_ROOT),
                 ],
                 cwd=str(AGENTOS_ROOT),
                 capture_output=True,
                 text=True,
                 encoding="utf-8",
                 errors="replace",
-                timeout=20,
+                timeout=15,
             )
             if completed.returncode != 0:
-                refresh_error = (completed.stderr or completed.stdout).strip()
-        except Exception as exc:
-            refresh_error = f"{type(exc).__name__}: {exc}"
+                evidence_error = f"collector exit {completed.returncode}: {completed.stderr[-500:]}"
+        except (OSError, subprocess.SubprocessError) as exc:
+            evidence_error = f"collector failed: {exc}"
+    if RUNTIME_STATUS.exists():
+        try:
+            evidence = json.loads(RUNTIME_STATUS.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as exc:
+            evidence_error = str(exc)
     else:
-        refresh_error = "governance sync script missing"
+        evidence_error = evidence_error or "runtime collector has not produced evidence"
 
+    statuses = {item.get("runtime_id"): item for item in evidence.get("runtimes", [])}
+    merged = []
+    for item in registry.get("runtimes", []):
+        merged.append({**item, "status": statuses.get(item.get("runtime_id"), {"state": "unknown"})})
+    return {
+        "schema_version": registry.get("schema_version"),
+        "collected_at": evidence.get("collected_at"),
+        "evidence_error": evidence_error,
+        "runtimes": merged,
+    }
+
+
+@app.get("/api/events")
+def runtime_events(runtime_id: str | None = None, dispatch_id: str | None = None, limit: int = 200):
+    """Read the newest structured runtime events without model interpretation."""
+    rows = []
+    for path in sorted(OBSERVABILITY_EVENTS_DIR.glob("*.jsonl"), reverse=True):
+        for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+            try:
+                row = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            if runtime_id and row.get("runtime_id") != runtime_id:
+                continue
+            if dispatch_id and row.get("dispatch_id") != dispatch_id:
+                continue
+            rows.append(row)
+    rows.sort(key=lambda row: row.get("ts", ""), reverse=True)
+    return {"events": rows[: max(1, min(limit, 1000))]}
+
+
+@app.get("/api/failures")
+def failures(error_class: str | None = None, limit: int = 200):
+    rows = runtime_events(limit=1000)["events"]
+    rows = [row for row in rows if row.get("result") in {"error", "timeout"}]
+    if error_class:
+        rows = [row for row in rows if row.get("error_class") == error_class]
+    return {"failures": rows[: max(1, min(limit, 1000))]}
+
+
+@app.get("/api/status-assistant")
+def status_assistant(q: str):
+    """Answer status questions from local structured evidence, with source paths."""
+    query = q.strip().lower()
+    if not query:
+        raise HTTPException(status_code=400, detail="q is required")
+
+    runtime_data = runtimes()
+    runtime_matches = [
+        item for item in runtime_data["runtimes"]
+        if item.get("runtime_id", "").lower() in query
+        or item.get("display_name", "").lower() in query
+    ]
+    task_matches = [
+        item for item in _list_codex_tasks()
+        if item.get("dispatch_id", "").lower() in query
+        or query in item.get("dispatch_id", "").lower()
+        or (len(query) >= 4 and query in item.get("title", "").lower())
+    ][:5]
+
+    citations = []
+    lines = []
+    if runtime_matches:
+        for item in runtime_matches[:5]:
+            state = item.get("status", {}).get("state", "unknown")
+            lines.append(f"{item['display_name']}: {state}")
+        citations.append({"path": "data/observability/runtime_status.json", "timestamp": runtime_data.get("collected_at")})
+        citations.append({"path": "config/runtime_registry.json", "timestamp": None})
+    if task_matches:
+        for item in task_matches:
+            lines.append(f"{item.get('dispatch_id')}: {item.get('normalized_status', item.get('status', 'unknown'))}")
+            if item.get("failure_reason"):
+                lines.append(f"blocker: {item.get('failure_reason')}")
+            recorded = runtime_events(dispatch_id=item.get("dispatch_id"), limit=1)["events"]
+            if recorded:
+                last = recorded[0]
+                lines.append(
+                    f"last event: {last.get('ts')} {last.get('actor')} / "
+                    f"{last.get('action')} -> {last.get('result')}; next={last.get('next_step') or 'none'}"
+                )
+                citations.append({"path": "data/observability/events/", "timestamp": last.get("ts")})
+            citations.append({"path": item.get("artifact_path"), "timestamp": item.get("mtime_str")})
+            if item.get("result_path"):
+                citations.append({"path": item.get("result_path"), "timestamp": item.get("mtime_str")})
+    if not lines:
+        counts: dict[str, int] = {}
+        for item in runtime_data["runtimes"]:
+            state = item.get("status", {}).get("state", "unknown")
+            counts[state] = counts.get(state, 0) + 1
+        lines.append("Runtime summary: " + ", ".join(f"{key}={value}" for key, value in sorted(counts.items())))
+        lines.append("No exact task or runtime match was found. Include a dispatch ID or runtime ID for a precise answer.")
+        citations.append({"path": "data/observability/runtime_status.json", "timestamp": runtime_data.get("collected_at")})
+    return {"answer": "\n".join(lines), "citations": citations, "models_invoked": False}
+
+
+@app.get("/api/governance")
+def governance():
+    """Return the latest governance evidence without mutating governance state."""
     if not GOVERNANCE_STATUS.exists():
         return JSONResponse(
             status_code=503,
             content={
                 "governance_status": "blocked",
-                "refresh_error": refresh_error or "status file missing",
+                "refresh_error": "status file missing; run the governance gate explicitly",
                 "token_cost": 0,
                 "model_calls": 0,
             },
@@ -1126,8 +1258,6 @@ def governance():
                 "model_calls": 0,
             },
         )
-    if refresh_error:
-        payload["refresh_error"] = refresh_error
     return payload
 
 
@@ -1222,10 +1352,19 @@ def decide_approval(
         ],
     )
     if body.decision in {"approve", "modify"}:
-        _run_control_script(
-            "workflow_supervisor.ps1",
-            ["-RootDispatchId", task_id],
-        )
+        escalations = _list_escalations()
+        esc = next((e for e in escalations if e["task_id"] == task_id), None)
+        esc_source = esc.get("source", "") if esc else ""
+        if esc_source == "raw_intake_approval":
+            _run_control_script(
+                "promote_draft.ps1",
+                ["-DraftId", task_id],
+            )
+        else:
+            _run_control_script(
+                "workflow_supervisor.ps1",
+                ["-RootDispatchId", task_id],
+            )
     return result
 
 
@@ -1282,7 +1421,12 @@ async def ws_bridge_latest(websocket: WebSocket):
     known = set(d.name for d in LIVE_BRIDGE_DIR.iterdir() if d.is_dir()) if LIVE_BRIDGE_DIR.exists() else set()
     try:
         while True:
-            await asyncio.sleep(2)
+            try:
+                message = await asyncio.wait_for(websocket.receive(), timeout=2)
+                if message.get("type") == "websocket.disconnect":
+                    break
+            except TimeoutError:
+                pass
             if not LIVE_BRIDGE_DIR.exists():
                 continue
             current = set(d.name for d in LIVE_BRIDGE_DIR.iterdir() if d.is_dir())
@@ -1293,29 +1437,6 @@ async def ws_bridge_latest(websocket: WebSocket):
             known = current
     except WebSocketDisconnect:
         pass
-
-
-# ---------------------------------------------------------------------------
-# Chat API — calls hermes.exe -z directly (independent of Telegram gateway)
-# ---------------------------------------------------------------------------
-
-class ChatRequest(BaseModel):
-    message: str
-
-
-def _snapshot_tokens() -> dict:
-    """Read current token totals from state.db for delta calculation."""
-    if not HERMES_DB.exists():
-        return {}
-    try:
-        con = sqlite3.connect(str(HERMES_DB))
-        cur = con.cursor()
-        cur.execute("SELECT SUM(input_tokens), SUM(output_tokens), SUM(cache_read_tokens) FROM sessions")
-        row = cur.fetchone()
-        con.close()
-        return {"input": row[0] or 0, "output": row[1] or 0, "cache": row[2] or 0}
-    except Exception:
-        return {}
 
 
 # Known context window limits by model keyword
@@ -1335,38 +1456,14 @@ _MODEL_CONTEXT = {
     "gpt-5": 128_000,
 }
 
-def _model_context_limit(model: str | None) -> int:
+def _model_context_limit(model: str | None) -> int | None:
     if not model:
-        return 128_000
+        return None
     m = (model or "").lower()
     for key, limit in _MODEL_CONTEXT.items():
         if key in m:
             return limit
-    return 128_000
-
-
-def _read_messages(limit: int = 50) -> list[dict]:
-    """Read recent messages from state.db — uses 'timestamp' column."""
-    if not HERMES_DB.exists():
-        return []
-    try:
-        con = sqlite3.connect(str(HERMES_DB))
-        con.row_factory = sqlite3.Row
-        cur = con.cursor()
-        cur.execute("""
-            SELECT m.id, m.session_id, m.role, m.content, m.timestamp,
-                   s.source, s.model
-            FROM messages m
-            LEFT JOIN sessions s ON m.session_id = s.id
-            ORDER BY m.timestamp DESC
-            LIMIT ?
-        """, (limit,))
-        rows = [dict(r) for r in cur.fetchall()]
-        con.close()
-        rows.reverse()
-        return rows
-    except Exception as e:
-        return [{"error": str(e)}]
+    return None
 
 
 def _context_window_pct() -> dict:
@@ -1375,7 +1472,7 @@ def _context_window_pct() -> dict:
     This is the best approximation without instrumenting the live session.
     """
     if not HERMES_DB.exists():
-        return {"pct": 0, "used": 0, "total": 128_000, "model": None}
+        return {"pct": None, "used": None, "total": None, "model": None, "note": "usage database unavailable"}
     try:
         con = sqlite3.connect(str(HERMES_DB))
         cur = con.cursor()
@@ -1388,13 +1485,15 @@ def _context_window_pct() -> dict:
         row = cur.fetchone()
         con.close()
         if not row:
-            return {"pct": 0, "used": 0, "total": 128_000, "model": None}
+            return {"pct": None, "used": None, "total": None, "model": None, "note": "no recorded session"}
         model = row[0]
         inp = row[1] or 0
         out = row[2] or 0
         cache = row[3] or 0
         used = inp + out + cache
         total = _model_context_limit(model)
+        if total is None:
+            return {"pct": None, "used": used, "total": None, "model": model, "note": "unknown model context limit"}
         pct = round(min(used / total * 100, 100), 1)
         return {
             "pct": pct, "used": used, "total": total,
@@ -1403,90 +1502,7 @@ def _context_window_pct() -> dict:
             "note": "last session"
         }
     except Exception:
-        return {"pct": 0, "used": 0, "total": 128_000, "model": None}
-
-
-@app.post("/api/chat")
-async def chat(req: ChatRequest):
-    """
-    Hermes Lite chat — calls Groq API directly.
-
-    Why not hermes.exe -z:
-    - Gemini: monthly cap hit (429)
-    - Groq via hermes.exe: full request with 30 tool schemas ~21K tokens,
-      exceeds Groq free-tier TPM limit of 6K → 413 every time.
-
-    Solution (same as scripts/free_model_window.ps1 for Telegram):
-    Call Groq API directly with a stripped system prompt, no tool schemas.
-    """
-    # Resolve GROQ_API_KEY from environment (user / machine level on Windows)
-    api_key = (
-        os.environ.get("GROQ_API_KEY")
-        or os.environ.get("GROQ_API_KEY".lower())
-        or ""
-    )
-    if not api_key:
-        return {
-            "error": "GROQ_API_KEY not set. Set it as a user environment variable.",
-            "response": None,
-            "mode": "hermes_lite",
-        }
-
-    HERMES_LITE_SYSTEM = (
-        "You are Hermes Lite, the AgentOS web dashboard chat interface.\n"
-        "Answer in the same language the user writes in.\n"
-        "You have no tools in this mode — do not claim file, routing, fetch, "
-        "model, or external actions unless the message contains explicit output.\n"
-        "For real work (code, tasks, file ops), tell the user to dispatch via Codex.\n"
-        "Be concise. Traditional Chinese preferred for short replies."
-    )
-
-    body = {
-        "model": "llama-3.1-8b-instant",
-        "messages": [
-            {"role": "system", "content": HERMES_LITE_SYSTEM},
-            {"role": "user", "content": req.message[:4000]},
-        ],
-        "max_tokens": 512,
-        "temperature": 0.3,
-    }
-
-    ts = datetime.now(timezone.utc).isoformat()
-
-    try:
-        async with httpx.AsyncClient(timeout=45) as client:
-            resp = await client.post(
-                "https://api.groq.com/openai/v1/chat/completions",
-                headers={
-                    "Authorization": f"Bearer {api_key}",
-                    "Content-Type": "application/json",
-                    "User-Agent": "AgentOS-Dashboard/1.0",
-                },
-                json=body,
-            )
-            resp.raise_for_status()
-            data = resp.json()
-
-        response_text = data["choices"][0]["message"]["content"].strip()
-        delta_tokens = data.get("usage", {}).get("total_tokens", 0)
-        return {
-            "response": response_text,
-            "sent_at": ts,
-            "delta_tokens": delta_tokens,
-            "context": _context_window_pct(),
-            "mode": "hermes_lite",
-            "model": data.get("model", "llama-3.1-8b-instant"),
-        }
-    except httpx.HTTPStatusError as e:
-        body_text = e.response.text[:300]
-        return {"error": f"Groq HTTP {e.response.status_code}: {body_text}", "response": None, "mode": "hermes_lite"}
-    except Exception as e:
-        return {"error": str(e), "response": None, "mode": "hermes_lite"}
-
-
-@app.get("/api/messages")
-def get_messages(limit: int = 50):
-    return _read_messages(limit)
+        return {"pct": None, "used": None, "total": None, "model": None, "note": "usage query failed"}
 
 
 @app.get("/api/context")

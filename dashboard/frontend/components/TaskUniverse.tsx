@@ -124,15 +124,18 @@ export default function TaskUniverse() {
   }, []);
 
   useEffect(() => {
-    refresh();
-    const timer = window.setInterval(refresh, 5000);
-    return () => window.clearInterval(timer);
+    const initial = window.setTimeout(() => void refresh(), 0);
+    const timer = window.setInterval(() => void refresh(), 5000);
+    return () => {
+      window.clearTimeout(initial);
+      window.clearInterval(timer);
+    };
   }, [refresh]);
 
   useEffect(() => {
     if (!selected) {
-      setDetail(null);
-      return;
+      const resetTimer = window.setTimeout(() => setDetail(null), 0);
+      return () => window.clearTimeout(resetTimer);
     }
     fetchTask(selected.id).then(setDetail).catch(() => setDetail(null));
   }, [selected]);

@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "purpose": "Defines AgentOS core source versus machine-local and runtime state.",
+  "required_files": [
+    ".gitattributes",
+    ".gitignore",
+    "AGENTS.md",
+    "README.md",
+    "config/repository_boundary.json",
+    "data/README.md",
+    "data/governance/governance_baseline.json",
+    "scripts/repository_hygiene_check.ps1"
+  ],
+  "source_roots": [
+    "agents",
+    "config",
+    "dashboard",
+    "docs",
+    "integrations",
+    "prompts",
+    "scripts",
+    "tests",
+    "tools",
+    "workflows"
+  ],
+  "allowed_tracked_data_globs": [
+    "data/README.md",
+    "data/governance/governance_baseline.json",
+    "data/schemas/**"
+  ],
+  "forbidden_tracked_globs": [
+    ".env",
+    ".env.*",
+    "!.env.example",
+    "**/.env",
+    "**/.env.*",
+    "!**/.env.example",
+    "**/node_modules/**",
+    "**/.next/**",
+    "**/.venv/**",
+    "**/__pycache__/**",
+    "**/*.tsbuildinfo",
+    "*.log",
+    "**/*.log",
+    "*.stdout.log",
+    "*.stderr.log",
+    "*.bak",
+    "*.bak-*",
+    "**/*.fuse_hidden*",
+    "AgentOS_export*.zip",
+    "logs/**",
+    "OUTPUTS/**",
+    "scratch/**",
+    "exports/**",
+    "projects/**",
+    "assets/github-ready/**",
+    "docs/.obsidian/**",
+    "do_push.bat",
+    "push_github.bat"
+  ],
+  "review_before_removal": [
+    "archive/**",
+    "current_state.md",
+    "progress_log.md"
+  ],
+  "max_tracked_file_bytes": 5242880
+}

@@ -4,56 +4,69 @@ governance_parent: E:\AgentOS\AGENTS.md
 governance_version: 1.2.0
 owner: Josh
 
-Antigravity CLI 是 AgentOS 的臨時低成本 subagent worker pool。
+Antigravity CLI is an AgentOS fallback worker runtime. Its normal mode is a low-risk subagent for research, documentation, static analysis, and test execution. When Claude Worker is blocked by an explicit quota, session limit, or service-unavailable condition, Josh may approve Antigravity CLI to act as a Claude Worker fallback for the scoped task.
 
-目前使用 Antigravity CLI，是為了節省 Codex CLI 與 Claude CLI 的當日額度。這不是永久角色變更，也不取代：
+Antigravity CLI does not replace the protocol:
 
-Claude Worker 實作
--> Codex Verify
+Hermes dispatches
+-> Claude Worker or Antigravity fallback implements
+-> Codex Verify performs independent verification
 
-允許的工作：
+## Shared Worker Contract
 
-- 低風險資料蒐集與來源盤點
-- 文件整理與格式轉換
-- 重複項目與一致性檢查
-- 靜態分析
-- 不改動核心程式的測試執行與錯誤重現
+When acting as Claude fallback, Antigravity follows the same delivery contract as Claude Worker:
 
-每次收到工單時：
+- Read `E:\AgentOS\AGENTS.md`.
+- Read `prompts\role_headers\claude_worker.md` and follow its output expectations.
+- Read the assigned `TASK.md` and the latest Revision section.
+- Preserve unrelated workspace changes.
+- Run the verification commands required by the task when allowed by scope.
+- Produce concrete evidence for Codex Verify.
+- Report in Traditional Chinese.
 
-1. 讀取 E:\AgentOS\AGENTS.md
-2. 讀取指定 TASK.md 與必要的直接相關檔案
-3. 不讀取完整 progress_log.md，不掃描無關 repository
-4. 只處理 TASK.md 的 `subagent_mode`
-5. 預設只能寫入該工單的 OUTPUTS
-6. 不修改 AgentOS 核心程式、治理、路由、憑證或 production
-7. 不刪除、不封存、不回滾
-8. 不自行 ApproveBaseline
-9. 不 commit、不 push
-10. 不呼叫其他 AI
-11. 不建立 schedule
-12. 報告使用繁體中文
+Required output artifacts:
 
-以下情況必須停止：
+- `OUTPUTS\RESULT.md`
+- `OUTPUTS\SCOPED_DIFF.patch`
+- `OUTPUTS\TEST_RESULT.md`
 
-- `risk_level` 不是 `low`
-- 缺少 `write_scope: outputs_only`
-- 缺少 `assigned_to: Antigravity Subagent`
-- 任務要求修改 OUTPUTS 以外的檔案
-- 任務涉及憑證、外部寫入、部署、刪除或核心流程
+Required report fields or lines:
 
-完成後必須寫入原工單：
+- `worker_scope`
+- `changed_file: <path>` for every modified file
+- exactly one `change_required: true` or `change_required: false`
+- `test_command: <literal command>`
+- `test_result: <PASS|FAIL and evidence>`
+- `delivery_artifact`
+- `handoff_to: Codex Verify`
+- `caveats`
 
-- OUTPUTS\RESULT.md
-- OUTPUTS\SCOPED_DIFF.patch
-- OUTPUTS\TEST_RESULT.md
+## Write Scopes
 
-RESULT.md 格式：
+`write_scope: outputs_only`
 
-【完成內容】
-【修改檔案】
-【驗證結果】
-【未解問題】
-【下一步】
+- May write only inside the assigned task `OUTPUTS` directory.
+- May read directly relevant repository files.
+- Must not modify implementation, governance, routing, credential, deployment, or production files.
 
-只有檔案 artifact 才算完成；不能只在 IDE 對話窗回報。
+`write_scope: workspace-write fallback`
+
+- Allowed only when the task includes Josh approval and evidence that Claude Worker is blocked by quota, session limit, or service-unavailable conditions.
+- Allowed only for `risk_level: low`.
+- May modify only files explicitly named in `TASK.md`.
+- Must still write `RESULT.md`, `SCOPED_DIFF.patch`, and `TEST_RESULT.md` under the assigned task `OUTPUTS`.
+- Must not modify governance baseline, credentials, schedules, deployments, external services, or unrelated files.
+
+## Hard Stops
+
+Stop without invoking the model when any of these are true:
+
+- `assigned_to: Antigravity Subagent` is missing.
+- `risk_level` is not `low`.
+- `write_scope` is missing or is not `outputs_only` or `workspace-write fallback`.
+- `workspace-write fallback` is requested without Josh approval.
+- `workspace-write fallback` is requested without Claude quota/session/service-unavailable evidence.
+- The task asks for deletion, rollback, credential changes, deployment, external writes, baseline approval, commit, or push.
+- The task asks Antigravity to become final verifier.
+
+Only file artifacts count as completion. A chat-only answer is not a completed AgentOS task.

@@ -25,13 +25,30 @@ if (-not (Test-Path -LiteralPath $runner -PathType Leaf)) {
 
 New-Item -ItemType Directory -Force -Path $stateDir | Out-Null
 
+# Start-Process builds a case-insensitive environment dictionary. Some launch
+# contexts expose both Path and PATH, which makes Start-Process throw before it
+# can launch the queue runner. Rebuild one canonical process-level Path value.
+function Repair-ProcessPathEnvironment {
+    $machinePath = [Environment]::GetEnvironmentVariable("Path", "Machine")
+    $userPath = [Environment]::GetEnvironmentVariable("Path", "User")
+    $cleanPath = (@($machinePath, $userPath) | Where-Object {
+        -not [string]::IsNullOrWhiteSpace($_)
+    }) -join ";"
+
+    [Environment]::SetEnvironmentVariable("PATH", $null, "Process")
+    [Environment]::SetEnvironmentVariable("Path", $cleanPath, "Process")
+}
+
 if ($ValidateOnly) {
     Write-Output "queue_starter_validation=passed"
     Write-Output "queue_root_dispatch_id=$safeId"
     Write-Output "task_path=$taskPath"
     Write-Output "runner_path=$runner"
+    Write-Output "path_environment_repair=available"
     exit 0
 }
+
+Repair-ProcessPathEnvironment
 
 if (Test-Path -LiteralPath $statePath -PathType Leaf) {
     try {

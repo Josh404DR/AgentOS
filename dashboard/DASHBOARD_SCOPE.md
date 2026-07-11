@@ -23,4 +23,18 @@ The following POST endpoints exist in `backend/main.py` and **do** trigger write
 - `POST /api/workflows/{id}/control` — executes a control action on a workflow via PowerShell
 - `POST /api/approvals/{id}/decision` — records an approval decision and may trigger downstream scripts
 
-These endpoints are live but unsecured (no auth). Agents must treat the dashboard as having a write surface, not a read-onl
+These endpoints are live but unsecured (no auth). Agents must treat the dashboard as having a write surface, not a read-only surface. Do not assume dashboard actions are safe no-ops.
+
+### Why
+Telegram's current state is stable and clean. Integration work will inevitably
+touch Telegram's logic. The dashboard is the place to build and test that
+integration safely before connecting it back.
+
+## Future Phase: Unified Integration
+
+When the integration is ready:
+- Both Telegram and web share the same state (single source of truth)
+- Writing from web will be safe because the conflict logic is already tested here
+
+The transition happens only after the dashboard-side integration is stable.
+Never modify Telegram's logic from the dashboard side during the current phase.

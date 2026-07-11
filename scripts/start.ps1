@@ -2,6 +2,8 @@
 # Starts Hermes gateway and Hermes proxy where credentials are available.
 
 param(
+    [string]$AgentOSRoot,
+    [string]$HermesRoot = "E:\AI_Projects_Hub\External_AI_Agents\hermes-agent",
     [string]$ProxyProvider = "nous",
     [int]$ProxyPort = 8080,
     [switch]$SkipGateway,
@@ -11,10 +13,10 @@ param(
 
 $ErrorActionPreference = "Stop"
 
-$HermesRoot = "E:\AI_Projects_Hub\External_AI_Agents\hermes-agent"
+if (-not $AgentOSRoot) { $AgentOSRoot = Split-Path -Parent $PSScriptRoot }
 $HermesExe = Join-Path $HermesRoot ".venv\Scripts\hermes.exe"
-$AgentOSRoot = "E:\AgentOS"
 $LogDir = Join-Path $AgentOSRoot "logs"
+$ReceiptDir = Join-Path $AgentOSRoot "data\runtime_receipts"
 
 if (-not (Test-Path -LiteralPath $HermesExe)) {
     throw "Hermes executable not found: $HermesExe"
@@ -27,6 +29,14 @@ if (-not (Test-Path -LiteralPath $LogDir)) {
 Write-Host "=== AgentOS startup ===" -ForegroundColor Cyan
 Write-Host "Hermes: $HermesExe" -ForegroundColor DarkGray
 Write-Host "AgentOS: $AgentOSRoot" -ForegroundColor DarkGray
+
+function Repair-ProcessPathEnvironment {
+    $machinePath = [Environment]::GetEnvironmentVariable("Path", "Machine")
+    $userPath = [Environment]::GetEnvironmentVariable("Path", "User")
+    [Environment]::SetEnvironmentVariable("PATH", $null, "Process")
+    [Environment]::SetEnvironmentVariable("Path", (@($machinePath, $userPath) | Where-Object { $_ }) -join ";", "Process")
+}
+Repair-ProcessPathEnvironment
 
 & $HermesExe --version
 
@@ -58,6 +68,16 @@ function Start-AgentOSProcess {
             Get-Content -LiteralPath $stdout -TotalCount 80
         }
     } else {
+        New-Item -ItemType Directory -Force -Path $ReceiptDir | Out-Null
+        $receipt = [ordered]@{
+            runtime_id = $Name
+            process_id = $process.Id
+            executable_path = $HermesExe
+            started_at = $process.StartTime.ToString("o")
+            arguments = @($ArgumentList)
+            identity = [Security.Principal.WindowsIdentity]::GetCurrent().Name
+        }
+        [IO.File]::WriteAllText((Join-Path $ReceiptDir "$Name.json"), ($receipt | ConvertTo-Json -Depth 5), [Text.UTF8Encoding]::new($false))
         Write-Host "[$Name] running. PID=$($process.Id)" -ForegroundColor Green
         Write-Host "[$Name] logs: $stdout / $stderr" -ForegroundColor DarkGray
     }

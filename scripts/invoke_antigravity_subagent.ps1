@@ -9,11 +9,18 @@ param(
     [ValidateRange(1, 30)]
     [int]$TimeoutMinutes = 10,
 
+    [string]$AgentOSRoot,
+
     [switch]$DryRun
 )
 
 $ErrorActionPreference = "Stop"
-$AgentOSRoot = "E:\AgentOS"
+$AgentOSRoot = if ([string]::IsNullOrWhiteSpace($AgentOSRoot)) {
+    Split-Path $PSScriptRoot -Parent
+} else {
+    $AgentOSRoot
+}
+$AgentOSRoot = (Resolve-Path -LiteralPath $AgentOSRoot).Path
 $ConfigPath = Join-Path $AgentOSRoot "config\antigravity_subagents.json"
 $RolePath = Join-Path $AgentOSRoot "integrations\antigravity\AGENTOS_ROLE.md"
 $GatePath = Join-Path $AgentOSRoot "scripts\assert_governance_ready.ps1"
@@ -42,17 +49,34 @@ $taskText = Get-Content -LiteralPath $resolvedTask -Raw -Encoding UTF8
 if ($taskText -notmatch "(?im)^assigned_to:\s*Antigravity Subagent\s*$") {
     throw "TASK.md must contain assigned_to: Antigravity Subagent"
 }
-if ($taskText -notmatch "(?im)^write_scope:\s*outputs_only\s*$") {
-    throw "TASK.md must contain write_scope: outputs_only"
+if ($taskText -notmatch "(?im)^write_scope:\s*([^\r\n]+)$") {
+    throw "TASK.md is missing write_scope"
+}
+$writeScope = $Matches[1].Trim().ToLowerInvariant()
+if ($writeScope -notin @("outputs_only", "workspace-write fallback")) {
+    throw "TASK.md write_scope must be outputs_only or workspace-write fallback"
 }
 if ($taskText -notmatch "(?im)^risk_level:\s*([^\r\n]+)$") {
     throw "TASK.md is missing risk_level"
 }
 $riskLevel = $Matches[1].Trim().ToLowerInvariant()
+if ($riskLevel -ne "low") {
+    throw "Antigravity fallback only allows risk_level low; actual=$riskLevel"
+}
 if ($taskText -notmatch "(?im)^subagent_mode:\s*([^\r\n]+)$") {
     throw "TASK.md is missing subagent_mode"
 }
 $subagentMode = $Matches[1].Trim().ToLowerInvariant()
+
+if ($writeScope -eq "workspace-write fallback") {
+    if ($taskText -notmatch "(?im)^approval:\s*\S+") {
+        throw "workspace-write fallback requires approval evidence in TASK.md"
+    }
+    $hasFallbackEvidence = $taskText -match "(?i)(fallback_reason|session limit|quota|service unavailable|service-unavailable|Claude.*blocked|Claude.*unavailable|Claude.*額度|Claude.*限制)"
+    if (-not $hasFallbackEvidence) {
+        throw "workspace-write fallback requires Claude quota/session/service-unavailable evidence in TASK.md"
+    }
+}
 
 $config = Get-Content -LiteralPath $ConfigPath -Raw -Encoding UTF8 | ConvertFrom-Json
 $worker = @($config.workers | Where-Object { $_.alias -eq $WorkerAlias })
@@ -80,16 +104,30 @@ if (-not (Test-Path -LiteralPath $outputDir)) {
     New-Item -ItemType Directory -Path $outputDir | Out-Null
 }
 
+$writeInstruction = if ($writeScope -eq "workspace-write fallback") {
+    @"
+You are running in workspace-write fallback mode because Claude Worker is blocked.
+You may modify only files explicitly named in TASK.md.
+You must preserve unrelated workspace changes.
+You must not approve baseline, delete evidence, commit, push, deploy, change credentials, create schedules, or act as final verifier.
+"@
+} else {
+    @"
+You may write only inside: $outputDir
+Do not modify any other file.
+"@
+}
+
 $prompt = @"
 Read and obey:
-1. E:\AgentOS\AGENTS.md
-2. E:\AgentOS\integrations\antigravity\AGENTOS_ROLE.md
-3. $resolvedTask
+1. $AgentOSRoot\AGENTS.md
+2. $AgentOSRoot\integrations\antigravity\AGENTOS_ROLE.md
+3. $AgentOSRoot\prompts\role_headers\claude_worker.md
+4. $resolvedTask
 
 You are worker alias '$WorkerAlias'.
 Execute only the latest task and Revision sections.
-You may write only inside: $outputDir
-Do not modify any other file.
+$writeInstruction
 Write RESULT.md, SCOPED_DIFF.patch, and TEST_RESULT.md in Traditional Chinese.
 Existing OUTPUTS are not proof of completion.
 "@
@@ -100,7 +138,7 @@ $dryRunReceipt = [ordered]@{
     task_path = $resolvedTask
     risk_level = $riskLevel
     subagent_mode = $subagentMode
-    write_scope = "outputs_only"
+    write_scope = $writeScope
     dry_run = [bool]$DryRun
     checked_at = (Get-Date).ToString("o")
 }

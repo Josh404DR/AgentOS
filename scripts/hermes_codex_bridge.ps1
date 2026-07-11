@@ -138,4 +138,21 @@ Status: success
 ## Files
 
 - Hermes to Codex: $HermesToCodexPath
-- Codex reply: $Cod
+- Codex reply: $CodexReplyPath
+- Hermes summary: $HermesSummaryPath
+
+## Hermes To Codex
+
+$hermesMessage
+
+## Codex Reply
+
+$codexReply
+
+## Hermes Summary
+
+$hermesSummary
+"@
+
+Write-Host "Hermes-Codex live bridge succeeded." -ForegroundColor Green
+Write-Host $TranscriptPath

@@ -127,4 +127,21 @@ Status: success
 ## Files
 
 - Hermes to Claude: $HermesToClaudePath
-- Claude reply: $ClaudeRe
+- Claude reply: $ClaudeReplyPath
+- Hermes summary: $HermesSummaryPath
+
+## Hermes To Claude
+
+$hermesMessage
+
+## Claude Reply
+
+$claudeReply
+
+## Hermes Summary
+
+$hermesSummary
+"@
+
+Write-Host "Hermes-Claude live bridge succeeded." -ForegroundColor Green
+Write-Host $TranscriptPath

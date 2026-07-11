@@ -35,7 +35,7 @@ if __name__ == '__main__':
     if len(sys.argv) < 3:
         print("Usage: python env_manager.py <get|set> <KEY> [VALUE]")
         sys.exit(1)
-        
+
     action = sys.argv[1]
     key = sys.argv[2]
 

@@ -1,8 +1,42 @@
 const BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
+async function readJson(res: Response) {
+  if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+  return res.json();
+}
+
 export async function fetchUsage() {
   const res = await fetch(`${BASE}/api/usage`);
-  return res.json();
+  return readJson(res);
+}
+
+export async function fetchContext() {
+  const res = await fetch(`${BASE}/api/context`, { cache: "no-store" });
+  return readJson(res);
+}
+
+export async function fetchRuntimes() {
+  const res = await fetch(`${BASE}/api/runtimes`, { cache: "no-store" });
+  return readJson(res);
+}
+
+export async function fetchRuntimeEvents(runtimeId?: string, dispatchId?: string) {
+  const params = new URLSearchParams();
+  if (runtimeId) params.set("runtime_id", runtimeId);
+  if (dispatchId) params.set("dispatch_id", dispatchId);
+  const query = params.size ? `?${params.toString()}` : "";
+  const res = await fetch(`${BASE}/api/events${query}`, { cache: "no-store" });
+  return readJson(res);
+}
+
+export async function fetchFailures() {
+  const res = await fetch(`${BASE}/api/failures`, { cache: "no-store" });
+  return readJson(res);
+}
+
+export async function askStatus(question: string) {
+  const res = await fetch(`${BASE}/api/status-assistant?q=${encodeURIComponent(question)}`, { cache: "no-store" });
+  return readJson(res);
 }
 
 export async function fetchGovernance() {

@@ -1,30 +1,65 @@
-# Runtime logs
-logs/*.log
-*.stdout.log
-*.stderr.log
-
-# Secrets and local environment
+# Secrets and machine-local environment
 .env
-*.env
-*.env.local
-machine2_hermes_config/.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
 
-# Temporary files
+# Python runtimes and caches
+**/.venv/
+**/.venv*/
+**/.venv
+**/__pycache__/
+**/*.py[cod]
+.pytest_cache/
+
+# Node runtimes and build output
+**/node_modules/
+**/.next/
+**/dist/
+**/build/
+**/coverage/
+**/*.tsbuildinfo
+
+# AgentOS runtime state
+/logs/
+/OUTPUTS/
+/scratch/
+/exports/
+/data/*
+!/data/README.md
+!/data/governance/
+!/data/schemas/
+/data/governance/*
+!/data/governance/governance_baseline.json
+
+# Projects are separate deliverables, not AgentOS core source
+/projects/
+/assets/github-ready/
+
+# Local editor state and generated documentation views
+/docs/.obsidian/
+**/.obsidian/workspace.json
+
+# Export packages and temporary backups
+/AgentOS_export*.zip
 *.tmp
 *.bak
+*.bak-*
+*.log
+*.stdout.log
+*.stderr.log
+*.fuse_hidden*
 ~$*
 
-# Python and local tool runtime artifacts
-**/__pycache__/
-scripts/fan_control/fan_control.log
-**/.venv_notebooklm_poc/
-**/.venv_perplexity_poc/
-**/.venv*/
-data/codex_tasks/**/OUTPUTS/CODEX_CONSOLE.log
-
-# Root-level personal and temp files
-/OUTPUTS/
+# Root-level personal and legacy helpers
+/do_push.bat
+/push_github.bat
 /人生計畫/
 /新增 文字文件.txt
 
-# OS/ed
+# OS noise
+Thumbs.db
+Desktop.ini
+.DS_Store

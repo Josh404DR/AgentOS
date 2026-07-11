@@ -1,0 +1,67 @@
+name: CI Core
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+permissions:
+  contents: read
+
+jobs:
+  windows-core:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - name: Check fresh-clone prerequisites without installation
+        shell: pwsh
+        run: ./scripts/entrypoints/agentos-bootstrap-check.ps1 -AgentOSRoot $PWD
+      - name: Run deterministic AgentOS smoke
+        shell: pwsh
+        run: ./scripts/agentos_ci_smoke.ps1 -AgentOSRoot $PWD -NoDashboard
+      - name: Validate script registry
+        shell: pwsh
+        run: ./tests/validate_script_registry.ps1 -AgentOSRoot $PWD
+      - name: Validate runtime registry and control contracts
+        shell: powershell
+        run: ./tests/validate_runtime_registry.ps1 -AgentOSRoot $PWD
+      - name: Verify governance line-ending invariance
+        shell: powershell
+        run: ./tests/governance_line_endings.ps1 -AgentOSRoot $PWD
+      - name: Validate generated registry documentation
+        shell: pwsh
+        run: ./scripts/maintenance/generate-registry-readme.ps1 -AgentOSRoot $PWD -Check
+      - name: Prove runtime control preserves unrelated processes
+        shell: powershell
+        run: ./tests/runtime_control_safety.ps1 -AgentOSRoot $PWD
+      - name: Test registered Hermes and queue controls
+        shell: powershell
+        run: ./tests/runtime_control_integration.ps1 -AgentOSRoot $PWD
+      - name: Verify deterministic degraded state isolation
+        shell: powershell
+        run: ./tests/runtime_degraded_state.ps1 -AgentOSRoot $PWD
+      - name: Verify dashboard launcher fails on unhealthy occupied port
+        shell: powershell
+        run: ./tests/dashboard_start_contract.ps1 -AgentOSRoot $PWD
+      - name: Verify receipt-bound Dashboard stop
+        shell: powershell
+        run: ./tests/dashboard_stop_receipt.ps1 -AgentOSRoot $PWD
+      - name: Prove valid and known-bad registry fixtures
+        shell: powershell
+        run: ./tests/ci_gate_regression.ps1 -AgentOSRoot $PWD
+      - name: Verify guarded local Git workflow contracts
+        shell: powershell
+        run: ./tests/workflow_guard_contract.ps1 -AgentOSRoot $PWD
+      - name: Validate repository boundary
+        shell: pwsh
+        run: ./scripts/repository_hygiene_check.ps1 -AgentOSRoot $PWD
+      - name: Build AgentOS Control Center
+        shell: pwsh
+        run: ./tools/AgentOS.ControlCenter/build.ps1
+      - name: Verify core checks leave the clone clean
+        shell: pwsh
+        run: |
+          $dirty = @(git status --porcelain --untracked-files=all)
+          if ($dirty.Count) { $dirty | ForEach-Object { Write-Error "CI generated repository debris: $_" }; exit 1 }
+          Write-Output "post_ci_worktree=clean"
