@@ -41,18 +41,28 @@ function Invoke-PromptInjection {
     return $Content
 }
 
-# Case 1: rerun TASK.md (lacks machine-readable verdict)
-$rerunPath = "E:\AgentOS\data\codex_tasks\telegram-telegram-1449022024-1273-20260710-190809-316973-child-01-rerun-child-02-fresh-codex-verify\TASK.md"
-$rerunContent = Get-Content -Raw -LiteralPath $rerunPath -Encoding UTF8
+# Case 1: synthetic rerun TASK.md content lacks a machine-readable verdict.
+$rerunContent = @"
+dispatch_id: fixture-rerun-verify
+type: CODEX_VERIFY
+task_status: ready
+
+Verify the scoped result and report findings.
+"@
 $beforeHas = [regex]::IsMatch($rerunContent, '(?m)^verify_verdict\s*:\s*PASS\s*$')
 Assert-Equal "rerun_task_lacks_verdict_before_fix" $beforeHas $false
 $afterContent = Invoke-PromptInjection $rerunContent
 $afterHas = [regex]::IsMatch($afterContent, '(?m)^verify_verdict\s*:\s*PASS\s*$')
 Assert-Equal "rerun_task_has_verdict_after_injection" $afterHas $true
 
-# Case 2: standard New-CodexVerifyTask path (already has verdict requirement)
-$stdPath = "E:\AgentOS\data\codex_tasks\telegram-telegram-1449022024-1278-20260710-192750-871694-child-03-fresh-codex-verify\TASK.md"
-$stdContent = Get-Content -Raw -LiteralPath $stdPath -Encoding UTF8
+# Case 2: standard New-CodexVerifyTask content already has the verdict contract.
+$stdContent = @"
+dispatch_id: fixture-standard-verify
+type: CODEX_VERIFY
+task_status: ready
+
+verify_verdict: PASS
+"@
 $stdBefore = [regex]::IsMatch($stdContent, '(?m)^verify_verdict\s*:\s*PASS\s*$')
 Assert-Equal "standard_task_already_has_verdict" $stdBefore $true
 $stdAfter = Invoke-PromptInjection $stdContent
@@ -82,7 +92,7 @@ try {
     $payload = [ordered]@{ approve = $approve; modify = $modify; stop = $stop }
     $json = $payload | ConvertTo-Json -Depth 2
     [IO.File]::WriteAllText($tmpPath, $json + [Environment]::NewLine, $utf8NoBom)
-    $readBack = Get-Content -Raw -LiteralPath $tmpPath -Encoding UTF8 | ConvertFrom-Json
+    $readBack = [IO.File]::ReadAllText($tmpPath, [Text.Encoding]::UTF8) | ConvertFrom-Json
     Assert-Equal "json_roundtrip_approve" $readBack.approve $approve
     Assert-Equal "json_roundtrip_modify"  $readBack.modify  $modify
     Assert-Equal "json_roundtrip_stop"    $readBack.stop    $stop
