@@ -41,3 +41,4 @@ try {
     if ($unrelated -and (Get-Process -Id $unrelated.Id -ErrorAction SilentlyContinue)) { Stop-Process -Id $unrelated.Id -Force }
     if (Test-Path $fixture) { Remove-Item -LiteralPath $fixture -Recurse -Force }
 }
+exit 0
