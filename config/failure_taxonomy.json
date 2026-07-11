@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0.0",
+  "classes": {
+    "ENV_PATH_DUPLICATE": "Path/PATH collision prevented process launch",
+    "IDENTITY_MISMATCH": "Observed Windows identity differs from the registered expectation",
+    "ACCESS_DENIED": "Worker executable or credential access was denied",
+    "SEVERITY_MISCLASSIFIED": "Warning output was incorrectly treated as fatal",
+    "NO_PROGRESS_TIMEOUT": "Runtime stopped producing progress before its deadline",
+    "DASHBOARD_UNREACHABLE": "Dashboard health endpoint could not be reached",
+    "HEARTBEAT_WRITER_DEAD": "Expected heartbeat evidence stopped updating",
+    "PROMPT_CONTRACT_BREAK": "Worker output did not satisfy its machine-readable contract",
+    "STATE_UPDATE_FAILED": "Deterministic state transition could not be persisted",
+    "UNKNOWN": "Failure evidence exists but has not been classified"
+  }
+}

@@ -15,9 +15,17 @@ export async function fetchRuntimes() {
   return readJson(res);
 }
 
-export async function fetchRuntimeEvents(runtimeId?: string) {
-  const query = runtimeId ? `?runtime_id=${encodeURIComponent(runtimeId)}` : "";
+export async function fetchRuntimeEvents(runtimeId?: string, dispatchId?: string) {
+  const params = new URLSearchParams();
+  if (runtimeId) params.set("runtime_id", runtimeId);
+  if (dispatchId) params.set("dispatch_id", dispatchId);
+  const query = params.size ? `?${params.toString()}` : "";
   const res = await fetch(`${BASE}/api/events${query}`, { cache: "no-store" });
+  return readJson(res);
+}
+
+export async function fetchFailures() {
+  const res = await fetch(`${BASE}/api/failures`, { cache: "no-store" });
   return readJson(res);
 }
 

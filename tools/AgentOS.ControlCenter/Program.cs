@@ -61,6 +61,7 @@ namespace AgentOSControlCenter
             toolbar.Controls.Add(Button("Restart", delegate { Control("restart"); }));
             toolbar.Controls.Add(Button("Open log", delegate { OpenLog(); }));
             toolbar.Controls.Add(Button("Run CI", delegate { RunCi(); }));
+            toolbar.Controls.Add(Button("Open CI report", delegate { OpenCiReport(); }));
             summary.AutoSize = true;
             summary.Padding = new Padding(16, 8, 0, 0);
             toolbar.Controls.Add(summary);
@@ -75,7 +76,9 @@ namespace AgentOSControlCenter
             grid.Columns.Add("runtime_id", "Runtime ID");
             grid.Columns.Add("display_name", "Name");
             grid.Columns.Add("kind", "Kind");
+            grid.Columns.Add("group", "Group");
             grid.Columns.Add("state", "State");
+            grid.Columns.Add("scheduled", "Scheduled task");
             grid.Columns.Add("identity", "Observed identity");
             grid.Columns.Add("pids", "PIDs");
 
@@ -147,7 +150,15 @@ namespace AgentOSControlCenter
                 Dictionary<string, object> observed;
                 statuses.TryGetValue(Convert.ToString(runtime["runtime_id"]), out observed);
                 var pids = observed != null && observed.ContainsKey("pids") ? string.Join(",", ((object[])observed["pids"]).Select(Convert.ToString)) : "";
-                grid.Rows.Add(runtime["runtime_id"], runtime["display_name"], runtime["kind"], observed == null ? "unknown" : observed["state"], observed == null ? "" : observed["observed_identity"], pids);
+                var scheduled = "";
+                if (observed != null && observed.ContainsKey("scheduled_tasks"))
+                {
+                    scheduled = string.Join(",", ((object[])observed["scheduled_tasks"]).Cast<Dictionary<string, object>>().Select(x => Convert.ToString(x["task_name"]) + ":" + Convert.ToString(x["state"])));
+                }
+                var enabled = Convert.ToBoolean(runtime["enabled"]);
+                var kind = Convert.ToString(runtime["kind"]);
+                var group = !enabled ? "retired / disabled" : kind == "per_event" ? "on-demand workflow" : kind == "scheduled" ? "maintenance" : "startup";
+                grid.Rows.Add(runtime["runtime_id"], runtime["display_name"], kind, group, observed == null ? "unknown" : observed["state"], scheduled, observed == null ? "" : observed["observed_identity"], pids);
             }
             summary.Text = string.Format("{0} runtimes · evidence {1}", runtimes.Count, status["collected_at"]);
         }
@@ -168,9 +179,15 @@ namespace AgentOSControlCenter
                 var control = (Dictionary<string, object>)runtime["control"];
                 if (!Convert.ToBoolean(control["enabled"])) throw new InvalidOperationException("Control is disabled for this runtime.");
                 if (MessageBox.Show(string.Format("{0} {1}?", action, runtime["display_name"]), "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) != DialogResult.OK) return;
-                var source = (Dictionary<string, object>)runtime["start_source"];
-                if (action == "stop" || action == "restart") output.Text = RunPowerShell(Convert.ToString(source["script"]), ((object[])control["stop_args"]).Select(Convert.ToString));
-                if (action == "start" || action == "restart") output.Text += RunPowerShell(Convert.ToString(source["script"]), ((object[])control["start_args"]).Select(Convert.ToString));
+                var arguments = new List<string> { "-RuntimeId", Convert.ToString(runtime["runtime_id"]), "-Action", action, "-AgentOSRoot", root };
+                if (control.ContainsKey("requires_dispatch_id") && Convert.ToBoolean(control["requires_dispatch_id"]))
+                {
+                    var dispatchId = Microsoft.VisualBasic.Interaction.InputBox("Root dispatch ID", "Queue control", "");
+                    if (string.IsNullOrWhiteSpace(dispatchId)) return;
+                    arguments.Add("-DispatchId");
+                    arguments.Add(dispatchId);
+                }
+                output.Text = RunPowerShell("scripts/runtimes/control-runtime.ps1", arguments);
                 RefreshEvidence();
             }
             catch (Exception ex) { ShowError(ex); }
@@ -193,6 +210,17 @@ namespace AgentOSControlCenter
         private void RunCi()
         {
             try { output.Text = RunPowerShell("scripts/entrypoints/agentos-check.ps1", new string[0]); }
+            catch (Exception ex) { ShowError(ex); }
+        }
+
+        private void OpenCiReport()
+        {
+            try
+            {
+                var path = Path.Combine(root, "data", "ci_health", "latest.md");
+                if (!File.Exists(path)) throw new FileNotFoundException("No CI report exists yet. Run CI first.", path);
+                Process.Start("notepad.exe", Quote(path));
+            }
             catch (Exception ex) { ShowError(ex); }
         }
 

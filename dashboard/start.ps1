@@ -64,16 +64,29 @@ if ($Stop) {
 if ($Install) {
     Write-Host "=== First-time Setup ===" -ForegroundColor Cyan
 
-    Write-Host "[1/3] Installing Python backend dependencies..." -ForegroundColor Yellow
-    Push-Location $BackendDir
-    pip install -r requirements.txt
-    Pop-Location
+    Write-Host "[1/3] Creating Python backend environment..." -ForegroundColor Yellow
+    if (-not (Test-Path -LiteralPath $BackendPython -PathType Leaf)) {
+        $pyLauncher = Get-Command py.exe -ErrorAction SilentlyContinue
+        $python = Get-Command python.exe -ErrorAction SilentlyContinue
+        if ($pyLauncher) {
+            & $pyLauncher.Source -3 -m venv (Join-Path $BackendDir ".venv")
+        } elseif ($python) {
+            & $python.Source -m venv (Join-Path $BackendDir ".venv")
+        } else {
+            throw "Python 3 is required to create dashboard/backend/.venv."
+        }
+        if ($LASTEXITCODE -ne 0) { throw "Python virtual environment creation failed." }
+    }
+    & $BackendPython -m pip install -r (Join-Path $BackendDir "requirements.txt")
+    if ($LASTEXITCODE -ne 0) { throw "Backend dependency installation failed." }
 
     Write-Host "[2/3] Installing Node.js frontend dependencies..." -ForegroundColor Yellow
     Push-Location $FrontendDir
-    npm install
+    if (Test-Path (Join-Path $FrontendDir "package-lock.json")) { npm ci } else { npm install }
+    if ($LASTEXITCODE -ne 0) { throw "Frontend dependency installation failed." }
     Write-Host "[3/3] Building the production frontend..." -ForegroundColor Yellow
     npm run build
+    if ($LASTEXITCODE -ne 0) { throw "Frontend production build failed." }
     Pop-Location
 
     Write-Host "Setup complete. Run .\start.ps1 to launch." -ForegroundColor Green

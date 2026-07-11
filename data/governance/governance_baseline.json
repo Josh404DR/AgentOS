@@ -1,6 +1,6 @@
 {
     "governance_version":  "1.2.0",
-    "approved_at":  "2026-07-11T12:42:14.2562247+08:00",
+    "approved_at":  "2026-07-11T13:27:05.8162712+08:00",
     "approved_by":  "Josh-authorized Codex governance task",
     "files":  [
                   {
@@ -41,7 +41,7 @@
                   {
                       "path":  "dashboard\\backend\\main.py",
                       "exists":  true,
-                      "sha256":  "F8FE99993E78934B6F56EE5CE0D1E63DCC058F730D907238EE365648D705D5A2"
+                      "sha256":  "13EC9AB390DC34B252E7C34980DAC5388E149058B17AF21D2C3C08117E73CADC"
                   },
                   {
                       "path":  "dashboard\\DASHBOARD_SCOPE.md",
@@ -61,7 +61,7 @@
                   {
                       "path":  "dashboard\\frontend\\app\\page.tsx",
                       "exists":  true,
-                      "sha256":  "8FC7CC7B320386515215CE2ABB0F66DFCFF5CDC17CF0F3CD0BDE674C8648AD43"
+                      "sha256":  "F8A9423206C1618D5F6CA88112B18BEBD8DF1CB5AFE1E38AA2C621ECF9074ED5"
                   },
                   {
                       "path":  "dashboard\\frontend\\components\\ApprovalQueue.tsx",
@@ -71,7 +71,7 @@
                   {
                       "path":  "dashboard\\frontend\\components\\DecisionMap.tsx",
                       "exists":  true,
-                      "sha256":  "4FE09DCA5F96858B7B82D4DBB69C25278223DAAAF5ED002CCB1C338A20BB5671"
+                      "sha256":  "A72EAF0280FAB73207CE34EADB49803A103C4B38BE8DB9C5404BE55EAE3658FC"
                   },
                   {
                       "path":  "dashboard\\frontend\\components\\EventTimeline.tsx",
@@ -79,19 +79,14 @@
                       "sha256":  "4EB26BC6AA215BCB8A755D08E0F18724F712816F9C4AA2C830EC7C051FF9BEDC"
                   },
                   {
+                      "path":  "dashboard\\frontend\\components\\FailurePath.tsx",
+                      "exists":  true,
+                      "sha256":  "C8979417EE3564BD275670ACA19DB6C5032824C5D59248B78B9C631D5B436C26"
+                  },
+                  {
                       "path":  "dashboard\\frontend\\components\\GovernanceStatus.tsx",
                       "exists":  true,
                       "sha256":  "A91E86CAAC213DD2F3EDF46691CF5BC64B480942997B8EDAE9520BAF49D0EEEC"
-                  },
-                  {
-                      "path":  "dashboard\\frontend\\components\\HermesChat.tsx",
-                      "exists":  true,
-                      "sha256":  "691EA70FA1C2C5D01C1B678C371A9AACD51EEB3738FA5E7C461F623C867B26D3"
-                  },
-                  {
-                      "path":  "dashboard\\frontend\\components\\LiveLogs.tsx",
-                      "exists":  true,
-                      "sha256":  "37BCFC9FDCD0C4D74F5B39B1C4D46A6C1EB7369F17BB3A863F7452E14B302E6B"
                   },
                   {
                       "path":  "dashboard\\frontend\\components\\RuntimeStatus.tsx",
@@ -114,6 +109,11 @@
                       "sha256":  "F226E6C9B9E2D09CBF52672A771A182FD1C4AD22967F784A68D4597E15E3B584"
                   },
                   {
+                      "path":  "dashboard\\frontend\\components\\TaskWorkspace.tsx",
+                      "exists":  true,
+                      "sha256":  "7568DE98F56B9EB60D89F037243AAC2AE3C43CB1FD4019B6C111B256108566E9"
+                  },
+                  {
                       "path":  "dashboard\\frontend\\components\\UsagePanel.tsx",
                       "exists":  true,
                       "sha256":  "6CF4B616DF7ABEB61085CFA61A3CE560DEF35ECFE0A0F493EAF180C97ED2CB2D"
@@ -124,14 +124,9 @@
                       "sha256":  "4695F5092DB245F6FFFE9E26D9AAA8D17890F6D1BB763A6DA5107CC8A6ABB7A0"
                   },
                   {
-                      "path":  "dashboard\\frontend\\components\\WorkTrail.tsx",
-                      "exists":  true,
-                      "sha256":  "E7BD15B67FED33E0513729D9C1852107B7839CF4B8DA519D3F4334427A7A2B1E"
-                  },
-                  {
                       "path":  "dashboard\\frontend\\lib\\api.ts",
                       "exists":  true,
-                      "sha256":  "877C3E59399DB04616238D3410655357FB4E11A0BE9DA856ABA7040C2103A7F7"
+                      "sha256":  "5177D6FAE6DE5C6977138A411428AA98E3AF8905FF7ED2DF18505021D25C8D73"
                   },
                   {
                       "path":  "dashboard\\frontend\\next.config.ts",
@@ -151,7 +146,7 @@
                   {
                       "path":  "dashboard\\start.ps1",
                       "exists":  true,
-                      "sha256":  "CD8F9378738F36CE7173A2C8A6AC8933D34AA1910CF928662CC9E575213F02FF"
+                      "sha256":  "ECCDBC357E027A71A260E9C0E839E00EFC9D489381DE3CB3B8A09109B41712BE"
                   },
                   {
                       "path":  "docs\\ARCHITECTURE.md",
@@ -376,7 +371,7 @@
                   {
                       "path":  "scripts\\start_hermes_lite.ps1",
                       "exists":  true,
-                      "sha256":  "7B13ED1CFA3B2B2BEC548A015CB76464DAE8FDB109AFD28DCBCE5B93F589060B"
+                      "sha256":  "1AB8E8F27CF6CB90B291F6B41A8C62C63772E3D0151E429E331AF290C00F7B4F"
                   },
                   {
                       "path":  "scripts\\start_task_queue.ps1",

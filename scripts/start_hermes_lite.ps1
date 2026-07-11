@@ -17,6 +17,12 @@ $pluginTarget = Join-Path $ProfileHome "plugins\agentos-typed-dispatch"
 $logDir = Join-Path $AgentOSRoot "logs"
 $stdoutPath = Join-Path $logDir "hermes-lite-gateway.stdout.log"
 $stderrPath = Join-Path $logDir "hermes-lite-gateway.stderr.log"
+$receiptDir = Join-Path $AgentOSRoot "data\runtime_receipts"
+
+$machinePath = [Environment]::GetEnvironmentVariable("Path", "Machine")
+$userPath = [Environment]::GetEnvironmentVariable("Path", "User")
+[Environment]::SetEnvironmentVariable("PATH", $null, "Process")
+[Environment]::SetEnvironmentVariable("Path", (@($machinePath, $userPath) | Where-Object { $_ }) -join ";", "Process")
 
 foreach ($required in @($hermesExe, $envPath, (Join-Path $pluginSource "__init__.py"))) {
     if (-not (Test-Path -LiteralPath $required -PathType Leaf)) {
@@ -128,3 +134,14 @@ Write-Output "telegram_access=restricted_allowlist"
 Write-Output "secrets_printed=false"
 Write-Output "stdout_path=$stdoutPath"
 Write-Output "stderr_path=$stderrPath"
+New-Item -ItemType Directory -Force -Path $receiptDir | Out-Null
+$receipt = [ordered]@{
+    runtime_id = "hermes-lite-gateway"
+    process_id = $process.Id
+    executable_path = $hermesExe
+    started_at = $process.StartTime.ToString("o")
+    arguments = @("gateway", "run", "--replace")
+    profile_home = $ProfileHome
+    identity = [Security.Principal.WindowsIdentity]::GetCurrent().Name
+}
+[IO.File]::WriteAllText((Join-Path $receiptDir "hermes-lite-gateway.json"), ($receipt | ConvertTo-Json -Depth 5), $utf8)

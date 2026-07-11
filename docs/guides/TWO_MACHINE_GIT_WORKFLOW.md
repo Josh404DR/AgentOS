@@ -2,6 +2,10 @@
 
 Each computer keeps its own ignored runtime state, credentials, virtual environments, and build output. Source changes travel through task branches and pull requests.
 
+## Bootstrap A Fresh Clone
+
+Run `scripts\entrypoints\agentos-bootstrap-check.ps1` first. It reports required tools and missing machine-local state without installing anything. When Dashboard dependencies are missing, explicitly run `dashboard\start.ps1 -Install`; this creates `dashboard\backend\.venv`, installs locked frontend dependencies, and builds the production frontend. Credentials remain machine-local and must be configured separately from `.env.example`.
+
 ## Start Work
 
 ```powershell

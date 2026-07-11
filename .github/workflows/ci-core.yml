@@ -14,12 +14,36 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+      - name: Check fresh-clone prerequisites without installation
+        shell: pwsh
+        run: ./scripts/entrypoints/agentos-bootstrap-check.ps1 -AgentOSRoot $PWD
       - name: Run deterministic AgentOS smoke
         shell: pwsh
         run: ./scripts/agentos_ci_smoke.ps1 -AgentOSRoot $PWD -NoDashboard
       - name: Validate script registry
         shell: pwsh
         run: ./tests/validate_script_registry.ps1 -AgentOSRoot $PWD
+      - name: Validate runtime registry and control contracts
+        shell: powershell
+        run: ./tests/validate_runtime_registry.ps1 -AgentOSRoot $PWD
+      - name: Validate generated registry documentation
+        shell: pwsh
+        run: ./scripts/maintenance/generate-registry-readme.ps1 -AgentOSRoot $PWD -Check
+      - name: Prove runtime control preserves unrelated processes
+        shell: powershell
+        run: ./tests/runtime_control_safety.ps1 -AgentOSRoot $PWD
+      - name: Test registered Hermes and queue controls
+        shell: powershell
+        run: ./tests/runtime_control_integration.ps1 -AgentOSRoot $PWD
+      - name: Verify deterministic degraded state isolation
+        shell: powershell
+        run: ./tests/runtime_degraded_state.ps1 -AgentOSRoot $PWD
+      - name: Verify dashboard launcher fails on unhealthy occupied port
+        shell: powershell
+        run: ./tests/dashboard_start_contract.ps1 -AgentOSRoot $PWD
+      - name: Prove valid and known-bad registry fixtures
+        shell: powershell
+        run: ./tests/ci_gate_regression.ps1 -AgentOSRoot $PWD
       - name: Validate repository boundary
         shell: pwsh
         run: ./scripts/repository_hygiene_check.ps1 -AgentOSRoot $PWD

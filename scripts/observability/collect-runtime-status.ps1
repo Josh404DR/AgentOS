@@ -25,6 +25,21 @@ $statuses = foreach ($runtime in $registry.runtimes) {
             $_.Name -like "$name*" -and ([string]::IsNullOrWhiteSpace($needle) -or $_.CommandLine -like "*$needle*")
         })
     }
+    $receipt = $null
+    if ($runtime.control.receipt_id) {
+        $receiptPath = Join-Path $root "data\runtime_receipts\$($runtime.control.receipt_id).json"
+        if (Test-Path $receiptPath) {
+            try {
+                $receipt = [IO.File]::ReadAllText($receiptPath, [Text.Encoding]::UTF8) | ConvertFrom-Json
+                $matches = @($matches | Where-Object ProcessId -eq ([int]$receipt.process_id))
+            } catch {
+                $receipt = [ordered]@{ error = $_.Exception.Message; path = $receiptPath }
+                $matches = @()
+            }
+        } else {
+            $matches = @()
+        }
+    }
 
     $ports = foreach ($port in @($runtime.ports)) {
         $listening = [bool]($netstat | Select-String ":$port\s+.*LISTENING")
@@ -50,6 +65,25 @@ $statuses = foreach ($runtime in $registry.runtimes) {
         }
     }
 
+    $scheduledTasks = @()
+    if ($runtime.start_source.type -eq "scheduled_task") {
+        try {
+            $scheduledTasks = @(Get-ScheduledTask -TaskName ([string]$runtime.start_source.ref) -ErrorAction Stop | ForEach-Object {
+                $info = Get-ScheduledTaskInfo -InputObject $_ -ErrorAction SilentlyContinue
+                [ordered]@{
+                    task_name = $_.TaskName
+                    state = [string]$_.State
+                    identity = $_.Principal.UserId
+                    last_run = if ($info) { $info.LastRunTime.ToString('o') } else { $null }
+                    last_result = if ($info) { $info.LastTaskResult } else { $null }
+                    next_run = if ($info) { $info.NextRunTime.ToString('o') } else { $null }
+                }
+            })
+        } catch {
+            $scheduledTasks = @([ordered]@{ task_name = [string]$runtime.start_source.ref; state = "not_found"; error = $_.Exception.Message })
+        }
+    }
+
     $state = if (-not $runtime.enabled) { "disabled" } elseif ($http -and -not $http.ok) { "down" } elseif (@($ports).Count -and @($ports | Where-Object { -not $_.listening }).Count) { "down" } elseif ($runtime.kind -eq "per_event" -and -not $matches.Count) { "idle" } elseif ($runtime.process_match -and -not $matches.Count) { "down" } elseif ($http -and $http.ok) { "healthy" } elseif ($matches.Count) { "running" } else { "unknown" }
     [ordered]@{
         runtime_id = $runtime.runtime_id
@@ -60,9 +94,11 @@ $statuses = foreach ($runtime in $registry.runtimes) {
         expected_identity = $runtime.expected_identity
         observed_identity = $identity
         pids = @($matches | ForEach-Object ProcessId)
+        receipt = $receipt
         ports = @($ports)
         http = $http
         logs = @($logs)
+        scheduled_tasks = @($scheduledTasks)
         depends_on = @($runtime.depends_on)
     }
 }

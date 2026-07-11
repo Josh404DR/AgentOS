@@ -45,3 +45,18 @@ jobs:
         env:
           AGENTOS_ROOT: ${{ github.workspace }}
         run: python -m py_compile main.py && python -c "import main; assert main.app is not None"
+      - name: Test production lifecycle with WebSocket
+        working-directory: .
+        env:
+          AGENTOS_ROOT: ${{ github.workspace }}
+        run: python tests/dashboard_lifecycle_smoke.py
+      - name: Prove dashboard reads do not mutate protected state
+        working-directory: .
+        env:
+          AGENTOS_ROOT: ${{ github.workspace }}
+        run: python tests/dashboard_readonly_contract.py
+      - name: Verify evidence-backed status assistant contract
+        working-directory: .
+        env:
+          AGENTOS_ROOT: ${{ github.workspace }}
+        run: python tests/status_assistant_contract.py

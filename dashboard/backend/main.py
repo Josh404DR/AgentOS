@@ -1170,6 +1170,15 @@ def runtime_events(runtime_id: str | None = None, dispatch_id: str | None = None
     return {"events": rows[: max(1, min(limit, 1000))]}
 
 
+@app.get("/api/failures")
+def failures(error_class: str | None = None, limit: int = 200):
+    rows = runtime_events(limit=1000)["events"]
+    rows = [row for row in rows if row.get("result") in {"error", "timeout"}]
+    if error_class:
+        rows = [row for row in rows if row.get("error_class") == error_class]
+    return {"failures": rows[: max(1, min(limit, 1000))]}
+
+
 @app.get("/api/status-assistant")
 def status_assistant(q: str):
     """Answer status questions from local structured evidence, with source paths."""
@@ -1201,6 +1210,16 @@ def status_assistant(q: str):
     if task_matches:
         for item in task_matches:
             lines.append(f"{item.get('dispatch_id')}: {item.get('normalized_status', item.get('status', 'unknown'))}")
+            if item.get("failure_reason"):
+                lines.append(f"blocker: {item.get('failure_reason')}")
+            recorded = runtime_events(dispatch_id=item.get("dispatch_id"), limit=1)["events"]
+            if recorded:
+                last = recorded[0]
+                lines.append(
+                    f"last event: {last.get('ts')} {last.get('actor')} / "
+                    f"{last.get('action')} -> {last.get('result')}; next={last.get('next_step') or 'none'}"
+                )
+                citations.append({"path": "data/observability/events/", "timestamp": last.get("ts")})
             citations.append({"path": item.get("artifact_path"), "timestamp": item.get("mtime_str")})
             if item.get("result_path"):
                 citations.append({"path": item.get("result_path"), "timestamp": item.get("mtime_str")})
@@ -1217,39 +1236,13 @@ def status_assistant(q: str):
 
 @app.get("/api/governance")
 def governance():
-    """Refresh and return local governance drift without invoking a model."""
-    refresh_error = None
-    if GOVERNANCE_SYNC.exists():
-        try:
-            completed = subprocess.run(
-                [
-                    "powershell.exe",
-                    "-NoProfile",
-                    "-ExecutionPolicy",
-                    "Bypass",
-                    "-File",
-                    str(GOVERNANCE_SYNC),
-                ],
-                cwd=str(AGENTOS_ROOT),
-                capture_output=True,
-                text=True,
-                encoding="utf-8",
-                errors="replace",
-                timeout=20,
-            )
-            if completed.returncode != 0:
-                refresh_error = (completed.stderr or completed.stdout).strip()
-        except Exception as exc:
-            refresh_error = f"{type(exc).__name__}: {exc}"
-    else:
-        refresh_error = "governance sync script missing"
-
+    """Return the latest governance evidence without mutating governance state."""
     if not GOVERNANCE_STATUS.exists():
         return JSONResponse(
             status_code=503,
             content={
                 "governance_status": "blocked",
-                "refresh_error": refresh_error or "status file missing",
+                "refresh_error": "status file missing; run the governance gate explicitly",
                 "token_cost": 0,
                 "model_calls": 0,
             },
@@ -1266,8 +1259,6 @@ def governance():
                 "model_calls": 0,
             },
         )
-    if refresh_error:
-        payload["refresh_error"] = refresh_error
     return payload
 
 
