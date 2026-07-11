@@ -13,7 +13,7 @@ jobs:
     runs-on: windows-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Check fresh-clone prerequisites without installation
         shell: pwsh
         run: ./scripts/entrypoints/agentos-bootstrap-check.ps1 -AgentOSRoot $PWD
