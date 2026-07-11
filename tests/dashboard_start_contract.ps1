@@ -15,3 +15,4 @@ try {
 } finally {
     $listener.Stop()
 }
+exit 0
