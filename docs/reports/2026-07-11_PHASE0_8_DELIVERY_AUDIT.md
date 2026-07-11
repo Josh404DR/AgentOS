@@ -5,7 +5,7 @@ branch: `codex/release-a-cleanup`
 pull_request: `https://github.com/Josh404DR/AgentOS/pull/1`
 governance_version: `1.2.0`
 governance_hash: `A29DDC3DE4701A07BECCCB95E9A7DA9A3B897D2C1C60FAD61416C6C85EED666F`
-merge_status: local completion hardening ready; commit/push and GitHub revalidation pending; merge held for machine-2 acceptance
+merge_status: completion hardening committed (`7ff6e02`) and pushed; GitHub CI #11 all Success on that head; merge held for machine-2 acceptance
 
 ## Verdict Matrix
 
@@ -65,3 +65,12 @@ merge_status: local completion hardening ready; commit/push and GitHub revalidat
 - Dashboard GET contracts do not mutate governance, queue, escalation, or task state.
 - No new commit or push occurred after completion hardening because the Codex escalation reviewer reported its usage limit before Git execution began. The worktree and index remain recoverable and the scoped diff passes `git diff --check`.
 - The PR remains unmerged because latest-head CI and machine-2 validation are explicit acceptance and cannot be inferred from earlier GitHub runs or machine 1 evidence.
+
+## Post-Audit Update (2026-07-11, Claude Cowork session)
+
+- Codex ran out of usage before committing the completion-hardening worktree. On Josh's explicit instruction, Claude staged the 32 prepared files individually (no `git add .`), verified `git diff --cached --check`, and created commit `7ff6e0211bef577e24c4f103f39216ce7a06d142` using the repository's existing identity.
+- Push was executed by Josh from the local Windows session (`30ad904..7ff6e02`), because the sandbox has no GitHub credential.
+- Latest-head GitHub revalidation is complete: CI Core #11 run `29153379798` Success (1m5s), CI Dashboard #11 run `29153379792` Success (1m3s), CI Security #11 run `29153379794` Success (43s), all on head `7ff6e02`.
+- The only annotation is a Node.js 20 deprecation warning for `actions/checkout@v4` and related actions; recorded as follow-up, not a failure.
+- Remaining acceptance conditions are unchanged: machine-2 acceptance drill and Josh's merge decision on PR #1. The moderate Dependabot alert on the default branch also remains open.
+- Known machine-local residue from the interrupted Codex session and the sandbox's no-unlink mount: renamed stale lock files and `tmp_obj_*` files under `.git\`; a cleanup script is provided at `E:\AgentOS\scratch\cleanup-git-debris.ps1` (deletion executes only when Josh runs it).
