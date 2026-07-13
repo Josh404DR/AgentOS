@@ -190,6 +190,40 @@ if (@($gatewayProfileLocks | Where-Object { -not (Test-Path -LiteralPath $_ -Pat
         -Command "scripts\observability\test-runtime-receipt-reconciliation.ps1"
 }
 
+# Regression guard for the 2026-07-13 gateway mutual-suicide incident: the
+# duplicate autostart task must stay disabled. If anyone re-enables it, two
+# instances race at logon and the symmetric guard used to kill both.
+Invoke-CiCommand -Name "hermes_autostart_dedupe" -Command "Get-ScheduledTask census vs runtime_registry related_scheduled_tasks" -Script {
+    $registryJson = Get-Content -LiteralPath (Join-Path $root "config\runtime_registry.json") -Raw | ConvertFrom-Json
+    $failures = @()
+    foreach ($runtimeEntry in $registryJson.runtimes) {
+        if (-not $runtimeEntry.enabled) { continue }
+        if ([string]$runtimeEntry.runtime_id -notlike "hermes-*") { continue }
+        if ([string]$runtimeEntry.start_source.type -ne "scheduled_task") { continue }
+        $primaryName = [string]$runtimeEntry.start_source.ref
+        $primaryTask = Get-ScheduledTask -TaskName $primaryName -ErrorAction SilentlyContinue
+        if (-not $primaryTask) {
+            $failures += "primary autostart missing: $primaryName"
+        } elseif ("$($primaryTask.State)" -eq "Disabled") {
+            $failures += "primary autostart disabled: $primaryName"
+        }
+        foreach ($relatedName in @($runtimeEntry.related_scheduled_tasks)) {
+            if ([string]::IsNullOrWhiteSpace([string]$relatedName)) { continue }
+            $relatedTask = Get-ScheduledTask -TaskName ([string]$relatedName) -ErrorAction SilentlyContinue
+            if ($relatedTask -and "$($relatedTask.State)" -ne "Disabled") {
+                $failures += "duplicate autostart enabled: $relatedName (must stay disabled; primary=$primaryName)"
+            }
+        }
+    }
+    if ($failures.Count) {
+        Write-Output ($failures -join [Environment]::NewLine)
+        $global:LASTEXITCODE = 1
+    } else {
+        Write-Output "hermes_autostart_dedupe=clean"
+        $global:LASTEXITCODE = 0
+    }
+}
+
 Invoke-CiCommand -Name "verify_prompt_fixture" -Command "data\tasks\fixtures\test_verify_prompt_verdict_injection.ps1" -Script {
     & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $root "data\tasks\fixtures\test_verify_prompt_verdict_injection.ps1")
 }

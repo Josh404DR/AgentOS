@@ -23,6 +23,31 @@ if (-not $native -or [string]$native.CommandLine -notmatch 'gateway\s+run') {
     throw "Profile lock PID $lockPid is not a live Hermes gateway process."
 }
 $managed = Get-Process -Id $lockPid -ErrorAction Stop
+
+# PID-reuse guard: recorded lock start_time must match the live process start
+# time (15s tolerance). Command-line matching alone cannot distinguish a
+# recycled PID or the other gateway profile.
+$lockStartRaw = $lock.start_time
+$lockStartUtc = $null
+$epoch = 0.0
+if ($null -ne $lockStartRaw -and "$lockStartRaw" -ne "") {
+    if ([double]::TryParse("$lockStartRaw", [Globalization.NumberStyles]::Float, [Globalization.CultureInfo]::InvariantCulture, [ref]$epoch)) {
+        if ($epoch -ge 100000000000) {
+            $lockStartUtc = [DateTimeOffset]::FromUnixTimeMilliseconds([long]$epoch).UtcDateTime
+        } elseif ($epoch -gt 946684800) {
+            $lockStartUtc = [DateTimeOffset]::FromUnixTimeMilliseconds([long]($epoch * 1000)).UtcDateTime
+        }
+    } else {
+        try { $lockStartUtc = ([DateTimeOffset]::Parse("$lockStartRaw", [Globalization.CultureInfo]::InvariantCulture)).UtcDateTime } catch { $lockStartUtc = $null }
+    }
+}
+if ($null -eq $lockStartUtc) {
+    throw "Profile lock start_time missing or unparseable ('$lockStartRaw'); refusing receipt (possible stale/foreign lock)."
+}
+$startDriftSeconds = [math]::Round([math]::Abs(($managed.StartTime.ToUniversalTime() - $lockStartUtc).TotalSeconds), 1)
+if ($startDriftSeconds -gt 15) {
+    throw "Profile lock start_time drift ${startDriftSeconds}s exceeds 15s tolerance (possible PID reuse); refusing receipt."
+}
 $owner = Invoke-CimMethod -InputObject $native -MethodName GetOwner -ErrorAction SilentlyContinue
 $identity = if ($owner -and $owner.ReturnValue -eq 0 -and $owner.User) {
     if ($owner.Domain) { "$($owner.Domain)\$($owner.User)" } else { [string]$owner.User }
@@ -40,6 +65,7 @@ $receipt = [ordered]@{
     identity = $identity
     profile_lock_path = $resolvedLockPath
     lock_start_time = $lock.start_time
+    start_time_drift_seconds = $startDriftSeconds
     receipt_source = "profile_lock"
     reconciled_at = (Get-Date).ToString("o")
 }

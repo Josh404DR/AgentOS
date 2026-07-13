@@ -12,11 +12,16 @@ if (-not $OutputPath) { $OutputPath = Join-Path $root "data\observability\runtim
 $gatewayReceiptWriter = Join-Path $root "scripts\observability\write-gateway-runtime-receipt.ps1"
 
 function ConvertTo-LockStartUtc($Raw) {
-    # Lock start_time may be epoch seconds (psutil create_time) or an ISO string.
+    # Lock start_time may be epoch milliseconds, epoch seconds, or an ISO string.
     if ($null -eq $Raw -or "$Raw" -eq "") { return $null }
     $epoch = 0.0
-    if ([double]::TryParse("$Raw", [Globalization.NumberStyles]::Float, [Globalization.CultureInfo]::InvariantCulture, [ref]$epoch) -and $epoch -gt 946684800) {
-        return [DateTimeOffset]::FromUnixTimeMilliseconds([long]($epoch * 1000)).UtcDateTime
+    if ([double]::TryParse("$Raw", [Globalization.NumberStyles]::Float, [Globalization.CultureInfo]::InvariantCulture, [ref]$epoch)) {
+        if ($epoch -ge 100000000000) {
+            return [DateTimeOffset]::FromUnixTimeMilliseconds([long]$epoch).UtcDateTime
+        }
+        if ($epoch -gt 946684800) {
+            return [DateTimeOffset]::FromUnixTimeMilliseconds([long]($epoch * 1000)).UtcDateTime
+        }
     }
     try { return ([DateTimeOffset]::Parse("$Raw", [Globalization.CultureInfo]::InvariantCulture)).UtcDateTime } catch { return $null }
 }
@@ -238,7 +243,22 @@ $statuses = foreach ($runtime in $registry.runtimes) {
     $heartbeatEvidence = if ($heartbeat) { "$($heartbeat.source)@$($heartbeat.observed_at)" } else { "none" }
     $logEvidence = @($logs | Where-Object exists).Count
     $stateEvidence = @($stateFiles | Where-Object exists).Count
-    $evidenceSummary = "pid=$pidEvidence; ports=$portEvidence; http=$httpEvidence; heartbeat=$heartbeatEvidence; logs=$logEvidence; state=$stateEvidence"
+    # Surface receipt reconciliation state so fail-open warnings are visible on
+    # the dashboard instead of only inside the raw snapshot JSON.
+    $receiptEvidence = if ($receiptReconciliationError) {
+        $trimmedError = "$receiptReconciliationError"
+        if ($trimmedError.Length -gt 80) { $trimmedError = $trimmedError.Substring(0, 80) + "..." }
+        "error($trimmedError)"
+    } elseif ($receiptReconciled) {
+        "rebuilt"
+    } elseif ($receipt -and $receipt.error) {
+        "error(receipt_parse)"
+    } elseif ($receipt) {
+        "ok"
+    } else {
+        "none"
+    }
+    $evidenceSummary = "pid=$pidEvidence; ports=$portEvidence; http=$httpEvidence; heartbeat=$heartbeatEvidence; logs=$logEvidence; state=$stateEvidence; receipt=$receiptEvidence"
     [ordered]@{
         runtime_id = $runtime.runtime_id
         display_name = $runtime.display_name
