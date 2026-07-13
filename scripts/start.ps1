@@ -15,6 +15,7 @@ $HermesRoot = "E:\AI_Projects_Hub\External_AI_Agents\hermes-agent"
 $HermesExe = Join-Path $HermesRoot ".venv\Scripts\hermes.exe"
 $AgentOSRoot = "E:\AgentOS"
 $LogDir = Join-Path $AgentOSRoot "logs"
+$GatewayReceiptWriter = Join-Path $AgentOSRoot "scripts\observability\write-gateway-runtime-receipt.ps1"
 
 if (-not (Test-Path -LiteralPath $HermesExe)) {
     throw "Hermes executable not found: $HermesExe"
@@ -65,6 +66,15 @@ function Start-AgentOSProcess {
 
 if (-not $SkipGateway) {
     Start-AgentOSProcess -Name "hermes-gateway" -ArgumentList @("gateway", "run", "--accept-hooks")
+    try {
+        & $GatewayReceiptWriter `
+            -ReceiptId "hermes-gateway" `
+            -RuntimeId "hermes-main-gateway" `
+            -ProfileLockPath "$env:LOCALAPPDATA\hermes\gateway.lock" `
+            -AgentOSRoot $AgentOSRoot | Out-Null
+    } catch {
+        Write-Warning "Hermes gateway is running but receipt reconciliation failed: $($_.Exception.Message)"
+    }
 }
 
 if (-not $SkipProxy) {
