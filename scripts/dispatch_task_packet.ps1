@@ -637,6 +637,7 @@ switch ($RouteTo) {
         
         $subagentMode = Get-PacketField $taskText "subagent_mode"
         $riskLevel = Get-PacketField $taskText "risk_level"
+        $writeScope = (Get-PacketField $taskText "write_scope").ToLowerInvariant()
         
         # Load config
         $config = Get-Content -LiteralPath $ConfigPath -Raw -Encoding UTF8 | ConvertFrom-Json
@@ -675,11 +676,30 @@ switch ($RouteTo) {
         
         $commandDescription = "powershell -File scripts\invoke_antigravity_subagent.ps1 -TaskPath `"$TaskPath`" -WorkerAlias $workerAlias"
         if (-not $DryRun) {
-            $invokeScript = Join-Path $AgentOSRoot "scripts\invoke_antigravity_subagent.ps1"
-            $invokeOutput = & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $invokeScript -TaskPath $TaskPath -WorkerAlias $workerAlias 2>&1
-            $exitCode = $LASTEXITCODE
-            $rawOutput = $invokeOutput -join [Environment]::NewLine
-            if ($rawOutput) {
+            $oldEap = $ErrorActionPreference
+            $ErrorActionPreference = "Continue"
+            try {
+                if ($TestAgentScript) {
+                    $invokeOutput = & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $TestAgentScript $AgentOutputPath 2>&1
+                } else {
+                    $invokeScript = Join-Path $AgentOSRoot "scripts\invoke_antigravity_subagent.ps1"
+                    $invokeOutput = & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $invokeScript -TaskPath $TaskPath -WorkerAlias $workerAlias 2>&1
+                }
+                $exitCode = $LASTEXITCODE
+            } finally {
+                $ErrorActionPreference = $oldEap
+            }
+            $invokeSummary = $invokeOutput -join [Environment]::NewLine            # A real Antigravity worker writes its own rich RESULT.md. Preserve
+            # that content as canonical Findings instead of replacing it with
+            # only invoke_antigravity_subagent.ps1's short status receipt.
+            $rawOutput = if (-not $TestAgentScript -and (Test-Path -LiteralPath $ResultPath -PathType Leaf)) {
+                Get-Content -Raw -LiteralPath $ResultPath -Encoding UTF8
+            } elseif (Test-Path -LiteralPath $AgentOutputPath -PathType Leaf) {
+                Get-Content -Raw -LiteralPath $AgentOutputPath -Encoding UTF8
+            } else {
+                $invokeSummary
+            }
+            if ($rawOutput -and -not (Test-Path -LiteralPath $AgentOutputPath -PathType Leaf)) {
                 Write-Utf8File -Path $AgentOutputPath -Content $rawOutput
             }
         }
@@ -713,23 +733,6 @@ if ($DryRun) {
     $exitCode = 0
 }
 
-if ($RouteTo -eq "Antigravity CLI") {
-    if ($exitCode -ne 0) {
-        Write-Output "status=partial_failure"
-        Write-Output "exit_code=$exitCode"
-        exit $exitCode
-    }
-    Write-Output "status=completed"
-    Write-Output "dispatch_id=$DispatchId"
-    Write-Output "route_to=$RouteTo"
-    Write-Output "codex_mode=$CodexModeForResult"
-    Write-Output "result_path=$ResultPath"
-    Write-Output "models_invoked=$(((-not $DryRun)).ToString().ToLowerInvariant())"
-    Write-Output "scripts_executed=$(((-not $DryRun)).ToString().ToLowerInvariant())"
-    Write-Output "review_dispatch_id=not_created"
-    exit 0
-}
-
 if ($exitCode -ne 0) {
     Write-CanonicalResult -Status "partial_failure" -ModelsInvoked (-not $DryRun) -ScriptsExecuted (-not $DryRun) `
         -Findings $rawOutput -Caveats "Agent CLI exited with code $exitCode."
@@ -739,7 +742,9 @@ if ($exitCode -ne 0) {
 }
 
 $reviewDispatchId = ""
-if ($RouteTo -eq "Claude" -and $assignedTo -eq "Claude Worker") {
+$builderCompleted = (($RouteTo -eq "Claude" -and $assignedTo -eq "Claude Worker") -or
+    ($RouteTo -eq "Antigravity CLI" -and $writeScope -eq "workspace-write fallback"))
+if ($builderCompleted) {
     $reviewDispatchId = New-CodexVerifyTask -ParentDispatchId $DispatchId
 }
 
