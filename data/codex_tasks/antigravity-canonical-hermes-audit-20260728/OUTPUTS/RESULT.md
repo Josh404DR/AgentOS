@@ -9,11 +9,11 @@ reviewed_by_claude: false
 approved_by_josh: scope_approved_current_prompt
 cleanup_executed: false
 live_external_action_executed: false
-files_modified: scripts\dispatch_task_packet.ps1
+files_modified: scripts\dispatch_task_packet.ps1, scripts\create_codex_verify_task.ps1, tests\test_dispatch_resilience.ps1
 files_created: data\codex_tasks\antigravity-canonical-hermes-audit-20260728\TASK.md, data\codex_tasks\antigravity-canonical-hermes-audit-20260728\OUTPUTS\RESULT.md, data\codex_tasks\antigravity-canonical-hermes-audit-20260728\OUTPUTS\TEST_RESULT.md
-commit_hash: not_applicable
+commit_hash: 914efc0, 7987cda, 5d2cd79, 5338ce6
 evidence_paths: data\codex_tasks\ci-antigravity-canonical-success-20260728\OUTPUTS\RESULT.md, data\codex_tasks\ci-antigravity-canonical-success-20260728\OUTPUTS\GIT_VERIFIED_CHANGES.json, data\codex_tasks\ci-antigravity-canonical-failure-20260728\OUTPUTS\RESULT.md, data\codex_tasks\ci-antigravity-canonical-failure-20260728\OUTPUTS\GIT_VERIFIED_CHANGES.json, data\codex_tasks\ci-antigravity-builder-fallback-20260728\OUTPUTS\VERIFY_BUNDLE.md
-verification_commands: PowerShell Parser API; offline Antigravity success/failure/fallback fixtures; tests\test_dispatch_resilience.ps1; read-only Hermes task census
+verification_commands: PowerShell Parser API; offline Antigravity success/failure/fallback fixtures; tests\test_dispatch_resilience.ps1; tests\test_verify_bundle_generation.ps1; read-only Hermes task census
 remaining_caveats: canonical Write-CanonicalResult remains noncompliant with the full Evidence Contract block across all routes; TestAgentScript fixtures are printed as models_invoked=true by existing dispatcher semantics even though no model was called; independent fresh Codex Verify is pending
 production_ready: false
 
@@ -27,6 +27,8 @@ task_execution_allowed: true
 ## 任務 1：Antigravity CLI
 
 changed_file: scripts\dispatch_task_packet.ps1
+changed_file: scripts\create_codex_verify_task.ps1
+changed_file: tests\test_dispatch_resilience.ps1
 changed_file: data\codex_tasks\antigravity-canonical-hermes-audit-20260728\OUTPUTS\RESULT.md
 changed_file: data\codex_tasks\antigravity-canonical-hermes-audit-20260728\OUTPUTS\TEST_RESULT.md
 change_required: true
@@ -38,6 +40,8 @@ change_required: true
 - 正常 Antigravity 執行已產生的完整 RESULT 會先讀入 canonical Findings，避免只留下短 status receipt。
 - `write_scope: workspace-write fallback` 才視為 Builder 並自動建立 Codex Verify；`outputs_only` 研究／文件／靜態分析／測試不觸發。
 - `TestAgentScript` 可在 offline fixture 驗證此 route，不呼叫外部 Antigravity。
+- Antigravity 子行程改用共同 `Invoke-BoundedProcess`：bounded timeout、定期 heartbeat、timeout process-tree cleanup，逾時精確輸出 `agent_timeout / antigravity_subagent`。
+- Verify bundle 的 meta 排除清單已縮窄為 pipeline transport/control artifacts；manifest 明列的 `RESULT.md`／`TEST_RESULT.md` 不再被排除。
 
 實測：
 
@@ -45,7 +49,15 @@ change_required: true
 - failure fixture：`status: partial_failure`、`reason=agent_exit_7`、process exit 7。
 - 兩者 `GIT_VERIFIED_CHANGES.json`：`snapshot_status: captured`。
 - approved workspace-write fallback fixture：建立 `ci-antigravity-builder-fallback-20260728-codex-verify`。
-- dispatcher resilience：`passed`, 6 cases。
+- dispatcher resilience：`passed`, 7 cases；第 7 案為 Antigravity timeout，canonical `partial_failure` 與 cleanup heartbeat 均通過。
+- verify bundle generation：`PASS`, 7/7 cases。
+
+### Commit 邊界
+
+- `914efc0`：Pillar B/C ground-truth bundle changes。
+- `7987cda`：Antigravity canonical completion path。
+- `5d2cd79`：既有 resilience 變更邊界隔離；commit message 明載仍待正式派工／驗收，不代表完成。
+- `5338ce6`：本修正回合新增 Antigravity timeout／heartbeat 與回歸覆蓋。
 
 ## 任務 2：Hermes 治理覆蓋（唯讀）
 

@@ -65,9 +65,33 @@ evidence_manifest_mismatch: false
 
 ```text
 dispatch_resilience_status=passed
-case_count=6
-timeout_elapsed_seconds=7
+case_count=7
+timeout_elapsed_seconds=15
 test_dispatch_resilience_exit_code=0
+```
+
+第 7 案實測 Antigravity timeout：
+
+```text
+route_to=Antigravity CLI
+status=partial_failure
+reason=agent_timeout
+phase=antigravity_subagent
+exit_code=124
+heartbeat_phase=agent_timeout_cleanup
+```
+
+## Verify Bundle Regression
+
+```text
+case=read_only_analysis status=PASS
+case=query_type_evidence status=PASS
+case=revision_original_context status=PASS
+case=out_of_scope_whole_file status=PASS
+case=untracked_new_file status=PASS
+case=git_manifest_mismatch status=PASS
+case=git_manifest_no_mismatch status=PASS
+verify_bundle_generation=PASS cases=7 passed=7 failed=0
 ```
 
 ## Hermes Audit Method
