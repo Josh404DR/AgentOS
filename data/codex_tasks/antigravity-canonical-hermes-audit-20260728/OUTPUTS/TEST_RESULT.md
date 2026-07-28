@@ -101,6 +101,13 @@ case=newer_test_result_refreshes_backup status=PASS
 verify_bundle_generation=PASS cases=8 passed=8 failed=0
 ```
 
+依第二次 fresh Verify 的 AC5 發現修正後：
+
+```text
+case=agent_outputs_included_task_control_excluded status=PASS
+verify_bundle_generation=PASS cases=9 passed=9 failed=0
+```
+
 ## Hermes Audit Method
 
 唯讀掃描 `data\codex_tasks\telegram-*\TASK.md` 與其 `OUTPUTS\RESULT.md`：

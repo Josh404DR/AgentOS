@@ -627,6 +627,23 @@ function New-CodexVerifyTask {
                 continue
             }
             $relative = $candidate.Substring($AgentOSRoot.Length).TrimStart('\')
+            $leaf = Split-Path -Leaf $candidate
+            $parentTaskArtifact = Join-Path $TasksRoot (Join-Path $ParentDispatchId "TASK.md")
+            $parentOutputsArtifactDir = Join-Path $TasksRoot (Join-Path $ParentDispatchId "OUTPUTS")
+            $pipelineMetaFiles = @(
+                "AGENT_OUTPUT.md",
+                "HEARTBEAT.json",
+                "VERIFY_BUNDLE.md",
+                "GIT_VERIFIED_CHANGES.json",
+                "SCOPED_DIFF.patch"
+            )
+            $isParentTaskArtifact = $candidate.Equals($parentTaskArtifact, [StringComparison]::OrdinalIgnoreCase)
+            $isParentOutputMeta = $pipelineMetaFiles -contains $leaf -and
+                $candidate.StartsWith($parentOutputsArtifactDir + "\", [StringComparison]::OrdinalIgnoreCase)
+            if ($isParentTaskArtifact -or $isParentOutputMeta) {
+                Write-Output "diff_trace: changed_file=[$changedFile] skipped=pipeline_transport_or_control_artifact"
+                continue
+            }
             if (Test-Path -LiteralPath $candidate -PathType Container) {
                 # Guard (2026-07-28, audit finding on dashboard-plane-naming-
                 # consistency: a Scope-section candidate resolved to a whole

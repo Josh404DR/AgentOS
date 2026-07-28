@@ -270,6 +270,26 @@ change_required: true
         Assert-Match $testResult '(?m)^case_count=7$' "current test evidence rolled back"
         Assert-Match $backupResult '(?m)^new_evidence=PASS$' "backup did not receive newer evidence"
     }
+
+    Assert-Case "agent_outputs_included_task_control_excluded" {
+        $id = "fixture-agent-output-scope"
+        $taskDir = New-FixtureTask $id "impact_scope: internal_only" @"
+changed_file: data\codex_tasks\$id\TASK.md
+changed_file: data\codex_tasks\$id\OUTPUTS\RESULT.md
+changed_file: data\codex_tasks\$id\OUTPUTS\TEST_RESULT.md
+change_required: true
+"@
+        Write-FixtureFile (Join-Path $taskDir "OUTPUTS\TEST_RESULT.md") "agent_test_evidence=PASS"
+        Invoke-Generator $id
+    } {
+        param($c)
+        if ($c.ExitCode -ne 0) { throw "generator exit=$($c.ExitCode): $($c.Output)" }
+        $diff = Get-Content -Raw -Encoding UTF8 (Join-Path $c.OutputDir "SCOPED_DIFF.patch")
+        Assert-Match $diff 'OUTPUTS\\RESULT\.md' "agent-authored RESULT.md missing from scoped diff"
+        Assert-Match $diff 'OUTPUTS\\TEST_RESULT\.md' "agent-authored TEST_RESULT.md missing from scoped diff"
+        Assert-NotMatch $diff 'diff_status: new_untracked_file path=data\\codex_tasks\\fixture-agent-output-scope\\TASK\.md' "TASK.md control artifact entered scoped diff"
+        Assert-Match $c.Output 'changed_file=\[data\\codex_tasks\\fixture-agent-output-scope\\TASK\.md\] skipped=pipeline_transport_or_control_artifact' "TASK.md exclusion trace missing"
+    }
 } finally {
     if (Test-Path -LiteralPath $fixtureRoot) {
         $resolvedTemp = [IO.Path]::GetFullPath([IO.Path]::GetTempPath())

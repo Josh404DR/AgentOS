@@ -51,7 +51,7 @@ change_required: true
 - 兩者 `GIT_VERIFIED_CHANGES.json`：`snapshot_status: captured`。
 - approved workspace-write fallback fixture：建立 `ci-antigravity-builder-fallback-20260728-codex-verify`。
 - dispatcher resilience：`passed`, 7 cases；第 7 案為 Antigravity timeout，canonical `partial_failure` 與 cleanup heartbeat 均通過。
-- verify bundle generation：`PASS`, 8/8 cases；新增「較新 TEST_RESULT 必須刷新舊 backup」回歸案。
+- verify bundle generation：`PASS`, 9/9 cases；涵蓋較新 TEST_RESULT 刷新舊 backup，以及 RESULT／TEST_RESULT 納入但 TASK control artifact 排除。
 
 ### Commit 邊界
 
