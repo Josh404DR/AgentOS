@@ -246,6 +246,30 @@ evidence: manifest match fixture
         Assert-Match $bundle '(?m)^git_verified_snapshot: captured; modified=0 created=0 deleted=0$' "zero-change captured summary missing"
         Assert-Match $bundle '(?m)^evidence_manifest_mismatch: false$' "matching zero-change manifest was marked mismatch"
     }
+
+    Assert-Case "newer_test_result_refreshes_backup" {
+        $id = "fixture-test-result-refresh"
+        $taskDir = New-FixtureTask $id "impact_scope: internal_only" @"
+changed_file: data\codex_tasks\$id\OUTPUTS\TEST_RESULT.md
+change_required: true
+"@
+        $outputs = Join-Path $taskDir "OUTPUTS"
+        $backup = Join-Path $outputs "TEST_RESULT.full.md"
+        $current = Join-Path $outputs "TEST_RESULT.md"
+        Write-FixtureFile $backup "case_count=6"
+        Write-FixtureFile $current "case_count=7`nnew_evidence=PASS"
+        [IO.File]::SetLastWriteTimeUtc($backup, [DateTime]::UtcNow.AddMinutes(-2))
+        [IO.File]::SetLastWriteTimeUtc($current, [DateTime]::UtcNow.AddMinutes(-1))
+        Invoke-Generator $id
+    } {
+        param($c)
+        if ($c.ExitCode -ne 0) { throw "generator exit=$($c.ExitCode): $($c.Output)" }
+        $testResult = Get-Content -Raw -Encoding UTF8 (Join-Path $c.OutputDir "TEST_RESULT.md")
+        $backupResult = Get-Content -Raw -Encoding UTF8 (Join-Path $c.OutputDir "TEST_RESULT.full.md")
+        Assert-Match $c.Output '(?m)^test_result_backup_refreshed=' "newer test result did not refresh backup"
+        Assert-Match $testResult '(?m)^case_count=7$' "current test evidence rolled back"
+        Assert-Match $backupResult '(?m)^new_evidence=PASS$' "backup did not receive newer evidence"
+    }
 } finally {
     if (Test-Path -LiteralPath $fixtureRoot) {
         $resolvedTemp = [IO.Path]::GetFullPath([IO.Path]::GetTempPath())

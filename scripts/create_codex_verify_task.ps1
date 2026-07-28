@@ -588,6 +588,21 @@ function New-CodexVerifyTask {
         if (-not (Test-Path -LiteralPath $backupPath)) {
             Copy-Item -LiteralPath $testPath -Destination $backupPath
             Write-Output "test_result_backup=$backupPath"
+        } else {
+            # A later Builder/revision may legitimately replace TEST_RESULT.md
+            # after the first bundle created TEST_RESULT.full.md. Reusing the
+            # older backup would silently roll the evidence back (observed in
+            # antigravity round 2: 7 cases reverted to 6). Refresh only when
+            # the current file is newer and its bytes actually differ; this
+            # avoids treating our own fallback rewrite as new evidence.
+            $testItem = Get-Item -LiteralPath $testPath
+            $backupItem = Get-Item -LiteralPath $backupPath
+            $testHash = (Get-FileHash -Algorithm SHA256 -LiteralPath $testPath).Hash
+            $backupHash = (Get-FileHash -Algorithm SHA256 -LiteralPath $backupPath).Hash
+            if ($testItem.LastWriteTimeUtc -gt $backupItem.LastWriteTimeUtc -and $testHash -ne $backupHash) {
+                Copy-Item -Force -LiteralPath $testPath -Destination $backupPath
+                Write-Output "test_result_backup_refreshed=$backupPath"
+            }
         }
     }
 

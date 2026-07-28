@@ -19,6 +19,15 @@ governance_hash: 0EAECF6D153925AC17B940992CC12CE82A6DE5E7F1D7B766BAB9C479C3088EB
 1. Repair Antigravity CLI canonical completion and conditional Builder Verify creation.
 2. Audit Hermes governance coverage without modifying Hermes artifacts.
 
+## Acceptance Criteria
+
+1. Antigravity success and nonzero exit both write canonical `OUTPUTS\RESULT.md`; success is `completed`, failure is `partial_failure` with the original exit code and exact reason.
+2. Antigravity subprocess execution has a bounded timeout, periodic heartbeat, timeout process-tree cleanup, and exact timeout phase `antigravity_subagent`.
+3. Offline regression tests cover Antigravity success, failure, conditional Builder Verify creation, and timeout without invoking an external model.
+4. Only `write_scope: workspace-write fallback` is treated as Builder work for automatic independent Verify; read-only or outputs-only Antigravity work is not.
+5. Verify scoped diff includes agent-authored `RESULT.md` and `TEST_RESULT.md` when explicitly declared, while continuing to exclude pipeline transport/control artifacts.
+6. Hermes audit inspects concrete completed `telegram-*` tasks and reports shared-dispatch coverage, Evidence Contract field coverage, and any Hermes-as-implementer boundary violations without modifying Hermes artifacts.
+
 ## Out of Scope
 
 - Do not modify docs\EVIDENCE_AND_REPORTING_CONTRACT.md.

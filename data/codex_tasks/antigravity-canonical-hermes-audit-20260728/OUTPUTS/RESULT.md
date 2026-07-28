@@ -9,7 +9,7 @@ reviewed_by_claude: false
 approved_by_josh: scope_approved_current_prompt
 cleanup_executed: false
 live_external_action_executed: false
-files_modified: scripts\dispatch_task_packet.ps1, scripts\create_codex_verify_task.ps1, tests\test_dispatch_resilience.ps1
+files_modified: scripts\dispatch_task_packet.ps1, scripts\create_codex_verify_task.ps1, tests\test_dispatch_resilience.ps1, tests\test_verify_bundle_generation.ps1
 files_created: data\codex_tasks\antigravity-canonical-hermes-audit-20260728\TASK.md, data\codex_tasks\antigravity-canonical-hermes-audit-20260728\OUTPUTS\RESULT.md, data\codex_tasks\antigravity-canonical-hermes-audit-20260728\OUTPUTS\TEST_RESULT.md
 commit_hash: 914efc0, 7987cda, 5d2cd79, 5338ce6
 evidence_paths: data\codex_tasks\ci-antigravity-canonical-success-20260728\OUTPUTS\RESULT.md, data\codex_tasks\ci-antigravity-canonical-success-20260728\OUTPUTS\GIT_VERIFIED_CHANGES.json, data\codex_tasks\ci-antigravity-canonical-failure-20260728\OUTPUTS\RESULT.md, data\codex_tasks\ci-antigravity-canonical-failure-20260728\OUTPUTS\GIT_VERIFIED_CHANGES.json, data\codex_tasks\ci-antigravity-builder-fallback-20260728\OUTPUTS\VERIFY_BUNDLE.md
@@ -29,6 +29,7 @@ task_execution_allowed: true
 changed_file: scripts\dispatch_task_packet.ps1
 changed_file: scripts\create_codex_verify_task.ps1
 changed_file: tests\test_dispatch_resilience.ps1
+changed_file: tests\test_verify_bundle_generation.ps1
 changed_file: data\codex_tasks\antigravity-canonical-hermes-audit-20260728\OUTPUTS\RESULT.md
 changed_file: data\codex_tasks\antigravity-canonical-hermes-audit-20260728\OUTPUTS\TEST_RESULT.md
 change_required: true
@@ -50,7 +51,7 @@ change_required: true
 - 兩者 `GIT_VERIFIED_CHANGES.json`：`snapshot_status: captured`。
 - approved workspace-write fallback fixture：建立 `ci-antigravity-builder-fallback-20260728-codex-verify`。
 - dispatcher resilience：`passed`, 7 cases；第 7 案為 Antigravity timeout，canonical `partial_failure` 與 cleanup heartbeat 均通過。
-- verify bundle generation：`PASS`, 7/7 cases。
+- verify bundle generation：`PASS`, 8/8 cases；新增「較新 TEST_RESULT 必須刷新舊 backup」回歸案。
 
 ### Commit 邊界
 

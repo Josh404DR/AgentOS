@@ -94,6 +94,13 @@ case=git_manifest_no_mismatch status=PASS
 verify_bundle_generation=PASS cases=7 passed=7 failed=0
 ```
 
+修正舊 backup 回滾問題後重跑：
+
+```text
+case=newer_test_result_refreshes_backup status=PASS
+verify_bundle_generation=PASS cases=8 passed=8 failed=0
+```
+
 ## Hermes Audit Method
 
 唯讀掃描 `data\codex_tasks\telegram-*\TASK.md` 與其 `OUTPUTS\RESULT.md`：
