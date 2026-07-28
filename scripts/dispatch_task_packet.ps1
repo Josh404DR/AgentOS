@@ -18,6 +18,104 @@ $Utf8NoBom = [System.Text.UTF8Encoding]::new($false)
 [Console]::OutputEncoding = $Utf8NoBom
 $OutputEncoding = $Utf8NoBom
 
+function Get-GitStatusSnapshot {
+    # Added 2026-07-28 (structural redesign Pillar B, per Josh's direction:
+    # docs\VERIFY_PIPELINE_STRUCTURAL_REDESIGN_2026-07-28.md). The verify
+    # pipeline has repeatedly failed because it only trusted what an agent
+    # SAID it changed (free-text changed_file:/change_required: lines,
+    # scraped by regex) with nothing to check that against. This function
+    # takes an independent, ground-truth git snapshot - not agent-reported,
+    # not regex-guessed. It is intentionally best-effort and NEVER throws:
+    # a snapshot failure (git unavailable, non-repo path, transient error)
+    # must degrade to "snapshot_unavailable" and let the dispatch proceed
+    # normally, not block real work over instrumentation.
+    param([string]$AgentOSRoot)
+    $gitRoot = $AgentOSRoot -replace '\\', '/'
+    try {
+        $psi = [System.Diagnostics.ProcessStartInfo]::new()
+        $psi.FileName = "git"
+        $psi.Arguments = "-c safe.directory=$gitRoot status --porcelain=v1 -uall"
+        $psi.WorkingDirectory = $AgentOSRoot
+        $psi.UseShellExecute = $false
+        $psi.RedirectStandardOutput = $true
+        $psi.RedirectStandardError = $true
+        $psi.StandardOutputEncoding = [Text.Encoding]::UTF8
+        $psi.StandardErrorEncoding = [Text.Encoding]::UTF8
+        $process = [System.Diagnostics.Process]::Start($psi)
+        if ($null -eq $process) {
+            return [pscustomobject]@{ Ok = $false; Lines = @(); Reason = "git_process_start_failed" }
+        }
+        $stdout = $process.StandardOutput.ReadToEnd()
+        $stderr = $process.StandardError.ReadToEnd()
+        $process.WaitForExit()
+        if ($process.ExitCode -ne 0) {
+            return [pscustomobject]@{ Ok = $false; Lines = @(); Reason = "git_exit_$($process.ExitCode):$($stderr.Trim())" }
+        }
+        $lines = @($stdout -split "`r?`n" | Where-Object { $_ })
+        return [pscustomobject]@{ Ok = $true; Lines = $lines; Reason = "" }
+    } catch {
+        return [pscustomobject]@{ Ok = $false; Lines = @(); Reason = "exception:$($_.Exception.Message)" }
+    }
+}
+
+function Write-GitVerifiedChanges {
+    # Diffs two Get-GitStatusSnapshot results (before/after an agent run) and
+    # writes OUTPUTS\GIT_VERIFIED_CHANGES.json - the system's own independent
+    # record of what actually changed on disk, separate from and not derived
+    # from anything the agent said. Never throws; a failure on either side
+    # just yields snapshot_status: unavailable so downstream tooling knows
+    # not to rely on it, rather than crashing the dispatch.
+    param(
+        [Parameter(Mandatory = $true)][object]$Before,
+        [Parameter(Mandatory = $true)][object]$After,
+        [Parameter(Mandatory = $true)][string]$OutputPath,
+        [string[]]$IgnoredRelativePaths = @()
+    )
+    $result = if (-not $Before.Ok -or -not $After.Ok) {
+        [ordered]@{
+            snapshot_status = "unavailable"
+            before_reason = $Before.Reason
+            after_reason = $After.Reason
+            git_verified_files_modified = @()
+            git_verified_files_created = @()
+            git_verified_files_deleted = @()
+        }
+    } else {
+        $beforeSet = [Collections.Generic.HashSet[string]]::new([string[]]$Before.Lines)
+        $ignoredSet = [Collections.Generic.HashSet[string]]::new(
+            [string[]]@($IgnoredRelativePaths | ForEach-Object { ($_ -replace '\\', '/').Trim('"') }),
+            [StringComparer]::OrdinalIgnoreCase
+        )
+        $newOrChangedLines = @($After.Lines | Where-Object { -not $beforeSet.Contains($_) })
+        $created = [Collections.Generic.List[string]]::new()
+        $modified = [Collections.Generic.List[string]]::new()
+        $deleted = [Collections.Generic.List[string]]::new()
+        foreach ($line in $newOrChangedLines) {
+            if ($line.Length -lt 4) { continue }
+            $code = $line.Substring(0, 2)
+            $path = ($line.Substring(3).Trim().Trim('"') -replace '\\', '/')
+            # These files are produced by the dispatcher for every invocation,
+            # not by the delivery itself. Counting them would make every
+            # query/read-only task disagree with change_required:false.
+            if ($ignoredSet.Contains($path)) { continue }
+            if ($code -eq "??") { $created.Add($path) }
+            elseif ($code -match "D") { $deleted.Add($path) }
+            else { $modified.Add($path) }
+        }
+        [ordered]@{
+            snapshot_status = "captured"
+            before_reason = ""
+            after_reason = ""
+            git_verified_files_modified = @($modified)
+            git_verified_files_created = @($created)
+            git_verified_files_deleted = @($deleted)
+        }
+    }
+    try {
+        Write-Utf8File -Path $OutputPath -Content (($result | ConvertTo-Json -Depth 6) + [Environment]::NewLine)
+    } catch { }
+}
+
 function Get-PacketField {
     param(
         [Parameter(Mandatory = $true)][string]$Text,
@@ -399,6 +497,9 @@ $commandDescription = ""
 $rawOutput = ""
 $exitCode = 0
 
+# Pillar B ground-truth snapshot (before): see Get-GitStatusSnapshot comment.
+$gitSnapshotBefore = Get-GitStatusSnapshot -AgentOSRoot $AgentOSRoot
+
 switch ($RouteTo) {
     "Codex" {
         if ($codexMode -notin @("build", "plan", "verify")) {
@@ -593,6 +694,20 @@ switch ($RouteTo) {
     }
 }
 
+# Pillar B ground-truth snapshot (after) + independent diff. Skipped for
+# DryRun (no agent ran, nothing changed by definition) so it doesn't write a
+# misleading "captured, zero changes" record for a structural dry run.
+if (-not $DryRun) {
+    $gitSnapshotAfter = Get-GitStatusSnapshot -AgentOSRoot $AgentOSRoot
+    $dispatchOutputPrefix = "data/codex_tasks/$DispatchId/OUTPUTS"
+    Write-GitVerifiedChanges -Before $gitSnapshotBefore -After $gitSnapshotAfter `
+        -OutputPath (Join-Path $OutputDir "GIT_VERIFIED_CHANGES.json") `
+        -IgnoredRelativePaths @(
+            "$dispatchOutputPrefix/AGENT_OUTPUT.md",
+            "$dispatchOutputPrefix/HEARTBEAT.json"
+        )
+}
+
 if ($DryRun) {
     $rawOutput = "DRY RUN: command plan only; no model or external service invoked.`n$commandDescription"
     $exitCode = 0
@@ -630,7 +745,21 @@ if ($RouteTo -eq "Claude" -and $assignedTo -eq "Claude Worker") {
 
 Write-CanonicalResult -Status "completed" -ModelsInvoked (-not $DryRun) -ScriptsExecuted (-not $DryRun) `
     -Findings $rawOutput `
-    -Caveats $(if ($DryRun) { "Structural dry run only; command was not executed." } else { "none" }) `
+    -Caveats $(# Pillar B ground-truth snapshot (after) + independent diff. Skipped for
+# DryRun (no agent ran, nothing changed by definition) so it doesn't write a
+# misleading "captured, zero changes" record for a structural dry run.
+if (-not $DryRun) {
+    $gitSnapshotAfter = Get-GitStatusSnapshot -AgentOSRoot $AgentOSRoot
+    $dispatchOutputPrefix = "data/codex_tasks/$DispatchId/OUTPUTS"
+    Write-GitVerifiedChanges -Before $gitSnapshotBefore -After $gitSnapshotAfter `
+        -OutputPath (Join-Path $OutputDir "GIT_VERIFIED_CHANGES.json") `
+        -IgnoredRelativePaths @(
+            "$dispatchOutputPrefix/AGENT_OUTPUT.md",
+            "$dispatchOutputPrefix/HEARTBEAT.json"
+        )
+}
+
+if ($DryRun) { "Structural dry run only; command was not executed." } else { "none" }) `
     -ReviewDispatchId $reviewDispatchId
 
 Write-Output "status=completed"
