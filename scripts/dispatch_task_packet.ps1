@@ -889,20 +889,32 @@ switch ($RouteTo) {
         
         $commandDescription = "powershell -File scripts\invoke_antigravity_subagent.ps1 -TaskPath `"$TaskPath`" -WorkerAlias $workerAlias"
         if (-not $DryRun) {
-            $oldEap = $ErrorActionPreference
-            $ErrorActionPreference = "Continue"
-            try {
-                if ($TestAgentScript) {
-                    $invokeOutput = & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $TestAgentScript $AgentOutputPath 2>&1
-                } else {
-                    $invokeScript = Join-Path $AgentOSRoot "scripts\invoke_antigravity_subagent.ps1"
-                    $invokeOutput = & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $invokeScript -TaskPath $TaskPath -WorkerAlias $workerAlias 2>&1
-                }
-                $exitCode = $LASTEXITCODE
-            } finally {
-                $ErrorActionPreference = $oldEap
+            $invokeScript = Join-Path $AgentOSRoot "scripts\invoke_antigravity_subagent.ps1"
+            $psi = [Diagnostics.ProcessStartInfo]::new()
+            $psi.FileName = "powershell.exe"
+            $psi.WorkingDirectory = $AgentOSRoot
+            $psi.UseShellExecute = $false
+            $psi.RedirectStandardOutput = $true
+            $psi.RedirectStandardError = $true
+            $psi.StandardOutputEncoding = [Text.Encoding]::UTF8
+            $psi.StandardErrorEncoding = [Text.Encoding]::UTF8
+            $psi.Arguments = '-NoProfile -ExecutionPolicy Bypass -File "' + $invokeScript +
+                '" -TaskPath "' + $TaskPath + '" -WorkerAlias "' + $workerAlias + '"'
+            [void](Set-TestAgentStartInfo -StartInfo $psi)
+            $process = [Diagnostics.Process]::new()
+            $process.StartInfo = $psi
+            [void]$process.Start()
+            $stdoutTask = $process.StandardOutput.ReadToEndAsync()
+            $stderrTask = $process.StandardError.ReadToEndAsync()
+            $execution = Invoke-BoundedProcess -Process $process -StdoutTask $stdoutTask -StderrTask $stderrTask -Phase "antigravity_subagent"
+            $exitCode = $execution.ExitCode
+            $elapsedSeconds = $execution.ElapsedSeconds
+            if ($execution.TimedOut) {
+                $failureReason = "agent_timeout"
+                $failurePhase = "antigravity_subagent"
             }
-            $invokeSummary = $invokeOutput -join [Environment]::NewLine            # A real Antigravity worker writes its own rich RESULT.md. Preserve
+            $invokeSummary = ($execution.Stdout + "`n" + $execution.Stderr).Trim()
+            # A real Antigravity worker writes its own rich RESULT.md. Preserve
             # that content as canonical Findings instead of replacing it with
             # only invoke_antigravity_subagent.ps1's short status receipt.
             $rawOutput = if (-not $TestAgentScript -and (Test-Path -LiteralPath $ResultPath -PathType Leaf)) {

@@ -25,6 +25,14 @@ function New-FixtureTask([string]$Id, [string]$RouteTo = "Claude", [string]$Code
     $dir = Join-Path $tasksRoot $Id
     $outputs = Join-Path $dir "OUTPUTS"
     New-Item -ItemType Directory -Force -Path $outputs | Out-Null
+    $antigravityFields = if ($RouteTo -eq "Antigravity CLI") {
+@"
+subagent_mode: test
+risk_level: low
+write_scope: read-only
+worker_alias: antigravity_research_auditor
+"@
+    } else { "" }
     $task = @"
 # Offline Dispatcher Resilience Fixture
 
@@ -42,6 +50,7 @@ requires_josh_approval: false
 approval: offline_fixture
 governance_version: $version
 governance_hash: $hash
+$antigravityFields
 
 ## Acceptance Criteria
 
@@ -129,10 +138,39 @@ if ($codexBuild.ExitCode -ne 0 -or $codexBuild.Text -notmatch ("(?m)^review_disp
     $failures.Add("Codex Builder did not create independent verify task: exit=$($codexBuild.ExitCode) output=$($codexBuild.Text)")
 }
 
+$antigravityTimeoutId = "ci-dispatch-resilience-antigravity-timeout"
+$antigravityTimeoutDir = New-FixtureTask $antigravityTimeoutId "Antigravity CLI"
+$antigravityTimeout = Invoke-Fixture $antigravityTimeoutId $timeoutScript $timeoutBudgetSeconds
+if ($antigravityTimeout.ExitCode -ne 124 -or
+    $antigravityTimeout.Text -notmatch '(?m)^reason=agent_timeout$' -or
+    $antigravityTimeout.Text -notmatch '(?m)^phase=antigravity_subagent$') {
+    $failures.Add("Antigravity timeout lost exact reason/phase: exit=$($antigravityTimeout.ExitCode) output=$($antigravityTimeout.Text)")
+}
+$antigravityResultPath = Join-Path $antigravityTimeoutDir "OUTPUTS\RESULT.md"
+if (-not (Test-Path -LiteralPath $antigravityResultPath -PathType Leaf)) {
+    $failures.Add("Antigravity timeout canonical RESULT.md missing")
+} else {
+    $antigravityResult = Get-Content -Raw -LiteralPath $antigravityResultPath -Encoding UTF8
+    if ($antigravityResult -notmatch '(?m)^status: partial_failure$' -or
+        $antigravityResult -notmatch 'reason=agent_timeout phase=antigravity_subagent') {
+        $failures.Add("Antigravity timeout canonical RESULT.md fields invalid")
+    }
+}
+$antigravityHeartbeatPath = Join-Path $antigravityTimeoutDir "OUTPUTS\HEARTBEAT.json"
+if (-not (Test-Path -LiteralPath $antigravityHeartbeatPath -PathType Leaf)) {
+    $failures.Add("Antigravity timeout heartbeat missing")
+} else {
+    $antigravityHeartbeat = Get-Content -Raw -LiteralPath $antigravityHeartbeatPath -Encoding UTF8 | ConvertFrom-Json
+    if ($antigravityHeartbeat.dispatch_id -ne $antigravityTimeoutId -or
+        $antigravityHeartbeat.phase -ne "agent_timeout_cleanup") {
+        $failures.Add("Antigravity timeout heartbeat fields invalid")
+    }
+}
+
 if ($failures.Count) {
     $failures | ForEach-Object { Write-Error $_ }
     exit 1
 }
 Write-Output "dispatch_resilience_status=passed"
-Write-Output "case_count=6"
+Write-Output "case_count=7"
 Write-Output "timeout_elapsed_seconds=$([int]$timer.Elapsed.TotalSeconds)"
