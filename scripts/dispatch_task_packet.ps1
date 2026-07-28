@@ -10,13 +10,50 @@ param(
 
     [string]$AgentOSRoot = "E:\AgentOS",
 
-    [switch]$DryRun
+    [switch]$DryRun,
+
+    [int]$AgentTimeoutSeconds = 600,
+    [int]$HeartbeatIntervalSeconds = 30,
+    [string]$TestAgentScript = "",
+    [switch]$TestPostprocessError
 )
 
 $ErrorActionPreference = "Stop"
 $Utf8NoBom = [System.Text.UTF8Encoding]::new($false)
 [Console]::OutputEncoding = $Utf8NoBom
 $OutputEncoding = $Utf8NoBom
+
+function Get-PacketField {
+    param(
+        [Parameter(Mandatory = $true)][string]$Text,
+        [Parameter(Mandatory = $true)][string]$Name
+    )
+    $escaped = [regex]::Escape($Name)
+    $patterns = @(
+        "(?im)^\s*$escaped\s*[:=]\s*(?<value>.+?)\s*$",
+        "(?im)^\s*[-*]\s*$escaped\s*[:=]\s*(?<value>.+?)\s*$",
+        "(?im)^\s*\*\*$escaped\*\*\s*[:=]\s*(?<value>.+?)\s*$"
+    )
+    foreach ($pattern in $patterns) {
+        $match = [regex]::Match($Text, $pattern)
+        if ($match.Success) {
+            return $match.Groups["value"].Value.Trim().Trim('"').Trim("'")
+        }
+    }
+    return ""
+}
+
+function Convert-ToBool {
+    param([string]$Value)
+    return $Value -match '^(?i:true|1|yes)$'
+}
+
+function Write-Utf8File {
+    param([string]$Path, [string]$Content)
+    $parent = Split-Path -Parent $Path
+    if ($parent) { New-Item -ItemType Directory -Force -Path $parent | Out-Null }
+    [System.IO.File]::WriteAllText($Path, $Content, $Utf8NoBom)
+}
 
 function Get-GitStatusSnapshot {
     # Added 2026-07-28 (structural redesign Pillar B, per Josh's direction:
@@ -116,36 +153,104 @@ function Write-GitVerifiedChanges {
     } catch { }
 }
 
-function Get-PacketField {
+function Stop-ProcessTree {
+    param([int]$ProcessId)
+    # Snapshot only this process' descendants; never match by executable name.
+    try {
+        $all = @(Get-CimInstance Win32_Process -ErrorAction Stop |
+            Select-Object ProcessId, ParentProcessId)
+        $pending = [Collections.Generic.Queue[int]]::new()
+        $pending.Enqueue($ProcessId)
+        $descendants = [Collections.Generic.List[int]]::new()
+        while ($pending.Count) {
+            $parent = $pending.Dequeue()
+            foreach ($child in $all | Where-Object { $_.ParentProcessId -eq $parent }) {
+                $childId = [int]$child.ProcessId
+                $descendants.Add($childId)
+                $pending.Enqueue($childId)
+            }
+        }
+        for ($i = $descendants.Count - 1; $i -ge 0; $i--) {
+            Stop-Process -Id $descendants[$i] -Force -ErrorAction SilentlyContinue
+        }
+        Stop-Process -Id $ProcessId -Force -ErrorAction SilentlyContinue
+    } catch {
+        try { & taskkill.exe /T /F /PID $ProcessId 2>&1 | Out-Null } catch { }
+    }
+}
+
+function Write-Heartbeat {
+    param([string]$Path, [string]$Phase, [int]$ElapsedSeconds, [int]$AgentPid)
+    try {
+        $hb = "{`"dispatch_id`":`"$DispatchId`",`"phase`":`"$Phase`",`"elapsed_seconds`":$ElapsedSeconds,`"agent_pid`":$AgentPid,`"timestamp`":`"$(Get-Date -Format o)`"}"
+        [System.IO.File]::WriteAllText($Path, $hb, $Utf8NoBom)
+    } catch { }
+}
+
+function Invoke-BoundedProcess {
     param(
-        [Parameter(Mandatory = $true)][string]$Text,
-        [Parameter(Mandatory = $true)][string]$Name
+        [Parameter(Mandatory = $true)][Diagnostics.Process]$Process,
+        [Parameter(Mandatory = $true)]$StdoutTask,
+        [Parameter(Mandatory = $true)]$StderrTask,
+        [string]$Phase = "agent_execution"
     )
-    $escaped = [regex]::Escape($Name)
-    $patterns = @(
-        "(?im)^\s*$escaped\s*[:=]\s*(?<value>.+?)\s*$",
-        "(?im)^\s*[-*]\s*$escaped\s*[:=]\s*(?<value>.+?)\s*$",
-        "(?im)^\s*\*\*$escaped\*\*\s*[:=]\s*(?<value>.+?)\s*$"
-    )
-    foreach ($pattern in $patterns) {
-        $match = [regex]::Match($Text, $pattern)
-        if ($match.Success) {
-            return $match.Groups["value"].Value.Trim().Trim('"').Trim("'")
+    $timer = [Diagnostics.Stopwatch]::StartNew()
+    $intervalMs = [Math]::Max(250, $HeartbeatIntervalSeconds * 1000)
+    $timeoutMs = [Math]::Max(1000, $AgentTimeoutSeconds * 1000)
+    Write-Heartbeat -Path $HeartbeatPath -Phase $Phase -ElapsedSeconds 0 -AgentPid $Process.Id
+    $timedOut = $false
+    while (-not $Process.HasExited) {
+        $remaining = $timeoutMs - [int]$timer.ElapsedMilliseconds
+        if ($remaining -le 0) { $timedOut = $true; break }
+        $waitMs = [Math]::Min($intervalMs, $remaining)
+        if (-not $Process.WaitForExit($waitMs)) {
+            Write-Heartbeat -Path $HeartbeatPath -Phase $Phase `
+                -ElapsedSeconds ([int]$timer.Elapsed.TotalSeconds) -AgentPid $Process.Id
         }
     }
-    return ""
+    if ($timedOut) {
+        Write-Heartbeat -Path $HeartbeatPath -Phase "agent_timeout_cleanup" `
+            -ElapsedSeconds ([int]$timer.Elapsed.TotalSeconds) -AgentPid $Process.Id
+        Stop-ProcessTree -ProcessId $Process.Id
+        try { [void]$Process.WaitForExit(5000) } catch { }
+    }
+    $timer.Stop()
+    $stdout = if ($StdoutTask.IsCompleted) { try { [string]$StdoutTask.Result } catch { "" } } else { "" }
+    $stderr = if ($StderrTask.IsCompleted) { try { [string]$StderrTask.Result } catch { "" } } else { "" }
+    $code = if ($timedOut) { 124 } elseif ($Process.HasExited) { $Process.ExitCode } else { 125 }
+    return [pscustomobject]@{
+        TimedOut = $timedOut
+        ExitCode = $code
+        Stdout = $stdout
+        Stderr = $stderr
+        ElapsedSeconds = [int]$timer.Elapsed.TotalSeconds
+        AgentPid = $Process.Id
+    }
 }
 
-function Convert-ToBool {
-    param([string]$Value)
-    return $Value -match '^(?i:true|1|yes)$'
+function Set-TestAgentStartInfo {
+    param([Diagnostics.ProcessStartInfo]$StartInfo)
+    if (-not $TestAgentScript) { return $false }
+    $resolved = (Resolve-Path -LiteralPath $TestAgentScript).Path
+    $StartInfo.FileName = "powershell.exe"
+    $StartInfo.Arguments = '-NoProfile -ExecutionPolicy Bypass -File "' + $resolved + '" "' + $AgentOutputPath + '"'
+    return $true
 }
 
-function Write-Utf8File {
-    param([string]$Path, [string]$Content)
-    $parent = Split-Path -Parent $Path
-    if ($parent) { New-Item -ItemType Directory -Force -Path $parent | Out-Null }
-    [System.IO.File]::WriteAllText($Path, $Content, $Utf8NoBom)
+function Write-RecoveryStatus {
+    param([string]$Reason, [string]$Phase, [string]$Detail)
+    $content = @"
+dispatch_id: $DispatchId
+status: recoverable
+reason: $Reason
+phase: $Phase
+agent_output_path: $AgentOutputPath
+result_path: $ResultPath
+heartbeat_path: $HeartbeatPath
+detail: $Detail
+recorded_at: $(Get-Date -Format o)
+"@
+    Write-Utf8File -Path $RecoveryStatusPath -Content $content
 }
 
 function Write-CanonicalResult {
@@ -190,20 +295,44 @@ $safeCaveats
     Write-Utf8File -Path $ResultPath -Content $content
 }
 
+# DEPRECATED (2026-07-28): Invoke-GitDiffText / Find-ExistingVerifyDispatch /
+# New-CodexVerifyTask below are the ORIGINAL versions that
+# scripts\create_codex_verify_task.ps1 was cloned from on 2026-07-27. A full
+# audit on 2026-07-28 (triggered by repeated Verify FAILs on
+# docs-governance-status-autolink / queue-active-index-optimization) found
+# these originals still have every bug that's since been fixed in the clone:
+# no UTF8 StandardOutputEncoding on the git diff subprocess (mojibake on any
+# non-ASCII diff content), no untracked-new-file detection (SCOPED_DIFF silently
+# empty for brand-new deliverable files), no impact_scope/## Scope-section
+# fallback when RESULT.md has no explicit changed_file:/change_required:
+# fields (true for the "AgentOS Dispatch Result" canonical format used by
+# most codex_mode: plan tickets), and no version-string false-positive
+# filtering. Rather than fixing the same logic twice in two files, the actual
+# auto-trigger call site below (search "builderCompleted") now calls
+# create_codex_verify_task.ps1 directly. These functions are left defined
+# only so a future cleanup pass can diff/delete them deliberately - nothing
+# in this file should call them. Do not add a new call site here; fix
+# create_codex_verify_task.ps1 instead.
 function Invoke-GitDiffText {
     param([Parameter(Mandatory = $true)][string]$RelativePath)
 
+    # Use Arguments string (not ArgumentList) for PS 5.1 / .NET Framework compatibility.
+    # ArgumentList is .NET Core 2.1+ only; accessing it in PS 5.1 returns null and
+    # calling .Add() on null throws InvokeMethodOnNull.
+    $gitRoot = $AgentOSRoot -replace '\\', '/'
+    $safePath = '"' + ($RelativePath -replace '"', '\"') + '"'
     $psi = [System.Diagnostics.ProcessStartInfo]::new()
     $psi.FileName = "git"
-    foreach ($arg in @("-c", "safe.directory=E:/AgentOS", "diff", "--", $RelativePath)) {
-        [void]$psi.ArgumentList.Add($arg)
-    }
+    $psi.Arguments = "-c safe.directory=$gitRoot diff -- $safePath"
     $psi.WorkingDirectory = $AgentOSRoot
     $psi.UseShellExecute = $false
     $psi.RedirectStandardOutput = $true
     $psi.RedirectStandardError = $true
 
     $process = [System.Diagnostics.Process]::Start($psi)
+    if ($null -eq $process) {
+        return "diff_status: git_process_start_failed path=$RelativePath`n"
+    }
     $stdout = $process.StandardOutput.ReadToEnd()
     $stderr = $process.StandardError.ReadToEnd()
     $process.WaitForExit()
@@ -386,6 +515,8 @@ $TaskPath = Join-Path $TasksRoot (Join-Path $DispatchId "TASK.md")
 $OutputDir = Join-Path (Split-Path -Parent $TaskPath) "OUTPUTS"
 $ResultPath = Join-Path $OutputDir "RESULT.md"
 $AgentOutputPath = Join-Path $OutputDir "AGENT_OUTPUT.md"
+$HeartbeatPath = Join-Path $OutputDir "HEARTBEAT.json"
+$RecoveryStatusPath = Join-Path $OutputDir "RECOVERY_STATUS.md"
 $RoutingDecisionPath = Join-Path $AgentOSRoot (Join-Path "data\routing_decisions" (Join-Path $DispatchId "ROUTING_DECISION.md"))
 
 if (-not (Test-Path -LiteralPath $TaskPath -PathType Leaf)) {
@@ -412,10 +543,17 @@ if (-not $GovernanceVersion -or -not $GovernanceHash) {
 }
 
 $governanceGate = Join-Path $AgentOSRoot "scripts\assert_governance_ready.ps1"
-$governanceOutput = & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $governanceGate -AgentOSRoot $AgentOSRoot -TaskPath $TaskPath
+$codexModeEarly = ([string](Get-PacketField $taskText "codex_mode")).ToLowerInvariant()
+$typeEarly = Get-PacketField $taskText "type"
+$useReadOnlyGate = ($codexModeEarly -eq "verify" -or $typeEarly -eq "CODEX_VERIFY")
+$gateArgs = @("-NoProfile", "-ExecutionPolicy", "Bypass", "-File", $governanceGate,
+    "-AgentOSRoot", $AgentOSRoot, "-TaskPath", $TaskPath)
+if ($useReadOnlyGate) { $gateArgs += "-ReadOnly" }
+$governanceOutput = & powershell.exe @gateArgs
 if ($LASTEXITCODE -ne 0) {
     Write-Output "status=blocked"
     Write-Output "reason=governance_gate_blocked"
+    Write-Output "phase=governance"
     Write-Output ($governanceOutput -join [Environment]::NewLine)
     exit 3
 }
@@ -492,10 +630,59 @@ verify_verdict: NEEDS_HUMAN_DECISION
 Then include findings, evidence, and required changes in Traditional Chinese.
 "@
 }
+# Added 2026-07-28: a systemic audit (triggered by repeated Verify FAIL
+# investigations) found that only ~2 of ~95 completed tickets' RESULT.md
+# ever populate the files_modified:/files_created: fields that
+# docs\EVIDENCE_AND_REPORTING_CONTRACT.md Section 3 has required since
+# 2026-06-24 - the contract exists but nothing in this dispatch pipeline ever
+# asked the Builder to follow it, so create_codex_verify_task.ps1 has to
+# guess changed files from free-form prose, which the same audit showed
+# produces both false negatives (real changes missed) and false positives
+# (API endpoints/directories/wildcards/example filenames mistaken for real
+# files). This block asks every Builder-mode dispatch (Codex build or Claude
+# Worker) to end its response with an explicit changed_file:/change_required:
+# manifest, mirroring the verify_verdict block above. It does not change the
+# Evidence and Reporting Contract itself (still requires Josh approval to
+# edit docs\EVIDENCE_AND_REPORTING_CONTRACT.md) - this only asks the Builder
+# to actually satisfy the "files_modified/files_created" spirit of the
+# contract using the same changed_file:/change_required: convention that
+# create_codex_verify_task.ps1 already parses as its highest-priority signal.
+$builderModeForManifest = (($RouteTo -eq "Codex" -and $codexMode -eq "build") -or
+    ($RouteTo -eq "Claude" -and $assignedTo -match '^Claude'))
+if ($builderModeForManifest -and
+    -not ([regex]::IsMatch($promptContent, '(?im)^\s*changed_file\s*:'))) {
+    $promptContent += @"
+
+## Required Machine-Readable Change Manifest
+
+Per docs\EVIDENCE_AND_REPORTING_CONTRACT.md Section 3 (files_modified/
+files_created are required fields), end your response with an explicit
+change manifest so an independent Verify session can build an accurate
+scoped diff without guessing from prose:
+
+changed_file: <repo-relative path you actually created, modified, or deleted>
+changed_file: <repo-relative path>
+change_required: true
+
+If this delivery made no code/content changes (query-type, read-only
+analysis, or pure investigation), instead write exactly:
+
+change_required: false
+
+List only real files this delivery actually touched - not files you merely
+read or referenced as examples, not files planned for a future round, and
+not directories, API endpoints, or wildcard patterns.
+"@
+}
 Write-Utf8File -Path $promptPath -Content $promptContent
 $commandDescription = ""
 $rawOutput = ""
 $exitCode = 0
+$failureReason = ""
+$failurePhase = ""
+$elapsedSeconds = 0
+
+New-Item -ItemType Directory -Force -Path $OutputDir | Out-Null
 
 # Pillar B ground-truth snapshot (before): see Get-GitStatusSnapshot comment.
 $gitSnapshotBefore = Get-GitStatusSnapshot -AgentOSRoot $AgentOSRoot
@@ -535,6 +722,7 @@ switch ($RouteTo) {
             $psi.Arguments = '/d /c "chcp 65001 >nul && "' + $codexCommand + '" -a never exec -C "' + $AgentOSRoot +
                 '" --sandbox ' + $sandboxMode + ' --output-last-message "' +
                 $AgentOutputPath + '" - < "' + $promptPath + '""'
+            [void](Set-TestAgentStartInfo -StartInfo $psi)
             $process = [Diagnostics.Process]::new()
             $process.StartInfo = $psi
             # Start Codex without inherited API-key overrides so it uses its
@@ -543,6 +731,20 @@ switch ($RouteTo) {
             # environment collection may be null.
             $savedOpenAiKey = [Environment]::GetEnvironmentVariable("OPENAI_API_KEY", "Process")
             $savedCodexKey = [Environment]::GetEnvironmentVariable("CODEX_API_KEY", "Process")
+            # Bug found 2026-07-28 (Josh traced a FAIL verdict with
+            # exit_code=1/elapsed_seconds=0 back to this exact spot): the
+            # read-back below only checked whether $AgentOutputPath *exists*,
+            # not whether THIS invocation actually wrote it. Codex writes that
+            # file itself via --output-last-message; if this run crashes
+            # before Codex gets that far (e.g. the ~0-second exit_1 case),
+            # the file left over from a PRIOR dispatch of the same
+            # dispatch_id is still sitting there and gets silently reused as
+            # if it were this run's fresh output - so a stale FAIL/PASS
+            # verdict from a previous attempt gets re-reported as if an
+            # independent blind verify had just happened. Recording the
+            # invocation start time lets the read-back require the file's
+            # last-write time to be at/after this specific process start.
+            $agentInvocationStartUtc = [DateTime]::UtcNow
             try {
                 [Environment]::SetEnvironmentVariable("OPENAI_API_KEY", $null, "Process")
                 [Environment]::SetEnvironmentVariable("CODEX_API_KEY", $null, "Process")
@@ -553,12 +755,20 @@ switch ($RouteTo) {
             }
             $stdoutTask = $process.StandardOutput.ReadToEndAsync()
             $stderrTask = $process.StandardError.ReadToEndAsync()
-            $process.WaitForExit()
-            $exitCode = $process.ExitCode
-            $consoleOutput = ($stdoutTask.Result + "`n" + $stderrTask.Result).Trim()
-            if (Test-Path -LiteralPath $AgentOutputPath -PathType Leaf) {
+            $execution = Invoke-BoundedProcess -Process $process -StdoutTask $stdoutTask -StderrTask $stderrTask -Phase "codex_$codexMode"
+            $exitCode = $execution.ExitCode
+            $elapsedSeconds = $execution.ElapsedSeconds
+            if ($execution.TimedOut) { $failureReason = "agent_timeout"; $failurePhase = "codex_$codexMode" }
+            $consoleOutput = ($execution.Stdout + "`n" + $execution.Stderr).Trim()
+            $agentOutputIsFresh = (Test-Path -LiteralPath $AgentOutputPath -PathType Leaf) -and
+                ((Get-Item -LiteralPath $AgentOutputPath).LastWriteTimeUtc -ge $agentInvocationStartUtc)
+            if ($agentOutputIsFresh) {
                 $rawOutput = Get-Content -Raw -LiteralPath $AgentOutputPath -Encoding UTF8
             } else {
+                if (Test-Path -LiteralPath $AgentOutputPath -PathType Leaf) {
+                    $failureReason = if ($failureReason) { $failureReason } else { "stale_agent_output_ignored" }
+                    $consoleOutput = "$consoleOutput`n[stale_agent_output_ignored: $AgentOutputPath predates this invocation (last_write=$((Get-Item -LiteralPath $AgentOutputPath).LastWriteTimeUtc.ToString('o'))); a prior attempt's leftover result was NOT reused]".Trim()
+                }
                 $rawOutput = $consoleOutput
             }
         }
@@ -588,15 +798,18 @@ switch ($RouteTo) {
             # chcp 65001 keeps the child console in UTF-8 so the CP950 default
             # cannot mangle the UTF-8 prompt fed through stdin redirection.
             $psi.Arguments = '/d /c chcp 65001 >nul && claude -p --permission-mode acceptEdits --no-session-persistence' + $claudeExtraArgs + ' < "' + $promptPath + '"'
+            [void](Set-TestAgentStartInfo -StartInfo $psi)
             $process = [Diagnostics.Process]::new()
             $process.StartInfo = $psi
             [void]$process.Start()
             $stdoutTask = $process.StandardOutput.ReadToEndAsync()
             $stderrTask = $process.StandardError.ReadToEndAsync()
-            $process.WaitForExit()
-            $exitCode = $process.ExitCode
-            $rawOutput = $stdoutTask.Result.Trim()
-            if (-not $rawOutput) { $rawOutput = $stderrTask.Result.Trim() }
+            $execution = Invoke-BoundedProcess -Process $process -StdoutTask $stdoutTask -StderrTask $stderrTask -Phase "claude_worker"
+            $exitCode = $execution.ExitCode
+            $elapsedSeconds = $execution.ElapsedSeconds
+            if ($execution.TimedOut) { $failureReason = "agent_timeout"; $failurePhase = "claude_worker" }
+            $rawOutput = $execution.Stdout.Trim()
+            if (-not $rawOutput) { $rawOutput = $execution.Stderr.Trim() }
             if ($rawOutput) {
                 Write-Utf8File -Path $AgentOutputPath -Content $rawOutput
             }
@@ -734,37 +947,96 @@ if ($DryRun) {
 }
 
 if ($exitCode -ne 0) {
+    if (-not $failureReason) { $failureReason = "agent_exit_$exitCode" }
+    if (-not $failurePhase) { $failurePhase = "agent_execution" }
+    if (Test-Path -LiteralPath $AgentOutputPath -PathType Leaf) {
+        Write-RecoveryStatus -Reason $failureReason -Phase $failurePhase -Detail "Agent output exists after nonzero execution result."
+    }
     Write-CanonicalResult -Status "partial_failure" -ModelsInvoked (-not $DryRun) -ScriptsExecuted (-not $DryRun) `
-        -Findings $rawOutput -Caveats "Agent CLI exited with code $exitCode."
+        -Findings $rawOutput -Caveats "reason=$failureReason phase=$failurePhase exit_code=$exitCode elapsed_seconds=$elapsedSeconds"
     Write-Output "status=partial_failure"
+    Write-Output "reason=$failureReason"
+    Write-Output "phase=$failurePhase"
+    Write-Output "elapsed_seconds=$elapsedSeconds"
+    Write-Output "result_path=$ResultPath"
+    if (Test-Path -LiteralPath $RecoveryStatusPath) { Write-Output "recovery_status_path=$RecoveryStatusPath" }
     Write-Output "exit_code=$exitCode"
     exit $exitCode
 }
 
+if ($RouteTo -eq "Codex" -and $codexMode -eq "verify" -and -not $DryRun) {
+    $verdictMatches = [regex]::Matches($rawOutput, '(?im)^\s*verify_verdict\s*:\s*(PASS|FAIL|NEEDS_HUMAN_DECISION)\s*$')
+    $evidenceText = [regex]::Replace(
+        $rawOutput,
+        '(?im)^\s*verify_verdict\s*:\s*(PASS|FAIL|NEEDS_HUMAN_DECISION)\s*$',
+        ''
+    ).Trim()
+    if ($verdictMatches.Count -ne 1 -or -not $evidenceText) {
+        $failureReason = "invalid_verify_output"
+        $failurePhase = "codex_verify_validation"
+        $detail = if ($verdictMatches.Count -ne 1) {
+            "Expected exactly one machine-readable verify_verdict line; found $($verdictMatches.Count)."
+        } else {
+            "Verifier returned a verdict without findings or evidence."
+        }
+        Write-RecoveryStatus -Reason $failureReason -Phase $failurePhase -Detail $detail
+        Write-CanonicalResult -Status "partial_failure" -ModelsInvoked $true -ScriptsExecuted $true `
+            -Findings $rawOutput -Caveats "reason=$failureReason phase=$failurePhase recovery_status_path=$RecoveryStatusPath detail=$detail"
+        Write-Output "status=partial_failure"
+        Write-Output "reason=$failureReason"
+        Write-Output "phase=$failurePhase"
+        Write-Output "result_path=$ResultPath"
+        Write-Output "recovery_status_path=$RecoveryStatusPath"
+        Write-Output "exit_code=12"
+        exit 12
+    }
+}
+
 $reviewDispatchId = ""
 $builderCompleted = (($RouteTo -eq "Claude" -and $assignedTo -eq "Claude Worker") -or
+    ($RouteTo -eq "Codex" -and $codexMode -eq "build") -or
     ($RouteTo -eq "Antigravity CLI" -and $writeScope -eq "workspace-write fallback"))
 if ($builderCompleted) {
-    $reviewDispatchId = New-CodexVerifyTask -ParentDispatchId $DispatchId
+    # The bundle builder reads the parent's RESULT.md. On a first-time
+    # dispatch there is no prior RESULT, so creating the bundle before this
+    # write deterministically failed (or, on retries, consumed a stale
+    # RESULT). Write the completed delivery first with a temporary
+    # review_dispatch_id:not_created; after the child id is known, the
+    # canonical write below updates only that reference.
+    Write-CanonicalResult -Status "completed" -ModelsInvoked (-not $DryRun) -ScriptsExecuted (-not $DryRun) `
+        -Findings $rawOutput `
+        -Caveats $(if ($DryRun) { "Structural dry run only; command was not executed." } else { "none" })
+    try {
+        if ($TestPostprocessError) { throw "test_postprocess_failure" }
+        # 2026-07-28: delegate to the single, actively-maintained verify-bundle
+        # builder instead of the local (deprecated, still-buggy) New-CodexVerifyTask
+        # defined above. See the DEPRECATED comment above Invoke-GitDiffText.
+        $verifyScriptPath = Join-Path $PSScriptRoot "create_codex_verify_task.ps1"
+        $verifyOutputLines = @(
+            & $verifyScriptPath -ParentDispatchId $DispatchId -AgentOSRoot $AgentOSRoot 2>&1 |
+                ForEach-Object { [string]$_ }
+        )
+        $verifyIdLine = $verifyOutputLines | Where-Object { $_ -match '^verify_dispatch_id=' } | Select-Object -Last 1
+        $reviewDispatchId = if ($verifyIdLine) { ($verifyIdLine -split '=', 2)[1] } else { "" }
+        if (-not $reviewDispatchId) {
+            throw "verify_bundle_creation_produced_no_dispatch_id: $($verifyOutputLines -join ' | ')"
+        }
+    } catch {
+        Write-RecoveryStatus -Reason "postprocess_failure_recoverable" -Phase "verify_bundle" -Detail $_.Exception.Message
+        Write-CanonicalResult -Status "completed_with_recovery" -ModelsInvoked (-not $DryRun) -ScriptsExecuted (-not $DryRun) `
+            -Findings $rawOutput -Caveats "reason=postprocess_failure_recoverable phase=verify_bundle recovery_status_path=$RecoveryStatusPath"
+        Write-Output "status=completed_with_recovery"
+        Write-Output "reason=postprocess_failure_recoverable"
+        Write-Output "phase=verify_bundle"
+        Write-Output "result_path=$ResultPath"
+        Write-Output "recovery_status_path=$RecoveryStatusPath"
+        exit 0
+    }
 }
 
 Write-CanonicalResult -Status "completed" -ModelsInvoked (-not $DryRun) -ScriptsExecuted (-not $DryRun) `
     -Findings $rawOutput `
-    -Caveats $(# Pillar B ground-truth snapshot (after) + independent diff. Skipped for
-# DryRun (no agent ran, nothing changed by definition) so it doesn't write a
-# misleading "captured, zero changes" record for a structural dry run.
-if (-not $DryRun) {
-    $gitSnapshotAfter = Get-GitStatusSnapshot -AgentOSRoot $AgentOSRoot
-    $dispatchOutputPrefix = "data/codex_tasks/$DispatchId/OUTPUTS"
-    Write-GitVerifiedChanges -Before $gitSnapshotBefore -After $gitSnapshotAfter `
-        -OutputPath (Join-Path $OutputDir "GIT_VERIFIED_CHANGES.json") `
-        -IgnoredRelativePaths @(
-            "$dispatchOutputPrefix/AGENT_OUTPUT.md",
-            "$dispatchOutputPrefix/HEARTBEAT.json"
-        )
-}
-
-if ($DryRun) { "Structural dry run only; command was not executed." } else { "none" }) `
+    -Caveats $(if ($DryRun) { "Structural dry run only; command was not executed." } else { "none" }) `
     -ReviewDispatchId $reviewDispatchId
 
 Write-Output "status=completed"
