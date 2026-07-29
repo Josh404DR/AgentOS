@@ -1,5 +1,10 @@
 # AgentOS Unified Evidence and Reporting Contract
 
+governance_source: E:\AgentOS\AGENTS.md
+
+This contract supplies detailed evidence labels under the shared governance.
+If the two conflict, stop and request governance reconciliation.
+
 ## Purpose
 This contract establishes a stable, project-wide standard for task status, evidence, and role-specific obligations. It ensures that Hermes, Codex, and Claude use a unified language to communicate execution success, quality, and risk to the human lead (Josh Hsu).
 
@@ -45,7 +50,15 @@ Legacy labels such as `verified`, `not_verified`, `review_passed`, `partially_ve
 
 ## 3. Required Evidence Block Format
 
-Every task report must include this block:
+Every task report must include an Evidence Block. The required level is
+determined from the existing task metadata and Verify classification; it is
+not selected by the reporting agent.
+
+### Full Evidence Block
+
+`full` applies to every task that changes workspace files, writes production
+state, performs an external operation, is a `BUILDER_TASK` or `CODEX_BUILD`,
+or has `change_required: true`. It retains all 16 fields:
 
 ```text
 task_status:
@@ -66,11 +79,51 @@ remaining_caveats:
 production_ready:
 ```
 
+### Lightweight Evidence Block
+
+`lightweight` is allowed only when the task is explicitly
+`task_kind: read_only` and makes no workspace, production, or external state
+change, or when the existing Verify query-type logic determines
+`change_required: false`. It requires these 7 fields:
+
+```text
+task_status:
+claimed_by:
+task_kind:
+evidence_sources:
+verification_summary:
+verified_by_codex:
+remaining_caveats:
+```
+
+`evidence_sources` must identify the files, outputs, command results, or other
+evidence actually inspected. `verification_summary` must briefly state the
+inspection method and conclusion.
+
+If task metadata, query-type classification, or `change_required` conflict,
+use `full`; never automatically downgrade to `lightweight`.
+
 **Rules:**
 - Use `true`/`false` or explicit status values.
-- Do not omit fields. Use `not_applicable` if a field does not apply.
-- Use `unknown` if the state is not determined.
+- Do not omit fields required by the applicable level.
+- Use `unknown` when the executor did not attempt to determine the
+  corresponding state or cannot determine it.
+- Use `not_applicable` only after confirming that the field is logically
+  inapplicable to the nature of the task.
+- Never use `not_applicable` as a substitute for an unchecked, unknown, or
+  forgotten field.
 - Do not infer approval or verification.
+
+### Progressive Enforcement
+
+Phase 1 records structural field presence and non-empty values in the Verify
+bundle. Missing fields produce a `WARNING` only and do not automatically make
+Verify fail. `unknown` and `not_applicable` count as populated values.
+
+Phase 2, after observing 10–20 new tasks, may refine the checks based on
+measured results. Phase 3 may require an explicit reason when Verify passes a
+`full` block with missing critical fields. Phase 2 and Phase 3 are future
+stages and are not currently enforced.
 
 ---
 
@@ -156,19 +209,20 @@ Execution threshold:
 - **No Unapproved Cleanup**: Never execute deletion/archiving without Josh approval.
 - **No Overclaims**: Do not claim remote success based only on local evidence.
 
-### Codex (Builder/Technical Executor)
+### Codex (Complex Planner / Blind Verifier)
 - Technical execution specialist and fourth-party verifier.
 - Read repo/files, modify code/scripts/docs, and run tests.
 - **Builder Mode**: Execute assigned implementation or documentation work. Builder mode may report `locally_verified=true` after self-checks, but must not mark its own current-turn work as `verified_by_codex=true`.
+- **Mode Isolation**: A Codex Builder delivery must be verified by a different fresh Codex Verify process/session. Planner, Builder, and Verifier labels describe execution mode, not a permanently exclusive vendor assignment.
 - **Verifier Mode**: Independently inspect claims made by Hermes, Claude, tools, commits, or prior task reports. Verifier mode may set `verified_by_codex=true` only for specific claims actually inspected.
 - **Independent Verification**: Inspect files/diffs/logs to identify overclaims or drift.
 - **Evidence Reporting**: Must report exact files changed and verification commands used.
 - **No Business Decisions**: Do not own client communication or pricing decisions.
 
-### Claude (Inspector)
+### Claude (Workspace Implementation / Revision Worker)
 - **Inspector Role**: Review risk, boundaries, quality, overclaims, and test coverage.
 - **Worker Role**: Perform parallel analysis, documentation, or checklist generation.
-- **Advisory Only**: Claude review does not replace Codex verification or Josh approval.
+- **Implementation Is Not Verification**: Claude delivery does not replace an independent Codex Blind Verify verdict or Josh approval.
 
 ### Josh (Lead)
 - Final authority for destructive actions, client messages, installs, and production rollout.
