@@ -32,12 +32,73 @@ function Start-HermesProcess {
     return Start-Process -FilePath $HermesExe -ArgumentList $ProcArgs -WorkingDirectory $HermesRoot -WindowStyle Hidden -RedirectStandardOutput $stdout -RedirectStandardError $stderr -PassThru
 }
 
-function Get-HermesGatewayProcesses {
-    Get-CimInstance Win32_Process -ErrorAction SilentlyContinue |
-        Where-Object {
-            ($_.CommandLine -match 'cli\.py\s+--gateway') -or
-            (($_.CommandLine -match 'hermes(\.exe)?') -and ($_.CommandLine -match 'gateway\s+run'))
+function Set-HermesApiServerEnvironment {
+    $settings = @{}
+    foreach ($name in @(
+        "API_SERVER_ENABLED",
+        "API_SERVER_HOST",
+        "API_SERVER_PORT",
+        "API_SERVER_KEY"
+    )) {
+        $value = [Environment]::GetEnvironmentVariable($name, "User")
+        if ([string]::IsNullOrWhiteSpace($value)) {
+            throw "Required user environment variable is missing: $name"
         }
+        $settings[$name] = $value
+    }
+
+    if ($settings.API_SERVER_ENABLED -ne "true") {
+        throw "API_SERVER_ENABLED must be true"
+    }
+    if ($settings.API_SERVER_HOST -ne "127.0.0.1") {
+        throw "API_SERVER_HOST must be 127.0.0.1"
+    }
+    $port = 0
+    if (
+        -not [int]::TryParse($settings.API_SERVER_PORT, [ref]$port) -or
+        $port -lt 1 -or
+        $port -gt 65535
+    ) {
+        throw "API_SERVER_PORT must be a valid TCP port"
+    }
+    if ($settings.API_SERVER_KEY.Length -lt 32) {
+        throw "API_SERVER_KEY must contain at least 32 characters"
+    }
+
+    foreach ($name in $settings.Keys) {
+        [Environment]::SetEnvironmentVariable(
+            $name,
+            $settings[$name],
+            "Process"
+        )
+    }
+}
+
+function Get-HermesGatewayProcesses {
+    $lockPath = Join-Path $env:LOCALAPPDATA "hermes\gateway.lock"
+    if (-not (Test-Path -LiteralPath $lockPath -PathType Leaf)) {
+        return @()
+    }
+    try {
+        $lock = Get-Content -Raw -LiteralPath $lockPath -Encoding UTF8 |
+            ConvertFrom-Json -ErrorAction Stop
+        $processId = [int]$lock.pid
+        $process = Get-CimInstance Win32_Process `
+            -Filter "ProcessId=$processId" `
+            -ErrorAction Stop
+        if (
+            $process.CommandLine -match 'cli\.py\s+--gateway' -or
+            (
+                $process.CommandLine -match 'hermes(\.exe)?' -and
+                $process.CommandLine -match 'gateway\s+run'
+            )
+        ) {
+            return @($process)
+        }
+    } catch {
+        return @()
+    }
+    return @()
 }
 
 function Ensure-Gateway {
@@ -47,6 +108,7 @@ function Ensure-Gateway {
         return @{ running = $true; restarted = $false; mode = $mode; pids = @($running | ForEach-Object { $_.ProcessId }) }
     }
 
+    Set-HermesApiServerEnvironment
     $p = Start-HermesProcess -Name "hermes-gateway" -ProcArgs @("gateway", "run", "--accept-hooks")
     Start-Sleep -Seconds 5
     $after = @(Get-HermesGatewayProcesses)
