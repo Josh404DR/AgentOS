@@ -283,7 +283,11 @@ def external_task_status(dispatch_id: str, request: Request):
             first = verify_result.read_text(encoding="utf-8", errors="replace").splitlines()
             for line in first[:5]:
                 lowered = line.strip().lower()
-                if lowered.startswith("verdict:") or lowered.startswith("驗證結果"):
+                if (
+                    lowered.startswith("verify_verdict:")
+                    or lowered.startswith("verdict:")
+                    or lowered.startswith("驗證結果")
+                ):
                     verify_verdict = line.strip()
                     break
         except OSError:
@@ -294,9 +298,13 @@ def external_task_status(dispatch_id: str, request: Request):
         escalation_dir.glob("RESOLUTION*.json")
     )
 
+    client_ref = _read_field(task_text, "client_ref")
+    if not client_ref or client_ref.lower() == "none":
+        client_ref = None
+
     return {
         "dispatch_id": dispatch_id,
-        "client_ref": (_read_field(task_text, "client_ref") or "none").replace("none", "") or None,
+        "client_ref": client_ref,
         "task_status": _read_field(task_text, "task_status") or "unknown",
         "dispatch_status": _read_field(task_text, "dispatch_status") or "unknown",
         "result_available": result_exists,

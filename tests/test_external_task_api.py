@@ -152,7 +152,9 @@ class ExternalTaskApiTests(unittest.TestCase):
 
     def test_status_and_result_flow(self):
         created = self.client.post(
-            "/api/v1/external/tasks", json=self._body(), headers=self._auth()
+            "/api/v1/external/tasks",
+            json=self._body(client_ref="someone-none-else"),
+            headers=self._auth(),
         ).json()
         did = created["dispatch_id"]
 
@@ -160,6 +162,7 @@ class ExternalTaskApiTests(unittest.TestCase):
         self.assertEqual(status.status_code, 200)
         payload = status.json()
         self.assertEqual(payload["dispatch_status"], "ready_to_route")
+        self.assertEqual(payload["client_ref"], "someone-none-else")
         self.assertFalse(payload["result_available"])
         self.assertFalse(payload["escalation_pending"])
 
@@ -177,6 +180,17 @@ class ExternalTaskApiTests(unittest.TestCase):
         (api.ESCALATIONS_DIR / did).mkdir()
         status = self.client.get(f"/api/v1/external/tasks/{did}", headers=self._auth()).json()
         self.assertTrue(status["escalation_pending"])
+
+        verify_outputs = api.CODEX_TASKS_DIR / f"{did}-codex-verify" / "OUTPUTS"
+        verify_outputs.mkdir(parents=True)
+        for verdict in ("PASS", "FAIL", "NEEDS_HUMAN_DECISION"):
+            (verify_outputs / "VERIFY_RESULT.md").write_text(
+                f"verify_verdict: {verdict}\n", encoding="utf-8"
+            )
+            status = self.client.get(
+                f"/api/v1/external/tasks/{did}", headers=self._auth()
+            ).json()
+            self.assertEqual(status["verify_verdict"], f"verify_verdict: {verdict}")
 
     def test_unknown_task_404(self):
         r = self.client.get("/api/v1/external/tasks/scc-nope", headers=self._auth())
