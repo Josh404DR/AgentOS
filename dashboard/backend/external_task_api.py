@@ -129,6 +129,15 @@ def _utc_now() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
+def _queue_runner_alive() -> bool:
+    """Use the queue index heartbeat without inspecting process command lines."""
+    try:
+        age = datetime.now(timezone.utc).timestamp() - QUEUE_INDEX.stat().st_mtime
+    except OSError:
+        return False
+    return 0 <= age <= 180
+
+
 # ---------------------------------------------------------------------------
 # Request/response models
 # ---------------------------------------------------------------------------
@@ -148,22 +157,20 @@ class ExternalTaskCreate(BaseModel):
 def external_health():
     """Unauthenticated liveness probe for SCC. Reveals nothing sensitive."""
     key_ok = len(_configured_key()) >= MIN_KEY_LENGTH
-    index_age: float | None = None
-    try:
-        mtime = QUEUE_INDEX.stat().st_mtime
-        index_age = round(datetime.now(timezone.utc).timestamp() - mtime, 1)
-    except OSError:
-        index_age = None
     return {
-        "service": "agentos-external-task-api",
+        "queue_runner_alive": _queue_runner_alive(),
         "api_key_configured": key_ok,
-        "queue_index_age_seconds": index_age,
     }
 
 
 @router.post("/tasks")
 def create_external_task(body: ExternalTaskCreate, request: Request):
     _require_api_key(request)
+
+    if "\n" in body.title or "\r" in body.title:
+        raise HTTPException(status_code=400, detail="title must be a single line")
+    if "\n" in body.client_ref or "\r" in body.client_ref:
+        raise HTTPException(status_code=400, detail="client_ref must be a single line")
 
     route = body.route_to.strip() or "Codex CLI"
     if route not in ALLOWED_ROUTES:
@@ -183,13 +190,14 @@ def create_external_task(body: ExternalTaskCreate, request: Request):
 
     client_ref = body.client_ref.strip()
     risk_note = body.risk_note.strip()
+    packet_route = "Codex" if route == "Codex CLI" else "Claude"
     task_md = f"""# Task Packet — [SCC外部工單] {body.title.strip()}
 
 dispatch_id: {dispatch_id}
 parent_dispatch_id: none
 type: BUILDER_TASK
-assigned_to: {'Codex Builder' if route == 'Codex CLI' else 'Claude Worker'}
-route_to: {route}
+assigned_to: {'Codex' if route == 'Codex CLI' else 'Claude Worker'}
+route_to: {packet_route}
 codex_mode: {mode}
 task_kind: scc_external_request
 task_type: Complex
@@ -221,8 +229,23 @@ governance_hash: {gov_hash}
 - 完成後寫 `OUTPUTS\\RESULT.md`（含 Evidence Block），交由獨立 fresh
   read-only Verify session 驗證，實作者不自驗。
 """
+    prompt_md = f"""# AgentOS SCC 外部工單派送
+
+執行工單 `{dispatch_id}`。先讀取並遵守：
+
+- `E:\\AgentOS\\AGENTS.md`
+- `E:\\AgentOS\\data\\codex_tasks\\{dispatch_id}\\TASK.md`
+
+開工前必須執行 `scripts\\assert_governance_ready.ps1` 並核對工單的
+governance_version/hash。工作範圍、風險邊界、驗收條件與回報要求皆以
+TASK.md 為準。完成後寫入 `OUTPUTS\\RESULT.md`；實作者不得自行宣稱
+最終 PASS，必須交 fresh read-only Codex Verify。
+"""
     task_dir.mkdir(parents=True, exist_ok=False)
     (task_dir / "TASK.md").write_text(task_md, encoding="utf-8", newline="\n")
+    (task_dir / "PROMPT_FOR_CODEX.md").write_text(
+        prompt_md, encoding="utf-8", newline="\n"
+    )
 
     return {
         "dispatch_id": dispatch_id,
