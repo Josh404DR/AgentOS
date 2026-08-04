@@ -8,6 +8,11 @@ logs/*.log
 *.env
 *.env.local
 machine2_hermes_config/.env
+data/dashboard_auth/owner-token.txt
+data/dashboard_auth/
+data/dashboard_index/knowledge_workspace.sqlite3
+data/dashboard_index/knowledge_workspace.sqlite3-wal
+data/dashboard_index/knowledge_workspace.sqlite3-shm
 
 # Temporary files
 *.tmp
@@ -18,6 +23,8 @@ machine2_hermes_config/.env
 **/__pycache__/
 scripts/fan_control/fan_control.log
 **/.venv_notebooklm_poc/
+**/.venv*/
+dashboard/backend/.venv/
 data/codex_tasks/**/OUTPUTS/CODEX_CONSOLE.log
 
 # OS/editor noise
