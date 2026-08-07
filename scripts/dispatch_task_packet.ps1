@@ -574,6 +574,17 @@ $type = Get-PacketField $taskText "type"
 $codexMode = ([string](Get-PacketField $taskText "codex_mode")).ToLowerInvariant()
 $CodexModeForResult = if ($RouteTo -eq "Codex") { $codexMode } else { "n/a" }
 $impactScope = ([string](Get-PacketField $taskText "impact_scope")).ToLowerInvariant()
+# Optional: an external_task_api "workspace_root" field (an absolute local
+# directory outside $AgentOSRoot, e.g. an SCC audit target). Only trusted when
+# it resolves to a real directory on this machine; otherwise the CLI keeps
+# running under $AgentOSRoot exactly like before this field existed.
+$workspaceRootField = ([string](Get-PacketField $taskText "workspace_root")).Trim()
+$workspaceRoot = if ($workspaceRootField -and $workspaceRootField -ne "none" -and
+    (Test-Path -LiteralPath $workspaceRootField -PathType Container)) {
+    (Resolve-Path -LiteralPath $workspaceRootField).Path
+} else {
+    $null
+}
 
 $dispatchStatus = if ($decisionText) {
     Get-PacketField $decisionText "dispatch_status"
@@ -784,6 +795,25 @@ switch ($RouteTo) {
             ' --allowedTools "WebSearch" "WebFetch"'
         } else {
             ''
+        }
+        # codex_mode: verify => this is a read-only audit/verification task, not a
+        # build. Deny the file-modifying tools outright (belt-and-suspenders on top
+        # of the prompt's own "do not modify" instructions) regardless of
+        # --permission-mode. Build/plan Claude Worker tasks are unaffected.
+        if ($codexMode -eq "verify") {
+            $claudeExtraArgs += ' --disallowedTools "Edit" "Write" "NotebookEdit"'
+        }
+        # workspace_root (see external_task_api.py) lets a task point the CLI at a
+        # real target directory outside $AgentOSRoot (e.g. an SCC audit target).
+        # Claude Code enforces a directory trust boundary even for -p/headless runs
+        # scoped to cwd, so without this the CLI can only ever access paths under
+        # $AgentOSRoot and any absolute path outside it is refused (this was the
+        # actual bug: a task's target path never reached the CLI invocation at
+        # all). cwd stays $AgentOSRoot so the prompt's existing absolute-path
+        # references to E:\AgentOS\AGENTS.md etc. keep working unchanged;
+        # --add-dir only *adds* read access to the target, it doesn't move cwd.
+        if ($workspaceRoot) {
+            $claudeExtraArgs += " --add-dir `"$workspaceRoot`""
         }
         $commandDescription = "claude -p --permission-mode acceptEdits --no-session-persistence$claudeExtraArgs < `"$promptPath`""
         if (-not $DryRun) {

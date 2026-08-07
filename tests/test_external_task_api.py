@@ -138,6 +138,38 @@ class ExternalTaskApiTests(unittest.TestCase):
         r = self.client.post("/api/v1/external/tasks", json=bad_mode, headers=self._auth())
         self.assertEqual(r.status_code, 400)
 
+    def test_create_accepts_valid_workspace_root(self):
+        with tempfile.TemporaryDirectory() as target:
+            r = self.client.post(
+                "/api/v1/external/tasks",
+                json=self._body(route_to="Claude CLI", workspace_root=target),
+                headers=self._auth(),
+            )
+            self.assertEqual(r.status_code, 200, r.text)
+            dispatch_id = r.json()["dispatch_id"]
+            task_md = (api.CODEX_TASKS_DIR / dispatch_id / "TASK.md").read_text(encoding="utf-8")
+            self.assertIn(f"workspace_root: {target}", task_md)
+
+    def test_create_defaults_workspace_root_to_none(self):
+        r = self.client.post(
+            "/api/v1/external/tasks", json=self._body(), headers=self._auth()
+        )
+        self.assertEqual(r.status_code, 200, r.text)
+        dispatch_id = r.json()["dispatch_id"]
+        task_md = (api.CODEX_TASKS_DIR / dispatch_id / "TASK.md").read_text(encoding="utf-8")
+        self.assertIn("workspace_root: none", task_md)
+
+    def test_create_rejects_nonexistent_workspace_root(self):
+        bad = self._body(workspace_root=r"E:\this-directory-should-not-exist-12345")
+        r = self.client.post("/api/v1/external/tasks", json=bad, headers=self._auth())
+        self.assertEqual(r.status_code, 400)
+
+    def test_create_rejects_relative_workspace_root(self):
+        with tempfile.TemporaryDirectory() as target:
+            bad = self._body(workspace_root=Path(target).name)
+            r = self.client.post("/api/v1/external/tasks", json=bad, headers=self._auth())
+            self.assertEqual(r.status_code, 400)
+
     def test_governance_drift_blocks_intake_503(self):
         api.AGENTS_MD.write_text("governance content CHANGED", encoding="utf-8")
         r = self.client.post("/api/v1/external/tasks", json=self._body(), headers=self._auth())

@@ -148,6 +148,10 @@ class ExternalTaskCreate(BaseModel):
     codex_mode: str = "build"
     risk_note: str = Field(default="", max_length=2000)
     client_ref: str = Field(default="", max_length=120)
+    # Optional: an absolute local directory outside E:\AgentOS that the CLI should
+    # actually operate in (e.g. an SCC audit target). When set, the dispatcher uses
+    # this as the CLI's working directory instead of defaulting to AgentOSRoot.
+    workspace_root: str = Field(default="", max_length=500)
 
 
 # ---------------------------------------------------------------------------
@@ -179,6 +183,18 @@ def create_external_task(body: ExternalTaskCreate, request: Request):
     if mode not in ALLOWED_MODES:
         raise HTTPException(status_code=400, detail="codex_mode must be build|plan|verify")
 
+    workspace_root = body.workspace_root.strip()
+    if workspace_root:
+        if "\n" in workspace_root or "\r" in workspace_root:
+            raise HTTPException(status_code=400, detail="workspace_root must be a single line")
+        workspace_path = Path(workspace_root)
+        if not workspace_path.is_absolute() or not workspace_path.is_dir():
+            raise HTTPException(
+                status_code=400,
+                detail="workspace_root must be an existing absolute directory",
+            )
+        workspace_root = str(workspace_path)
+
     version, gov_hash = _governance_binding()
 
     slug = _SLUG_RE.sub("-", body.title.lower()).strip("-")[:40] or "task"
@@ -199,6 +215,7 @@ type: BUILDER_TASK
 assigned_to: {'Codex' if route == 'Codex CLI' else 'Claude Worker'}
 route_to: {packet_route}
 codex_mode: {mode}
+workspace_root: {workspace_root or 'none'}
 task_kind: scc_external_request
 task_type: Complex
 task_status: ready
