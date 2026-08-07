@@ -797,11 +797,22 @@ switch ($RouteTo) {
             ''
         }
         # codex_mode: verify => this is a read-only audit/verification task, not a
-        # build. Deny the file-modifying tools outright (belt-and-suspenders on top
-        # of the prompt's own "do not modify" instructions) regardless of
-        # --permission-mode. Build/plan Claude Worker tasks are unaffected.
+        # build. A bare tool name in --disallowedTools removes that tool from
+        # Claude's context entirely; a bare tool name in --allowedTools matches
+        # every use of that tool with no approval prompt (docs.claude.com/en/docs/
+        # claude-code/permissions). These rule sets cover different tools, so
+        # combining them gives "can execute commands, cannot edit files":
+        #   - Deny Edit/Write/NotebookEdit outright, regardless of --permission-mode.
+        #   - Allow Bash outright, so running a test suite doesn't stall on an
+        #     approval prompt nobody can answer in this non-interactive session
+        #     (previously only file edits were auto-accepted via acceptEdits, so
+        #     every Bash command still asked for approval and could never get one).
+        # Caveat: this blocks Claude's own file tools and the file commands it
+        # recognizes inside Bash, but not an arbitrary subprocess that writes a
+        # file itself (e.g. a Python script run via Bash); only OS-level
+        # sandboxing (a separate feature, not enabled here) closes that gap.
         if ($codexMode -eq "verify") {
-            $claudeExtraArgs += ' --disallowedTools "Edit" "Write" "NotebookEdit"'
+            $claudeExtraArgs += ' --disallowedTools "Edit" "Write" "NotebookEdit" --allowedTools "Bash"'
         }
         # workspace_root (see external_task_api.py) lets a task point the CLI at a
         # real target directory outside $AgentOSRoot (e.g. an SCC audit target).
