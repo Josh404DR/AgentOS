@@ -9,7 +9,9 @@ param(
     [int]$MaxTasksPerRun = 20,
     [int]$MaxAttemptsPerRoute = 2,
     [string]$DispatcherPath = "",
-    [int]$FullSweepIntervalSeconds = 60
+    [int]$FullSweepIntervalSeconds = 60,
+    [ValidateSet("ci", "runtime")]
+    [string]$Environment = "runtime"
 )
 
 $ErrorActionPreference = "Stop"
@@ -671,7 +673,7 @@ function New-RevisionTask([object[]]$Tasks, [object]$VerifyTask) {
                 -TaskId $originalId -Source $source -Reason $escalationReason `
                 -DecisionType "accept_partial_delivery" `
                 -SummaryForJosh "Task $originalId failed Codex Verify after two Claude revisions." `
-                -Evidence @((Get-ReviewFlowPath $originalId)) -AgentOSRoot $AgentOSRoot | Out-Null
+                -Evidence @((Get-ReviewFlowPath $originalId)) -AgentOSRoot $AgentOSRoot -Environment $Environment | Out-Null
             Write-QueueEvent $originalId "escalation_required" $escalationReason
             return
         }
@@ -780,7 +782,7 @@ function Update-ReviewFlowStates([object[]]$Tasks) {
                 -Reason "codex_verify_needs_human_decision" `
                 -DecisionType "clarify_requirement" `
                 -SummaryForJosh "Codex Verify requires a Josh decision instead of PASS or FAIL." `
-                -Evidence @((Get-ResultPath $review.Id)) -AgentOSRoot $AgentOSRoot | Out-Null
+                -Evidence @((Get-ResultPath $review.Id)) -AgentOSRoot $AgentOSRoot -Environment $Environment | Out-Null
             # NEEDS_HUMAN_DECISION trajectories also feed the learning loop.
             $originalTaskType = if ($original) {
                 Get-Field $original.Text "task_type"
@@ -810,7 +812,7 @@ function Update-ReviewFlowStates([object[]]$Tasks) {
                 -Reason "invalid_or_missing_verify_verdict" `
                 -DecisionType "retry_with_changes" `
                 -SummaryForJosh "Codex Verify did not emit a valid verdict; Josh must decide whether to retry." `
-                -Evidence @((Get-ResultPath $review.Id)) -AgentOSRoot $AgentOSRoot | Out-Null
+                -Evidence @((Get-ResultPath $review.Id)) -AgentOSRoot $AgentOSRoot -Environment $Environment | Out-Null
             Write-QueueEvent $originalId "escalation_required" "invalid_verify_verdict:$($review.Id)"
         }
     }
@@ -948,7 +950,7 @@ while ($executed -lt $MaxTasksPerRun) {
                 -TaskId $ready.Id -Source $escalationSource `
                 -Reason $reason -DecisionType "retry_with_changes" `
                 -SummaryForJosh "All bounded retries and compliant worker fallbacks were exhausted; the queue continued processing independent tasks." `
-                -EvidenceB64 $evidenceB64 -AgentOSRoot $AgentOSRoot 2>&1
+                -EvidenceB64 $evidenceB64 -AgentOSRoot $AgentOSRoot -Environment $Environment 2>&1
             if ($LASTEXITCODE -ne 0) { throw ($escalationOutput -join [Environment]::NewLine) }
         } catch {
             Write-QueueEvent $ready.Id "escalation_write_failed" $_.Exception.Message
