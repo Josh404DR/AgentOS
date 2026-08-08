@@ -1,6 +1,11 @@
 # AgentOS Architecture
 
-Updated: 2026-06-20 21:58 Asia/Taipei
+governance_source: E:\AgentOS\AGENTS.md
+
+This document explains architecture. Shared authority, deletion approval,
+cross-window sync, and evidence precedence live in the root governance source.
+
+Document revision history is tracked in version control; current governance status is not copied here. See the auto-generated [Governance Status Snapshot](GOVERNANCE_STATUS_SNAPSHOT.md).
 Owner: Josh Hsu
 Coordinator: Hermes
 
@@ -15,22 +20,27 @@ Primary business flow:
 ```text
 Josh <-> Telegram <-> Hermes
                          |
-                         | lead patrol / project coordination / review summaries
+                         | intake / routing / task dispatching / reporting
                          v
                 AgentOS data + workflows
                          |
-          +--------------+--------------+
-          |                             |
-       Codex                         Gemini
-  code execution, tests,       research, summarization,
-  scripts, repo work           second opinions, fallback reasoning
+        +----------------+----------------+
+        |                                 |
+     Claude                             Gemini
+  workspace implementer             research & second opinion
+        |
+        +-- (Codex Plan: task packet breakdown)
+        |
+        +-- (Codex Verify: read-only blind verification)
 ```
 
-Hermes is the brain. Codex and Gemini are execution/reasoning helpers. Josh approves final client-facing commitments.
+Hermes handles receiving, classification, dispatching, and reporting. Claude is the default workspace implementer. Codex Plan breaks down Complex Tasks, and Codex Verify performs independent read-only verification. Gemini provides research and fallback reasoning. The task queue (task_queue_runner.ps1) handles deterministic scheduling and is not an AI agent. Josh approves final client-facing commitments.
 
 ## Current Implementation Snapshot
 
-Observed top-level structure:
+Observed top-level structure (updated 2026-08-08; this snapshot decays as the
+tree grows — treat `data\codex_tasks\` volume and any newly added top-level
+directory as expected drift, not an error):
 
 ```text
 E:\AgentOS\
@@ -39,26 +49,53 @@ E:\AgentOS\
     codex.md
     gemini.md
     hermes.md
+  archive\
+    Cursor_use\
+    scripts\
+  dashboard\
+    backend\
+    frontend\
+    DASHBOARD_SCOPE.md
+    start.ps1
   data\
     codex_tasks\
+    escalations\
+      ESCALATION_INDEX.jsonl
+    governance\
+      governance_baseline.json
+      governance_status.json
     leads\
+    metrics\
+      METRICS_LOG.jsonl
     projects\
     proposals\
   docs\
     ARCHITECTURE.md
     SETUP_STATUS.md
+    governance\
+  integrations\
+    antigravity\
+    hermes_plugins\
   logs\
     hermes-gateway.stderr.log
     hermes-gateway.stdout.log
     model_fallback_state.json
     watchdog_state.json
+  projects\
+    (client/portfolio project directories, each with its own nested git metadata)
   scripts\
     model_fallback.ps1
     replicate_to_machine2.ps1
     setup_hermes.ps1
     start.ps1
+    task_queue_runner.ps1
     test_hermes.ps1
     watchdog.ps1
+  tests\
+  tools\
+    network\
+    threads\
+    upwork\
   workflows\
     ai_freelancer_os.md
     client_project.md
@@ -77,7 +114,7 @@ Current state by layer:
 | Codex execution | `data\codex_tasks\`; `workflows\hermes_to_codex.md` | Task packet contract exists; mock/smoke packet cycles completed; no real client packet cycle observed yet |
 | Project delivery | `data\projects\`; `workflows\client_project.md` | Directory and workflow exist; no active project artifacts observed yet |
 | Maintenance | `scripts\start.ps1`, `watchdog.ps1`, `model_fallback.ps1`; `logs\*.json` | Scripts exist and parser checks were previously recorded as passing; logs show legacy gateway and healthy model check |
-| Queue/database | File directories only | No database, broker, queue runner, or daemon inside AgentOS |
+| Queue/runner | `scripts\task_queue_runner.ps1`; `data\codex_tasks\...`; `data\escalations\`; `data\metrics\` | Deterministic PowerShell queue runner operational under Workflow v1.2. Receives classified tasks and manages dependency scheduling, dispatcher execution, Verify verdict parsing, retry, escalation, and metrics. |
 
 ## Internal Device Maintenance
 
@@ -124,12 +161,15 @@ AgentOS operates under a unified reporting contract to ensure alignment between 
 
 ## Agent Responsibilities
 
-| Agent | Current role | Primary artifacts | Status |
+| Agent / Component | Current role | Primary artifacts | Status |
 |---|---|---|---|
-| Hermes | AgentOS coordinator, Telegram-facing brain, real lead patrol, proposal coordination, health reporting | `SOUL.md`, Hermes cron, `data\leads\`, `data\proposals\`, `docs\SETUP_STATUS.md` | Running, Telegram connected |
-| Codex | Execution specialist for code, scripts, repo inspection, tests, and structured file edits | `data\codex_tasks\...\TASK.md`, `OUTPUTS\RESULT.md`, changed files | Workflow specified, no daemon yet |
-| Gemini | Research, summarization, alternate reasoning, fallback/low-cost analysis | Lead analysis notes, proposal support, Hermes model fallback | Role exists, operational details still light |
-| OpenClaw | Separate Telegram/Gemini gateway from the Hub era | External state under `.openclaw-ai-hub` | Separate bot confirmed, no conflict with Hermes |
+| Hermes | Telegram-facing intake, task dispatching, classification, and reporting | `SOUL.md`, Hermes cron, `data\leads\`, `data\proposals\`, `docs\SETUP_STATUS.md` | Running, Telegram connected |
+| Claude | Default workspace implementer for code changes and test execution | Scoped patches, local source edits | Active worker |
+| Codex Plan | Breaks down Complex Tasks into subtasks and dependency orders | `TASK.md` packet structure and plans | Triggered for Complex tasks |
+| Codex Verify | Performs independent, read-only blind verification in a separate session | `OUTPUTS\RESULT.md`, `OUTPUTS\VERIFY_BUNDLE.md` | Active validator |
+| Gemini | Research, summarization, fallback reasoning, and second opinions | Lead analysis notes, proposal support, model fallback | Operational |
+| Queue | Deterministic scheduling runner (`task_queue_runner.ps1`) receiving classified tasks; manages dependency scheduling, execution, Verify verdict parsing, retry, escalation, and metrics. **Not an AI agent.** | `data\queue_runs\`, execution logs | Operational |
+| OpenClaw | Separate Telegram/Gemini gateway from the Hub era | External state under `.openclaw-ai-hub` | Separate bot confirmed, no conflict |
 
 ## Workflow Surfaces
 
@@ -167,17 +207,22 @@ Important boundary: screening consumes Hermes lead output. It must not run a sec
 
 Source of truth: `workflows\hermes_to_codex.md`
 
-Expected flow:
+Expected flow (Workflow v1.2):
 
 ```text
-Hermes creates task packet
-  data\codex_tasks\YYYY-MM-DD-<task-slug>\TASK.md
-Codex executes
-  data\codex_tasks\YYYY-MM-DD-<task-slug>\OUTPUTS\RESULT.md
-Hermes summarizes result to Josh
+Hermes / local worker
+  -> TASK.md / task packet
+  -> task_queue_runner.ps1
+  -> Claude Worker implements
+  -> OUTPUTS/RESULT.md + SCOPED_DIFF.patch + TEST_RESULT.md
+  -> Codex Blind Verify
+       -> PASS: write_task_metric.ps1 -> Hermes summary
+       -> FAIL: return to Claude Worker, up to 2 revision rounds
+       -> still FAIL / risky / unclear: write_escalation.ps1
+          -> ESCALATION_INDEX.jsonl -> Josh decision
 ```
 
-Do not build an execution daemon yet. Use file packets first, then automate only after the packet workflow is proven.
+技術限制：Codex Blind Verify 必須使用獨立的 verify context / bundle，不得包含 Codex Plan reasoning 或先前聊天歷史；只能接收 task ticket、acceptance criteria、scoped diff、test result、delivery artifact 與必要治理綁定。
 
 ### Live Hermes-Codex Bridge
 
@@ -210,7 +255,7 @@ AgentOS currently uses lightweight file-based state:
 - Project execution records: `data\projects\<project_id>\...`
 - Maintenance state: `logs\watchdog_state.json`, `logs\model_fallback_state.json`
 
-No database or queue runner exists inside AgentOS. That is intentional for now.
+Workflow v1.2 is operational. The queue runner (`scripts\task_queue_runner.ps1`) is a deterministic PowerShell runner — it is not an LLM broker. It receives rule-based classified tasks, executes approved task packets in dependency order, parses Verify verdicts, handles retries, triggers escalation JSON writing to `data\escalations\`, and appends metrics to `data\metrics\METRICS_LOG.jsonl`.
 
 ## Hermes / Codex / Gemini Collaboration Seam
 
@@ -310,7 +355,7 @@ Known blockers:
 ## Explicit Non-Goals For Now
 
 - Do not rewrite or add a second lead-finding agent; Hermes already owns real lead discovery.
-- Do not create a new queue, database, broker, or scheduler until the file-packet workflow has been proven.
+- Do not create a second queue runner; `scripts\task_queue_runner.ps1` is the canonical deterministic runner under Workflow v1.2.
 - Do not rebuild `E:\AI_Projects_Hub` governance inside AgentOS.
 - Do not let Codex contact clients, submit proposals, or make pricing commitments.
 - Do not pretend Hermes proxy, Claude bridge, or scheduler gateway behavior is solved until they are actually tested end to end.
