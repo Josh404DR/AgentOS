@@ -5,14 +5,25 @@
 param(
     [string]$BridgeId = (Get-Date -Format "yyyy-MM-dd-HHmmss"),
     [string]$AgentOSRoot = "E:\AgentOS",
-    [string]$HermesRoot = "E:\AI_Projects_Hub\External_AI_Agents\hermes-agent",
+    [string]$HermesRoot,
     [string]$TaskSeed = "Verify the consistency of the 'Three-Agent Protocol' section across agents/roles/hermes.md, agents/roles/codex.md, and agents/roles/claude.md."
 )
 
 $ErrorActionPreference = "Stop"
 $Utf8NoBom = New-Object System.Text.Utf8Encoding($false)
+$runtimeLoader = Join-Path $AgentOSRoot "scripts\lib\runtime_config.ps1"
+. $runtimeLoader
+$runtimeConfig = Get-AgentOSRuntimeConfig -AgentOSRoot $AgentOSRoot
+if ([string]::IsNullOrWhiteSpace($HermesRoot)) {
+    $HermesRoot = [string]$runtimeConfig.hermes.root
+    $HermesExe = [string]$runtimeConfig.hermes.executable
+} else {
+    $HermesExe = Join-Path $HermesRoot ".venv\Scripts\hermes.exe"
+}
+$governanceGate = Join-Path $AgentOSRoot "scripts\assert_governance_ready.ps1"
+$governanceOutput = & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $governanceGate -AgentOSRoot $AgentOSRoot
+if ($LASTEXITCODE -ne 0) { throw "Governance gate blocked tripartite bridge.`n$($governanceOutput -join "`n")" }
 
-$HermesExe = Join-Path $HermesRoot ".venv\Scripts\hermes.exe"
 $RunDir = Join-Path $AgentOSRoot "data\live_bridge\tripartite_$BridgeId"
 New-Item -ItemType Directory -Force -Path $RunDir | Out-Null
 

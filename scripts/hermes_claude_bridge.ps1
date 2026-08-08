@@ -1,3 +1,8 @@
+﻿# DEPRECATED — 2026-07-08 (W20)
+# 此腳本為 live bridge/test pipeline，不是通用的 TASK.md 讀取器。
+# 正式任務路由請使用：scripts\dispatch_task_packet.ps1 -DispatchId <id>
+# 保留作為參考；非必要請勿直接呼叫。
+#
 # AgentOS Hermes <-> Claude CLI live bridge
 # Runs one real CLI handoff:
 # Hermes generates a message -> Claude CLI answers -> Hermes summarizes Claude result.
@@ -5,13 +10,24 @@
 param(
     [string]$BridgeId = (Get-Date -Format "yyyy-MM-dd-HHmmss"),
     [string]$AgentOSRoot = "E:\AgentOS",
-    [string]$HermesRoot = "E:\AI_Projects_Hub\External_AI_Agents\hermes-agent",
+    [string]$HermesRoot,
     [string]$ClaudePrompt = "Claude, this is a live bridge test from Hermes. Reply concisely with your status and confirm you can read AgentOS files in read-only mode."
 )
 
 $ErrorActionPreference = "Stop"
+$runtimeLoader = Join-Path $AgentOSRoot "scripts\lib\runtime_config.ps1"
+. $runtimeLoader
+$runtimeConfig = Get-AgentOSRuntimeConfig -AgentOSRoot $AgentOSRoot
+if ([string]::IsNullOrWhiteSpace($HermesRoot)) {
+    $HermesRoot = [string]$runtimeConfig.hermes.root
+    $HermesExe = [string]$runtimeConfig.hermes.executable
+} else {
+    $HermesExe = Join-Path $HermesRoot ".venv\Scripts\hermes.exe"
+}
+$governanceGate = Join-Path $AgentOSRoot "scripts\assert_governance_ready.ps1"
+$governanceOutput = & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $governanceGate -AgentOSRoot $AgentOSRoot
+if ($LASTEXITCODE -ne 0) { throw "Governance gate blocked Hermes-Claude bridge.`n$($governanceOutput -join "`n")" }
 
-$HermesExe = Join-Path $HermesRoot ".venv\Scripts\hermes.exe"
 $RunDir = Join-Path $AgentOSRoot "data\live_bridge\claude_$BridgeId"
 $HermesToClaudePath = Join-Path $RunDir "01_HERMES_TO_CLAUDE.md"
 $ClaudeReplyPath = Join-Path $RunDir "02_CLAUDE_REPLY.md"

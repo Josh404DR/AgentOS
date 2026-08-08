@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
     [string]$AgentOSRoot = "E:\AgentOS",
-    [string]$HermesRoot = "E:\AI_Projects_Hub\External_AI_Agents\hermes-agent",
+    [string]$HermesRoot,
     [string]$ProfileHome = "$env:LOCALAPPDATA\hermes-lite",
     [string]$TelegramAllowedUsers = "1449022024",
     [switch]$ValidateOnly
@@ -9,7 +9,15 @@ param(
 
 $ErrorActionPreference = "Stop"
 $utf8 = [Text.UTF8Encoding]::new($false)
-$hermesExe = Join-Path $HermesRoot ".venv\Scripts\hermes.exe"
+$runtimeLoader = Join-Path $AgentOSRoot "scripts\lib\runtime_config.ps1"
+. $runtimeLoader
+$runtimeConfig = Get-AgentOSRuntimeConfig -AgentOSRoot $AgentOSRoot
+if ([string]::IsNullOrWhiteSpace($HermesRoot)) {
+    $HermesRoot = [string]$runtimeConfig.hermes.root
+    $hermesExe = [string]$runtimeConfig.hermes.executable
+} else {
+    $hermesExe = Join-Path $HermesRoot ".venv\Scripts\hermes.exe"
+}
 $envPath = Join-Path $ProfileHome ".env"
 $configPath = Join-Path $ProfileHome "config.yaml"
 $pluginSource = Join-Path $AgentOSRoot "integrations\hermes_plugins\agentos-typed-dispatch"
