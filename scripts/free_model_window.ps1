@@ -8,12 +8,16 @@ param(
     [string]$Message,
     [string]$AgentOSRoot = "E:\AgentOS",
     [int]$MaxTokens = 120,
+    [int]$MaxMessageChars = 6000,
     [switch]$Invoke
 )
 
 $ErrorActionPreference = "Stop"
 [Console]::OutputEncoding = [System.Text.UTF8Encoding]::new($false)
 $OutputEncoding = [System.Text.UTF8Encoding]::new($false)
+$governanceGate = Join-Path $AgentOSRoot "scripts\assert_governance_ready.ps1"
+$governanceOutput = & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $governanceGate -AgentOSRoot $AgentOSRoot
+if ($LASTEXITCODE -ne 0) { throw "Governance gate blocked free-model window.`n$($governanceOutput -join "`n")" }
 
 function Read-JsonFile([string]$Path) {
     if (-not (Test-Path -LiteralPath $Path)) {
@@ -91,12 +95,21 @@ function Invoke-FreeChatCompletion($ProviderConfig, [string]$ProviderName, [stri
         $headers["X-Title"] = "AgentOS Free Window Guard"
     }
 
+    $liteSystem = @"
+You are Hermes Lite, the low-cost Telegram intake voice for AgentOS.
+Answer briefly in the same language Josh uses.
+You have no tools in this mode. Do not claim file, routing, fetch, model, or
+external actions unless the current message contains explicit artifact output.
+Ordinary conversation is context, not permission to execute.
+For real work, ask Josh to use a URL or an explicit [TYPE: ...] dispatch.
+"@
+
     $body = @{
         model = $model
         messages = @(
             @{
                 role = "system"
-                content = "You are Hermes Lite, the low-cost Telegram intake voice for AgentOS. Keep Josh oriented and answer briefly in the same language Josh uses unless he explicitly asks for another language. You cannot call tools in this lite mode, cannot edit files, cannot create tasks, and cannot route work to Codex or Claude by yourself. Never say you will route, have routed, will summarize a link, or have performed external/file actions unless an explicit artifact or typed dispatch result is present. For real work, ask Josh to send a typed dispatch block such as [TYPE: CODEX_VERIFY] or [TYPE: CLAUDE_REVIEW]."
+                content = $liteSystem
             },
             @{
                 role = "user"
@@ -179,6 +192,15 @@ if ($status -ne "ready") {
 
 if (-not $Message) {
     throw "Provide -Message when using -Invoke."
+}
+if ($Message.Length -gt $MaxMessageChars) {
+    Write-Output "provider_call_status=blocked"
+    Write-Output "reason=message_exceeds_lite_limit"
+    Write-Output "message_chars=$($Message.Length)"
+    Write-Output "max_message_chars=$MaxMessageChars"
+    Write-Output "models_invoked=false"
+    Write-Output "external_services_invoked=false"
+    exit 0
 }
 
 # Count before network call so failed attempts are still visible.

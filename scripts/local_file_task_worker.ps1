@@ -2,7 +2,9 @@ param(
     [Parameter(Mandatory = $true)][string]$MessageText,
     [Parameter(Mandatory = $true)][string]$DispatchId,
     [string]$AgentOSRoot = "E:\AgentOS",
-    [int]$TimeoutSeconds = 600
+    [int]$TimeoutSeconds = 600,
+    [switch]$RunQueueInline,
+    [string]$QueueDispatcherPath = ""
 )
 
 $ErrorActionPreference = "Stop"
@@ -246,35 +248,40 @@ $task
 "@
 [IO.File]::WriteAllText($promptPath, $prompt, $Utf8NoBom)
 
-$dispatcher = Join-Path $root "scripts\dispatch_task_packet.ps1"
-if (-not (Test-Path -LiteralPath $dispatcher -PathType Leaf)) {
-    throw "Canonical dispatcher not found: $dispatcher"
-}
-$dispatchOutput = & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $dispatcher `
-    -DispatchId $safeId -AgentOSRoot $root 2>&1 | Out-String
-[IO.File]::WriteAllText($consolePath, $dispatchOutput.Trim(), $Utf8NoBom)
-if ($LASTEXITCODE -ne 0 -or -not (Test-Path -LiteralPath $resultPath)) {
-    throw "Canonical dispatcher failed with exit code $LASTEXITCODE."
-}
 $queueStartStatus = "not_requested"
 $queueProcessId = ""
 $queueStatePath = ""
 if ($taskType -in @("Simple", "Complex", "INFO_QUERY")) {
-    $queueStarter = Join-Path $root "scripts\start_task_queue.ps1"
-    if (-not (Test-Path -LiteralPath $queueStarter -PathType Leaf)) {
-        throw "Queue starter not found: $queueStarter"
+    if ($RunQueueInline) {
+        $queueRunner = Join-Path $root "scripts\task_queue_runner.ps1"
+        if (-not (Test-Path -LiteralPath $queueRunner -PathType Leaf)) {
+            throw "Queue runner not found: $queueRunner"
+        }
+        $queueArgs = @(
+            "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", $queueRunner,
+            "-RootDispatchId", $safeId, "-AgentOSRoot", $root, "-PollSeconds", "0"
+        )
+        if ($QueueDispatcherPath) { $queueArgs += @("-DispatcherPath", $QueueDispatcherPath) }
+        $queueOutput = & powershell.exe @queueArgs 2>&1
+    } else {
+        $queueStarter = Join-Path $root "scripts\start_task_queue.ps1"
+        if (-not (Test-Path -LiteralPath $queueStarter -PathType Leaf)) {
+            throw "Queue starter not found: $queueStarter"
+        }
+        $queueOutput = & powershell.exe -NoProfile -ExecutionPolicy Bypass `
+            -File $queueStarter -RootDispatchId $safeId -AgentOSRoot $root 2>&1
     }
-    $queueOutput = & powershell.exe -NoProfile -ExecutionPolicy Bypass `
-        -File $queueStarter -RootDispatchId $safeId -AgentOSRoot $root 2>&1
     $queueExitCode = $LASTEXITCODE
     $queueText = $queueOutput -join "`n"
+    [IO.File]::WriteAllText($consolePath, $queueText.Trim(), $Utf8NoBom)
     if ($queueExitCode -ne 0) {
-        throw "Queue starter failed with exit code $queueExitCode.`n$queueText"
+        throw "Resilient queue failed to start or run with exit code $queueExitCode.`n$queueText"
     }
-    $queueStartStatus = ([regex]::Match(
-        $queueText,
-        '(?m)^queue_start_status=(.+)$'
-    )).Groups[1].Value.Trim()
+    $queueStartStatus = if ($RunQueueInline) {
+        "inline_completed"
+    } else {
+        ([regex]::Match($queueText, '(?m)^queue_start_status=(.+)$')).Groups[1].Value.Trim()
+    }
     $queueProcessId = ([regex]::Match(
         $queueText,
         '(?m)^queue_process_id=(.+)$'
@@ -284,12 +291,13 @@ if ($taskType -in @("Simple", "Complex", "INFO_QUERY")) {
         '(?m)^queue_state_path=(.+)$'
     )).Groups[1].Value.Trim()
 }
-Write-Output "local_file_task_status=completed"
+Write-Output "local_file_task_status=$(if ($RunQueueInline) { 'completed_locally' } else { 'queued' })"
 Write-Output "dispatch_id=$DispatchId"
 Write-Output "target_path=$target"
 Write-Output "task_path=$taskPath"
 Write-Output "result_path=$resultPath"
-Write-Output "models_invoked=$(if ($isPlanTask) { 'codex_cli' } else { 'claude_cli' })"
+Write-Output "models_invoked=$(if ($RunQueueInline) { 'by_resilient_queue' } else { 'false_at_intake' })"
+Write-Output "worker_route=$routeTo"
 Write-Output "external_services_invoked=false"
 Write-Output "queue_start_status=$queueStartStatus"
 Write-Output "queue_process_id=$queueProcessId"
