@@ -1,4 +1,4 @@
-# AgentOS typed dispatch runner
+﻿# AgentOS typed dispatch runner
 # Deterministic router for Josh [TYPE: ...] requests.
 # This script assembles routing decisions and prompt packets without calling
 # Gemini, Codex, Claude, or external services.
@@ -13,13 +13,19 @@ param(
 
 $ErrorActionPreference = "Stop"
 $Utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+$governanceGate = Join-Path $AgentOSRoot "scripts\assert_governance_ready.ps1"
+$governanceOutput = & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $governanceGate -AgentOSRoot $AgentOSRoot
+if ($LASTEXITCODE -ne 0) { throw "Governance gate blocked typed dispatch.`n$($governanceOutput -join "`n")" }
+$governanceText = $governanceOutput -join "`n"
+$governanceVersion = ([regex]::Match($governanceText, '(?m)^governance_version=(.+)$')).Groups[1].Value.Trim()
+$governanceHash = ([regex]::Match($governanceText, '(?m)^governance_hash=(.+)$')).Groups[1].Value.Trim()
 
 function Read-TextInput {
     if ($InputFile) {
         if (-not (Test-Path -LiteralPath $InputFile)) {
             throw "Input file not found: $InputFile"
         }
-        return Get-Content -Raw -LiteralPath $InputFile
+        return [IO.File]::ReadAllText($InputFile, [Text.Encoding]::UTF8)
     }
     if ($InputText) { return $InputText }
     throw "Provide -InputText or -InputFile."
@@ -39,6 +45,7 @@ function Parse-TypedFields([string]$Text) {
 function Get-RouteSpec([string]$Type) {
     $map = @{
         "CODEX_BUILD"   = @{ route_to = "Codex"; template = "prompts\task_templates\codex_build.md"; role_header = "prompts\role_headers\codex_builder.md"; context_pack = "repo_task"; gemini_allowed = $false; approval_required = $false }
+        "CODEX_PLAN"    = @{ route_to = "Codex"; template = "prompts\task_templates\codex_plan.md"; role_header = "prompts\role_headers\codex_verifier.md"; context_pack = "minimal"; gemini_allowed = $false; approval_required = $false }
         "CODEX_VERIFY"  = @{ route_to = "Codex"; template = "prompts\task_templates\codex_verify.md"; role_header = "prompts\role_headers\codex_verifier.md"; context_pack = "evidence_verification"; gemini_allowed = $false; approval_required = $false }
         "CLAUDE_REVIEW" = @{ route_to = "Claude"; template = "prompts\task_templates\claude_review.md"; role_header = "prompts\role_headers\claude_inspector.md"; context_pack = "evidence_verification"; gemini_allowed = $false; approval_required = $false }
         "CLAUDE_WORKER" = @{ route_to = "Claude"; template = "prompts\task_templates\claude_worker.md"; role_header = "prompts\role_headers\claude_worker.md"; context_pack = "minimal"; gemini_allowed = $false; approval_required = $false }
@@ -123,6 +130,8 @@ dispatch_id: $DispatchId
 type: $type
 route_to: $($route.route_to)
 dispatch_status: $dispatchStatus
+governance_version: $governanceVersion
+governance_hash: $governanceHash
 gemini_allowed: $($route.gemini_allowed)
 requires_josh_approval: $requiresJoshApproval
 
@@ -167,6 +176,8 @@ context_pack: $($route.context_pack)
 gemini_allowed: $($route.gemini_allowed)
 requires_josh_approval: $requiresJoshApproval
 dispatch_status: $dispatchStatus
+governance_version: $governanceVersion
+governance_hash: $governanceHash
 cleanup_executed: false
 live_external_action_executed: false
 models_invoked: false
@@ -214,6 +225,8 @@ Write-Output "dispatch_id=$DispatchId"
 Write-Output "type=$type"
 Write-Output "route_to=$($route.route_to)"
 Write-Output "dispatch_status=$dispatchStatus"
+Write-Output "governance_version=$governanceVersion"
+Write-Output "governance_hash=$governanceHash"
 Write-Output "gemini_allowed=$($route.gemini_allowed)"
 Write-Output "requires_josh_approval=$requiresJoshApproval"
 Write-Output "models_invoked=false"
