@@ -6,21 +6,36 @@ param(
     [switch]$ValidateOnly,
     [switch]$Once,
     [int]$PollSeconds = 5,
-    [int]$MaxTasksPerRun = 20
+    [int]$MaxTasksPerRun = 20,
+    [int]$MaxAttemptsPerRoute = 2,
+    [string]$DispatcherPath = "",
+    [int]$FullSweepIntervalSeconds = 60
 )
 
 $ErrorActionPreference = "Stop"
 $Utf8NoBom = [Text.UTF8Encoding]::new($false)
 $TasksRoot = Join-Path $AgentOSRoot "data\codex_tasks"
-$Dispatcher = Join-Path $AgentOSRoot "scripts\dispatch_task_packet.ps1"
+$Dispatcher = if ($DispatcherPath) { (Resolve-Path -LiteralPath $DispatcherPath).Path } else { Join-Path $AgentOSRoot "scripts\dispatch_task_packet.ps1" }
 $Gate = Join-Path $AgentOSRoot "scripts\assert_governance_ready.ps1"
 $QueueLog = Join-Path $AgentOSRoot "logs\task-queue.log"
 $QueueStatePath = Join-Path $AgentOSRoot (Join-Path "data\queue_runs" "$RootDispatchId.json")
+$TaskIndexPath = Join-Path $AgentOSRoot "data\queue_runs\ACTIVE_TASK_INDEX.json"
+$TaskIndexRebuildScript = Join-Path $AgentOSRoot "scripts\rebuild_active_task_index.ps1"
+$script:LoopScanMilliseconds = 0.0
+$script:LoopDirectoryCount = 0
+$script:LoopIndexRebuilds = 0
+# MinValue forces a full sweep on the very first Get-AllTasks call in this
+# process (correct-by-default on startup), then throttled to at most once
+# per $FullSweepIntervalSeconds after that. See Get-AllTasks for why this
+# exists (2026-07-29, AC1 reparenting-staleness fix + benchmark regression).
+$script:LastFullSweepUtc = [datetime]::MinValue
+. (Join-Path $AgentOSRoot "scripts\escalation_receipt_validation.ps1")
+. (Join-Path $AgentOSRoot "scripts\lib\global_jsonl_lock.ps1")
 
 function Get-Field([string]$Text, [string]$Name) {
     $match = [regex]::Match(
         $Text,
-        "(?mi)^\s*" + [regex]::Escape($Name) + "\s*:\s*(.+?)\s*$"
+        "(?mi)^\s*" + [regex]::Escape($Name) + "\s*[:=]\s*(.+?)\s*$"
     )
     if ($match.Success) { return $match.Groups[1].Value.Trim().Trim('"').Trim("'") }
     return ""
@@ -38,8 +53,54 @@ function Write-Utf8([string]$Path, [string]$Text) {
 
 function Write-QueueEvent([string]$DispatchId, [string]$Status, [string]$Detail) {
     $line = "$(Get-Date -Format o) dispatch_id=$DispatchId status=$Status detail=$Detail"
-    Add-Content -LiteralPath $QueueLog -Value $line -Encoding UTF8
+    $pending = $line + [Environment]::NewLine
+    Invoke-GlobalJsonlLockedAppend -LiteralPath $QueueLog -PendingContent $pending -AppendAction {
+        [IO.File]::AppendAllText($QueueLog, $pending, $Utf8NoBom)
+    }
     Write-Output $line
+}
+
+function Get-EscalationDecisionGate([string]$DispatchId) {
+    $safeId = Get-AgentOSEscalationSafeId $DispatchId
+    $dir = Join-Path $AgentOSRoot "data\escalations\$safeId"
+    if (-not (Test-Path -LiteralPath $dir -PathType Container)) {
+        return [pscustomobject]@{ HasEscalation=$false; Valid=$true; Reason='no_escalation' }
+    }
+    $events = @(Get-ChildItem -LiteralPath $dir -Filter '*.json' -File -ErrorAction SilentlyContinue |
+        Where-Object { $_.Name -notlike 'DECISION-*' -and $_.Name -notlike 'RESOLUTION*' })
+    if (-not $events) {
+        return [pscustomobject]@{ HasEscalation=$false; Valid=$true; Reason='no_escalation_event' }
+    }
+    $decisions = @(Get-ChildItem -LiteralPath $dir -Filter 'DECISION-*.json' -File -ErrorAction SilentlyContinue |
+        Sort-Object Name -Descending)
+    if (-not $decisions) {
+        return [pscustomobject]@{ HasEscalation=$true; Valid=$false; Reason='escalation_awaiting_josh:no_decision_receipt' }
+    }
+    $lastReason = 'decision_record_invalid'
+    foreach ($path in $decisions) {
+        try {
+            $record = [IO.File]::ReadAllText($path.FullName, [Text.Encoding]::UTF8) | ConvertFrom-Json
+            $validation = Test-AgentOSEscalationDecisionRecord -AgentOSRoot $AgentOSRoot -DecisionRecord $record
+            if ($validation.Valid) {
+                return [pscustomobject]@{
+                    HasEscalation=$true; Valid=$true; Reason='verified_owner_decision'
+                    Decision=[string]$record.decision; DecisionPath=$path.FullName
+                }
+            }
+            $lastReason = [string]$validation.Reason
+        } catch {
+            $lastReason = 'decision_json_invalid'
+        }
+    }
+    return [pscustomobject]@{
+        HasEscalation=$true; Valid=$false
+        Reason="escalation_decision_receipt_invalid:$lastReason"
+    }
+}
+
+function Test-TaskRequiresEscalationGate([object]$Task) {
+    if (-not $Task) { return $false }
+    return $Task.Status -eq 'escalation_required' -or $Task.TaskStatus -eq 'blocked'
 }
 
 function Set-QueueRunState([string]$Status, [string]$Detail = "") {
@@ -70,34 +131,159 @@ function Get-ReviewFlowPath([string]$DispatchId) {
     return Join-Path $TasksRoot (Join-Path $DispatchId "OUTPUTS\REVIEW_FLOW_STATUS.md")
 }
 
+function Invoke-TaskIndexRebuild(
+    [string]$Reason,
+    [string[]]$TaskPaths = @()
+) {
+    $mode = if ($TaskPaths.Count) { "incremental" } else { "full" }
+    Write-QueueEvent $RootDispatchId "index_rebuild_triggered" `
+        "reason=$Reason mode=$mode index_path=$TaskIndexPath" | Out-Null
+    $arguments = @{
+        AgentOSRoot = $AgentOSRoot
+        TasksRoot = $TasksRoot
+        IndexPath = $TaskIndexPath
+    }
+    if ($TaskPaths.Count) { $arguments.TaskPaths = $TaskPaths }
+    try {
+        $output = & $TaskIndexRebuildScript @arguments 2>&1
+    } catch {
+        $detail = $_.Exception.Message
+        Write-QueueEvent $RootDispatchId "index_rebuild_failed" `
+            "reason=$Reason mode=$mode error=$detail" | Out-Null
+        throw "task index rebuild failed: $detail"
+    }
+    $script:LoopIndexRebuilds++
+    Write-QueueEvent $RootDispatchId "index_rebuild_completed" `
+        "reason=$Reason mode=$mode index_path=$TaskIndexPath" | Out-Null
+}
+
+function Convert-IndexEntryToTask([object]$Entry) {
+    $metadataText = @(
+        "dispatch_id: $($Entry.dispatch_id)"
+        "dispatch_status: $($Entry.dispatch_status)"
+        "task_status: $($Entry.task_status)"
+        "type: $($Entry.type)"
+        "route_to: $($Entry.route_to)"
+        "depends_on: $($Entry.depends_on)"
+        "parent_dispatch_id: $($Entry.parent_dispatch_id)"
+        "revision_of: $($Entry.revision_of)"
+        "source_dispatch_id: $($Entry.source_dispatch_id)"
+        "dependency_order: $($Entry.dependency_order)"
+        "revision_round: $($Entry.revision_round)"
+        "task_type: $($Entry.task_type)"
+        "risk_level: $($Entry.risk_level)"
+        "codex_mode: $($Entry.codex_mode)"
+        "governance_version: $($Entry.governance_version)"
+        "governance_hash: $($Entry.governance_hash)"
+    ) -join [Environment]::NewLine
+    return [pscustomobject]@{
+        Id = [string]$Entry.dispatch_id
+        Path = [string]$Entry.task_path
+        Text = $metadataText
+        Status = [string]$Entry.dispatch_status
+        TaskStatus = [string]$Entry.task_status
+        Type = [string]$Entry.type
+        Route = [string]$Entry.route_to
+        DependsOn = [string]$Entry.depends_on
+        Parent = [string]$Entry.parent_dispatch_id
+        SourceDispatch = [string]$Entry.source_dispatch_id
+        RevisionOf = [string]$Entry.revision_of
+        RevisionRound = [int]$Entry.revision_round
+        Order = [int]$Entry.dependency_order
+        IndexedMtimeUtcTicks = [long]$Entry.task_mtime_utc_ticks
+        IndexedLength = [long]$Entry.task_length
+    }
+}
+
+function Read-TaskIndex {
+    return [IO.File]::ReadAllText($TaskIndexPath, [Text.Encoding]::UTF8) |
+        ConvertFrom-Json
+}
+
 function Get-AllTasks {
-    if (-not (Test-Path -LiteralPath $TasksRoot)) { return @() }
-    return @(Get-ChildItem -LiteralPath $TasksRoot -Directory | ForEach-Object {
-        $taskPath = Join-Path $_.FullName "TASK.md"
-        if (Test-Path -LiteralPath $taskPath -PathType Leaf) {
-            $text = Read-Utf8 $taskPath
-            $revisionRoundValue = Get-Field $text "revision_round"
-            $orderValue = Get-Field $text "dependency_order"
-            [pscustomobject]@{
-                Id = Get-Field $text "dispatch_id"
-                Path = $taskPath
-                Text = $text
-                Status = Get-Field $text "dispatch_status"
-                Type = Get-Field $text "type"
-                Route = Get-Field $text "route_to"
-                DependsOn = Get-Field $text "depends_on"
-                Parent = Get-Field $text "parent_dispatch_id"
-                SourceDispatch = Get-Field $text "source_dispatch_id"
-                RevisionOf = Get-Field $text "revision_of"
-                RevisionRound = if ($revisionRoundValue) {
-                    [int]$revisionRoundValue
-                } else { 0 }
-                Order = if ($orderValue) {
-                    [int]$orderValue
-                } else { 999 }
+    $stopwatch = [Diagnostics.Stopwatch]::StartNew()
+    try {
+        if (-not (Test-Path -LiteralPath $TasksRoot -PathType Container)) {
+            $script:LoopDirectoryCount = 0
+            return @()
+        }
+        if (-not (Test-Path -LiteralPath $TaskIndexPath -PathType Leaf)) {
+            Invoke-TaskIndexRebuild "index_missing"
+        }
+        $index = Read-TaskIndex
+        if ([int]$index.schema_version -ne 3) {
+            Invoke-TaskIndexRebuild "schema_version_mismatch"
+            $index = Read-TaskIndex
+        }
+        $tasksRootMtimeTicks = (Get-Item -LiteralPath $TasksRoot).LastWriteTimeUtc.Ticks
+        if ($tasksRootMtimeTicks -ne [long]$index.tasks_root_mtime_utc_ticks) {
+            Invoke-TaskIndexRebuild "tasks_root_changed"
+            $index = Read-TaskIndex
+        }
+        $script:LoopDirectoryCount = [int]$index.directory_count
+
+        $tasks = @($index.tasks | ForEach-Object { Convert-IndexEntryToTask $_ })
+        # 2026-07-29 history: AC1 finding on queue-active-index-optimization
+        # revision-3 fresh Verify FAIL said staleness must be checked against
+        # EVERY indexed entry, not just the subset already believed to be in
+        # this root's scope - a task manually re-parented INTO this root
+        # (via editing parent_dispatch_id/revision_of/source_dispatch_id,
+        # with no directory created/deleted) was never a member of the OLD
+        # scoped subset, so it was never staleness-checked and stayed
+        # silently excluded until an unrelated full rebuild happened to
+        # catch it. The first fix checked all indexed entries on every
+        # single loop - that closed the correctness gap but a real benchmark
+        # showed it made the 10x-scale case SLOWER than the original
+        # unoptimized full-parse baseline (p95 ratio dropped from 1.97 to
+        # 0.67), defeating the point of this whole ticket. Per-file stat
+        # calls at thousands-of-files scale are not as cheap as they looked
+        # on paper.
+        #
+        # Revised fix (Josh's choice after seeing the regression): keep the
+        # cheap scoped-only check as the per-loop default (this is what
+        # restores the original performance characteristics), and run the
+        # full all-entries sweep only periodically, throttled to at most
+        # once every $FullSweepIntervalSeconds (default 60s). This bounds
+        # re-parenting detection to "within at most ~60 seconds" instead of
+        # "next loop" - an accepted trade-off since re-parenting only
+        # happens via manual TASK.md edits, not as part of normal dispatch
+        # flow, so near-immediate detection was never actually required.
+        $nowUtc = [datetime]::UtcNow
+        $dueForFullSweep = ($nowUtc - $script:LastFullSweepUtc).TotalSeconds -ge $FullSweepIntervalSeconds
+        $checkSet = if ($dueForFullSweep) { $tasks } else { @(Get-ScopedTasks $tasks $RootDispatchId) }
+        $stalePaths = [Collections.Generic.List[string]]::new()
+        foreach ($task in $checkSet) {
+            if (-not (Test-Path -LiteralPath $task.Path -PathType Leaf)) {
+                $stalePaths.Add($task.Path)
+                continue
+            }
+            $item = Get-Item -LiteralPath $task.Path
+            if ($item.LastWriteTimeUtc.Ticks -ne $task.IndexedMtimeUtcTicks -or
+                [long]$item.Length -ne $task.IndexedLength) {
+                $stalePaths.Add($task.Path)
             }
         }
-    })
+        if ($stalePaths.Count) {
+            Invoke-TaskIndexRebuild "scoped_task_metadata_changed" $stalePaths.ToArray()
+            $index = Read-TaskIndex
+            $tasks = @($index.tasks | ForEach-Object { Convert-IndexEntryToTask $_ })
+        }
+        if ($dueForFullSweep) {
+            $script:LastFullSweepUtc = $nowUtc
+            Write-QueueEvent $RootDispatchId "full_sweep_completed" `
+                "checked_count=$($checkSet.Count);stale_count=$($stalePaths.Count)" | Out-Null
+        }
+        return $tasks
+    } finally {
+        $stopwatch.Stop()
+        $script:LoopScanMilliseconds += $stopwatch.Elapsed.TotalMilliseconds
+    }
+}
+
+function Write-LoopScanEvent([object[]]$ScopedTasks) {
+    $scanMs = [math]::Round($script:LoopScanMilliseconds, 3)
+    Write-QueueEvent $RootDispatchId "queue_scan" `
+        "scan_ms=$scanMs directory_count=$script:LoopDirectoryCount scoped_task_count=$($ScopedTasks.Count) index_rebuilds=$script:LoopIndexRebuilds"
 }
 
 function Get-ScopedTasks([object[]]$Tasks, [string]$RootId) {
@@ -125,6 +311,96 @@ function Get-ResultStatus([string]$DispatchId) {
     $path = Get-ResultPath $DispatchId
     if (-not (Test-Path -LiteralPath $path -PathType Leaf)) { return "" }
     return Get-Field (Read-Utf8 $path) "status"
+}
+
+function Get-AttemptLogPath([string]$DispatchId) {
+    return Join-Path $TasksRoot (Join-Path $DispatchId "OUTPUTS\DISPATCH_ATTEMPTS.jsonl")
+}
+
+function Get-Attempts([string]$DispatchId) {
+    $path = Get-AttemptLogPath $DispatchId
+    if (-not (Test-Path -LiteralPath $path -PathType Leaf)) { return @() }
+    return @(Get-Content -LiteralPath $path -Encoding UTF8 | Where-Object { $_.Trim() } | ForEach-Object {
+        try { $_ | ConvertFrom-Json } catch { $null }
+    } | Where-Object { $null -ne $_ })
+}
+
+function Write-Attempt(
+    [object]$Task,
+    [int]$ExitCode,
+    [string]$Reason,
+    [string]$Phase,
+    [string]$Artifact
+) {
+    $record = [ordered]@{
+        timestamp = (Get-Date -Format o)
+        dispatch_id = $Task.Id
+        route_to = $Task.Route
+        codex_mode = Get-Field $Task.Text "codex_mode"
+        exit_code = $ExitCode
+        reason = $Reason
+        phase = $Phase
+        artifact = $Artifact
+    } | ConvertTo-Json -Compress
+    $attemptLogPath = Get-AttemptLogPath $Task.Id
+    $pending = $record + [Environment]::NewLine
+    Invoke-GlobalJsonlLockedAppend -LiteralPath $attemptLogPath -PendingContent $pending -AppendAction {
+        [IO.File]::AppendAllText($attemptLogPath, $pending, $Utf8NoBom)
+    }
+}
+
+function Set-OrAddField([string]$Text, [string]$Name, [string]$Value) {
+    $pattern = '(?mi)^\s*' + [regex]::Escape($Name) + '\s*:\s*.*$'
+    if ([regex]::IsMatch($Text, $pattern)) {
+        return [regex]::Replace($Text, $pattern, "${Name}: $Value")
+    }
+    return $Text.TrimEnd() + "`r`n${Name}: $Value`r`n"
+}
+
+function Set-TaskRoute([object]$Task, [string]$Route, [string]$Type, [string]$AssignedTo, [string]$CodexMode) {
+    $text = Read-Utf8 $Task.Path
+    if (-not (Get-Field $text "original_route_to")) {
+        $text = Set-OrAddField $text "original_route_to" $Task.Route
+    }
+    $text = Set-OrAddField $text "route_to" $Route
+    $text = Set-OrAddField $text "type" $Type
+    $text = Set-OrAddField $text "assigned_to" $AssignedTo
+    $text = Set-OrAddField $text "codex_mode" $CodexMode
+    $text = Set-OrAddField $text "dispatch_status" "ready_to_route"
+    $text = Set-OrAddField $text "task_status" "fallback_ready"
+    $text = Set-OrAddField $text "fallback_from" $Task.Route
+    Write-Utf8 $Task.Path $text
+}
+
+function Get-RouteKey([string]$Route, [string]$CodexMode) {
+    return ($Route + ":" + $CodexMode).ToLowerInvariant()
+}
+
+function Get-FallbackSpec([object]$Task, [object[]]$Attempts) {
+    $taskType = Get-Field $Task.Text "task_type"
+    $riskLevel = Get-Field $Task.Text "risk_level"
+    if ($taskType -eq "Risky" -or $riskLevel -in @("medium", "high", "risky")) { return $null }
+    $mode = ([string](Get-Field $Task.Text "codex_mode")).ToLowerInvariant()
+    $candidate = $null
+    if ($Task.Route -eq "Claude") {
+        $candidate = [pscustomobject]@{ Route="Codex"; Type="CODEX_BUILD"; AssignedTo="Codex"; CodexMode="build" }
+    } elseif ($Task.Route -eq "Codex" -and $mode -eq "build") {
+        $candidate = [pscustomobject]@{ Route="Claude"; Type="CLAUDE_WORKER"; AssignedTo="Claude Worker"; CodexMode="n/a" }
+    } elseif ($Task.Route -eq "Antigravity CLI") {
+        $candidate = [pscustomobject]@{ Route="Codex"; Type="CODEX_BUILD"; AssignedTo="Codex"; CodexMode="build" }
+    }
+    if (-not $candidate) { return $null }
+    $candidateKey = Get-RouteKey $candidate.Route $candidate.CodexMode
+    $usedKeys = @($Attempts | ForEach-Object { Get-RouteKey ([string]$_.route_to) ([string]$_.codex_mode) })
+    if ($candidateKey -in $usedKeys) { return $null }
+    return $candidate
+}
+
+function Test-RecoverableFailure([string]$Reason) {
+    return $Reason -notin @(
+        "governance_gate_blocked", "task_governance_binding_missing",
+        "invalid_codex_mode", "unsupported_route", "config_file_missing"
+    )
 }
 
 function Get-VerifyVerdict([string]$VerifyId) {
@@ -318,26 +594,88 @@ function New-RevisionTask([object[]]$Tasks, [object]$VerifyTask) {
     } else {
         1
     }
-    if ($round -gt 2) {
-        $original = $Tasks | Where-Object { $_.Id -eq $originalId } | Select-Object -First 1
-        if ($original) {
-            Set-TaskState $original.Path "escalation_required" "blocked"
-        }
-        Write-ReviewFlowStatus $originalId $VerifyTask.Id "FAIL" `
-            "escalation_required" "revision_limit_reached" $reviewedTask.RevisionRound
-        $taskType = Get-Field $original.Text "task_type"
-        $source = if ($taskType -eq "Complex") { "complex_fail" } else { "simple_fail" }
-        & powershell.exe -NoProfile -ExecutionPolicy Bypass `
-            -File (Join-Path $AgentOSRoot "scripts\write_escalation.ps1") `
-            -TaskId $originalId -Source $source -Reason "revision_limit_reached" `
-            -DecisionType "accept_partial_delivery" `
-            -SummaryForJosh "Task $originalId failed Codex Verify after two Claude revisions." `
-            -Evidence @((Get-ReviewFlowPath $originalId)) -AgentOSRoot $AgentOSRoot | Out-Null
-        Write-QueueEvent $originalId "escalation_required" "revision_limit_reached"
-        return
-    }
     $id = "$originalId-revision-$round"
     if (Test-Path -LiteralPath (Get-TaskPath $id)) { return }
+    if ($round -gt 2) {
+        # Added 2026-07-28 (Josh's finding on queue-active-index-optimization):
+        # a resolved "Modify" escalation decision (recorded via
+        # decide_escalation.ps1, receipt-verified as Josh's own action) was
+        # sitting valid on disk, but nothing here ever consumed it - this
+        # branch always re-escalated with revision_limit_reached regardless,
+        # so `tasks_executed=0` forever even after Josh explicitly chose
+        # Modify. "Modify" for an `accept_partial_delivery` escalation means
+        # "adjust and retry", i.e. grant exactly one more revision round
+        # beyond the normal 2-round cap.
+        #
+        # FIXED 2026-07-29 (Josh's finding, real production incident on the
+        # same ticket): the first version of this fix keyed the consumption
+        # marker to the ROUND NUMBER ("MODIFY_CONSUMED-round_$round.json").
+        # That only prevented the SAME round from reusing a decision - it did
+        # NOT prevent a single old decision from being replayed across
+        # DIFFERENT round numbers, because round N+1 checks a marker file
+        # named for round N+1, which doesn't exist yet, so the still-"Valid"
+        # old decision passed the gate again and silently authorized round
+        # N+1 with no new escalation and no new Josh decision. This is
+        # exactly what happened: round 3 was legitimately unlocked by a
+        # Modify decision; round 3's fresh Verify FAILed; round 4 was then
+        # created and dispatched automatically using that same, already-spent
+        # decision, with no Josh involvement, and it ran for hours before
+        # timing out.
+        #
+        # The fix: track consumption by the DECISION itself (its
+        # DecisionPath, which is unique per verified-owner decision record),
+        # not by round number. A given decision may consume exactly one round
+        # across the ENTIRE lifetime of this original_id, regardless of which
+        # round number it happens to land on. Every additional round beyond
+        # that requires a brand new escalation + a brand new Josh decision.
+        $safeOriginalId = Get-AgentOSEscalationSafeId $originalId
+        $escalationDir = Join-Path $AgentOSRoot "data\escalations\$safeOriginalId"
+        $consumedMarkerPath = Join-Path $escalationDir "MODIFY_CONSUMED-round_$round.json"
+        $gate = Get-EscalationDecisionGate $originalId
+        $decisionAlreadyConsumed = $false
+        if ($gate.Valid -and $gate.DecisionPath -and (Test-Path -LiteralPath $escalationDir -PathType Container)) {
+            foreach ($markerFile in @(Get-ChildItem -LiteralPath $escalationDir -Filter "MODIFY_CONSUMED-*.json" -File -ErrorAction SilentlyContinue)) {
+                try {
+                    $markerRecord = [IO.File]::ReadAllText($markerFile.FullName, [Text.Encoding]::UTF8) | ConvertFrom-Json
+                    if ([string]$markerRecord.decision_path -eq [string]$gate.DecisionPath) {
+                        $decisionAlreadyConsumed = $true
+                        break
+                    }
+                } catch {
+                    continue
+                }
+            }
+        }
+        if ($gate.HasEscalation -and $gate.Valid -and $gate.Decision -eq "modify" -and
+            -not $decisionAlreadyConsumed -and -not (Test-Path -LiteralPath $consumedMarkerPath)) {
+            Write-Utf8 $consumedMarkerPath (([ordered]@{
+                consumed_at = (Get-Date -Format o)
+                decision_path = $gate.DecisionPath
+                granted_round = $round
+                original_id = $originalId
+            } | ConvertTo-Json) + [Environment]::NewLine)
+            Write-QueueEvent $originalId "revision_round_extended" "modify_decision_consumed:round_$round;decision_path=$($gate.DecisionPath)"
+            # Fall through: do not escalate, proceed to create round $round below.
+        } else {
+            $original = $Tasks | Where-Object { $_.Id -eq $originalId } | Select-Object -First 1
+            if ($original) {
+                Set-TaskState $original.Path "escalation_required" "blocked"
+            }
+            Write-ReviewFlowStatus $originalId $VerifyTask.Id "FAIL" `
+                "escalation_required" "revision_limit_reached" $reviewedTask.RevisionRound
+            $taskType = Get-Field $original.Text "task_type"
+            $source = if ($taskType -eq "Complex") { "complex_fail" } else { "simple_fail" }
+            $escalationReason = if ($decisionAlreadyConsumed) { "revision_limit_reached_decision_already_consumed" } else { "revision_limit_reached" }
+            & powershell.exe -NoProfile -ExecutionPolicy Bypass `
+                -File (Join-Path $AgentOSRoot "scripts\write_escalation.ps1") `
+                -TaskId $originalId -Source $source -Reason $escalationReason `
+                -DecisionType "accept_partial_delivery" `
+                -SummaryForJosh "Task $originalId failed Codex Verify after two Claude revisions." `
+                -Evidence @((Get-ReviewFlowPath $originalId)) -AgentOSRoot $AgentOSRoot | Out-Null
+            Write-QueueEvent $originalId "escalation_required" $escalationReason
+            return
+        }
+    }
     $originalTaskPath = Get-TaskPath $originalId
     $reviewResultPath = Get-ResultPath $VerifyTask.Id
     $governanceVersion = Get-Field $VerifyTask.Text "governance_version"
@@ -480,7 +818,21 @@ function Update-ReviewFlowStates([object[]]$Tasks) {
 
 New-Item -ItemType Directory -Force -Path (Split-Path -Parent $QueueLog) | Out-Null
 if ($ValidateOnly) {
-    $validatedTasks = Get-ScopedTasks (Get-AllTasks) $RootDispatchId
+    $script:LoopScanMilliseconds = 0.0
+    $script:LoopIndexRebuilds = 0
+    $validatedTasks = @(Get-ScopedTasks (Get-AllTasks) $RootDispatchId)
+    Write-LoopScanEvent $validatedTasks
+    $validatedRoot = $validatedTasks | Where-Object Id -eq $RootDispatchId | Select-Object -First 1
+    if (Test-TaskRequiresEscalationGate $validatedRoot) {
+        $decisionGate = Get-EscalationDecisionGate $RootDispatchId
+        if ($decisionGate.HasEscalation -and -not $decisionGate.Valid) {
+            Write-Output "queue_validation=blocked"
+            Write-Output "root_dispatch_id=$RootDispatchId"
+            Write-Output "reason=$($decisionGate.Reason)"
+            Write-Output "task_status=awaiting_josh"
+            exit 22
+        }
+    }
     Write-Output "queue_validation=passed"
     Write-Output "root_dispatch_id=$RootDispatchId"
     Write-Output "scoped_task_count=$($validatedTasks.Count)"
@@ -491,7 +843,11 @@ if ($ValidateOnly) {
 }
 
 $executed = 0
+$recoveryPending = $false
+$containedFailures = 0
 while ($executed -lt $MaxTasksPerRun) {
+    $script:LoopScanMilliseconds = 0.0
+    $script:LoopIndexRebuilds = 0
     $gateOutput = & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $Gate -AgentOSRoot $AgentOSRoot
     if ($LASTEXITCODE -ne 0) {
         Write-QueueEvent "queue" "blocked" "governance_gate"
@@ -499,18 +855,33 @@ while ($executed -lt $MaxTasksPerRun) {
         exit 20
     }
 
-    $tasks = Get-ScopedTasks (Get-AllTasks) $RootDispatchId
+    $tasks = @(Get-ScopedTasks (Get-AllTasks) $RootDispatchId)
+    $rootTask = $tasks | Where-Object Id -eq $RootDispatchId | Select-Object -First 1
+    if (Test-TaskRequiresEscalationGate $rootTask) {
+        $decisionGate = Get-EscalationDecisionGate $RootDispatchId
+        if ($decisionGate.HasEscalation -and -not $decisionGate.Valid) {
+            Write-LoopScanEvent $tasks
+            Write-QueueEvent $RootDispatchId "awaiting_josh" $decisionGate.Reason
+            Set-QueueRunState "awaiting_josh" $decisionGate.Reason
+            Write-Output "queue_status=awaiting_josh"
+            Write-Output "root_dispatch_id=$RootDispatchId"
+            Write-Output "reason=$($decisionGate.Reason)"
+            Write-Output "tasks_executed=0"
+            exit 0
+        }
+    }
     Update-ReviewFlowStates $tasks
 
-    $tasks = Get-ScopedTasks (Get-AllTasks) $RootDispatchId
+    $tasks = @(Get-ScopedTasks (Get-AllTasks) $RootDispatchId)
     Promote-Dependencies $tasks
-    $tasks = Get-ScopedTasks (Get-AllTasks) $RootDispatchId
+    $tasks = @(Get-ScopedTasks (Get-AllTasks) $RootDispatchId)
+    Write-LoopScanEvent $tasks
     $ready = $tasks |
         Where-Object {
-            $_.Id -ne $RootDispatchId -and
             $_.Status -eq "ready_to_route" -and
             $_.Route -in @("Codex", "Claude", "Ollama", "Antigravity CLI") -and
-            -not (Test-Path -LiteralPath (Get-ResultPath $_.Id) -PathType Leaf)
+            ((-not (Test-Path -LiteralPath (Get-ResultPath $_.Id) -PathType Leaf)) -or
+                $_.TaskStatus -in @("retrying", "fallback_ready"))
         } |
         Sort-Object Order, Id |
         Select-Object -First 1
@@ -521,16 +892,75 @@ while ($executed -lt $MaxTasksPerRun) {
     }
 
     Write-QueueEvent $ready.Id "processing" "dispatcher_start"
-    & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $Dispatcher `
-        -DispatchId $ready.Id -AgentOSRoot $AgentOSRoot
+    $dispatcherOutput = & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $Dispatcher `
+        -DispatchId $ready.Id -AgentOSRoot $AgentOSRoot 2>&1
     $exitCode = $LASTEXITCODE
+    $dispatcherText = $dispatcherOutput -join [Environment]::NewLine
+    if ($dispatcherText) { Write-Output $dispatcherText }
+    $reason = Get-Field $dispatcherText "reason"
+    $phase = Get-Field $dispatcherText "phase"
+    $artifact = Get-Field $dispatcherText "recovery_status_path"
+    if (-not $artifact) { $artifact = Get-Field $dispatcherText "result_path" }
     $executed++
     if ($exitCode -ne 0) {
-        Write-QueueEvent $ready.Id "blocked" "dispatcher_exit_$exitCode"
-        Set-QueueRunState "blocked" "dispatcher_exit_$exitCode"
-        exit $exitCode
+        if (-not $reason) { $reason = "dispatcher_exit_$exitCode" }
+        if (-not $phase) { $phase = "unknown" }
+        if (-not $artifact) { $artifact = "not_available" }
+        $detail = "reason=$reason phase=$phase exit_code=$exitCode artifact=$artifact"
+        Write-Attempt $ready $exitCode $reason $phase $artifact
+        $attempts = Get-Attempts $ready.Id
+        $mode = [string](Get-Field $ready.Text "codex_mode")
+        $routeKey = Get-RouteKey $ready.Route $mode
+        $routeAttempts = @($attempts | Where-Object {
+            (Get-RouteKey ([string]$_.route_to) ([string]$_.codex_mode)) -eq $routeKey
+        }).Count
+        if ((Test-RecoverableFailure $reason) -and $routeAttempts -lt $MaxAttemptsPerRoute) {
+            Set-TaskState $ready.Path "ready_to_route" "retrying"
+            $recoveryPending = $true
+            Write-QueueEvent $ready.Id "retry_scheduled" "$detail attempt=$routeAttempts/$MaxAttemptsPerRoute"
+            if ($Once) { break }
+            continue
+        }
+        $fallback = if (Test-RecoverableFailure $reason) { Get-FallbackSpec $ready $attempts } else { $null }
+        if ($fallback) {
+            Set-TaskRoute $ready $fallback.Route $fallback.Type $fallback.AssignedTo $fallback.CodexMode
+            $recoveryPending = $true
+            Write-QueueEvent $ready.Id "fallback_scheduled" "$detail next_route=$($fallback.Route) next_mode=$($fallback.CodexMode)"
+            if ($Once) { break }
+            continue
+        }
+        Set-TaskState $ready.Path "escalation_required" "blocked"
+        $containedFailures++
+        Write-QueueEvent $ready.Id "failure_contained" "$detail recovery_exhausted=true"
+        try {
+            $escalationSource = if ((Get-Field $ready.Text "task_type") -eq "Complex") { "complex_fail" } else { "simple_fail" }
+            # This is the one call site that passes >1 evidence item across the
+            # `powershell.exe -File` process boundary. Confirmed by direct repro
+            # (2026-07-27) that a plain -Evidence array silently mis-binds its
+            # second element onto -Environment in that scenario; -EvidenceB64
+            # (Base64-encoded JSON array) is the only transport verified to
+            # survive the boundary intact. See write_escalation.ps1 for the
+            # decode side and the full root-cause note.
+            $evidenceJson = @($artifact, (Get-AttemptLogPath $ready.Id)) | ConvertTo-Json -Compress
+            $evidenceB64 = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($evidenceJson))
+            $escalationOutput = & powershell.exe -NoProfile -ExecutionPolicy Bypass `
+                -File (Join-Path $AgentOSRoot "scripts\write_escalation.ps1") `
+                -TaskId $ready.Id -Source $escalationSource `
+                -Reason $reason -DecisionType "retry_with_changes" `
+                -SummaryForJosh "All bounded retries and compliant worker fallbacks were exhausted; the queue continued processing independent tasks." `
+                -EvidenceB64 $evidenceB64 -AgentOSRoot $AgentOSRoot 2>&1
+            if ($LASTEXITCODE -ne 0) { throw ($escalationOutput -join [Environment]::NewLine) }
+        } catch {
+            Write-QueueEvent $ready.Id "escalation_write_failed" $_.Exception.Message
+        }
+        if ($Once) { break }
+        continue
     }
-    Write-QueueEvent $ready.Id "completed" "dispatcher_exit_0"
+    $successReason = if ($reason) { $reason } else { "dispatcher_exit_0" }
+    $successDetail = "reason=$successReason phase=$(if($phase){$phase}else{'completed'}) artifact=$(if($artifact){$artifact}else{'not_available'})"
+    Write-QueueEvent $ready.Id "completed" $successDetail
+    Set-TaskState $ready.Path "completed" "completed"
+    $recoveryPending = $false
     if ($Once) { break }
     Start-Sleep -Seconds $PollSeconds
 }
@@ -552,7 +982,9 @@ try {
     Write-QueueEvent "queue" "learning_collector_failed" $_.Exception.Message
 }
 
-Write-Output "queue_status=completed"
+$finalQueueStatus = if ($recoveryPending) { "recovery_pending" } elseif ($containedFailures -gt 0) { "completed_with_failures" } else { "completed" }
+Write-Output "queue_status=$finalQueueStatus"
 Write-Output "root_dispatch_id=$RootDispatchId"
 Write-Output "tasks_executed=$executed"
-Set-QueueRunState "completed" "tasks_executed=$executed"
+Write-Output "contained_failures=$containedFailures"
+Set-QueueRunState $finalQueueStatus "tasks_executed=$executed contained_failures=$containedFailures"
