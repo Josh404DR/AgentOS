@@ -2,18 +2,23 @@
 
 AgentOS is Josh Hsu's independent freelance automation operating system at `E:\AgentOS`.
 
-Hermes coordinates the system and talks to Josh through Telegram. Codex performs local technical execution. Gemini supports research, summaries, and second opinions.
+Hermes handles receiving, classification, dispatching, and reporting through Telegram. Claude is the default workspace implementer. Codex Plan only breaks down Complex Tasks, while Codex Verify performs independent, read-only blind verification in a separate session. Gemini supports research, summaries, and second opinions. The Queue (task_queue_runner.ps1) is a deterministic scheduler and not an AI agent.
+
+Governance authority: [`AGENTS.md`](AGENTS.md). For the current version, status, hash, and checked time, see the auto-generated [`docs\GOVERNANCE_STATUS_SNAPSHOT.md`](docs/GOVERNANCE_STATUS_SNAPSHOT.md); they are not copied here.
 
 ## Current Source Of Truth
 
+- Governance rules (authoritative): `AGENTS.md`
+- Workflow v1.2 contract: `docs\governance\WORKFLOW_V1_2_CONTRACT.md`
 - Architecture and implementation status: `docs\ARCHITECTURE.md`
 - Lead, screening, and proposal workflow: `workflows\ai_freelancer_os.md`
 - Hermes-to-Codex task packets: `workflows\hermes_to_codex.md`
 - Model/tool resource inventory: `docs\RESOURCE_INVENTORY.md`
 - Agent routing plan: `docs\AGENT_ROUTING_PLAN.md`
-- Pre-flight test plan: `docs\PRE_FLIGHT_TEST_PLAN.md`
 - Hermes setup and operational status: `docs\SETUP_STATUS.md`
 - Append-only work history: `progress_log.md`
+- Task escalations: `data\escalations\ESCALATION_INDEX.jsonl`
+- Task metrics: `data\metrics\METRICS_LOG.jsonl`
 
 `current_state.md` is only a snapshot/index. Do not use it as a second canonical spec.
 
@@ -48,5 +53,5 @@ Known caveat: Hermes proxy on `localhost:8080` is not considered available until
 ## Do Not Duplicate
 
 - Do not build another lead-finding agent; Hermes owns real lead search.
-- Do not create a database or queue before the file-packet workflow is proven.
+- Do not create a second queue runner; `scripts\task_queue_runner.ps1` is the canonical deterministic runner under Workflow v1.2.
 - Do not copy the full `E:\AI_Projects_Hub` governance model into AgentOS.
