@@ -1,0 +1,6 @@
+- Local Ollama: low-risk categorization, rough summaries, private/offline drafts.
+- Gemini: bulk reasoning, lead summaries, proposal second opinions.
+- Perplexity: current web research with sources.
+- Codex: repo edits, scripts, tests, debugging, implementation artifacts.
+- Claude: automated high-assurance review (tripartite bridge) or manual complex reasoning.
+- Antigravity / Perplexity IDE / VSCode Cline / Cursor: manual IDE work, not yet automated.
