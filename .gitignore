@@ -43,3 +43,6 @@ Desktop.ini
 # Upwork private data and caches
 data/upwork/private/
 tools/upwork/__pycache__/
+
+data\codex_tasks\
+
