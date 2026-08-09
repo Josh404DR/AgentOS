@@ -80,3 +80,14 @@ Source: Codex / Hermes Telegram model routing update
 ### [RISK] Model status must not overclaim quota data
 - Hermes can switch models at the gateway/session layer, but it does not yet have a reliable cross-provider token usage and remaining-rate-limit counter.
 - Until that counter exists, reports must distinguish active model state from quota state.
+
+---
+
+## 2026-07-05
+Source: Josh / AgentOS governance alignment
+
+### [治理更正] Source of Truth 邊界
+- 本紀錄取代 2026-06-23 將 HERMES_NOTES.md 稱為唯一事實來源的舊說法。
+- E:\AgentOS\AGENTS.md 是共同治理正本。
+- current_state.md 保存目前狀態。
+- data\memory\HERMES_NOTES.md 只保存歷史洞察與跨任務筆記，從屬 AGENTS.md，不得覆寫治理規則或即時證據。
