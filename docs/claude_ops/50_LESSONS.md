@@ -79,6 +79,24 @@
 決定: 2026-07-28 Josh 授權 Claude 自行決定——**不承認**此格式為滿足 AGENTS.md 驗證要求的證據；已知 3 張票一律須另外走標準 `create_codex_verify_task.ps1` pipeline 產生真正獨立的 `-codex-verify` 子工單，`dashboard-plane-naming-consistency` 已依此重新產生 bundle。
 制度化: 待辦——`global-jsonl-append-lock` 尚未補跑；長期應在 Codex plan-mode 的 prompt 模板加一條明確禁止語（不得在同一 session 內自稱「獨立 Verify」），避免此格式再次出現。
 
+## 2026-08-08 治理正本（AGENTS.md／CLAUDE.md）從未進版控
+症狀: `git log -- AGENTS.md CLAUDE.md` 完全是空的，`git ls-files` 確認兩者從未被 add 過；唯一異動紀錄只靠零星手動 `.bak-<日期>` 檔。
+根因: 治理系統自建了一套獨立於 git 的 hash 快照機制（`governance_baseline.json`）做 drift 偵測，可能因此從未真正依賴 git 來保護這兩份最核心的文件，長期沒人注意到它們根本沒進版控。
+修法: 已於本輪 commit `3a00833` 首次進版控。
+制度化: 已提案——本檔 §8「收尾稽核義務」新增「治理／drift 類工單開工前掃已知未結案項目」的規則，用來預防同類「重要檔案長期在監控範圍外」的情況；另建議未來新增受治理檔案時，第一步就是確認 `git log` 有歷史，而不是只信 hash 快照存在。
+
+## 2026-08-08 ESCALATION_INDEX 是 append-only 快照，狀態顯示嚴重灌水
+症狀: 抽查發現 `ESCALATION_INDEX.jsonl` 顯示 282 筆非 fixture 的 `awaiting_josh`，扣除已知的兩個重複灌水 bug（learning-candidate dedupe、ci-queue-01-always-fail 測試污染）後，剩餘 56 筆裡有 72%（約 40 筆）其實資料夾內已有 `RESOLUTION.json`，index 只是沒跟著更新。
+根因: index 本身設計就是 append-only 快照，沒有機制在項目被解決後回頭更新該行 status，讀者（包含模型自己）容易誤把 index 顯示的 `awaiting_josh` 數量當成即時真相。
+修法: 本輪查證時改用「掃 index 拿候選清單 → 逐一到對應資料夾查是否已有 RESOLUTION.json」的兩段式方法，不再單信 index 的 status 欄位。
+制度化: 已落地 → 本檔 §8「收尾稽核義務」掃描範圍第 4 項明確要求「須實際查資料夾，不能只信 index 的 status 欄位」。
+
+## 2026-08-08 `.gitignore` 用反斜線路徑分隔符，規則完全不生效
+症狀: 依指示在 `.gitignore` 加入 `data\codex_tasks\`（反斜線，配合 Windows 路徑書寫習慣），commit 後用 `git check-ignore` 驗證完全沒有命中，規則是死的。
+根因: `.gitignore` 語法一律用正斜線當路徑分隔符，不分作業系統；反斜線在 `.gitignore` 裡是跳脫字元，不會被解析成目錄規則。這條規則是 Claude（非 code 執行端）在對話中直接口述給 PowerShell 指令時寫錯的，當下沒注意到 Windows 慣用反斜線跟 `.gitignore` 語法規則是兩回事。
+修法: code 執行端依驗收流程實際跑 `git check-ignore` 才抓到，另開 commit `d1cb4b9` 改用正斜線修正。
+制度化: 提案——往後任何人（含模型）撰寫 `.gitignore` 規則，一律用正斜線，不因對話語境是 Windows 路徑就跟著用反斜線；且任何新增的 `.gitignore` 規則都必須附 `git check-ignore -v` 的驗證證據才能算完成，不能只憑「加了規則」就宣稱生效。待 Josh 核准後排入相關腳本模板或 T2 委派模板的注意事項。
+
 ## 2026-07-28 Git commit 邊界政策：Verify PASS 後即 commit
 症狀: `scripts\task_queue_runner.ps1` 等共用檔案疊了多張票的未進版控變更，`git diff -- <path>` 天生分不出哪段屬於哪張票，造成 scoped diff 反覆被指控「範圍外變更」。
 決定: 2026-07-28 Josh 授權 Claude 自行決定——採納「每張票 Verify PASS 後立即 commit 該票 changed_file 清單」為往後政策，降低下一張票 scoped diff 混入舊票變更的機率。

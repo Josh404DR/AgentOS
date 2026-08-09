@@ -1,7 +1,7 @@
 # AgentOS 共同治理規範
 
-governance_version: 1.3.0
-updated_at: 2026-07-18 Asia/Taipei
+governance_version: 1.4.0
+updated_at: 2026-08-08 Asia/Taipei
 owner: Josh
 canonical_path: E:\AgentOS\AGENTS.md
 report_language: zh-TW
@@ -66,6 +66,9 @@ report_language: zh-TW
 - Agent執行必須有 bounded timeout、heartbeat與精確 failure reason。安全的診斷、測試、bounded retry與既有輸出 recovery應自動進行；只有方案用盡、需要新權限或 Risky／外部行動時才詢問 Josh。
 - 已核准工單範圍內的 operational drift可持續到實作、修正及驗證完成；範圍外 drift仍須標記並阻擋其被納入交付。
 - 完成報告必須有 artifact 路徑、實際變更、驗證證據、未解風險與下一步。
+- 治理／drift／稽核類工單開工前須先掃已知未結案項目（`40_MAINTENANCE_PROTOCOL.md` §3、
+  `50_LESSONS.md` 未落地條目、卡住的 `approval_required` 工單、無 `RESOLUTION.json` 的
+  非 fixture escalation），並在回報中點名現況；不得略過，見 `docs\claude_ops\40_MAINTENANCE_PROTOCOL.md` §8。
 - Josh 說「驗證」時使用 `prompts\response_templates\verification_result_zh_tw.md`。
 - `Cancel This request` 是撤回最近請求的控制意圖；已完成工作不得自動刪除或回滾。
 - 任務完成指標寫入 append-only `data\metrics\METRICS_LOG.jsonl`；無法取得的
