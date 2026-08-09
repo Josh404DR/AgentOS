@@ -23,11 +23,23 @@ data/dashboard_index/knowledge_workspace.sqlite3-shm
 **/__pycache__/
 scripts/fan_control/fan_control.log
 **/.venv_notebooklm_poc/
+**/.venv_perplexity_poc/
 **/.venv*/
 dashboard/backend/.venv/
 data/codex_tasks/**/OUTPUTS/CODEX_CONSOLE.log
+
+# Root-level personal and temp files
+/OUTPUTS/
+/人生計畫/
+/新增 文字文件.txt
+/AgentOS_export.zip
+/AgentOS_export_with_git.zip
 
 # OS/editor noise
 Thumbs.db
 Desktop.ini
 .DS_Store
+
+# Upwork private data and caches
+data/upwork/private/
+tools/upwork/__pycache__/
