@@ -53,7 +53,35 @@ evidence_policy: fresh_local_evidence
 
 ## 7. Immediate Priority
 
-> **2026-07-20 更新（修正 07-13 版凍結範圍，其餘不變）**：Josh 裁決
+> **2026-08-10 更新（取代下方「收入優先」框架，量化路線技術做法不變）**：
+> Josh 於 Cowork 對話中裁決：AgentOS 的首要目的從「收入優先」調整為
+> **任務導向——讓 Josh 能在本職工作之餘輕鬆多工處理多個專案**。
+> 收入不再是驅動優先序的核心目標；07-08／07-13／07-20 版裡「收入優先，
+> 系統優化凍結至第一筆收入後再議」這個框架**不再適用**。
+>
+> 07-13 版核准的技術路線本身（先量化再優化：儀表板八指標 → 修假失敗 →
+> 查詢分流 → 自動學教訓 → 觀察窗驗證）**不變**，只是驅動目的從「賺錢」
+> 改成「降低 Josh 手動介入、讓多個專案可以並行推進」——量化 baseline
+> 對這個新目的一樣必要（沒有數據不知道哪裡在浪費 Josh 的時間）。
+>
+> 目前有三個架構提案在審查（見 `docs\PROJECT_TASK_BOARD_2026-08-09.md` §4）：
+> 1. **Hermes Lite × AgentOS Knowledge Intelligence Layer**——跟新目標關聯度最高
+>    （直接對應「不用手動翻資料就能問到答案」），執行計畫見
+>    `docs\plans\2026-08-09-hermes-lite-knowledge-layer-執行計畫.md`。
+> 2. **AgentOS Self-Evolution**——v0.2 修正為 HOLD，僅授權 Phase -1 前提工作
+>    （P-1 Verify isolation、P-3 歷史資料信任分類），Josh 裁決**可與其他工作並行**，
+>    比照收尾稽核義務的做法併入日常工作流，不必等其他項目做完才開始；
+>    完整 Self-Evolution Phase 0 稽核／PoC 仍需四項 Exit Criteria 全部達成才能解凍。
+> 3. **AgentOS × OmniRoute 多模型基礎設施**——查證後發現該工具有真實的
+>    憑證處理 CVE 記錄（已修補）與 ToS 風險（免費層聚合靠偽裝客戶端流量達成，
+>    有害及 Josh 正式在用的 Claude/Codex 帳號風險），且 AgentOS 目前實際
+>    使用的 provider 數量少，效益不如提案標題暗示的大。**先不做**，
+>    review 見 `docs\plans\2026-08-09-self-evolution-proposal-review.md` 同目錄下的
+>    OmniRoute 相關記錄（待補正式 review 檔）。
+>
+> ---
+>
+> **2026-07-20 更新（修正 07-13 版凍結範圍，其餘不變，歷史保留）**：Josh 裁決
 > 知識平台（Telegram × Dashboard 知識工作平台計畫）Phase 0/1 可與
 > 量化路線**並行**，見 `docs\decisions\ADR-0011-parallel-knowledge-platform.md`
 > （含回頭條件：量化路線因搶資源停滯超過一週 → 知識平台讓路）。
