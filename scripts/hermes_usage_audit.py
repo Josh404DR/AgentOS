@@ -9,6 +9,8 @@ low-risk work should be routed to Ollama.
 from __future__ import annotations
 
 import argparse
+import json
+import os
 import sqlite3
 from collections import defaultdict
 from dataclasses import dataclass
@@ -17,7 +19,52 @@ from pathlib import Path
 from typing import Iterable
 
 
-DEFAULT_DB = Path.home() / "AppData" / "Local" / "hermes" / "state.db"
+AGENTOS_ROOT = Path(__file__).resolve().parents[1]
+
+
+def _load_runtime_config() -> dict:
+    config_path = AGENTOS_ROOT / "config" / "runtime.local.json"
+    if not config_path.is_file():
+        raise RuntimeError(f"AgentOS runtime config not found: {config_path}")
+    try:
+        config = json.loads(config_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise RuntimeError(f"AgentOS runtime config is invalid JSON: {config_path}. {exc}") from exc
+
+    if not config.get("schema_version"):
+        raise RuntimeError("AgentOS runtime config field is missing or empty: schema_version")
+    hermes = config.get("hermes")
+    if not isinstance(hermes, dict):
+        raise RuntimeError("AgentOS runtime config field is missing: hermes")
+    environment_overrides = {
+        "root": "AGENTOS_HERMES_ROOT",
+        "executable": "AGENTOS_HERMES_EXECUTABLE",
+        "python": "AGENTOS_HERMES_PYTHON",
+        "state_db": "AGENTOS_HERMES_STATE_DB",
+    }
+    for field, environment_name in environment_overrides.items():
+        environment_value = os.environ.get(environment_name)
+        if environment_value is not None:
+            hermes[field] = environment_value
+    for field in ("root", "executable", "python", "state_db"):
+        value = hermes.get(field)
+        if not isinstance(value, str) or not value.strip():
+            raise RuntimeError(f"AgentOS runtime config field is missing or empty: hermes.{field}")
+        if not Path(value).is_absolute():
+            raise RuntimeError(
+                f"AgentOS runtime config path must be absolute: hermes.{field}={value}"
+            )
+    if not Path(hermes["root"]).is_dir():
+        raise RuntimeError(f"Hermes root not found: {hermes['root']}")
+    for field in ("executable", "python"):
+        if not Path(hermes[field]).is_file():
+            raise RuntimeError(f"Hermes {field} not found: {hermes[field]}")
+    if not Path(hermes["state_db"]).is_file():
+        raise RuntimeError(f"Hermes state_db not found: {hermes['state_db']}")
+    return config
+
+
+DEFAULT_DB = Path(_load_runtime_config()["hermes"]["state_db"])
 DEFAULT_OUT_DIR = Path("data") / "usage"
 
 
@@ -212,7 +259,12 @@ def agg_table(items: list[dict[str, object]], key_label: str, limit: int = 20) -
     return table([key_label, "Sessions", "Non-cache tokens", "Cache read", "Total tokens", "Cost"], rows)
 
 
-def render_report(all_rows: list[SessionRow], today_rows: list[SessionRow], date: str) -> str:
+def render_report(
+    all_rows: list[SessionRow],
+    today_rows: list[SessionRow],
+    date: str,
+    db_path: Path,
+) -> str:
     generated = datetime.now().astimezone().strftime("%Y-%m-%d %H:%M:%S %z")
     all_total = sum(r.total_tokens for r in all_rows)
     all_non_cache = sum(r.non_cache_tokens for r in all_rows)
@@ -258,7 +310,7 @@ def render_report(all_rows: list[SessionRow], today_rows: list[SessionRow], date
         "",
         "## Scope",
         f"- Generated: {generated}",
-        "- Source DB: `C:\\Users\\brian\\AppData\\Local\\hermes\\state.db`",
+        f"- Source DB: `{db_path}`",
         "- Privacy: message content was not read; this report uses session metadata and token counters only.",
         "",
         "## Summary",
@@ -331,7 +383,7 @@ def main() -> int:
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     out_path = out_dir / f"hermes_usage_audit_{args.date}.md"
-    out_path.write_text(render_report(all_rows, today_rows, args.date), encoding="utf-8")
+    out_path.write_text(render_report(all_rows, today_rows, args.date, db_path), encoding="utf-8")
     print(out_path)
     return 0
 

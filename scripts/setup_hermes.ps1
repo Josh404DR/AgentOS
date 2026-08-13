@@ -1,7 +1,11 @@
-# Hermes 首次設定腳本
+﻿# Hermes 首次設定腳本
 # 在 Hermes 安裝好之後執行一次
 
-$HermesVenv = "E:\AI_Projects_Hub\External_AI_Agents\hermes-agent\.venv\Scripts\hermes.exe"
+$AgentOSRoot = Split-Path -Parent $PSScriptRoot
+$runtimeLoader = Join-Path $AgentOSRoot "scripts\lib\runtime_config.ps1"
+. $runtimeLoader
+$runtimeConfig = Get-AgentOSRuntimeConfig -AgentOSRoot $AgentOSRoot
+$HermesVenv = [string]$runtimeConfig.hermes.executable
 
 Write-Host "=== Hermes 首次設定 ===" -ForegroundColor Cyan
 

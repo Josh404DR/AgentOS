@@ -641,6 +641,34 @@ verify_verdict: NEEDS_HUMAN_DECISION
 Then include findings, evidence, and required changes in Traditional Chinese.
 "@
 }
+# 2026-08-13: child-02-evidence-precedence-codex-verify (and the general
+# EXEC-2026-08-12-001 followups) found that Codex Verify sandboxes had no
+# Python interpreter with pytest reachable - every interpreter on the host
+# (WindowsApps py launcher, external project venvs) lived outside
+# E:\AgentOS, so a read-only `-C E:\AgentOS` sandbox could never reach one.
+# A self-contained standalone Python + venv now lives inside E:\AgentOS
+# itself (built via `uv python install` + `uv venv`, no dependency on any
+# path outside this repo), so it is already covered by the sandbox's
+# existing read-only workspace root - no --add-dir change needed. This
+# block only tells the Verify agent it exists, since dispatch_task_packet.ps1
+# does not hardcode which python command an agent runs.
+$verifyPythonPath = "E:\AgentOS\.verify-python-venv\Scripts\python.exe"
+if ($RouteTo -eq "Codex" -and $codexMode -eq "verify" -and
+    -not ($promptContent.Contains($verifyPythonPath))) {
+    $promptContent += @"
+
+## Available Python Interpreter For Tests
+
+If this verification needs to run Python/pytest, use this self-contained
+interpreter (already inside the sandboxed workspace root, no extra
+permissions required):
+
+$verifyPythonPath -m pytest ...
+
+Do not use ``py``, ``python``, or any interpreter path outside E:\AgentOS -
+none of them are reachable from this sandbox.
+"@
+}
 # Added 2026-07-28: a systemic audit (triggered by repeated Verify FAIL
 # investigations) found that only ~2 of ~95 completed tickets' RESULT.md
 # ever populate the files_modified:/files_created: fields that
@@ -709,13 +737,26 @@ switch ($RouteTo) {
             exit 7
         }
         $sandboxMode = if ($codexMode -in @("build", "plan")) { "workspace-write" } else { "read-only" }
+        # verify mode is --sandbox read-only; pytest/governance checks still need
+        # one writable scratch dir (TemporaryFile etc.) to run to completion.
+        # --add-dir opens only this one directory; the rest of the workspace
+        # stays read-only, matching verify's read-only audit design intent.
+        # 2026-08-12: fixes verify sandbox lacking writable temp -> NEEDS_HUMAN_DECISION.
+        $verifyTempDir = $null
+        if ($codexMode -eq "verify") {
+            $verifyTempDir = Join-Path $env:TEMP "agentos_verify_$DispatchId`_$([guid]::NewGuid().ToString('N').Substring(0,8))"
+            if (-not $DryRun) {
+                New-Item -ItemType Directory -Force -Path $verifyTempDir | Out-Null
+            }
+        }
         $npmCodex = if ($env:APPDATA) { Join-Path $env:APPDATA "npm\codex.cmd" } else { "" }
         $codexCommand = if ($npmCodex -and (Test-Path -LiteralPath $npmCodex -PathType Leaf)) {
             $npmCodex
         } else {
             "codex"
         }
-        $commandDescription = "`"$codexCommand`" -a never exec -C `"$AgentOSRoot`" --sandbox $sandboxMode --output-last-message `"$AgentOutputPath`" -"
+        $addDirArg = if ($verifyTempDir) { " --add-dir `"$verifyTempDir`"" } else { "" }
+        $commandDescription = "`"$codexCommand`" -a never exec -C `"$AgentOSRoot`" --sandbox $sandboxMode$addDirArg --output-last-message `"$AgentOutputPath`" -"
         if (-not $DryRun) {
             # Use cmd.exe file redirection so Codex receives the UTF-8 prompt
             # bytes unchanged. Remove stale API-key overrides only in the child
@@ -730,8 +771,9 @@ switch ($RouteTo) {
             $psi.StandardErrorEncoding = [Text.Encoding]::UTF8
             # chcp 65001 keeps the child console in UTF-8 so the CP950 default
             # cannot mangle the UTF-8 prompt fed through stdin redirection.
+            $addDirCliArg = if ($verifyTempDir) { ' --add-dir "' + $verifyTempDir + '"' } else { "" }
             $psi.Arguments = '/d /c "chcp 65001 >nul && "' + $codexCommand + '" -a never exec -C "' + $AgentOSRoot +
-                '" --sandbox ' + $sandboxMode + ' --output-last-message "' +
+                '" --sandbox ' + $sandboxMode + $addDirCliArg + ' --output-last-message "' +
                 $AgentOutputPath + '" - < "' + $promptPath + '""'
             [void](Set-TestAgentStartInfo -StartInfo $psi)
             $process = [Diagnostics.Process]::new()
@@ -759,6 +801,16 @@ switch ($RouteTo) {
             try {
                 [Environment]::SetEnvironmentVariable("OPENAI_API_KEY", $null, "Process")
                 [Environment]::SetEnvironmentVariable("CODEX_API_KEY", $null, "Process")
+                # Touching $psi.EnvironmentVariables materializes a snapshot of
+                # the current process environment into the child's env block.
+                # This must happen AFTER the two nulls above, or the snapshot
+                # freezes in whatever stale API key was present before they
+                # were cleared, silently defeating the persisted-login intent
+                # above (found 2026-08-12: caused 401 Unauthorized failures).
+                if ($verifyTempDir) {
+                    $psi.EnvironmentVariables["TEMP"] = $verifyTempDir
+                    $psi.EnvironmentVariables["TMP"] = $verifyTempDir
+                }
                 [void]$process.Start()
             } finally {
                 [Environment]::SetEnvironmentVariable("OPENAI_API_KEY", $savedOpenAiKey, "Process")
@@ -767,6 +819,9 @@ switch ($RouteTo) {
             $stdoutTask = $process.StandardOutput.ReadToEndAsync()
             $stderrTask = $process.StandardError.ReadToEndAsync()
             $execution = Invoke-BoundedProcess -Process $process -StdoutTask $stdoutTask -StderrTask $stderrTask -Phase "codex_$codexMode"
+            if ($verifyTempDir -and (Test-Path -LiteralPath $verifyTempDir)) {
+                Remove-Item -LiteralPath $verifyTempDir -Recurse -Force -ErrorAction SilentlyContinue
+            }
             $exitCode = $execution.ExitCode
             $elapsedSeconds = $execution.ElapsedSeconds
             if ($execution.TimedOut) { $failureReason = "agent_timeout"; $failurePhase = "codex_$codexMode" }

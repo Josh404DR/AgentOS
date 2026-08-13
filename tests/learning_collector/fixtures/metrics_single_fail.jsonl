@@ -1,0 +1,1 @@
+{"task_id":"test-task-single-001","task_type":"Simple","worker":"Claude","verifier":"Codex","verdict":"FAIL","retry_count":0,"fail_reason":"verify_output_missing","escalation_required":false,"token_actual":"unknown","duration_actual":"unknown","final_status":"failed","recorded_at":"2026-07-04T10:00:00+08:00"}

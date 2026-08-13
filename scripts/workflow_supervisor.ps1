@@ -15,6 +15,14 @@ $EscalationsRoot = Join-Path $AgentOSRoot "data\escalations"
 $QueueStarter = Join-Path $AgentOSRoot "scripts\start_task_queue.ps1"
 $Gate = Join-Path $AgentOSRoot "scripts\assert_governance_ready.ps1"
 $MetricsWriter = Join-Path $AgentOSRoot "scripts\write_task_metric.ps1"
+$QueueLog = Join-Path $AgentOSRoot "logs\task-queue.log"
+. (Join-Path $AgentOSRoot "scripts\lib\dependency_status.ps1")
+
+function Write-DependencyStatusWarning([string]$DispatchId, [string]$Status) {
+    $line = "$(Get-Date -Format o) dispatch_id=$DispatchId status=warning detail=unknown_dependency_status:$Status"
+    Add-Content -LiteralPath $QueueLog -Value $line -Encoding UTF8
+    Write-Warning $line
+}
 
 function Read-Utf8([string]$Path) {
     if (-not (Test-Path -LiteralPath $Path -PathType Leaf)) { return "" }
@@ -205,8 +213,13 @@ function Invoke-SupervisorPass {
         }
         $unresolved = Test-UnresolvedEscalation $root.Id
         $pending = @($scoped | Where-Object {
+            $candidate = $_
             -not $_.HasResult -and
-            $_.Status -in @("ready_to_route", "pending_dependency", "waiting_on_dependency") -and
+            ($_.Status -eq "ready_to_route" -or
+                (Test-AgentOSDependencyWaitingStatus -Status $_.Status -OnUnknownStatus {
+                    param($unknownStatus)
+                    Write-DependencyStatusWarning $candidate.Id $unknownStatus
+                })) -and
             ($_.Id -ne $root.Id -or $_.Route -in @("Codex", "Claude", "Ollama", "Antigravity CLI"))
         })
         if ($passes -and -not $pending -and -not $unresolved) {

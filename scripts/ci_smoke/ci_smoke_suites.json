@@ -1,0 +1,7 @@
+{
+  "governance_and_syntax": { "timeout_seconds": 60 },
+  "powershell_regression": { "timeout_seconds": 180 },
+  "python_suites": { "timeout_seconds": 150 },
+  "queue_and_antigravity_dryrun": { "timeout_seconds": 150 },
+  "dashboard_optional": { "timeout_seconds": 30 }
+}

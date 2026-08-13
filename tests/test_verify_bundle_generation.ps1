@@ -113,9 +113,13 @@ evidence: offline read-only fixture
         param($c)
         if ($c.ExitCode -ne 0) { throw "generator exit=$($c.ExitCode): $($c.Output)" }
         $bundle = Get-Content -Raw -Encoding UTF8 (Join-Path $c.OutputDir "VERIFY_BUNDLE.md")
+        $verifyTask = Get-Content -Raw -Encoding UTF8 (Join-Path $fixtureRoot "data\codex_tasks\fixture-read-only-codex-verify\TASK.md")
         Assert-Match $bundle '(?m)^change_required: false$' "read-only change_required was not false"
         Assert-Match $bundle '(?m)^changed_file_source: read_only_ticket_no_scope_mining$' "read-only source was not explicit"
         Assert-NotMatch $bundle 'read-only-example\.ps1' "read-only Scope mining was not short-circuited"
+        Assert-Match $verifyTask 'assert_governance_ready\.ps1 -AgentOSRoot ".+" -TaskPath\s+".+fixture-read-only-codex-verify\\TASK\.md" -ReadOnly' "Verify task did not bind the read-only governance gate to its own TASK.md"
+        Assert-Match $verifyTask 'The `-TaskPath` target is this Verify `TASK\.md`' "Verify task did not distinguish TASK.md from the Verify bundle"
+        Assert-Match $verifyTask 'Never invoke that script without `-ReadOnly`' "Verify task did not prohibit the write-mode governance gate"
     }
 
     Assert-Case "query_type_evidence" {

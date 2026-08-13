@@ -38,7 +38,23 @@ if ($Mode -eq "DryRun") {
     $args += "--dry-run"
 }
 
+$syncStartedAt = Get-Date
 & $PythonPath @args
+$syncExit = $LASTEXITCODE
+$latestSyncLog = Get-ChildItem -LiteralPath $logDir -Filter "notebooklm_sync_*.md" |
+    Where-Object { $_.LastWriteTime -ge $syncStartedAt.AddSeconds(-2) } |
+    Sort-Object LastWriteTime -Descending |
+    Select-Object -First 1
+if ($syncExit -ne 0) {
+    throw "NotebookLM sync process failed with exit code $syncExit."
+}
+if (-not $latestSyncLog) {
+    throw "NotebookLM sync did not create a run log."
+}
+$syncLogContent = Get-Content -Raw -LiteralPath $latestSyncLog.FullName -Encoding UTF8
+if ($Mode -eq "Live" -and $syncLogContent -notmatch '\*\*Final Status\*\*:\s*`live_sync_success`') {
+    throw "NotebookLM Live sync did not succeed. See $($latestSyncLog.FullName)"
+}
 
 $summaryPath = Join-Path $logDir ("notebooklm_conveyor_{0}.md" -f (Get-Date -Format "yyyy-MM-dd_HHmmss"))
 $summary = @"
@@ -50,7 +66,9 @@ $summary = @"
 - export_dir: $exportDir
 - python_path: $PythonPath
 - title_mode: bundle-hash
-- bundle_count: 6
+- bundle_count: 5
+- knowledge_pool_excluded_from_bundles: true
+- knowledge_pool_upload_script: scripts\publish_url_knowledge.ps1
 - notebooklm_role: human_auxiliary_retrieval
 - models_invoked: false
 - external_services_invoked: $($Mode -eq "Live")

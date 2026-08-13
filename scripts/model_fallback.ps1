@@ -8,9 +8,11 @@ param(
 
 $ErrorActionPreference = "Continue"
 
-$HermesRoot = "E:\AI_Projects_Hub\External_AI_Agents\hermes-agent"
-$HermesExe = Join-Path $HermesRoot ".venv\Scripts\hermes.exe"
 $AgentOSRoot = "E:\AgentOS"
+. (Join-Path $AgentOSRoot "scripts\lib\runtime_config.ps1")
+$RuntimeConfig = Get-AgentOSRuntimeConfig -AgentOSRoot $AgentOSRoot
+$HermesRoot = [string]$RuntimeConfig.hermes.root
+$HermesExe = [string]$RuntimeConfig.hermes.executable
 $LogDir = Join-Path $AgentOSRoot "logs"
 $StateFile = Join-Path $LogDir "model_fallback_state.json"
 

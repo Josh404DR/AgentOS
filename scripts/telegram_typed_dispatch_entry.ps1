@@ -8,6 +8,7 @@ param(
     [string]$MessageFile,
     [string]$AgentOSRoot = "E:\AgentOS",
     [string]$DispatchId = ("telegram-" + (Get-Date -Format "yyyy-MM-dd-HHmmss")),
+    [switch]$TelegramHookInvoked,
     [switch]$NoWrite
 )
 
@@ -30,10 +31,19 @@ $argsList = @(
     "-DispatchId", $DispatchId
 )
 
+$cleanupTempFile = $false
+$tempMsgFile = ""
 if ($MessageFile) {
     $argsList += @("-InputFile", $MessageFile)
 } else {
-    $argsList += @("-InputText", $MessageText)
+    # Write to a UTF-8 NoBOM temp file to avoid CJK character mangling when
+    # PowerShell 5.1 serialises the command-line across the process boundary
+    # on CP950 (Traditional Chinese) Windows systems.
+    $tempMsgFile = [IO.Path]::GetTempFileName()
+    $Utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+    [IO.File]::WriteAllText($tempMsgFile, $MessageText, $Utf8NoBom)
+    $argsList += @("-InputFile", $tempMsgFile)
+    $cleanupTempFile = $true
 }
 
 if ($NoWrite) {
@@ -43,10 +53,14 @@ if ($NoWrite) {
 $output = & powershell @argsList
 $exit = $LASTEXITCODE
 
+if ($cleanupTempFile -and $tempMsgFile) {
+    Remove-Item -LiteralPath $tempMsgFile -Force -ErrorAction SilentlyContinue
+}
+
 if ($exit -ne 0) {
     throw "typed dispatch failed with exit code $exit"
 }
 
 $output | ForEach-Object { Write-Output $_ }
-Write-Output "telegram_hook_invoked=false"
+Write-Output ("telegram_hook_invoked={0}" -f $TelegramHookInvoked.IsPresent.ToString().ToLowerInvariant())
 Write-Output "external_services_invoked=false"

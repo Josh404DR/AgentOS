@@ -4,7 +4,7 @@
 
 param(
     [string]$SourceAgentOSRoot = "E:\AgentOS",
-    [string]$SourceHermesRoot = "E:\AI_Projects_Hub\External_AI_Agents\hermes-agent",
+    [string]$SourceHermesRoot,
     [string]$TargetAgentOSRoot = "E:\AgentOS",
     [string]$TargetHubRoot = "E:\AI_Projects_Hub",
     [switch]$IncludeHermesUserConfig,
@@ -12,6 +12,12 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
+
+if (-not $PSBoundParameters.ContainsKey("SourceHermesRoot")) {
+    . (Join-Path $PSScriptRoot "lib\runtime_config.ps1")
+    $RuntimeConfig = Get-AgentOSRuntimeConfig -AgentOSRoot $SourceAgentOSRoot
+    $SourceHermesRoot = [string]$RuntimeConfig.hermes.root
+}
 
 $TargetHermesRoot = Join-Path $TargetHubRoot "External_AI_Agents\hermes-agent"
 $TargetHermesConfigRoot = Join-Path $TargetAgentOSRoot "machine2_hermes_config"

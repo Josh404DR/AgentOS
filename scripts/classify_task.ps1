@@ -16,7 +16,7 @@ $riskRules = [ordered]@{
 }
 
 $complexRules = [ordered]@{
-    explicit_plan = '(?i)\b(plan|parent task|child task|dependency)\b|\u8a08\u756b|\u7236\u5de5\u55ae|\u5b50\u5de5\u55ae|\u4f9d\u8cf4'
+    explicit_plan = '(?i)(?<![a-zA-Z])plan(?:ning)?(?![a-zA-Z])|\b(parent task|child task|dependency)\b|\u8a08\u756b|\u898f\u5283|\u7236\u5de5\u55ae|\u5b50\u5de5\u55ae|\u4f9d\u8cf4'
     multi_component = '(?i)\b(frontend|backend|database|api)\b.*\b(frontend|backend|database|api)\b|\u524d\u7aef.*\u5f8c\u7aef|\u5f8c\u7aef.*\u524d\u7aef'
     architecture = '(?i)\b(architecture|workflow|dispatcher|queue|gateway|governance)\b|\u67b6\u69cb|\u5de5\u4f5c\u6d41|\u6d3e\u5de5\u5668|\u4f47\u5217|\u6cbb\u7406'
     multiple_deliverables = '(?i)(\u5efa\u7acb|\u4fee\u6539|\u66f4\u65b0|\u65b0\u589e).*(\u4ee5\u53ca|\u4e26\u4e14|\u540c\u6642).*(\u5efa\u7acb|\u4fee\u6539|\u66f4\u65b0|\u65b0\u589e)'
@@ -24,15 +24,35 @@ $complexRules = [ordered]@{
 
 $negationPrefix = '(?i)(?:\u4e0d|\u4e0d\u8981|\u4e0d\u5f97|\u7981\u6b62|\u907f\u514d|\u4e0d\u53ef|\u7121\u9700|\u4e0d\u9700|\u4e0d\u6703|do\s+not|must\s+not|without|never)'
 $riskTerm = '(?i)(?:delete|remove|erase|drop|purge|payment|billing|subscription|purchase|charge|api[ _-]?key|token|credential|password|oauth|permissions?|send|publish|post|upload|deploy|release|allowlist|blocklist|firewall|access control|security rule|refactor|rewrite|outage|downtime|\u522a\u9664|\u6e05\u9664|\u79fb\u9664|\u92b7\u6bc0|\u4ed8\u6b3e|\u91d1\u6d41|\u5e33\u55ae|\u8a02\u95b1|\u8cfc\u8cb7|\u6263\u6b3e|\u6191\u8b49|\u5bc6\u78bc|\u6b0a\u9650|\u91d1\u9470|\u5beb\u5165|\u50b3\u9001|\u767c\u5e03|\u4e0a\u50b3|\u90e8\u7f72|\u767d\u540d\u55ae|\u9ed1\u540d\u55ae|\u5b58\u53d6\u63a7\u5236|\u5927\u91cd\u69cb|\u5168\u9762\u91cd\u5beb|\u670d\u52d9\u4e2d\u65b7|\u505c\u6a5f)'
-$negatedRiskConstraints = @(
+$inlineNegationPattern = "$negationPrefix[^\r\n\uff0c\u3002\uff1b;]{0,24}?$riskTerm"
+
+# Treat only consecutive bullet lines under an explicit prohibition header as
+# negated scope. The block ends at the first blank or non-bullet line, so a
+# prohibition cannot accidentally suppress active instructions later on.
+$listNegationPattern = '(?im)^(?<header>[^\r\n]{0,80}(?:\u660e\u78ba\u7981\u6b62|\u7981\u6b62\u4e8b\u9805|\u7981\u6b62\u6e05\u55ae)\s*[:\uff1a]\s*)\r?\n(?<bullets>(?:[ \t]*(?:[-*+]|\d+[.)])\s+[^\r\n]*(?:\r?\n|$))+)'
+$negatedRiskConstraints = @()
+$riskScanText = $MessageText
+$listBlocks = @([regex]::Matches($MessageText, $listNegationPattern))
+for ($index = $listBlocks.Count - 1; $index -ge 0; $index--) {
+    $block = $listBlocks[$index]
+    $blockRiskTerms = @([regex]::Matches($block.Value, $riskTerm))
+    if ($blockRiskTerms.Count -eq 0) { continue }
+
+    $header = $block.Groups['header'].Value.Trim()
+    $negatedRiskConstraints += $blockRiskTerms | ForEach-Object { "$header $($_.Value)" }
+    $replacement = [regex]::Replace($block.Value, $riskTerm, '[NEGATED_RISK_CONSTRAINT]')
+    $riskScanText = $riskScanText.Remove($block.Index, $block.Length).Insert($block.Index, $replacement)
+}
+
+$negatedRiskConstraints += @(
     [regex]::Matches(
-        $MessageText,
-        "$negationPrefix[^\r\n\uff0c\u3002\uff1b;]{0,24}?$riskTerm"
+        $riskScanText,
+        $inlineNegationPattern
     ) | ForEach-Object { $_.Value }
 )
 $riskScanText = [regex]::Replace(
-    $MessageText,
-    "$negationPrefix[^\r\n\uff0c\u3002\uff1b;]{0,24}?$riskTerm",
+    $riskScanText,
+    $inlineNegationPattern,
     "[NEGATED_RISK_CONSTRAINT]"
 )
 

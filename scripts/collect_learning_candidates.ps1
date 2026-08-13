@@ -19,6 +19,7 @@ param(
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
+. (Join-Path $PSScriptRoot "lib\global_jsonl_lock.ps1")
 
 # ── Paths ──────────────────────────────────────────────────────────────────
 $root = (Resolve-Path -LiteralPath $AgentOSRoot).Path
@@ -185,6 +186,7 @@ Write-Output "unique_failure_reason_keys=$($groups.Count)"
 
 # ── Load existing candidates (for dedup) ───────────────────────────────────
 $existingDedupeKeys = [System.Collections.Generic.HashSet[string]]::new()
+$existingEscalationTaskIds = [System.Collections.Generic.HashSet[string]]::new()
 if (Test-Path -LiteralPath $candidateIndexPath -PathType Leaf) {
     $indexLines = Get-Content -LiteralPath $candidateIndexPath -Encoding UTF8
     foreach ($line in $indexLines) {
@@ -198,7 +200,24 @@ if (Test-Path -LiteralPath $candidateIndexPath -PathType Leaf) {
         } catch { continue }
     }
 }
+if (Test-Path -LiteralPath $EscalationIndexPath -PathType Leaf) {
+    $escalationIndexLines = Get-Content -LiteralPath $EscalationIndexPath -Encoding UTF8
+    foreach ($line in $escalationIndexLines) {
+        $line = $line.Trim()
+        if ([string]::IsNullOrEmpty($line)) { continue }
+        try {
+            $entry = $line | ConvertFrom-Json
+            if ($entry.PSObject.Properties["task_id"] -and -not [string]::IsNullOrWhiteSpace($entry.task_id)) {
+                $null = $existingEscalationTaskIds.Add("$($entry.task_id)")
+            }
+            if ($entry.PSObject.Properties["dedupe_key"] -and -not [string]::IsNullOrWhiteSpace($entry.dedupe_key)) {
+                $null = $existingDedupeKeys.Add("$($entry.dedupe_key)")
+            }
+        } catch { continue }
+    }
+}
 Write-Output "existing_candidates=$($existingDedupeKeys.Count)"
+Write-Output "existing_escalation_task_ids=$($existingEscalationTaskIds.Count)"
 
 # ── Process groups ─────────────────────────────────────────────────────────
 $now            = [System.DateTimeOffset]::UtcNow.ToOffset([System.TimeSpan]::FromHours(8))
@@ -303,6 +322,16 @@ foreach ($key in $groups.Keys) {
         # Route to escalation instead of creating a candidate file
         $escTaskId  = "learning-candidate-$candidateId"
         $escDir     = Join-Path $EscalationDir $escTaskId
+        $existingEscalationEvents = @()
+        if (Test-Path -LiteralPath $escDir -PathType Container) {
+            $existingEscalationEvents = @(Get-ChildItem -LiteralPath $escDir -File -Filter "*.json" -ErrorAction SilentlyContinue)
+        }
+        if ($existingEscalationTaskIds.Contains($escTaskId) -or $existingEscalationEvents.Count -gt 0) {
+            $skippedDedupe++
+            Write-Output "skip_duplicate: key=$key task_id=$escTaskId reason=existing_escalation_task_or_event"
+            $null = $existingDedupeKeys.Add($dedupeKey)
+            continue
+        }
         if (-not (Test-Path -LiteralPath $escDir -PathType Container)) {
             $null = New-Item -ItemType Directory -Path $escDir -Force
         }
@@ -328,11 +357,16 @@ foreach ($key in $groups.Keys) {
             source       = "learning_candidate_governance"
             reason       = "governance_change_candidate:$key"
             artifact_path = $escArtifact
+            dedupe_key   = $dedupeKey
             created_at   = $isoNow
             status       = "awaiting_josh"
         }
         $indexLine = $indexEntry | ConvertTo-Json -Compress
-        Add-Content -LiteralPath $EscalationIndexPath -Value $indexLine -Encoding UTF8
+        $pendingLine = $indexLine + [Environment]::NewLine
+        Invoke-GlobalJsonlLockedAppend -LiteralPath $EscalationIndexPath -PendingContent $pendingLine -AppendAction {
+            Add-Content -LiteralPath $EscalationIndexPath -Value $indexLine -Encoding UTF8
+        }
+        $null = $existingEscalationTaskIds.Add($escTaskId)
 
         Write-Output "governance_escalation_created: candidate_id=$candidateId task_id=$escTaskId artifact=$escArtifact"
         $null = $existingDedupeKeys.Add($dedupeKey)
@@ -355,7 +389,10 @@ foreach ($key in $groups.Keys) {
             artifact_path  = $candidatePath
         }
         $indexLine = $indexEntry | ConvertTo-Json -Compress
-        Add-Content -LiteralPath $candidateIndexPath -Value $indexLine -Encoding UTF8
+        $pendingLine = $indexLine + [Environment]::NewLine
+        Invoke-GlobalJsonlLockedAppend -LiteralPath $candidateIndexPath -PendingContent $pendingLine -AppendAction {
+            Add-Content -LiteralPath $candidateIndexPath -Value $indexLine -Encoding UTF8
+        }
 
         Write-Output "candidate_created: candidate_id=$candidateId change_class=$changeClass frequency=$($evList.Count) impact=$impact artifact=$candidatePath"
         $null = $existingDedupeKeys.Add($dedupeKey)

@@ -119,16 +119,16 @@ $bundleSpecs = @(
         Definition = "Compact current state and maintained Agent memory indexes; raw transcripts and task evidence are excluded."
         Patterns = @(
             "current_state.md",
-            "HERMES_NOTES.md",
+            "data\memory\HERMES_NOTES.md",
             "data\memory\HERMES_CORE_MEMORY.md",
             "data\memory\NOTEBOOKLM_SOURCE_INDEX.md"
         )
     },
-    @{
-        Name = "KNOWLEDGE_POOL"
-        Definition = "External references and distilled reusable research, not current operational truth."
-        Patterns = @("data\knowledge_pool\*.md")
-    },
+    # KNOWLEDGE_POOL bundle removed 2026-06-29.
+    # Knowledge Pool nodes are now independent NotebookLM sources uploaded
+    # individually via scripts\publish_url_knowledge.ps1. They must not be
+    # merged into a bundle. AUDIT and MIGRATION_REPORT management files
+    # in data\knowledge_pool\ are also excluded from all bundles.
     @{
         Name = "PROJECT_ANALYSIS"
         Definition = "Cursor-owned project analysis copied read-only for human retrieval."

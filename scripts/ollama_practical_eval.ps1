@@ -1,4 +1,4 @@
-# AgentOS Ollama practical model evaluation runner.
+﻿# AgentOS Ollama practical model evaluation runner.
 # Runs installed Ollama models on real AgentOS workflow tasks and records raw outputs.
 
 param(

@@ -78,7 +78,11 @@ $statuses = foreach ($runtime in $registry.runtimes) {
                     $existingReceiptPath = Join-Path $root "data\runtime_receipts\$($runtime.control.receipt_id).json"
                     $existingReceipt = $null
                     if (Test-Path -LiteralPath $existingReceiptPath -PathType Leaf) {
-                        try { $existingReceipt = [IO.File]::ReadAllText($existingReceiptPath, [Text.Encoding]::UTF8) | ConvertFrom-Json } catch {}
+                        try {
+                            $existingReceipt = [IO.File]::ReadAllText($existingReceiptPath, [Text.Encoding]::UTF8) | ConvertFrom-Json
+                        } catch {
+                            $receiptReconciliationError = "existing receipt read/parse failed at $existingReceiptPath : $($_.Exception.Message)"
+                        }
                     }
                     if (-not $existingReceipt -or [int]$existingReceipt.process_id -ne $lockPid) {
                         & $gatewayReceiptWriter `

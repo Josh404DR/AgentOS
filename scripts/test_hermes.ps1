@@ -1,5 +1,9 @@
-# Hermes 快速驗證腳本
-$hermes = "E:\AI_Projects_Hub\External_AI_Agents\hermes-agent\.venv\Scripts\hermes.exe"
+﻿# Hermes 快速驗證腳本
+$AgentOSRoot = Split-Path -Parent $PSScriptRoot
+$runtimeLoader = Join-Path $AgentOSRoot "scripts\lib\runtime_config.ps1"
+. $runtimeLoader
+$runtimeConfig = Get-AgentOSRuntimeConfig -AgentOSRoot $AgentOSRoot
+$hermes = [string]$runtimeConfig.hermes.executable
 
 Write-Host "=== Hermes 驗證 ===" -ForegroundColor Cyan
 

@@ -187,6 +187,96 @@ function Get-PacketField {
     return ""
 }
 
+function Get-EvidenceFieldValue {
+    param(
+        [Parameter(Mandatory = $true)][string]$Text,
+        [Parameter(Mandatory = $true)][string]$Name
+    )
+    $escaped = [regex]::Escape($Name)
+    $patterns = @(
+        "(?im)^[ \t]*(?:>[ \t]*)?(?:[-*][ \t]*)?\*\*$escaped[ \t]*[:=\uFF1A]\*\*[ \t]*(?<value>[^\r\n]*?)[ \t]*$",
+        "(?im)^[ \t]*(?:>[ \t]*)?(?:[-*][ \t]*)?\*\*$escaped\*\*[ \t]*[:=\uFF1A][ \t]*(?<value>[^\r\n]*?)[ \t]*$",
+        "(?im)^[ \t]*(?:>[ \t]*)?(?:[-*][ \t]*)?$escaped[ \t]*[:=\uFF1A][ \t]*(?<value>[^\r\n]*?)[ \t]*$"
+    )
+    foreach ($pattern in $patterns) {
+        $match = [regex]::Match($Text, $pattern)
+        if ($match.Success) {
+            return $match.Groups["value"].Value.Trim().Trim('`').Trim('*').Trim()
+        }
+    }
+    return $null
+}
+
+function Test-EvidenceValuePopulated {
+    param([AllowNull()][string]$Value)
+    if ($null -eq $Value -or -not $Value.Trim()) { return $false }
+    $trimmed = $Value.Trim()
+    $placeholderPatterns = @(
+        '^(?:todo|tbd|to\s*be\s*filled|fill\s*in|placeholder)$',
+        '^(?:\.{3,}|_+|-+)$',
+        '^<[^>]*(?:填|placeholder|todo|tbd|fill)[^>]*>$',
+        '^\{[^}]*(?:填|placeholder|todo|tbd|fill)[^}]*\}$',
+        '^\[[^]]*(?:填|placeholder|todo|tbd|fill)[^]]*\]$',
+        '^[（(]?(?:待填|請填|尚待填寫)[）)]?$'
+    )
+    if ($trimmed -match '^[\p{P}\p{S}\s]+$') { return $false }
+    foreach ($pattern in $placeholderPatterns) {
+        if ($trimmed -match "(?i)$pattern") { return $false }
+    }
+    return $true
+}
+
+function Get-EvidenceBlockAssessment {
+    param(
+        [Parameter(Mandatory = $true)][string]$TaskText,
+        [Parameter(Mandatory = $true)][string]$ResultText,
+        [Parameter(Mandatory = $true)][ValidateSet("true", "false")][string]$ChangeRequired
+    )
+    $fullFields = @(
+        "task_status", "claimed_by", "artifact_status", "locally_verified",
+        "verified_by_codex", "reviewed_by_claude", "approved_by_josh",
+        "cleanup_executed", "live_external_action_executed",
+        "files_modified", "files_created", "commit_hash", "evidence_paths",
+        "verification_commands", "remaining_caveats", "production_ready"
+    )
+    $lightweightFields = @(
+        "task_status", "claimed_by", "task_kind", "evidence_sources",
+        "verification_summary", "verified_by_codex", "remaining_caveats"
+    )
+    $taskKind = (Get-PacketField $TaskText "task_kind").ToLowerInvariant()
+    $taskType = (Get-PacketField $TaskText "type").ToUpperInvariant()
+    $externalAction = Get-EvidenceFieldValue $ResultText "live_external_action_executed"
+    $hasFullSignal = (
+        $ChangeRequired -eq "true" -or
+        $taskType -eq "BUILDER_TASK" -or
+        $taskType -eq "CODEX_BUILD" -or
+        ($taskKind -and $taskKind -ne "read_only") -or
+        ($externalAction -and $externalAction -match '^(?i:true)$')
+    )
+    $level = if ($hasFullSignal) {
+        "full"
+    } elseif ($taskKind -eq "read_only" -or $ChangeRequired -eq "false") {
+        "lightweight"
+    } else {
+        # Classification ambiguity is fail-closed at the stricter level.
+        "full"
+    }
+    $requiredFields = if ($level -eq "full") { $fullFields } else { $lightweightFields }
+    $missingFields = [Collections.Generic.List[string]]::new()
+    foreach ($field in $requiredFields) {
+        $value = Get-EvidenceFieldValue $ResultText $field
+        if (-not (Test-EvidenceValuePopulated $value)) {
+            $missingFields.Add($field)
+        }
+    }
+    return [pscustomobject]@{
+        Level = $level
+        RequiredCount = $requiredFields.Count
+        PopulatedCount = $requiredFields.Count - $missingFields.Count
+        MissingFields = @($missingFields)
+    }
+}
+
 function Write-Utf8File {
     param([string]$Path, [string]$Content)
     $parent = Split-Path -Parent $Path
@@ -535,6 +625,17 @@ function New-CodexVerifyTask {
         # that will never exist).
         "false"
     }
+    $parentTaskForEvidence = Get-Content -Raw -LiteralPath $parentTaskPath -Encoding UTF8
+    $evidenceAssessment = Get-EvidenceBlockAssessment `
+        -TaskText $parentTaskForEvidence `
+        -ResultText $parentResult `
+        -ChangeRequired $changeRequired
+    $evidenceMissingLines = if ($evidenceAssessment.MissingFields.Count) {
+        ($evidenceAssessment.MissingFields | ForEach-Object { "  - $_" }) -join [Environment]::NewLine
+    } else {
+        "  - none"
+    }
+    $evidenceWarning = ($evidenceAssessment.MissingFields.Count -gt 0).ToString().ToLowerInvariant()
 
     # Added 2026-07-28 (structural redesign Pillar B, per Josh's direction:
     # docs\VERIFY_PIPELINE_STRUCTURAL_REDESIGN_2026-07-28.md). Everything
@@ -719,6 +820,12 @@ change_required: $changeRequired
 changed_file_source: $changedFileSource
 $gitVerifiedSummary
 evidence_manifest_mismatch: $($evidenceManifestMismatch.ToString().ToLowerInvariant())
+evidence_block_level: $($evidenceAssessment.Level)
+evidence_block_field_count: $($evidenceAssessment.PopulatedCount)/$($evidenceAssessment.RequiredCount)
+evidence_block_missing_fields:
+$evidenceMissingLines
+evidence_block_warning: $evidenceWarning
+evidence_block_enforcement: phase_1_warning_only
 
 ## Task Ticket
 
@@ -773,6 +880,11 @@ $bundlePath
 
 This is a new independent verification session. Do not use plan reasoning or
 prior chat history. Use read-only inspection and acceptance criteria only.
+Before inspecting the bundle, run the required governance readiness check as
+``scripts\assert_governance_ready.ps1 -AgentOSRoot "$AgentOSRoot" -TaskPath
+"$childPath" -ReadOnly``. The ``-TaskPath`` target is this Verify ``TASK.md``,
+not the Verify bundle. Never invoke that script without ``-ReadOnly`` in this
+Codex Verify session.
 If test result or delivery evidence is missing, do not PASS. Missing scoped
 diff cannot PASS unless the bundle explicitly says ``change_required: false``.
 

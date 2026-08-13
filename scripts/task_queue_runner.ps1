@@ -33,6 +33,7 @@ $script:LoopIndexRebuilds = 0
 $script:LastFullSweepUtc = [datetime]::MinValue
 . (Join-Path $AgentOSRoot "scripts\escalation_receipt_validation.ps1")
 . (Join-Path $AgentOSRoot "scripts\lib\global_jsonl_lock.ps1")
+. (Join-Path $AgentOSRoot "scripts\lib\dependency_status.ps1")
 
 function Get-Field([string]$Text, [string]$Name) {
     $match = [regex]::Match(
@@ -519,7 +520,7 @@ $Detail
     Write-Utf8 $path $content
 }
 
-function Test-Approved([object[]]$Tasks, [string]$DispatchId) {
+function Test-Approved([object[]]$Tasks, [string]$DispatchId, [string]$RequestingTaskId = $DispatchId) {
     if ((Get-ResultStatus $DispatchId) -ne "completed") { return $false }
     $task = $Tasks | Where-Object { $_.Id -eq $DispatchId } | Select-Object -First 1
     if ($task -and $task.Type -eq "CODEX_VERIFY") {
@@ -527,17 +528,22 @@ function Test-Approved([object[]]$Tasks, [string]$DispatchId) {
         if ($decision -eq "PASS") { return $true }
         if ($decision -eq "FAIL" -and $task.Parent) {
             $revision = Find-LatestRevision $Tasks $task.Parent
-            if ($revision) { return Test-Approved $Tasks $revision.Id }
+            if ($revision) { return Test-Approved $Tasks $revision.Id $RequestingTaskId }
         }
         return $false
     }
     $review = Find-Verify $Tasks $DispatchId
     if (-not $review) { return $true }
+    # Self-loop guard: if the verify found here is the very task that
+    # originated this dependency check, do not require it to have already
+    # passed its own review - that is a deadlock (fixed 2026-08-12, hermes-lite
+    # phase1 child verify tasks).
+    if ($review.Id -eq $RequestingTaskId) { return $true }
     $decision = Get-VerifyVerdict $review.Id
     if ($decision -eq "PASS") { return $true }
     if ($decision -eq "FAIL") {
         $revision = Find-LatestRevision $Tasks $DispatchId
-        if ($revision) { return Test-Approved $Tasks $revision.Id }
+        if ($revision) { return Test-Approved $Tasks $revision.Id $RequestingTaskId }
     }
     return $false
 }
@@ -558,14 +564,20 @@ function Set-TaskState([string]$TaskPath, [string]$DispatchStatus, [string]$Task
 }
 
 function Promote-Dependencies([object[]]$Tasks) {
-    foreach ($task in $Tasks | Where-Object { $_.Status -eq "pending_dependency" }) {
+    foreach ($task in $Tasks | Where-Object {
+        $candidate = $_
+        Test-AgentOSDependencyWaitingStatus -Status $candidate.Status -OnUnknownStatus {
+            param($unknownStatus)
+            Write-QueueEvent $candidate.Id "warning" "unknown_dependency_status:$unknownStatus" | Out-Null
+        }
+    }) {
         $dependency = $task.DependsOn
         $satisfied = $false
         if ($dependency -like "parent_created:*") {
             $parentId = $dependency.Substring("parent_created:".Length)
             $satisfied = Test-Path -LiteralPath (Get-TaskPath $parentId)
         } elseif ($dependency) {
-            $satisfied = Test-Approved $Tasks $dependency
+            $satisfied = Test-Approved $Tasks $dependency $task.Id
         }
         if ($satisfied) {
             Set-TaskState $task.Path "ready_to_route" "ready"

@@ -1,3 +1,8 @@
+﻿# OUT-OF-SCOPE — 2026-07-08 (W27)
+# 此腳本為裝置維護工具，與接案業務無關。
+# 依據稽核報告 W27，凍結；之後應移出 AgentOS repo。
+# 目前保留原地，不執行任何修改。
+
 param(
     [int]$ThresholdPercent = 85,
     [int]$Top = 20,

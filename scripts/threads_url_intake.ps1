@@ -24,6 +24,9 @@ param(
 
 $ErrorActionPreference = "Stop"
 $Utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+$governanceGate = Join-Path $AgentOSRoot "scripts\assert_governance_ready.ps1"
+$governanceOutput = & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $governanceGate -AgentOSRoot $AgentOSRoot
+if ($LASTEXITCODE -ne 0) { throw "Governance gate blocked Threads intake.`n$($governanceOutput -join "`n")" }
 
 function Write-Utf8NoBom([string]$Path, [string]$Value) {
     $dir = Split-Path -Parent $Path
@@ -61,7 +64,7 @@ $sourceJson = Join-Path $fetchDir "source.json"
 $typedEntry = Join-Path $AgentOSRoot "scripts\telegram_typed_dispatch_entry.ps1"
 $packetScript = Join-Path $AgentOSRoot "scripts\url_intake_task_packet.ps1"
 $workerScript = Join-Path $AgentOSRoot "scripts\url_intake_worker.ps1"
-$fetchScript = Join-Path $AgentOSRoot "fetch_threads.py"
+$fetchScript = Join-Path $AgentOSRoot "tools\threads\fetch_threads.py"
 
 New-Item -ItemType Directory -Force -Path $fetchDir | Out-Null
 
@@ -108,7 +111,8 @@ $typedMessage = @"
 
 $routingOutput = & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $typedEntry `
     -MessageText $typedMessage `
-    -DispatchId $safeDispatchId 2>&1
+    -DispatchId $safeDispatchId `
+    -TelegramHookInvoked 2>&1
 if ($LASTEXITCODE -ne 0) {
     Write-Utf8NoBom $pipelineLog (($routingOutput | Out-String).Trim())
     throw "Typed dispatch failed."
@@ -129,6 +133,12 @@ if ($LASTEXITCODE -ne 0) {
 $taskPathLine = @($packetOutput | Where-Object { "$_" -like "task_path=*" } | Select-Object -Last 1)
 if (-not $taskPathLine) { throw "Task packet did not report task_path." }
 $taskPath = ("$taskPathLine").Substring("task_path=".Length)
+
+# Emit stable identity fields before invoking the worker so a native CLI error
+# cannot erase the intake identity from the Telegram completion reply.
+Write-Output "dispatch_id=$DispatchId"
+Write-Output "fetch_status=$fetchStatus"
+Write-Output "task_path=$taskPath"
 
 if ($fetchStatus -eq "success") {
     $workerOutput = & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $workerScript `

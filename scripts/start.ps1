@@ -2,6 +2,7 @@
 # Starts Hermes gateway and Hermes proxy where credentials are available.
 
 param(
+    [string]$AgentOSRoot = "E:\AgentOS",
     [string]$ProxyProvider = "nous",
     [int]$ProxyPort = 8080,
     [switch]$SkipGateway,
@@ -11,11 +12,15 @@ param(
 
 $ErrorActionPreference = "Stop"
 
-$HermesRoot = "E:\AI_Projects_Hub\External_AI_Agents\hermes-agent"
-$HermesExe = Join-Path $HermesRoot ".venv\Scripts\hermes.exe"
-$AgentOSRoot = "E:\AgentOS"
+$runtimeLoader = Join-Path $AgentOSRoot "scripts\lib\runtime_config.ps1"
+. $runtimeLoader
+$runtimeConfig = Get-AgentOSRuntimeConfig -AgentOSRoot $AgentOSRoot
+$HermesRoot = [string]$runtimeConfig.hermes.root
+$HermesExe = [string]$runtimeConfig.hermes.executable
 $LogDir = Join-Path $AgentOSRoot "logs"
 $GatewayReceiptWriter = Join-Path $AgentOSRoot "scripts\observability\write-gateway-runtime-receipt.ps1"
+$PluginSource = Join-Path $AgentOSRoot "integrations\hermes_plugins\agentos-typed-dispatch"
+$PluginTarget = Join-Path $env:LOCALAPPDATA "hermes\plugins\agentos-typed-dispatch"
 
 if (-not (Test-Path -LiteralPath $HermesExe)) {
     throw "Hermes executable not found: $HermesExe"
@@ -24,6 +29,24 @@ if (-not (Test-Path -LiteralPath $HermesExe)) {
 if (-not (Test-Path -LiteralPath $LogDir)) {
     New-Item -ItemType Directory -Path $LogDir | Out-Null
 }
+
+foreach ($pluginFile in @("__init__.py", "plugin.yaml")) {
+    $sourcePath = Join-Path $PluginSource $pluginFile
+    if (-not (Test-Path -LiteralPath $sourcePath -PathType Leaf)) {
+        throw "Hermes plugin source missing: $sourcePath"
+    }
+}
+New-Item -ItemType Directory -Force -Path $PluginTarget | Out-Null
+Copy-Item -LiteralPath (Join-Path $PluginSource "__init__.py") `
+    -Destination (Join-Path $PluginTarget "__init__.py") -Force
+Copy-Item -LiteralPath (Join-Path $PluginSource "plugin.yaml") `
+    -Destination (Join-Path $PluginTarget "plugin.yaml") -Force
+$pluginSourceHash = (Get-FileHash -LiteralPath (Join-Path $PluginSource "__init__.py") -Algorithm SHA256).Hash
+$pluginTargetHash = (Get-FileHash -LiteralPath (Join-Path $PluginTarget "__init__.py") -Algorithm SHA256).Hash
+if ($pluginSourceHash -ne $pluginTargetHash) {
+    throw "Hermes plugin deployment hash mismatch."
+}
+Write-Host "Hermes plugin deployed. SHA256=$pluginTargetHash" -ForegroundColor DarkGray
 
 Write-Host "=== AgentOS startup ===" -ForegroundColor Cyan
 Write-Host "Hermes: $HermesExe" -ForegroundColor DarkGray
@@ -65,15 +88,24 @@ function Start-AgentOSProcess {
 }
 
 if (-not $SkipGateway) {
-    Start-AgentOSProcess -Name "hermes-gateway" -ArgumentList @("gateway", "run", "--accept-hooks")
+    # The Hermes native scheduled task may start first at logon. AgentOS is the
+    # canonical final owner, so replace that instance instead of exiting with
+    # "Gateway already running".
+    $previousPluginMode = $env:AGENTOS_PLUGIN_MODE
     try {
-        & $GatewayReceiptWriter `
-            -ReceiptId "hermes-gateway" `
-            -RuntimeId "hermes-main-gateway" `
-            -ProfileLockPath "$env:LOCALAPPDATA\hermes\gateway.lock" `
-            -AgentOSRoot $AgentOSRoot | Out-Null
-    } catch {
-        Write-Warning "Hermes gateway is running but receipt reconciliation failed: $($_.Exception.Message)"
+        $env:AGENTOS_PLUGIN_MODE = "task_only"
+        Start-AgentOSProcess -Name "hermes-gateway" -ArgumentList @("gateway", "run", "--accept-hooks", "--replace")
+        try {
+            & $GatewayReceiptWriter `
+                -ReceiptId "hermes-gateway" `
+                -RuntimeId "hermes-main-gateway" `
+                -ProfileLockPath "$env:LOCALAPPDATA\hermes\gateway.lock" `
+                -AgentOSRoot $AgentOSRoot | Out-Null
+        } catch {
+            Write-Warning "Hermes gateway is running but receipt reconciliation failed: $($_.Exception.Message)"
+        }
+    } finally {
+        $env:AGENTOS_PLUGIN_MODE = $previousPluginMode
     }
 }
 
