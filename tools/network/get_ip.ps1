@@ -1,0 +1,1 @@
+(Get-NetIPAddress -AddressFamily IPv4 | Where-Object { $_.IPAddress -like "192.168.*" -or ($_.IPAddress -like "10.*" -and $_.IPAddress -notlike "10.0.0.*") } | Select-Object -First 1).IPAddress | Out-File "E:\AgentOS\data\monitoring\network\my_ip.txt" -Encoding UTF8
