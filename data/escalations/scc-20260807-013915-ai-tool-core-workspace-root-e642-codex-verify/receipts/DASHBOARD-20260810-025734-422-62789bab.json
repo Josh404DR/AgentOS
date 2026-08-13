@@ -1,0 +1,19 @@
+{
+  "schema_version": "1",
+  "receipt_type": "dashboard_owner_session",
+  "task_id": "scc-20260807-013915-ai-tool-core-workspace-root-e642-codex-verify",
+  "decision": "stop",
+  "actor_id": "laptop-impr60b8\\brian",
+  "authentication_method": "local_owner_token",
+  "request_id": "397bb321-1bc6-4759-ad99-733144e1e969",
+  "issued_at": "2026-08-10T02:57:34.421365+00:00",
+  "expires_at": "2026-08-10T02:59:34.421365+00:00",
+  "session_validated": true,
+  "csrf_validated": true,
+  "origin_validated": true,
+  "local_client_validated": true,
+  "telegram_identity": "",
+  "confirmation_code_consumed": false,
+  "source_api": "/api/approvals/scc-20260807-013915-ai-tool-core-workspace-root-e642-codex-verify/decision",
+  "signature": "2DC40898F965998C827EA9D31833A80D95F050DC5AA90B9779A2D8284F2AD8E3"
+}

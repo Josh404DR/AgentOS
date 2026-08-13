@@ -1,0 +1,8 @@
+{
+    "status":  "recovery_pending",
+    "root_dispatch_id":  "ci-queue-reason-root-15964-092213186",
+    "started_at":  "2026-08-07T09:22:13.3312803+08:00",
+    "process_id":  15964,
+    "finished_at":  "2026-08-07T09:22:40.3671735+08:00",
+    "detail":  "tasks_executed=1 contained_failures=0"
+}

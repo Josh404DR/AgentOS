@@ -1,0 +1,21 @@
+{
+    "schema_version":  "2",
+    "task_id":  "2026-07-26-ci-smoke-stage-split",
+    "decision":  "approve",
+    "note":  "",
+    "decided_by":  "laptop-impr60b8\\brian",
+    "authentication_method":  "local_owner_token",
+    "request_id":  "80495fd9-5aa5-4bb4-95fe-084c87a5c38f",
+    "decided_at":  "2026-07-27T17:19:48.8286805+08:00",
+    "escalation_created_at":  "2026-07-26T23:07:49.4649113+08:00",
+    "decision_delay_seconds":  65519.364,
+    "suspicious_fast_decision":  false,
+    "receipt":  {
+                    "path":  "E:\\AgentOS\\data\\escalations\\2026-07-26-ci-smoke-stage-split\\receipts\\DASHBOARD-20260727-091948-337-da558d5d.json",
+                    "sha256":  "6DD7FE5DDD1F2DB66076A657AC60BB7562596007CC05FE835049E2A2A31BDB27",
+                    "type":  "dashboard_owner_session",
+                    "issued_at":  "2026-07-27T09:19:48.336674+00:00",
+                    "expires_at":  "2026-07-27T09:21:48.336674+00:00",
+                    "verified_at":  "2026-07-27T17:19:48.8286805+08:00"
+                }
+}

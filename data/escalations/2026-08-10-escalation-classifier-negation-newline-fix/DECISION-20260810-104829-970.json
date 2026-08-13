@@ -1,0 +1,21 @@
+{
+    "schema_version":  "2",
+    "task_id":  "2026-08-10-escalation-classifier-negation-newline-fix",
+    "decision":  "approve",
+    "note":  "",
+    "decided_by":  "laptop-impr60b8\\brian",
+    "authentication_method":  "local_owner_token",
+    "request_id":  "6e4aaabd-cf37-40c0-a0a3-ae0e26d070b4",
+    "decided_at":  "2026-08-10T10:48:29.9672775+08:00",
+    "escalation_created_at":  "2026-08-10T10:44:02.5944110+08:00",
+    "decision_delay_seconds":  267.373,
+    "suspicious_fast_decision":  false,
+    "receipt":  {
+                    "path":  "E:\\AgentOS\\data\\escalations\\2026-08-10-escalation-classifier-negation-newline-fix\\receipts\\DASHBOARD-20260810-024829-526-731eae33.json",
+                    "sha256":  "1DD0C670DC7A559D9314FABFC699D4DBC076A347C3CE12B121979FAC14DE2183",
+                    "type":  "dashboard_owner_session",
+                    "issued_at":  "2026-08-10T02:48:29.525215+00:00",
+                    "expires_at":  "2026-08-10T02:50:29.525215+00:00",
+                    "verified_at":  "2026-08-10T10:48:29.9672775+08:00"
+                }
+}

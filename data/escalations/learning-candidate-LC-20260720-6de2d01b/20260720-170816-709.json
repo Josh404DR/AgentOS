@@ -1,0 +1,58 @@
+﻿{
+    "task_id":  "learning-candidate-LC-20260720-6de2d01b",
+    "source":  "learning_candidate_governance",
+    "reason":  "governance_change_candidate:risk_rules_matched:external_write",
+    "decision_type":  "governance_review",
+    "summary_for_josh":  "學習候選項目（LC-20260720-6de2d01b）的建議涉及治理層面（risk_rules_matched:external_write），需要 Josh 評估後才能建立後續工單或修改治理文件。詳見此 escalation artifact 的 candidate 欄位。",
+    "candidate":  {
+                      "candidate_id":  "LC-20260720-6de2d01b",
+                      "schema_version":  "1.0.0",
+                      "created_at":  "2026-07-20T17:08:16+08:00",
+                      "collector_version":  "1.0.0",
+                      "governance_version":  "1.3.0",
+                      "governance_hash":  "0EAECF6D153925AC17B940992CC12CE82A6DE5E7F1D7B766BAB9C479C3088EB1",
+                      "source_task_ids":  [
+                                              "telegram-telegram-1449022024-1216-20260706-081516-233034",
+                                              "telegram-telegram-1449022024-1264-20260710-151750-634210"
+                                          ],
+                      "source_evidence_paths":  [
+                                                    "E:\\AgentOS\\data\\escalations\\telegram-telegram-1449022024-1216-20260706-081516-233034\\RESOLUTION.json",
+                                                    "E:\\AgentOS\\data\\escalations\\telegram-telegram-1449022024-1264-20260710-151750-634210\\RESOLUTION.json"
+                                                ],
+                      "failure_reason_key":  "risk_rules_matched:external_write",
+                      "failure_reason_examples":  [
+                                                      "risk_rules_matched:external_write"
+                                                  ],
+                      "frequency":  2,
+                      "threshold":  2,
+                      "retry_evidence":  [
+
+                                         ],
+                      "resolved_evidence":  [
+                                                {
+                                                    "resolved_at":  "2026-07-06T09:51:46.2671304+08:00",
+                                                    "task_id":  "telegram-telegram-1449022024-1216-20260706-081516-233034",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\telegram-telegram-1449022024-1216-20260706-081516-233034\\RESOLUTION.json",
+                                                    "reason":  "risk_rules_matched:external_write"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-07-10T15:19:04.6198297+08:00",
+                                                    "task_id":  "telegram-telegram-1449022024-1264-20260710-151750-634210",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\telegram-telegram-1449022024-1264-20260710-151750-634210\\RESOLUTION.json",
+                                                    "reason":  "risk_rules_matched:external_write"
+                                                }
+                                            ],
+                      "impact":  "low",
+                      "recommendation":  "此失敗原因涉及治理、路由或安全層面。需要 Josh 評估是否調整相關治理文件、規則或角色定義。請查閱對應的 escalation artifact 取得詳情。",
+                      "change_class":  "governance_change",
+                      "josh_approval_status":  "pending",
+                      "dedupe_key":  "6de2d01b045b8942b373a9fd240dcc10412200972aeeb6288ea67cb0e401030a",
+                      "status":  "open"
+                  },
+    "evidence":  [
+                     "E:\\AgentOS\\data\\escalations\\telegram-telegram-1449022024-1216-20260706-081516-233034\\RESOLUTION.json",
+                     "E:\\AgentOS\\data\\escalations\\telegram-telegram-1449022024-1264-20260710-151750-634210\\RESOLUTION.json"
+                 ],
+    "created_at":  "2026-07-20T17:08:16+08:00",
+    "status":  "awaiting_josh"
+}

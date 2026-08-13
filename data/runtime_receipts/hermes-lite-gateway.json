@@ -1,0 +1,14 @@
+{
+    "runtime_id":  "hermes-lite-gateway",
+    "status":  "running",
+    "process_id":  15876,
+    "executable_path":  "E:\\AI_Projects_Hub\\External_AI_Agents\\hermes-agent\\.uv-python\\cpython-3.13-windows-x86_64-none\\python.exe",
+    "command_match":  "gateway run",
+    "started_at":  "2026-08-13T09:03:57.4811744+08:00",
+    "identity":  "LAPTOP-IMPR60B8\\brian",
+    "profile_lock_path":  "C:\\Users\\brian\\AppData\\Local\\hermes-lite\\gateway.lock",
+    "lock_start_time":  1786583037481,
+    "start_time_drift_seconds":  0,
+    "receipt_source":  "profile_lock",
+    "reconciled_at":  "2026-08-13T09:04:05.7105677+08:00"
+}

@@ -1,0 +1,28 @@
+[RESULT_JSON]
+{
+  "fetch_status": "success",
+  "url": "https://www.threads.com/@yi_john_huang/post/Da-6mvHk6_5?xmt=AQG0VdR0qDgUeiuSDYT9g6Mr0RTzIcp0b9DX6FuSxL7mNRHPNMVckpJCWPdO_rI4NdgQwgNRzws&slof=1",
+  "final_url": "https://www.threads.com/@yi_john_huang/post/Da-6mvHk6_5?xmt=AQG0VdR0qDgUeiuSDYT9g6Mr0RTzIcp0b9DX6FuSxL7mNRHPNMVckpJCWPdO_rI4NdgQwgNRzws&slof=1",
+  "http_status": 200,
+  "text": "yi_john_huang\nLLM Wiki\n11小時\n週末我把 Andrej Karpathy 提出的「LLM Wiki」概念，實作成一個可以直接建立個人知識庫的開源專案：Loreloom。\n很多 AI 筆記工具都在解決「如何讓 AI 讀取、搜尋與生成筆記」，但我更在意另一個問題：當 AI 把來源摘要錯誤，之後又把自己的摘要當成事實時，我們要怎麼知道哪些內容值得信任？\nLoreloom 把知識生命週期拆成三個不同層次：\n- Sources：保留原始資料、來源與證據\n- Knowledge：經過人工確認、帶有引用的原子知識\n- Wiki：由 AI 根據已確認知識產生、可以重新生成的綜合內容\nAI 可以擷取、整理、草擬與綜合，但只有人能決定什麼可以成為長期可信的知識。\n目前專案已開源，也可以直接透過 GitHub Template 建立自己的私人 Vault：\ngithub.com/yi-jo…\n這仍是一個早期專案。任何 onboarding、文件、工作流程或實際使用上的回饋都很歡迎。  \n翻譯\ngithub.com\nGitHub - yi-john-huang/loreloom: An AI-first Obsidian vault framework that weaves sources into living knowledge.\n54\n4\n3\n32",
+  "links": [
+    {
+      "url": "https://github.com/yi-john-huang/loreloom",
+      "text": "github.com/yi-jo…"
+    },
+    {
+      "url": "https://github.com/yi-john-huang/loreloom",
+      "text": "github.com\nGitHub - yi-john-huang/loreloom: An AI-first Obsidian vault framework that weaves sources into living knowledge."
+    }
+  ],
+  "post_count": 1,
+  "anchor_found": false,
+  "images": [
+    "E:\\AgentOS\\data\\url_intake\\telegram-telegram-1449022024-1357-20260720-130342-618302\\fetch\\images\\image_01.jpg",
+    "E:\\AgentOS\\data\\url_intake\\telegram-telegram-1449022024-1357-20260720-130342-618302\\fetch\\images\\image_02.png"
+  ],
+  "screenshot": "E:\\AgentOS\\data\\url_intake\\telegram-telegram-1449022024-1357-20260720-130342-618302\\fetch\\screenshot.png",
+  "source_untrusted": true
+}
+[/RESULT_JSON]
+source_json_path=E:\AgentOS\data\url_intake\telegram-telegram-1449022024-1357-20260720-130342-618302\fetch\source.json

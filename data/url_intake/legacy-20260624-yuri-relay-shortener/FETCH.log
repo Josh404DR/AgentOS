@@ -1,0 +1,15 @@
+[RESULT_JSON]
+{
+  "fetch_status": "success",
+  "url": "https://www.threads.net/@yuri.learns/post/DZ7CAIGifhC",
+  "final_url": "https://www.threads.com/@yuri.learns/post/DZ7CAIGifhC",
+  "http_status": 200,
+  "text": "yuri.learns\nClaudeCode\n6天\n我做了一套可以自己架的短網址工具，前陣子丟上 GitHub。\n但開源不是丟出去就算了。這陣子我一直在打磨它：讓它預設就隱私優先（不存 IP、不存原始 UA、排掉爬蟲），加了不靠 cookie 的轉換追蹤，還補上資安硬化跟一整套測試。\n我是平面設計師，學 AI 第一年。能一路把它優化到自己敢拿出來見人，不是我多強，是這條門檻真的被 AI 拉低了。\n現在這版我滿意了，MIT 授權，有緣人自取  \n翻譯\n71\n13\n4\n36",
+  "images": [
+    "E:\\AgentOS\\data\\url_intake\\legacy-20260624-yuri-relay-shortener\\fetch\\images\\image_01.jpg"
+  ],
+  "screenshot": "E:\\AgentOS\\data\\url_intake\\legacy-20260624-yuri-relay-shortener\\fetch\\screenshot.png",
+  "source_untrusted": true
+}
+[/RESULT_JSON]
+source_json_path=E:\AgentOS\data\url_intake\legacy-20260624-yuri-relay-shortener\fetch\source.json

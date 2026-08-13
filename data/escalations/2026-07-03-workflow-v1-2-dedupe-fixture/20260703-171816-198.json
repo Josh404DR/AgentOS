@@ -1,0 +1,26 @@
+{
+    "task_id":  "2026-07-03-workflow-v1-2-dedupe-fixture",
+    "source":  "simple_fail",
+    "reason":  "fixture",
+    "decision_type":  "retry_with_changes",
+    "summary_for_josh":  "Fixture only",
+    "options":  [
+                    {
+                        "label":  "Approve",
+                        "effect":  "?迂?冽???蝜潛??瑁?"
+                    },
+                    {
+                        "label":  "Modify",
+                        "effect":  "隤踵?瘙???"
+                    },
+                    {
+                        "label":  "Stop",
+                        "effect":  "?迫隞餃?"
+                    }
+                ],
+    "evidence":  [
+                     ".\\scripts\\task_queue_runner.ps1"
+                 ],
+    "created_at":  "2026-07-03T17:18:16.1981233+08:00",
+    "status":  "awaiting_josh"
+}

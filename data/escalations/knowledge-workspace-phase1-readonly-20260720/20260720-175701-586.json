@@ -1,0 +1,26 @@
+{
+    "task_id":  "knowledge-workspace-phase1-readonly-20260720",
+    "source":  "complex_fail",
+    "reason":  "two_bounded_verify_revisions_failed:last_gap=today_scope_classification",
+    "decision_type":  "retry_with_changes",
+    "summary_for_josh":  "兩輪驗證修正後安全邊界已通過，但 Today 尚缺未讀完成、待處理 feedback、草稿 candidate 分類。依 Josh 已明確要求執行到成功，記錄 escalation 後做最後 bounded revision。",
+    "options":  [
+                    {
+                        "label":  "Approve",
+                        "effect":  "允許在核准範圍內繼續執行"
+                    },
+                    {
+                        "label":  "Modify",
+                        "effect":  "調整需求後重跑"
+                    },
+                    {
+                        "label":  "Stop",
+                        "effect":  "停止任務"
+                    }
+                ],
+    "evidence":  [
+                     "OUTPUTS\\VERIFY_ATTEMPT_1.md,OUTPUTS\\VERIFY_ATTEMPT_2.md,fresh_verify_revision_2_FAIL"
+                 ],
+    "created_at":  "2026-07-20T17:57:01.5859750+08:00",
+    "status":  "awaiting_josh"
+}

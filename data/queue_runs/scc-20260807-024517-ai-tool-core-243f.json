@@ -1,0 +1,10 @@
+{
+    "root_dispatch_id":  "scc-20260807-024517-ai-tool-core-243f",
+    "process_id":  6264,
+    "started_at":  "2026-08-07T10:45:18.0271767+08:00",
+    "status":  "recovery_pending",
+    "stdout_path":  "E:\\AgentOS\\data\\queue_runs\\scc-20260807-024517-ai-tool-core-243f.stdout.log",
+    "stderr_path":  "E:\\AgentOS\\data\\queue_runs\\scc-20260807-024517-ai-tool-core-243f.stderr.log",
+    "finished_at":  "2026-08-07T10:54:22.8240568+08:00",
+    "detail":  "tasks_executed=3 contained_failures=1"
+}

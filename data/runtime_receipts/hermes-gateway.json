@@ -1,0 +1,14 @@
+{
+    "runtime_id":  "hermes-main-gateway",
+    "status":  "running",
+    "process_id":  23988,
+    "executable_path":  "E:\\AI_Projects_Hub\\External_AI_Agents\\hermes-agent\\.uv-python\\cpython-3.13-windows-x86_64-none\\python.exe",
+    "command_match":  "gateway run",
+    "started_at":  "2026-08-12T19:56:41.5941149+08:00",
+    "identity":  "LAPTOP-IMPR60B8\\brian",
+    "profile_lock_path":  "C:\\Users\\brian\\AppData\\Local\\hermes\\gateway.lock",
+    "lock_start_time":  1786535801594,
+    "start_time_drift_seconds":  0,
+    "receipt_source":  "profile_lock",
+    "reconciled_at":  "2026-08-12T19:57:10.9146969+08:00"
+}

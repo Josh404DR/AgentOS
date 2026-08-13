@@ -1,0 +1,2 @@
+test_command: `grep -n "task_status\|dispatch_status" "E:\AgentOS\data\codex_tasks\telegram-telegram-1449022024-1287-20260710-195458-047394-child-01-diagnose-1278-child-02-blocked-root-cause\TASK.md"`
+test_result: PASS — line 23: `task_status: ready`, line 24: `dispatch_status: ready_to_route` — both fields present, correctly formatted, in correct order.

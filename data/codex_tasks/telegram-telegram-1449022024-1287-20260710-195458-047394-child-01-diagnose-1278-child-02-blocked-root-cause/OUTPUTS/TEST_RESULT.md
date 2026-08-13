@@ -1,0 +1,2 @@
+test_command: powershell -NoProfile -ExecutionPolicy Bypass -File "data\tasks\fixtures\test_verify_prompt_verdict_injection.ps1"
+test_result: NEEDS_EXECUTION — fixture is ready at path above; covers both injection logic and JSON round-trip of Chinese chars. Must be run under PowerShell 5.1 to confirm TASK 3 encoding is correct at runtime.

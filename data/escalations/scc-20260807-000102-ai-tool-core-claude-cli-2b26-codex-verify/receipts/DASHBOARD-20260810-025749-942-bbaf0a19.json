@@ -1,0 +1,19 @@
+{
+  "schema_version": "1",
+  "receipt_type": "dashboard_owner_session",
+  "task_id": "scc-20260807-000102-ai-tool-core-claude-cli-2b26-codex-verify",
+  "decision": "stop",
+  "actor_id": "laptop-impr60b8\\brian",
+  "authentication_method": "local_owner_token",
+  "request_id": "0f9914bc-d15e-475c-9896-e293cf65d0b4",
+  "issued_at": "2026-08-10T02:57:49.941773+00:00",
+  "expires_at": "2026-08-10T02:59:49.941773+00:00",
+  "session_validated": true,
+  "csrf_validated": true,
+  "origin_validated": true,
+  "local_client_validated": true,
+  "telegram_identity": "",
+  "confirmation_code_consumed": false,
+  "source_api": "/api/approvals/scc-20260807-000102-ai-tool-core-claude-cli-2b26-codex-verify/decision",
+  "signature": "F9387F84A37F3296C89EF349EEA69578CF62F966F12901FB6BEBC50F7083372F"
+}

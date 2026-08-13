@@ -1,0 +1,61 @@
+﻿{
+    "candidate_id":  "LC-20260810-f60c2dcc",
+    "schema_version":  "1.0.0",
+    "created_at":  "2026-08-10T13:08:46+08:00",
+    "collector_version":  "1.0.0",
+    "governance_version":  "1.4.0",
+    "governance_hash":  "759F5EE67C5706DD7BF9B193913DFA6B6EEF03292FC0B8FA264F40A9A9E146D2",
+    "source_task_ids":  [
+                            "2026-07-03-workflow-v1-2-live-simple-smoke",
+                            "telegram-telegram-1449022024-1203-20260704-124308-798485-child-01-hermes-gateway-autostart-audit",
+                            "telegram-telegram-1449022024-1313-20260712-223356-135714",
+                            "telegram-telegram-1449022024-1409-20260808-121811-487046"
+                        ],
+    "source_evidence_paths":  [
+                                  "E:\\AgentOS\\data\\escalations\\2026-07-03-workflow-v1-2-live-simple-smoke\\RESOLUTION.json",
+                                  "E:\\AgentOS\\data\\escalations\\telegram-telegram-1449022024-1203-20260704-124308-798485-child-01-hermes-gateway-autostart-audit\\RESOLUTION.json",
+                                  "E:\\AgentOS\\data\\escalations\\telegram-telegram-1449022024-1313-20260712-223356-135714\\RESOLUTION.json",
+                                  "E:\\AgentOS\\data\\escalations\\telegram-telegram-1449022024-1409-20260808-121811-487046\\RESOLUTION.json"
+                              ],
+    "failure_reason_key":  "codex_verify_needs_human_decision",
+    "failure_reason_examples":  [
+                                    "codex_verify_needs_human_decision"
+                                ],
+    "frequency":  4,
+    "threshold":  2,
+    "retry_evidence":  [
+
+                       ],
+    "resolved_evidence":  [
+                              {
+                                  "resolved_at":  "2026-07-04T22:11:09.2159393+08:00",
+                                  "task_id":  "2026-07-03-workflow-v1-2-live-simple-smoke",
+                                  "resolution_path":  "E:\\AgentOS\\data\\escalations\\2026-07-03-workflow-v1-2-live-simple-smoke\\RESOLUTION.json",
+                                  "reason":  "codex_verify_needs_human_decision"
+                              },
+                              {
+                                  "resolved_at":  "2026-07-04T20:58:32.8506725+08:00",
+                                  "task_id":  "telegram-telegram-1449022024-1203-20260704-124308-798485-child-01-hermes-gateway-autostart-audit",
+                                  "resolution_path":  "E:\\AgentOS\\data\\escalations\\telegram-telegram-1449022024-1203-20260704-124308-798485-child-01-hermes-gateway-autostart-audit\\RESOLUTION.json",
+                                  "reason":  "codex_verify_needs_human_decision"
+                              },
+                              {
+                                  "resolved_at":  "2026-08-10T10:50:30.4586980+08:00",
+                                  "task_id":  "telegram-telegram-1449022024-1313-20260712-223356-135714",
+                                  "resolution_path":  "E:\\AgentOS\\data\\escalations\\telegram-telegram-1449022024-1313-20260712-223356-135714\\RESOLUTION.json",
+                                  "reason":  "codex_verify_needs_human_decision"
+                              },
+                              {
+                                  "resolved_at":  "2026-08-10T10:33:08.0826757+08:00",
+                                  "task_id":  "telegram-telegram-1449022024-1409-20260808-121811-487046",
+                                  "resolution_path":  "E:\\AgentOS\\data\\escalations\\telegram-telegram-1449022024-1409-20260808-121811-487046\\RESOLUTION.json",
+                                  "reason":  "codex_verify_needs_human_decision"
+                              }
+                          ],
+    "impact":  "medium",
+    "recommendation":  "分析 Codex Verify 回傳 NEEDS_HUMAN_DECISION 的根本原因，考慮在 acceptance criteria 中增加明確判斷標準以減少人工決策需求。",
+    "change_class":  "implementation_change",
+    "josh_approval_status":  "pending",
+    "dedupe_key":  "f60c2dcce1bec52b1013625cae525c874bf5ae7417072c0c2f32a8a9e1faf6c5",
+    "status":  "open"
+}

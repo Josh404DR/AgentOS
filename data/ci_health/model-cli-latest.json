@@ -1,0 +1,45 @@
+{
+    "schema_version":  1,
+    "checked_at":  "2026-07-20T16:50:26.6602560+08:00",
+    "identity":  "LAPTOP-IMPR60B8\\brian",
+    "status":  "PASS",
+    "models_invoked":  true,
+    "probes":  [
+                   {
+                       "name":  "codex",
+                       "command":  "codex",
+                       "resolved_path":  "C:\\Users\\brian\\AppData\\Roaming\\npm\\codex.ps1",
+                       "version":  "codex-cli 0.144.1",
+                       "version_exit_code":  0,
+                       "invocation_exit_code":  0,
+                       "timed_out":  false,
+                       "status":  "PASS",
+                       "failure_kind":  null,
+                       "detail":  "AGENTOS_SMOKE_OK\n\n2026-07-20T08:50:02.850725Z ERROR codex_models_manager::cache: failed to load models cache: missing field `supports_reasoning_summaries` at line 86 column 5\n2026-07-20T08:50:04.288699Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with \u0027..\u0027 must resolve under plugin assets/\n2026-07-20T08:50:04.288731Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with \u0027..\u0027 must resolve under plugin assets/\n2026-07-20T08:50:04.391841Z  WARN codex_core::shell_snapshot: Failed to create shell snapshot for powershell: Shell snapshot not supported yet for PowerShell\nOpenAI Codex v0.144.1\n--------\nworkdir: E:\\AgentOS\nmodel: gpt-5.6-sol\nprovider: openai\napproval: on-request\nsandbox: read-only\nreasoning effort: low\nreasoning summaries: none\nsession id: 019f7eb7-d0af-7082-b8a7-5ceb95f050c5\n--------\nuser\nReply with exactly AGENTOS_SMOKE_OK. Do not use tools or modify files.\ncodex\nAGENTOS_SMOKE_OK\ntokens used\n7,300"
+                   },
+                   {
+                       "name":  "claude",
+                       "command":  "claude",
+                       "resolved_path":  "C:\\Users\\brian\\AppData\\Roaming\\npm\\claude.ps1",
+                       "version":  "2.1.185 (Claude Code)",
+                       "version_exit_code":  0,
+                       "invocation_exit_code":  0,
+                       "timed_out":  false,
+                       "status":  "PASS",
+                       "failure_kind":  null,
+                       "detail":  "AGENTOS_SMOKE_OK"
+                   },
+                   {
+                       "name":  "antigravity",
+                       "command":  "C:\\Users\\brian\\AppData\\Local\\agy\\bin\\agy.exe",
+                       "resolved_path":  "C:\\Users\\brian\\AppData\\Local\\agy\\bin\\agy.exe",
+                       "version":  "1.1.4",
+                       "version_exit_code":  0,
+                       "invocation_exit_code":  0,
+                       "timed_out":  false,
+                       "status":  "PASS",
+                       "failure_kind":  null,
+                       "detail":  "AGENTOS_SMOKE_OK"
+                   }
+               ]
+}

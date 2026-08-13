@@ -1,0 +1,21 @@
+Codex has completed the consistency check between `agents/roles/hermes.md` and `agents/roles/codex.md`.
+
+### Technical Audit Findings (ASCII key=value)
+
+hermes_protocol_present=false
+codex_protocol_present=false
+hermes_role_match=true
+codex_role_match=true
+issue_1=Neither file mentions the 'Three-Agent Protocol' or 'Three-Agent Coordinator Protocol' by name.
+issue_2=The Inspector (Claude) role is entirely missing from both hermes.md and codex.md.
+issue_3=Role definitions are heavily specialized for the AI Freelancer workflow and lack the general protocol terminology (Brain/Builder/Inspector).
+issue_4=Gemini exists as a third role in the directory but is not part of the defined Three-Agent Protocol ground truth.
+summary=Roles generally align with Brain/Builder functions but the Three-Agent Protocol is not explicitly documented, and the Inspector (Claude) is missing from the role definitions.
+
+### Summary of Audit
+- **Protocol Documentation:** The explicit "Three-Agent Protocol" nomenclature is absent from the specialized role files.
+- **Role Alignment:** While the functional duties of Hermes (Brain) and Codex (Builder) align with the protocol, they are described in the context of the AI Freelancer workflow rather than the general AgentOS pattern.
+- **Inspector Gap:** The Inspector (Claude) role is not documented in either file, creating a protocol documentation gap.
+- **Shadow Role:** `agents/roles/gemini.md` exists but is not part of the core Three-Agent Protocol ground truth.
+
+Codex suggests updating these files to explicitly reference the Three-Agent Protocol and include the Inspector (Claude) role to ensure architectural consistency.

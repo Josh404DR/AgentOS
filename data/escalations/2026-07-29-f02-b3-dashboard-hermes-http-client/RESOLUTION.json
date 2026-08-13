@@ -1,0 +1,21 @@
+{
+    "schema_version":  "2",
+    "task_id":  "2026-07-29-f02-b3-dashboard-hermes-http-client",
+    "resolution_type":  "verified_owner_decision",
+    "decision":  "stop",
+    "resolved_at":  "2026-08-10T10:57:56.1362598+08:00",
+    "resolved_by":  "laptop-impr60b8\\brian",
+    "authentication_method":  "local_owner_token",
+    "request_id":  "79fc1335-f778-439b-ae74-7a894a1ebd89",
+    "decision_path":  "E:\\AgentOS\\data\\escalations\\2026-07-29-f02-b3-dashboard-hermes-http-client\\DECISION-20260810-105756-140.json",
+    "receipt_path":  "E:\\AgentOS\\data\\escalations\\2026-07-29-f02-b3-dashboard-hermes-http-client\\receipts\\DASHBOARD-20260810-025755-662-b66bd9bb.json",
+    "receipt_sha256":  "F1B48845457D28019430F49DBEBA4D5283D991D67A193D3D1AF4C50AEFDDD682",
+    "suspicious_fast_decision":  false,
+    "summary":  "The verified owner selected stop.",
+    "evidence":  [
+                     "E:\\AgentOS\\data\\escalations\\2026-07-29-f02-b3-dashboard-hermes-http-client\\DECISION-20260810-105756-140.json",
+                     "E:\\AgentOS\\data\\escalations\\2026-07-29-f02-b3-dashboard-hermes-http-client\\receipts\\DASHBOARD-20260810-025755-662-b66bd9bb.json"
+                 ],
+    "josh_action_required":  false,
+    "recommended_status":  "stopped"
+}

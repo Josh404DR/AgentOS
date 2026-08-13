@@ -1,0 +1,21 @@
+{
+    "schema_version":  "2",
+    "task_id":  "scc-20260807-013915-ai-tool-core-workspace-root-e642-codex-verify",
+    "decision":  "stop",
+    "note":  "",
+    "decided_by":  "laptop-impr60b8\\brian",
+    "authentication_method":  "local_owner_token",
+    "request_id":  "397bb321-1bc6-4759-ad99-733144e1e969",
+    "decided_at":  "2026-08-10T10:57:34.8597917+08:00",
+    "escalation_created_at":  "2026-08-07T10:19:46.0253879+08:00",
+    "decision_delay_seconds":  261468.834,
+    "suspicious_fast_decision":  false,
+    "receipt":  {
+                    "path":  "E:\\AgentOS\\data\\escalations\\scc-20260807-013915-ai-tool-core-workspace-root-e642-codex-verify\\receipts\\DASHBOARD-20260810-025734-422-62789bab.json",
+                    "sha256":  "5103B06072C3B159A3F3550362B911613B4D80F6192EB77CF704C3FE764F3187",
+                    "type":  "dashboard_owner_session",
+                    "issued_at":  "2026-08-10T02:57:34.421365+00:00",
+                    "expires_at":  "2026-08-10T02:59:34.421365+00:00",
+                    "verified_at":  "2026-08-10T10:57:34.8597917+08:00"
+                }
+}

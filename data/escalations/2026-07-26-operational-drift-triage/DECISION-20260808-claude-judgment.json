@@ -1,0 +1,7 @@
+{
+    "task_id": "2026-07-26-operational-drift-triage",
+    "decision": "approve",
+    "note": "Josh 於 2026-08-08 Cowork 對話明確授權：「由你來判斷這個是否有需要留就好」。本決策由 Claude 依授權範圍代為判斷，非 Josh 本人逐字核可內容，如實記錄。判斷依據見 RESOLUTION.json。",
+    "decided_by": "Claude (Josh 明確授權判斷, 見 note 原話)",
+    "decided_at": "2026-08-08T00:00:00+08:00"
+}

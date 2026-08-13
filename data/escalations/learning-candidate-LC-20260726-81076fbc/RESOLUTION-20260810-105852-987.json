@@ -1,0 +1,21 @@
+{
+    "schema_version":  "2",
+    "task_id":  "learning-candidate-LC-20260726-81076fbc",
+    "resolution_type":  "verified_owner_decision",
+    "decision":  "stop",
+    "resolved_at":  "2026-08-10T10:58:52.9836738+08:00",
+    "resolved_by":  "laptop-impr60b8\\brian",
+    "authentication_method":  "local_owner_token",
+    "request_id":  "cc874f11-e88d-4bb8-b33e-9b6d064e620b",
+    "decision_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260726-81076fbc\\DECISION-20260810-105852-987.json",
+    "receipt_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260726-81076fbc\\receipts\\DASHBOARD-20260810-025852-507-9ed38c8d.json",
+    "receipt_sha256":  "03020EC431C8B4FBB07C2B0F5603D45FE15E8FB7BBAE295A4DDBC7EA61152F27",
+    "suspicious_fast_decision":  false,
+    "summary":  "The verified owner selected stop.",
+    "evidence":  [
+                     "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260726-81076fbc\\DECISION-20260810-105852-987.json",
+                     "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260726-81076fbc\\receipts\\DASHBOARD-20260810-025852-507-9ed38c8d.json"
+                 ],
+    "josh_action_required":  false,
+    "recommended_status":  "stopped"
+}

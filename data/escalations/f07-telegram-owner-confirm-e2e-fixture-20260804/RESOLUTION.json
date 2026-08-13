@@ -1,0 +1,21 @@
+{
+    "schema_version":  "2",
+    "task_id":  "f07-telegram-owner-confirm-e2e-fixture-20260804",
+    "resolution_type":  "verified_owner_decision",
+    "decision":  "stop",
+    "resolved_at":  "2026-08-10T10:57:54.1417585+08:00",
+    "resolved_by":  "laptop-impr60b8\\brian",
+    "authentication_method":  "local_owner_token",
+    "request_id":  "d430f706-23b7-4eb7-a673-b2c4ef602cac",
+    "decision_path":  "E:\\AgentOS\\data\\escalations\\f07-telegram-owner-confirm-e2e-fixture-20260804\\DECISION-20260810-105754-145.json",
+    "receipt_path":  "E:\\AgentOS\\data\\escalations\\f07-telegram-owner-confirm-e2e-fixture-20260804\\receipts\\DASHBOARD-20260810-025753-669-7e698bb6.json",
+    "receipt_sha256":  "58233B6F4343DF6AD4FC2DC83778CE9A5B618501EB29CAE44E067F1660C917BB",
+    "suspicious_fast_decision":  false,
+    "summary":  "The verified owner selected stop.",
+    "evidence":  [
+                     "E:\\AgentOS\\data\\escalations\\f07-telegram-owner-confirm-e2e-fixture-20260804\\DECISION-20260810-105754-145.json",
+                     "E:\\AgentOS\\data\\escalations\\f07-telegram-owner-confirm-e2e-fixture-20260804\\receipts\\DASHBOARD-20260810-025753-669-7e698bb6.json"
+                 ],
+    "josh_action_required":  false,
+    "recommended_status":  "stopped"
+}

@@ -1,0 +1,8 @@
+You are Codex. Execute the following task from Hermes in AgentOS (E:\AgentOS).
+Task Packet:
+Task packet created and executed by Codex.  Packet Path: E:/AgentOS/data/codex_tasks/2026-06-22-protocol-consistency-check/TASK.md Result Path: E:/AgentOS/data/codex_tasks/2026-06-22-protocol-consistency-check/OUTPUTS/RESULT.md  Codex Findings: consistent=true hermes_role=Brain codex_role=Builder claude_role=Inspector discrepancies=none
+
+Output rules:
+1. ASCII only.
+2. key=value format for core findings.
+3. Keep it technical and concise.

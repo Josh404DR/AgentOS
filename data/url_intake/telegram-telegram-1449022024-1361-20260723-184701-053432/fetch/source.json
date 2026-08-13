@@ -1,0 +1,21 @@
+{
+  "fetch_status": "success",
+  "url": "https://www.threads.com/@weichih.ting/post/DbHnJrcIOe5?xmt=AQG0FDPf84g99aBLVoEhU6axFxTNWzRVRMQxZc4jJn2a4mPzmQqNhnPkHIDt08WG-joPh188rS8&slof=1",
+  "final_url": "https://www.threads.com/@weichih.ting/post/DbHnJrcIOe5?xmt=AQG0FDPf84g99aBLVoEhU6axFxTNWzRVRMQxZc4jJn2a4mPzmQqNhnPkHIDt08WG-joPh188rS8&slof=1",
+  "http_status": 200,
+  "text": "weichih.ting\n8小時\n哈 今天 HN 又在傳 tokenizer 可以再快一千倍\nGigaToken: Rust, pip 裝完就能當 HF / tiktoken drop-in. 自家 API 更兇, 大機器上 GPT-2 大概 GB/s 而不是 MB/s.\n重點大概是 pretokenize SIMD + cache, 少跟 Python 扯來扯去. compatibility mode 會慢一點但輸出對齊.\n你是資料前處理先爆, 還是 inference 先爆 ?\ngithub.com/marce…  \n翻譯\n10\n1\n2\n5",
+  "links": [
+    {
+      "url": "https://github.com/marcelroed/gigatoken",
+      "text": "github.com/marce…"
+    }
+  ],
+  "post_count": 1,
+  "anchor_found": false,
+  "images": [
+    "E:\\AgentOS\\data\\url_intake\\telegram-telegram-1449022024-1361-20260723-184701-053432\\fetch\\images\\image_01.jpg",
+    "E:\\AgentOS\\data\\url_intake\\telegram-telegram-1449022024-1361-20260723-184701-053432\\fetch\\images\\image_02.jpg"
+  ],
+  "screenshot": "E:\\AgentOS\\data\\url_intake\\telegram-telegram-1449022024-1361-20260723-184701-053432\\fetch\\screenshot.png",
+  "source_untrusted": true
+}

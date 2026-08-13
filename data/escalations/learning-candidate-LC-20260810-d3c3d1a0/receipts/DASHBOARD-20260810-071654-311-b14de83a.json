@@ -1,0 +1,19 @@
+{
+  "schema_version": "1",
+  "receipt_type": "dashboard_owner_session",
+  "task_id": "learning-candidate-LC-20260810-d3c3d1a0",
+  "decision": "stop",
+  "actor_id": "laptop-impr60b8\\brian",
+  "authentication_method": "local_owner_token",
+  "request_id": "a66b7207-aaa4-4637-b5fa-5b9601c10fac",
+  "issued_at": "2026-08-10T07:16:54.310906+00:00",
+  "expires_at": "2026-08-10T07:17:01.682197+00:00",
+  "session_validated": true,
+  "csrf_validated": true,
+  "origin_validated": true,
+  "local_client_validated": true,
+  "telegram_identity": "",
+  "confirmation_code_consumed": false,
+  "source_api": "/api/approvals/learning-candidate-LC-20260810-d3c3d1a0/decision",
+  "signature": "528B474FBCECFDD9BD55F1F3218B1F91DC5A8551F656B9DDAB69E55C2C672C5F"
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": "1",
+  "receipt_type": "dashboard_owner_session",
+  "task_id": "2026-07-26-ci-smoke-stage-split",
+  "decision": "stop",
+  "actor_id": "laptop-impr60b8\\brian",
+  "authentication_method": "local_owner_token",
+  "request_id": "f04725e6-2d26-40c0-9e21-e881360b88de",
+  "issued_at": "2026-08-10T02:58:40.155722+00:00",
+  "expires_at": "2026-08-10T03:00:40.155722+00:00",
+  "session_validated": true,
+  "csrf_validated": true,
+  "origin_validated": true,
+  "local_client_validated": true,
+  "telegram_identity": "",
+  "confirmation_code_consumed": false,
+  "source_api": "/api/approvals/2026-07-26-ci-smoke-stage-split/decision",
+  "signature": "0CC3B26E00EBB7B619D4695F9701FE9A156CFF9B1E902611B422BC4C6AE5730D"
+}

@@ -1,0 +1,21 @@
+{
+    "schema_version":  "2",
+    "task_id":  "antigravity-canonical-hermes-audit-20260728",
+    "resolution_type":  "verified_owner_decision",
+    "decision":  "modify",
+    "resolved_at":  "2026-07-28T22:08:43.9923150+08:00",
+    "resolved_by":  "laptop-impr60b8\\brian",
+    "authentication_method":  "local_owner_token",
+    "request_id":  "bd489a6d-baed-466c-bf7f-90f2b8aa823e",
+    "decision_path":  "E:\\AgentOS\\data\\escalations\\antigravity-canonical-hermes-audit-20260728\\DECISION-20260728-220843-997.json",
+    "receipt_path":  "E:\\AgentOS\\data\\escalations\\antigravity-canonical-hermes-audit-20260728\\receipts\\DASHBOARD-20260728-140843-459-534d1bed.json",
+    "receipt_sha256":  "15C4F2BA43EBBF8A0B05FB2AE0075402677EA17599CE735C48C9DAC1395EB8AD",
+    "suspicious_fast_decision":  false,
+    "summary":  "The verified owner selected modify.",
+    "evidence":  [
+                     "E:\\AgentOS\\data\\escalations\\antigravity-canonical-hermes-audit-20260728\\DECISION-20260728-220843-997.json",
+                     "E:\\AgentOS\\data\\escalations\\antigravity-canonical-hermes-audit-20260728\\receipts\\DASHBOARD-20260728-140843-459-534d1bed.json"
+                 ],
+    "josh_action_required":  false,
+    "recommended_status":  "resolved"
+}

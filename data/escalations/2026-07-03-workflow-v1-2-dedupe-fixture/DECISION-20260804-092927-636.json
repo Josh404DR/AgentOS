@@ -1,0 +1,21 @@
+{
+    "schema_version":  "2",
+    "task_id":  "2026-07-03-workflow-v1-2-dedupe-fixture",
+    "decision":  "approve",
+    "note":  "",
+    "decided_by":  "telegram:***2024",
+    "authentication_method":  "telegram_one_time_confirmation",
+    "request_id":  "telegram-12bda66af2ed447ea4c52da8660c84a1",
+    "decided_at":  "2026-08-04T09:29:27.6278499+08:00",
+    "escalation_created_at":  "2026-07-03T17:18:16.1981233+08:00",
+    "decision_delay_seconds":  2736671.43,
+    "suspicious_fast_decision":  false,
+    "receipt":  {
+                    "path":  "E:\\AgentOS\\data\\escalations\\2026-07-03-workflow-v1-2-dedupe-fixture\\receipts\\TELEGRAM-20260804-012926-427-ec373b00.json",
+                    "sha256":  "35515A251EAC2AA6AD69F102DB8C4E0DBC01976A012D917C7EF347CEB5BCE173",
+                    "type":  "telegram_one_time_confirmation",
+                    "issued_at":  "2026-08-04T01:24:25.371159+00:00",
+                    "expires_at":  "2026-08-04T01:34:25.371159+00:00",
+                    "verified_at":  "2026-08-04T09:29:27.6278499+08:00"
+                }
+}

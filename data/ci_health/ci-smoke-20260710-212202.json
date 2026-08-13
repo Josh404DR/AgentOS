@@ -1,0 +1,74 @@
+{
+    "status":  "FAIL",
+    "started_at":  "2026-07-10T21:22:02.7789561+08:00",
+    "finished_at":  "2026-07-10T21:22:24.2401045+08:00",
+    "duration_seconds":  21.461,
+    "agentos_root":  "E:\\AgentOS",
+    "models_invoked":  false,
+    "external_services_invoked":  false,
+    "queue_rerun_executed":  false,
+    "baseline_approval_executed":  false,
+    "fail_count":  1,
+    "warn_count":  1,
+    "check_count":  9,
+    "created_fixtures":  [
+                             "E:\\AgentOS\\data\\codex_tasks\\ci-smoke-antigravity-outputs-only\\TASK.md",
+                             "E:\\AgentOS\\data\\codex_tasks\\ci-smoke-antigravity-workspace-fallback\\TASK.md"
+                         ],
+    "checks":  [
+                   {
+                       "name":  "governance_gate",
+                       "status":  "PASS",
+                       "detail":  "governance_gate=passed\r\ngovernance_status=aligned\r\ngovernance_version=1.2.0\r\ngovernance_hash=A29DDC3DE4701A07BECCCB95E9A7DA9A3B897D2C1C60FAD61416C6C85EED666F\r\ngovernance_checked_at=2026-07-10T21:22:07.4825369+08:00\r\ntask_execution_allowed=true\r\ntoken_cost=0\r\nmodel_calls=0",
+                       "command":  "scripts\\assert_governance_ready.ps1"
+                   },
+                   {
+                       "name":  "powershell_syntax_core",
+                       "status":  "PASS",
+                       "detail":  "parsed=10",
+                       "command":  "PowerShell AST parse core scripts"
+                   },
+                   {
+                       "name":  "verify_prompt_fixture",
+                       "status":  "PASS",
+                       "detail":  "PASS: rerun_task_lacks_verdict_before_fix\r\nPASS: rerun_task_has_verdict_after_injection\r\nPASS: standard_task_already_has_verdict\r\nPASS: standard_task_unchanged_after_no-op_injection\r\nPASS: approve_effect_char_count\r\nPASS: modify_effect_char_count\r\nPASS: stop_effect_char_count\r\nPASS: approve_first_char_codepoint\r\nPASS: modify_first_char_codepoint\r\nPASS: stop_first_char_codepoint\r\nPASS: json_roundtrip_approve\r\nPASS: json_roundtrip_modify\r\nPASS: json_roundtrip_stop\r\n--- TOTAL: pass=13 fail=0\r\nAll fixture tests PASSED",
+                       "command":  "data\\tasks\\fixtures\\test_verify_prompt_verdict_injection.ps1"
+                   },
+                   {
+                       "name":  "classifier_regression",
+                       "status":  "PASS",
+                       "detail":  "classifier_regression_status=passed\r\ncase_count=6",
+                       "command":  "tests\\classify_task_regression.ps1"
+                   },
+                   {
+                       "name":  "queue_starter_validate_only",
+                       "status":  "PASS",
+                       "detail":  "queue_starter_validation=passed\r\nqueue_root_dispatch_id=ci-smoke-queue-root\r\ntask_path=E:\\AgentOS\\data\\codex_tasks\\ci-smoke-queue-root\\TASK.md\r\nrunner_path=E:\\AgentOS\\scripts\\task_queue_runner.ps1",
+                       "command":  "scripts\\start_task_queue.ps1 -ValidateOnly"
+                   },
+                   {
+                       "name":  "process_env_path_duplicate",
+                       "status":  "FAIL",
+                       "detail":  "duplicate_env_key=path variants=Path,PATH",
+                       "command":  "Check process environment for duplicate Path/PATH keys"
+                   },
+                   {
+                       "name":  "antigravity_outputs_only_dryrun",
+                       "status":  "PASS",
+                       "detail":  "{\r\n    \"worker_alias\":  \"pro\",\r\n    \"windows_user\":  \"brian\",\r\n    \"task_path\":  \"E:\\\\AgentOS\\\\data\\\\codex_tasks\\\\ci-smoke-antigravity-outputs-only\\\\TASK.md\",\r\n    \"risk_level\":  \"low\",\r\n    \"subagent_mode\":  \"static_analysis\",\r\n    \"write_scope\":  \"outputs_only\",\r\n    \"dry_run\":  true,\r\n    \"checked_at\":  \"2026-07-10T21:22:17.6566234+08:00\"\r\n}",
+                       "command":  "scripts\\invoke_antigravity_subagent.ps1 -DryRun outputs_only fixture"
+                   },
+                   {
+                       "name":  "antigravity_workspace_fallback_dryrun",
+                       "status":  "PASS",
+                       "detail":  "{\r\n    \"worker_alias\":  \"pro\",\r\n    \"windows_user\":  \"brian\",\r\n    \"task_path\":  \"E:\\\\AgentOS\\\\data\\\\codex_tasks\\\\ci-smoke-antigravity-workspace-fallback\\\\TASK.md\",\r\n    \"risk_level\":  \"low\",\r\n    \"subagent_mode\":  \"test_execution\",\r\n    \"write_scope\":  \"workspace-write fallback\",\r\n    \"dry_run\":  true,\r\n    \"checked_at\":  \"2026-07-10T21:22:24.1665239+08:00\"\r\n}",
+                       "command":  "scripts\\invoke_antigravity_subagent.ps1 -DryRun workspace-write fallback fixture"
+                   },
+                   {
+                       "name":  "python_compile_core",
+                       "status":  "WARN",
+                       "detail":  "No Python at \u0027\"C:\\Users\\brian\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe\u0027",
+                       "command":  "python -m py_compile core Python files"
+                   }
+               ]
+}

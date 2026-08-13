@@ -1,0 +1,1 @@
+Build a plan for validating the AgentOS governance architecture. The workflow dispatcher and queue system must handle dependency-ordered routing for this parent task and child task fixture. Validate governance workflow coverage. Local fixture only.

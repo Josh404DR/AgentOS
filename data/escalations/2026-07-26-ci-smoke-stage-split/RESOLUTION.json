@@ -1,0 +1,21 @@
+{
+    "schema_version":  "2",
+    "task_id":  "2026-07-26-ci-smoke-stage-split",
+    "resolution_type":  "verified_owner_decision",
+    "decision":  "approve",
+    "resolved_at":  "2026-07-27T17:19:48.8286805+08:00",
+    "resolved_by":  "laptop-impr60b8\\brian",
+    "authentication_method":  "local_owner_token",
+    "request_id":  "80495fd9-5aa5-4bb4-95fe-084c87a5c38f",
+    "decision_path":  "E:\\AgentOS\\data\\escalations\\2026-07-26-ci-smoke-stage-split\\DECISION-20260727-171948-832.json",
+    "receipt_path":  "E:\\AgentOS\\data\\escalations\\2026-07-26-ci-smoke-stage-split\\receipts\\DASHBOARD-20260727-091948-337-da558d5d.json",
+    "receipt_sha256":  "6DD7FE5DDD1F2DB66076A657AC60BB7562596007CC05FE835049E2A2A31BDB27",
+    "suspicious_fast_decision":  false,
+    "summary":  "The verified owner selected approve.",
+    "evidence":  [
+                     "E:\\AgentOS\\data\\escalations\\2026-07-26-ci-smoke-stage-split\\DECISION-20260727-171948-832.json",
+                     "E:\\AgentOS\\data\\escalations\\2026-07-26-ci-smoke-stage-split\\receipts\\DASHBOARD-20260727-091948-337-da558d5d.json"
+                 ],
+    "josh_action_required":  false,
+    "recommended_status":  "resolved"
+}

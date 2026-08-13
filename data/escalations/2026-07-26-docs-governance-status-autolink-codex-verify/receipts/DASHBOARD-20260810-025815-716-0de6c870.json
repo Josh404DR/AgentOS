@@ -1,0 +1,19 @@
+{
+  "schema_version": "1",
+  "receipt_type": "dashboard_owner_session",
+  "task_id": "2026-07-26-docs-governance-status-autolink-codex-verify",
+  "decision": "stop",
+  "actor_id": "laptop-impr60b8\\brian",
+  "authentication_method": "local_owner_token",
+  "request_id": "549aa874-1345-4ab5-8bc0-329f70b1cf60",
+  "issued_at": "2026-08-10T02:58:15.716182+00:00",
+  "expires_at": "2026-08-10T03:00:15.716182+00:00",
+  "session_validated": true,
+  "csrf_validated": true,
+  "origin_validated": true,
+  "local_client_validated": true,
+  "telegram_identity": "",
+  "confirmation_code_consumed": false,
+  "source_api": "/api/approvals/2026-07-26-docs-governance-status-autolink-codex-verify/decision",
+  "signature": "8126562D62CE47F8EE70B8C3DD57B247EC3052573AAF63E4F0726A7CA3FCB65E"
+}

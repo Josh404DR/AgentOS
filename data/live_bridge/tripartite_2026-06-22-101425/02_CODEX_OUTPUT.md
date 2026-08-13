@@ -1,0 +1,11 @@
+status=consistent
+discrepancy_found=no
+files_checked=agents/roles/hermes.md,agents/roles/codex.md
+section_checked=Three-Agent Protocol
+role_identification=expected_difference
+hermes_role=Brain
+codex_role=Builder
+role_definitions=identical
+gemini_note=identical
+spacing_and_bullets=identical
+changes_made=none

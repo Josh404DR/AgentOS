@@ -1,0 +1,21 @@
+{
+    "schema_version":  "2",
+    "task_id":  "2026-07-26-ci-smoke-stage-split",
+    "resolution_type":  "verified_owner_decision",
+    "decision":  "stop",
+    "resolved_at":  "2026-08-10T10:58:40.6447702+08:00",
+    "resolved_by":  "laptop-impr60b8\\brian",
+    "authentication_method":  "local_owner_token",
+    "request_id":  "f04725e6-2d26-40c0-9e21-e881360b88de",
+    "decision_path":  "E:\\AgentOS\\data\\escalations\\2026-07-26-ci-smoke-stage-split\\DECISION-20260810-105840-648.json",
+    "receipt_path":  "E:\\AgentOS\\data\\escalations\\2026-07-26-ci-smoke-stage-split\\receipts\\DASHBOARD-20260810-025840-156-d22c2a32.json",
+    "receipt_sha256":  "8E71AA666F4148E2E08C57CD4997D5454B45110EF2D3034D5DC24D3CFE786F95",
+    "suspicious_fast_decision":  false,
+    "summary":  "The verified owner selected stop.",
+    "evidence":  [
+                     "E:\\AgentOS\\data\\escalations\\2026-07-26-ci-smoke-stage-split\\DECISION-20260810-105840-648.json",
+                     "E:\\AgentOS\\data\\escalations\\2026-07-26-ci-smoke-stage-split\\receipts\\DASHBOARD-20260810-025840-156-d22c2a32.json"
+                 ],
+    "josh_action_required":  false,
+    "recommended_status":  "stopped"
+}

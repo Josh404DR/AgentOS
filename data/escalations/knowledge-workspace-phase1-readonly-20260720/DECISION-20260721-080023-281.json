@@ -1,0 +1,21 @@
+{
+    "schema_version":  "2",
+    "task_id":  "knowledge-workspace-phase1-readonly-20260720",
+    "decision":  "approve",
+    "note":  "?? Phase 1,????????(junction/hardlink/Today/rebuild ????,fresh Verify ?? PASS)",
+    "decided_by":  "laptop-impr60b8\\brian",
+    "authentication_method":  "local_owner_token",
+    "request_id":  "e7f0b29d-6ad8-4622-bf01-c8b977e13bbf",
+    "decided_at":  "2026-07-21T08:00:23.2812780+08:00",
+    "escalation_created_at":  "2026-07-20T17:57:01.5859750+08:00",
+    "decision_delay_seconds":  50601.695,
+    "suspicious_fast_decision":  false,
+    "receipt":  {
+                    "path":  "E:\\AgentOS\\data\\escalations\\knowledge-workspace-phase1-readonly-20260720\\receipts\\DASHBOARD-20260721-000022-499-991e51bc.json",
+                    "sha256":  "71BE2E68BECC9A079387FE97C1E3B5ABF1D59AF2DB17CDDE14A5D463F255D68B",
+                    "type":  "dashboard_owner_session",
+                    "issued_at":  "2026-07-21T00:00:22.484214+00:00",
+                    "expires_at":  "2026-07-21T00:02:22.484214+00:00",
+                    "verified_at":  "2026-07-21T08:00:23.2812780+08:00"
+                }
+}

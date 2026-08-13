@@ -1,0 +1,98 @@
+{
+    "status":  "WARN",
+    "started_at":  "2026-07-13T16:15:21.0387480+08:00",
+    "finished_at":  "2026-07-13T16:16:13.7884327+08:00",
+    "duration_seconds":  52.75,
+    "agentos_root":  "E:\\AgentOS",
+    "models_invoked":  true,
+    "external_services_invoked":  true,
+    "queue_rerun_executed":  false,
+    "baseline_approval_executed":  false,
+    "fail_count":  0,
+    "warn_count":  1,
+    "check_count":  13,
+    "created_fixtures":  [
+                             "E:\\AgentOS\\data\\codex_tasks\\ci-smoke-antigravity-outputs-only\\TASK.md",
+                             "E:\\AgentOS\\data\\codex_tasks\\ci-smoke-antigravity-workspace-fallback\\TASK.md"
+                         ],
+    "checks":  [
+                   {
+                       "name":  "governance_gate",
+                       "status":  "PASS",
+                       "detail":  "governance_gate=passed\r\ngovernance_status=aligned\r\ngovernance_version=1.2.0\r\ngovernance_hash=A29DDC3DE4701A07BECCCB95E9A7DA9A3B897D2C1C60FAD61416C6C85EED666F\r\ngovernance_checked_at=2026-07-13T16:15:24.4867925+08:00\r\ntask_execution_allowed=true\r\ntoken_cost=0\r\nmodel_calls=0",
+                       "command":  "scripts\\assert_governance_ready.ps1"
+                   },
+                   {
+                       "name":  "powershell_syntax_core",
+                       "status":  "PASS",
+                       "detail":  "parsed=16",
+                       "command":  "PowerShell AST parse core scripts"
+                   },
+                   {
+                       "name":  "gateway_runtime_receipt_reconciliation",
+                       "status":  "PASS",
+                       "detail":  "PASS: hermes-main-gateway pid=7400 state=running\r\nPASS: hermes-lite-gateway pid=7436 state=running\r\nruntime_receipt_reconciliation=PASS",
+                       "command":  "scripts\\observability\\test-runtime-receipt-reconciliation.ps1"
+                   },
+                   {
+                       "name":  "hermes_autostart_dedupe",
+                       "status":  "PASS",
+                       "detail":  "hermes_autostart_dedupe=clean",
+                       "command":  "Get-ScheduledTask census vs runtime_registry related_scheduled_tasks"
+                   },
+                   {
+                       "name":  "verify_prompt_fixture",
+                       "status":  "PASS",
+                       "detail":  "PASS: rerun_task_lacks_verdict_before_fix\r\nPASS: rerun_task_has_verdict_after_injection\r\nPASS: standard_task_already_has_verdict\r\nPASS: standard_task_unchanged_after_no-op_injection\r\nPASS: approve_effect_char_count\r\nPASS: modify_effect_char_count\r\nPASS: stop_effect_char_count\r\nPASS: approve_first_char_codepoint\r\nPASS: modify_first_char_codepoint\r\nPASS: stop_first_char_codepoint\r\nPASS: json_roundtrip_approve\r\nPASS: json_roundtrip_modify\r\nPASS: json_roundtrip_stop\r\n--- TOTAL: pass=13 fail=0\r\nAll fixture tests PASSED",
+                       "command":  "data\\tasks\\fixtures\\test_verify_prompt_verdict_injection.ps1"
+                   },
+                   {
+                       "name":  "classifier_regression",
+                       "status":  "PASS",
+                       "detail":  "classifier_regression_status=passed\r\ncase_count=6",
+                       "command":  "tests\\classify_task_regression.ps1"
+                   },
+                   {
+                       "name":  "model_cli_live_smoke",
+                       "status":  "PASS",
+                       "detail":  "model_cli=codex status=PASS version=codex-cli 0.144.1 exit=0\r\nmodel_cli=claude status=PASS version=2.1.185 (Claude Code) exit=0\r\nmodel_cli=antigravity status=PASS version=1.1.1 exit=0\r\nmodel_cli_smoke_status=PASS\r\nresult_path=E:\\AgentOS\\data\\ci_health\\model-cli-latest.json",
+                       "command":  "scripts\\model_cli_health_smoke.ps1"
+                   },
+                   {
+                       "name":  "queue_starter_validate_only",
+                       "status":  "PASS",
+                       "detail":  "queue_starter_validation=passed\r\nqueue_root_dispatch_id=ci-smoke-queue-root\r\ntask_path=E:\\AgentOS\\data\\codex_tasks\\ci-smoke-queue-root\\TASK.md\r\nrunner_path=E:\\AgentOS\\scripts\\task_queue_runner.ps1\r\npath_environment_repair=available",
+                       "command":  "scripts\\start_task_queue.ps1 -ValidateOnly"
+                   },
+                   {
+                       "name":  "queue_starter_path_repair_contract",
+                       "status":  "PASS",
+                       "detail":  "path_repair_contract=present",
+                       "command":  "Check start_task_queue.ps1 has Path/PATH repair before Start-Process"
+                   },
+                   {
+                       "name":  "antigravity_outputs_only_dryrun",
+                       "status":  "PASS",
+                       "detail":  "{\r\n    \"worker_alias\":  \"pro\",\r\n    \"windows_user\":  \"brian\",\r\n    \"task_path\":  \"E:\\\\AgentOS\\\\data\\\\codex_tasks\\\\ci-smoke-antigravity-outputs-only\\\\TASK.md\",\r\n    \"risk_level\":  \"low\",\r\n    \"subagent_mode\":  \"static_analysis\",\r\n    \"write_scope\":  \"outputs_only\",\r\n    \"dry_run\":  true,\r\n    \"checked_at\":  \"2026-07-13T16:16:07.5054284+08:00\"\r\n}",
+                       "command":  "scripts\\invoke_antigravity_subagent.ps1 -DryRun outputs_only fixture"
+                   },
+                   {
+                       "name":  "antigravity_workspace_fallback_dryrun",
+                       "status":  "PASS",
+                       "detail":  "{\r\n    \"worker_alias\":  \"pro\",\r\n    \"windows_user\":  \"brian\",\r\n    \"task_path\":  \"E:\\\\AgentOS\\\\data\\\\codex_tasks\\\\ci-smoke-antigravity-workspace-fallback\\\\TASK.md\",\r\n    \"risk_level\":  \"low\",\r\n    \"subagent_mode\":  \"test_execution\",\r\n    \"write_scope\":  \"workspace-write fallback\",\r\n    \"dry_run\":  true,\r\n    \"checked_at\":  \"2026-07-13T16:16:11.3429044+08:00\"\r\n}",
+                       "command":  "scripts\\invoke_antigravity_subagent.ps1 -DryRun workspace-write fallback fixture"
+                   },
+                   {
+                       "name":  "python_compile_core",
+                       "status":  "PASS",
+                       "detail":  "python=E:\\AgentOS\\dashboard\\backend\\.venv\\Scripts\\python.exe",
+                       "command":  "python -m py_compile core Python files"
+                   },
+                   {
+                       "name":  "dashboard_health_endpoint",
+                       "status":  "WARN",
+                       "detail":  "無法連接至遠端伺服器",
+                       "command":  "GET http://127.0.0.1:8000/api/health"
+                   }
+               ]
+}

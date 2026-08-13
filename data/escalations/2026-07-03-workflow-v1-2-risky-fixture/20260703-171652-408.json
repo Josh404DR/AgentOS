@@ -1,0 +1,26 @@
+{
+    "task_id":  "2026-07-03-workflow-v1-2-risky-fixture",
+    "source":  "risky_task",
+    "reason":  "risk_rules_matched:credentials,external_write",
+    "decision_type":  "approve_risky_action",
+    "summary_for_josh":  "Task 2026-07-03-workflow-v1-2-risky-fixture requires Josh decision; no model or worker was invoked.",
+    "options":  [
+                    {
+                        "label":  "Approve",
+                        "effect":  "?迂?冽???蝜潛??瑁?"
+                    },
+                    {
+                        "label":  "Modify",
+                        "effect":  "隤踵?瘙???"
+                    },
+                    {
+                        "label":  "Stop",
+                        "effect":  "?迫隞餃?"
+                    }
+                ],
+    "evidence":  [
+                     "E:\\AgentOS\\data\\codex_tasks\\2026-07-03-workflow-v1-2-risky-fixture\\TASK.md"
+                 ],
+    "created_at":  "2026-07-03T17:16:52.4088101+08:00",
+    "status":  "awaiting_josh"
+}

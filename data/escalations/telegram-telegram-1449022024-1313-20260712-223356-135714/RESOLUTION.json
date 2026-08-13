@@ -1,0 +1,21 @@
+{
+    "schema_version":  "2",
+    "task_id":  "telegram-telegram-1449022024-1313-20260712-223356-135714",
+    "resolution_type":  "verified_owner_decision",
+    "decision":  "approve",
+    "resolved_at":  "2026-08-10T10:50:30.4586980+08:00",
+    "resolved_by":  "laptop-impr60b8\\brian",
+    "authentication_method":  "local_owner_token",
+    "request_id":  "6f8518c8-f012-4b35-8c01-c47028a3e3e7",
+    "decision_path":  "E:\\AgentOS\\data\\escalations\\telegram-telegram-1449022024-1313-20260712-223356-135714\\DECISION-20260810-105030-462.json",
+    "receipt_path":  "E:\\AgentOS\\data\\escalations\\telegram-telegram-1449022024-1313-20260712-223356-135714\\receipts\\DASHBOARD-20260810-025029-996-e125238e.json",
+    "receipt_sha256":  "32A6DDC7F8762D687FF3F0C4BDEC9EDBB179315BC38C3F3C138152C6A7AECD50",
+    "suspicious_fast_decision":  false,
+    "summary":  "The verified owner selected approve.",
+    "evidence":  [
+                     "E:\\AgentOS\\data\\escalations\\telegram-telegram-1449022024-1313-20260712-223356-135714\\DECISION-20260810-105030-462.json",
+                     "E:\\AgentOS\\data\\escalations\\telegram-telegram-1449022024-1313-20260712-223356-135714\\receipts\\DASHBOARD-20260810-025029-996-e125238e.json"
+                 ],
+    "josh_action_required":  false,
+    "recommended_status":  "resolved"
+}

@@ -1,0 +1,157 @@
+﻿{
+    "candidate_id":  "LC-20260810-b3a23b9c",
+    "schema_version":  "1.0.0",
+    "created_at":  "2026-08-10T13:08:46+08:00",
+    "collector_version":  "1.0.0",
+    "governance_version":  "1.4.0",
+    "governance_hash":  "759F5EE67C5706DD7BF9B193913DFA6B6EEF03292FC0B8FA264F40A9A9E146D2",
+    "source_task_ids":  [
+                            "ci-queue-01-always-fail-10492-113956763",
+                            "ci-queue-01-always-fail-12284-175639211",
+                            "ci-queue-01-always-fail-15888-115219259",
+                            "ci-queue-01-always-fail-17684-093111656",
+                            "ci-queue-01-always-fail-17848-092241206",
+                            "ci-queue-01-always-fail-21340-092921258",
+                            "ci-queue-01-always-fail-24800-013131456",
+                            "ci-queue-01-always-fail-27944-030444891",
+                            "ci-queue-01-always-fail-2840-233159275",
+                            "ci-queue-01-always-fail-29968-092423604",
+                            "ci-queue-01-always-fail-30020-111715153",
+                            "ci-queue-01-always-fail-31784-180046296",
+                            "ci-queue-01-always-fail-33492-141709459",
+                            "ci-queue-01-always-fail-33756-173329447",
+                            "ci-queue-01-always-fail-33788-092802746",
+                            "ci-queue-01-always-fail-5796-174106300"
+                        ],
+    "source_evidence_paths":  [
+                                  "E:\\AgentOS\\data\\escalations\\ci-queue-01-always-fail-10492-113956763\\RESOLUTION.json",
+                                  "E:\\AgentOS\\data\\escalations\\ci-queue-01-always-fail-12284-175639211\\RESOLUTION.json",
+                                  "E:\\AgentOS\\data\\escalations\\ci-queue-01-always-fail-15888-115219259\\RESOLUTION.json",
+                                  "E:\\AgentOS\\data\\escalations\\ci-queue-01-always-fail-17684-093111656\\RESOLUTION.json",
+                                  "E:\\AgentOS\\data\\escalations\\ci-queue-01-always-fail-17848-092241206\\RESOLUTION.json",
+                                  "E:\\AgentOS\\data\\escalations\\ci-queue-01-always-fail-21340-092921258\\RESOLUTION.json",
+                                  "E:\\AgentOS\\data\\escalations\\ci-queue-01-always-fail-24800-013131456\\RESOLUTION.json",
+                                  "E:\\AgentOS\\data\\escalations\\ci-queue-01-always-fail-27944-030444891\\RESOLUTION.json",
+                                  "E:\\AgentOS\\data\\escalations\\ci-queue-01-always-fail-2840-233159275\\RESOLUTION.json",
+                                  "E:\\AgentOS\\data\\escalations\\ci-queue-01-always-fail-29968-092423604\\RESOLUTION.json",
+                                  "E:\\AgentOS\\data\\escalations\\ci-queue-01-always-fail-30020-111715153\\RESOLUTION.json",
+                                  "E:\\AgentOS\\data\\escalations\\ci-queue-01-always-fail-31784-180046296\\RESOLUTION.json",
+                                  "E:\\AgentOS\\data\\escalations\\ci-queue-01-always-fail-33492-141709459\\RESOLUTION.json",
+                                  "E:\\AgentOS\\data\\escalations\\ci-queue-01-always-fail-33756-173329447\\RESOLUTION.json",
+                                  "E:\\AgentOS\\data\\escalations\\ci-queue-01-always-fail-33788-092802746\\RESOLUTION.json",
+                                  "E:\\AgentOS\\data\\escalations\\ci-queue-01-always-fail-5796-174106300\\RESOLUTION.json"
+                              ],
+    "failure_reason_key":  "agent_exit_9",
+    "failure_reason_examples":  [
+                                    "agent_exit_9"
+                                ],
+    "frequency":  16,
+    "threshold":  2,
+    "retry_evidence":  [
+
+                       ],
+    "resolved_evidence":  [
+                              {
+                                  "resolved_at":  "2026-08-10T10:58:38.6913512+08:00",
+                                  "task_id":  "ci-queue-01-always-fail-33756-173329447",
+                                  "resolution_path":  "E:\\AgentOS\\data\\escalations\\ci-queue-01-always-fail-33756-173329447\\RESOLUTION.json",
+                                  "reason":  "agent_exit_9"
+                              },
+                              {
+                                  "resolved_at":  "2026-08-10T10:58:17.9373673+08:00",
+                                  "task_id":  "ci-queue-01-always-fail-27944-030444891",
+                                  "resolution_path":  "E:\\AgentOS\\data\\escalations\\ci-queue-01-always-fail-27944-030444891\\RESOLUTION.json",
+                                  "reason":  "agent_exit_9"
+                              },
+                              {
+                                  "resolved_at":  "2026-08-10T10:58:13.9907233+08:00",
+                                  "task_id":  "ci-queue-01-always-fail-5796-174106300",
+                                  "resolution_path":  "E:\\AgentOS\\data\\escalations\\ci-queue-01-always-fail-5796-174106300\\RESOLUTION.json",
+                                  "reason":  "agent_exit_9"
+                              },
+                              {
+                                  "resolved_at":  "2026-08-10T10:58:11.5284514+08:00",
+                                  "task_id":  "ci-queue-01-always-fail-12284-175639211",
+                                  "resolution_path":  "E:\\AgentOS\\data\\escalations\\ci-queue-01-always-fail-12284-175639211\\RESOLUTION.json",
+                                  "reason":  "agent_exit_9"
+                              },
+                              {
+                                  "resolved_at":  "2026-08-10T10:58:09.1310763+08:00",
+                                  "task_id":  "ci-queue-01-always-fail-31784-180046296",
+                                  "resolution_path":  "E:\\AgentOS\\data\\escalations\\ci-queue-01-always-fail-31784-180046296\\RESOLUTION.json",
+                                  "reason":  "agent_exit_9"
+                              },
+                              {
+                                  "resolved_at":  "2026-08-10T10:34:04.4321337+08:00",
+                                  "task_id":  "ci-queue-01-always-fail-24800-013131456",
+                                  "resolution_path":  "E:\\AgentOS\\data\\escalations\\ci-queue-01-always-fail-24800-013131456\\RESOLUTION.json",
+                                  "reason":  "agent_exit_9"
+                              },
+                              {
+                                  "resolved_at":  "2026-08-10T10:58:00.4182037+08:00",
+                                  "task_id":  "ci-queue-01-always-fail-30020-111715153",
+                                  "resolution_path":  "E:\\AgentOS\\data\\escalations\\ci-queue-01-always-fail-30020-111715153\\RESOLUTION.json",
+                                  "reason":  "agent_exit_9"
+                              },
+                              {
+                                  "resolved_at":  "2026-08-10T10:57:58.6663203+08:00",
+                                  "task_id":  "ci-queue-01-always-fail-10492-113956763",
+                                  "resolution_path":  "E:\\AgentOS\\data\\escalations\\ci-queue-01-always-fail-10492-113956763\\RESOLUTION.json",
+                                  "reason":  "agent_exit_9"
+                              },
+                              {
+                                  "resolved_at":  "2026-07-29T12:13:05.2499592+08:00",
+                                  "task_id":  "ci-queue-01-always-fail-15888-115219259",
+                                  "resolution_path":  "E:\\AgentOS\\data\\escalations\\ci-queue-01-always-fail-15888-115219259\\RESOLUTION.json",
+                                  "reason":  "agent_exit_9"
+                              },
+                              {
+                                  "resolved_at":  "2026-08-10T10:57:52.2751898+08:00",
+                                  "task_id":  "ci-queue-01-always-fail-2840-233159275",
+                                  "resolution_path":  "E:\\AgentOS\\data\\escalations\\ci-queue-01-always-fail-2840-233159275\\RESOLUTION.json",
+                                  "reason":  "agent_exit_9"
+                              },
+                              {
+                                  "resolved_at":  "2026-08-10T10:57:44.0215064+08:00",
+                                  "task_id":  "ci-queue-01-always-fail-17848-092241206",
+                                  "resolution_path":  "E:\\AgentOS\\data\\escalations\\ci-queue-01-always-fail-17848-092241206\\RESOLUTION.json",
+                                  "reason":  "agent_exit_9"
+                              },
+                              {
+                                  "resolved_at":  "2026-08-10T10:57:45.7819346+08:00",
+                                  "task_id":  "ci-queue-01-always-fail-33788-092802746",
+                                  "resolution_path":  "E:\\AgentOS\\data\\escalations\\ci-queue-01-always-fail-33788-092802746\\RESOLUTION.json",
+                                  "reason":  "agent_exit_9"
+                              },
+                              {
+                                  "resolved_at":  "2026-08-10T10:57:42.2221904+08:00",
+                                  "task_id":  "ci-queue-01-always-fail-17684-093111656",
+                                  "resolution_path":  "E:\\AgentOS\\data\\escalations\\ci-queue-01-always-fail-17684-093111656\\RESOLUTION.json",
+                                  "reason":  "agent_exit_9"
+                              },
+                              {
+                                  "resolved_at":  "2026-08-10T10:57:30.9428715+08:00",
+                                  "task_id":  "ci-queue-01-always-fail-33492-141709459",
+                                  "resolution_path":  "E:\\AgentOS\\data\\escalations\\ci-queue-01-always-fail-33492-141709459\\RESOLUTION.json",
+                                  "reason":  "agent_exit_9"
+                              },
+                              {
+                                  "resolved_at":  "2026-08-10T10:57:32.9475544+08:00",
+                                  "task_id":  "ci-queue-01-always-fail-29968-092423604",
+                                  "resolution_path":  "E:\\AgentOS\\data\\escalations\\ci-queue-01-always-fail-29968-092423604\\RESOLUTION.json",
+                                  "reason":  "agent_exit_9"
+                              },
+                              {
+                                  "resolved_at":  "2026-08-10T10:57:26.3389359+08:00",
+                                  "task_id":  "ci-queue-01-always-fail-21340-092921258",
+                                  "resolution_path":  "E:\\AgentOS\\data\\escalations\\ci-queue-01-always-fail-21340-092921258\\RESOLUTION.json",
+                                  "reason":  "agent_exit_9"
+                              }
+                          ],
+    "impact":  "high",
+    "recommendation":  "分析重複出現的失敗原因（agent_exit_9），評估是否需要更新工作流程步驟、驗收條件或相關腳本。",
+    "change_class":  "implementation_change",
+    "josh_approval_status":  "pending",
+    "dedupe_key":  "b3a23b9c739e2de68796ab7e3e112849869cf28138ca12081a965febc97fe544",
+    "status":  "open"
+}

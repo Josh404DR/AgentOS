@@ -1,0 +1,10 @@
+{
+    "root_dispatch_id":  "scc-20260807-013915-ai-tool-core-workspace-root-e642",
+    "process_id":  7800,
+    "started_at":  "2026-08-07T09:39:16.2563411+08:00",
+    "status":  "recovery_pending",
+    "stdout_path":  "E:\\AgentOS\\data\\queue_runs\\scc-20260807-013915-ai-tool-core-workspace-root-e642.stdout.log",
+    "stderr_path":  "E:\\AgentOS\\data\\queue_runs\\scc-20260807-013915-ai-tool-core-workspace-root-e642.stderr.log",
+    "finished_at":  "2026-08-07T10:19:50.9492328+08:00",
+    "detail":  "tasks_executed=8 contained_failures=1"
+}

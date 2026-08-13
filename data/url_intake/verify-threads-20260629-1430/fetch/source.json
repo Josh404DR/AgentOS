@@ -1,0 +1,12 @@
+{
+  "fetch_status": "success",
+  "url": "https://www.threads.com/@leeunhn/post/DaE78j_GXJj?xmt=AQG0bMvXtpM3TmeNKgeqch-jWnzLBNcAiQeY5oea-yhoEelWxlRtBMyDKkR0oY8-WCZ2EA6tvg&slof=1",
+  "final_url": "https://www.threads.com/@leeunhn/post/DaE78j_GXJj?xmt=AQG0bMvXtpM3TmeNKgeqch-jWnzLBNcAiQeY5oea-yhoEelWxlRtBMyDKkR0oY8-WCZ2EA6tvg&slof=1",
+  "http_status": 200,
+  "text": "leeunhn\n2天\n大家不是都在喊 agent 框架已經太多了不要再造輪子，結果 Vercel 自己跳下來做了一個叫 eve 的，兩週就衝到 2600 多顆星超猛，主打把建 agent 這件事收乾淨給你一套 TypeScript 寫到底，我看了一下它不是再包一層誰，而是直接從前端開發者的手感切進去，這種大廠親自下場做基建的最值得追一波，先丟著等它長大～  \n翻譯\ngithub.com\nGitHub - vercel/eve: The Framework for Building Agents\n149\n21\n139",
+  "images": [
+    "E:\\AgentOS\\data\\url_intake\\verify-threads-20260629-1430\\fetch\\images\\image_02.png"
+  ],
+  "screenshot": "E:\\AgentOS\\data\\url_intake\\verify-threads-20260629-1430\\fetch\\screenshot.png",
+  "source_untrusted": true
+}

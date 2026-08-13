@@ -1,0 +1,8 @@
+{
+    "status":  "completed_with_failures",
+    "root_dispatch_id":  "ci-queue-containment-root-15552-225818135",
+    "started_at":  "2026-07-26T22:58:51.6259033+08:00",
+    "process_id":  15552,
+    "finished_at":  "2026-07-26T22:59:26.3848777+08:00",
+    "detail":  "tasks_executed=3 contained_failures=1"
+}

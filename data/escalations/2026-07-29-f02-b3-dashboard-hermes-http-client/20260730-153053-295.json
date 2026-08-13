@@ -1,0 +1,30 @@
+{
+  "task_id": "2026-07-29-f02-b3-dashboard-hermes-http-client",
+  "source": "complex_fail",
+  "reason": "two_fresh_verify_rounds_failed_loopback_wildcard_and_scoped_diff_integrity",
+  "decision_type": "choose_next_action_after_verify_retry_limit",
+  "summary_for_josh": "B3 已達兩輪 fresh Verify 上限。Live 功能大多通過，但 wildcard host 未 fail-closed，且正式 scoped patch 仍受序列化污染；依治理規範停止自動修正並等待 Josh。",
+  "options": [
+    {
+      "label": "Approve third repair",
+      "effect": "核准第三輪 Builder，只修正 wildcard fail-closed 與 byte-safe scoped patch，再由新 Verify 驗證"
+    },
+    {
+      "label": "Modify evidence requirement",
+      "effect": "調整 untracked dashboard 的 scoped-diff 交付方式與驗收標準後另建工單"
+    },
+    {
+      "label": "Stop",
+      "effect": "停止 B3，保留目前 artifacts 與失敗證據"
+    }
+  ],
+  "evidence": [
+    "E:\\AgentOS\\data\\codex_tasks\\2026-07-29-f02-b3-dashboard-hermes-http-client\\OUTPUTS\\RESULT.md",
+    "E:\\AgentOS\\data\\codex_tasks\\2026-07-29-f02-b3-dashboard-hermes-http-client\\OUTPUTS\\VERIFY_RESULT_ROUND1.md",
+    "E:\\AgentOS\\data\\codex_tasks\\2026-07-29-f02-b3-dashboard-hermes-http-client\\OUTPUTS\\VERIFY_RESULT_ROUND2.md",
+    "E:\\AgentOS\\data\\codex_tasks\\2026-07-29-f02-b3-dashboard-hermes-http-client\\OUTPUTS\\SCOPED_DIFF.patch",
+    "E:\\AgentOS\\data\\codex_tasks\\2026-07-29-f02-b3-dashboard-hermes-http-client\\OUTPUTS\\SCOPED_DIFF_INVALID_ROUND2.patch"
+  ],
+  "created_at": "2026-07-30T15:30:53.3244050+08:00",
+  "status": "awaiting_josh"
+}

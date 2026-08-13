@@ -1,0 +1,19 @@
+{
+  "schema_version": "1",
+  "receipt_type": "dashboard_owner_session",
+  "task_id": "2026-08-10-escalation-classifier-negation-newline-fix",
+  "decision": "approve",
+  "actor_id": "laptop-impr60b8\\brian",
+  "authentication_method": "local_owner_token",
+  "request_id": "6e4aaabd-cf37-40c0-a0a3-ae0e26d070b4",
+  "issued_at": "2026-08-10T02:48:29.525215+00:00",
+  "expires_at": "2026-08-10T02:50:29.525215+00:00",
+  "session_validated": true,
+  "csrf_validated": true,
+  "origin_validated": true,
+  "local_client_validated": true,
+  "telegram_identity": "",
+  "confirmation_code_consumed": false,
+  "source_api": "/api/approvals/2026-08-10-escalation-classifier-negation-newline-fix/decision",
+  "signature": "13C533E0679A1926E521C5A4E6D4231BE38A3C3AFC6CC145451DC2A4F5432597"
+}

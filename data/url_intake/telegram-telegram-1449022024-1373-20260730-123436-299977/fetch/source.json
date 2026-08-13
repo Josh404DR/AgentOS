@@ -1,0 +1,25 @@
+{
+  "fetch_status": "success",
+  "url": "https://www.threads.com/share/BCFyGycN7J",
+  "final_url": "https://www.threads.com/@tsla.mark/post/DbZZ3zJGdQy?xmt=AQG0j-bbmI8f6JUM7ndlVtF5JR4qII6FTpZbQy4n9TzBZdiO_TcazeI1l69Ozp1UOvocVj8Vsx0&slof=1",
+  "http_status": 200,
+  "text": "tsla.mark\n4小時\n昨晚把一堆 PDF 餵進去 local-llm, 然後叫它寫程式.\n馬上遇到 context window 太小的問題\n所以叫 GPT5.6 review DS4, 然後設計出一個改進計畫.\n然後再用 local-llm Qwem3.5 122b 幫自己寫 server.\n完成後, 改用 Grok 4.3 去 fine tune server 參數.\n這次似乎是增加了 Cuda Graph.\nDeepSeek V4 Flash 在我 2 張 RTX Pro 6000 Blackwell 96GB GPUs.\n1 百萬 context window\n40 ~ 50 Tokens 每秒\n目前體感2小時, 運作一切正常, Claude CLI 寫程式順利沒問題.\n修改放到 github, 或許會有人需要.\n一百萬 context window 真的很有必要, 尤其是你要在 Linux kernel, Android OS, chromium, ANGLE 這類 GB 的程式碼工作, 256KB 真的無法.\ngithub.com/merck…  \n翻譯\ngithub.com\nGitHub - merckhung/ds4: DeepSeek 4 Flash and PRO local inference engine for Metal, CUDA and ROCm\n54\n3\n7",
+  "links": [
+    {
+      "url": "https://github.com/merckhung/ds4",
+      "text": "github.com/merck…"
+    },
+    {
+      "url": "https://github.com/merckhung/ds4",
+      "text": "github.com\nGitHub - merckhung/ds4: DeepSeek 4 Flash and PRO local inference engine for Metal, CUDA and ROCm"
+    }
+  ],
+  "post_count": 1,
+  "anchor_found": false,
+  "images": [
+    "E:\\AgentOS\\data\\url_intake\\telegram-telegram-1449022024-1373-20260730-123436-299977\\fetch\\images\\image_01.jpg",
+    "E:\\AgentOS\\data\\url_intake\\telegram-telegram-1449022024-1373-20260730-123436-299977\\fetch\\images\\image_02.png"
+  ],
+  "screenshot": "E:\\AgentOS\\data\\url_intake\\telegram-telegram-1449022024-1373-20260730-123436-299977\\fetch\\screenshot.png",
+  "source_untrusted": true
+}

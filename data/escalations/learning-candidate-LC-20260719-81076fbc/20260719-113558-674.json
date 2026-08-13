@@ -1,0 +1,58 @@
+﻿{
+    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+    "source":  "learning_candidate_governance",
+    "reason":  "governance_change_candidate:risk_rules_matched:deletion",
+    "decision_type":  "governance_review",
+    "summary_for_josh":  "學習候選項目（LC-20260719-81076fbc）的建議涉及治理層面（risk_rules_matched:deletion），需要 Josh 評估後才能建立後續工單或修改治理文件。詳見此 escalation artifact 的 candidate 欄位。",
+    "candidate":  {
+                      "candidate_id":  "LC-20260719-81076fbc",
+                      "schema_version":  "1.0.0",
+                      "created_at":  "2026-07-19T11:35:58+08:00",
+                      "collector_version":  "1.0.0",
+                      "governance_version":  "1.3.0",
+                      "governance_hash":  "0EAECF6D153925AC17B940992CC12CE82A6DE5E7F1D7B766BAB9C479C3088EB1",
+                      "source_task_ids":  [
+                                              "telegram-telegram-1449022024-1223-20260708-093932-970665",
+                                              "telegram-telegram-1449022024-1228-20260708-100730-764545"
+                                          ],
+                      "source_evidence_paths":  [
+                                                    "E:\\AgentOS\\data\\escalations\\telegram-telegram-1449022024-1223-20260708-093932-970665\\RESOLUTION.json",
+                                                    "E:\\AgentOS\\data\\escalations\\telegram-telegram-1449022024-1228-20260708-100730-764545\\RESOLUTION.json"
+                                                ],
+                      "failure_reason_key":  "risk_rules_matched:deletion",
+                      "failure_reason_examples":  [
+                                                      "risk_rules_matched:deletion"
+                                                  ],
+                      "frequency":  2,
+                      "threshold":  2,
+                      "retry_evidence":  [
+
+                                         ],
+                      "resolved_evidence":  [
+                                                {
+                                                    "resolved_at":  "2026-07-10T12:40:52.6128570+08:00",
+                                                    "task_id":  "telegram-telegram-1449022024-1223-20260708-093932-970665",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\telegram-telegram-1449022024-1223-20260708-093932-970665\\RESOLUTION.json",
+                                                    "reason":  "risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-07-10T12:40:49.1194874+08:00",
+                                                    "task_id":  "telegram-telegram-1449022024-1228-20260708-100730-764545",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\telegram-telegram-1449022024-1228-20260708-100730-764545\\RESOLUTION.json",
+                                                    "reason":  "risk_rules_matched:deletion"
+                                                }
+                                            ],
+                      "impact":  "low",
+                      "recommendation":  "此失敗原因涉及治理、路由或安全層面。需要 Josh 評估是否調整相關治理文件、規則或角色定義。請查閱對應的 escalation artifact 取得詳情。",
+                      "change_class":  "governance_change",
+                      "josh_approval_status":  "pending",
+                      "dedupe_key":  "81076fbc6352be1f257f250b8faa8c77dbfd46bdec6ca3cc05abaa37130a5a98",
+                      "status":  "open"
+                  },
+    "evidence":  [
+                     "E:\\AgentOS\\data\\escalations\\telegram-telegram-1449022024-1223-20260708-093932-970665\\RESOLUTION.json",
+                     "E:\\AgentOS\\data\\escalations\\telegram-telegram-1449022024-1228-20260708-100730-764545\\RESOLUTION.json"
+                 ],
+    "created_at":  "2026-07-19T11:35:58+08:00",
+    "status":  "awaiting_josh"
+}

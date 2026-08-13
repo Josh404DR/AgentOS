@@ -1,0 +1,19 @@
+{
+  "schema_version": "1",
+  "receipt_type": "dashboard_owner_session",
+  "task_id": "2026-07-29-f02-b3-dashboard-hermes-http-client",
+  "decision": "stop",
+  "actor_id": "laptop-impr60b8\\brian",
+  "authentication_method": "local_owner_token",
+  "request_id": "79fc1335-f778-439b-ae74-7a894a1ebd89",
+  "issued_at": "2026-08-10T02:57:55.661504+00:00",
+  "expires_at": "2026-08-10T02:59:55.661504+00:00",
+  "session_validated": true,
+  "csrf_validated": true,
+  "origin_validated": true,
+  "local_client_validated": true,
+  "telegram_identity": "",
+  "confirmation_code_consumed": false,
+  "source_api": "/api/approvals/2026-07-29-f02-b3-dashboard-hermes-http-client/decision",
+  "signature": "73D82E9B5DE9175D21B93C4DB6F3B7B176192CCBF76AB7385C8E1EB2EBDBB64F"
+}

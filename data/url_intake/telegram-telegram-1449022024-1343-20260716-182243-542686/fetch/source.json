@@ -1,0 +1,25 @@
+{
+  "fetch_status": "success",
+  "url": "https://www.threads.com/@iluciddreaming/post/Da2X0F3mzoy?xmt=AQG0GfebiDQx6HGS2Z-os-oHnFGrQpmJ0Vwj-MDAf29nMBTYTQsKLPY8TRk2NDT60Lv2FGB2Ff0&slof=1",
+  "final_url": "https://www.threads.com/@iluciddreaming/post/Da2X0F3mzoy?xmt=AQG0GfebiDQx6HGS2Z-os-oHnFGrQpmJ0Vwj-MDAf29nMBTYTQsKLPY8TRk2NDT60Lv2FGB2Ff0&slof=1",
+  "http_status": 200,
+  "text": "iluciddreaming\n24分鐘\n1-bit LLM 就是这么厉害。\nBonsai 27B 模型从 54GB 压到了 3.8GB，展小了 93%，还能直接在浏览器里跑。\nhuggingface.co/space…  \n翻譯\nhuggingface.co\nBonsai 27B WebGPU Kernels - a Hugging Face Space by webml-community\n1\n1\n1",
+  "links": [
+    {
+      "url": "https://huggingface.co/spaces/webml-community/bonsai-webgpu-kernels",
+      "text": "huggingface.co/space…"
+    },
+    {
+      "url": "https://huggingface.co/spaces/webml-community/bonsai-webgpu-kernels",
+      "text": "huggingface.co\nBonsai 27B WebGPU Kernels - a Hugging Face Space by webml-community"
+    }
+  ],
+  "post_count": 1,
+  "anchor_found": false,
+  "images": [
+    "E:\\AgentOS\\data\\url_intake\\telegram-telegram-1449022024-1343-20260716-182243-542686\\fetch\\images\\image_01.jpg",
+    "E:\\AgentOS\\data\\url_intake\\telegram-telegram-1449022024-1343-20260716-182243-542686\\fetch\\images\\image_02.png"
+  ],
+  "screenshot": "E:\\AgentOS\\data\\url_intake\\telegram-telegram-1449022024-1343-20260716-182243-542686\\fetch\\screenshot.png",
+  "source_untrusted": true
+}

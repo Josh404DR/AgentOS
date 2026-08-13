@@ -1,0 +1,44 @@
+﻿{
+    "candidate_id":  "LC-20260719-3a4c5922",
+    "schema_version":  "1.0.0",
+    "created_at":  "2026-07-19T11:34:35+08:00",
+    "collector_version":  "1.0.0",
+    "governance_version":  "1.3.0",
+    "governance_hash":  "0EAECF6D153925AC17B940992CC12CE82A6DE5E7F1D7B766BAB9C479C3088EB1",
+    "source_task_ids":  [
+                            "2026-07-03-workflow-v1-2-dedupe-fixture",
+                            "telegram-telegram-1449022024-1189-20260703-185037-401113"
+                        ],
+    "source_evidence_paths":  [
+                                  "E:\\AgentOS\\data\\metrics\\METRICS_LOG.jsonl"
+                              ],
+    "failure_reason_key":  "unknown_retry",
+    "failure_reason_examples":  [
+                                    "unknown_retry"
+                                ],
+    "frequency":  2,
+    "threshold":  2,
+    "retry_evidence":  [
+                           {
+                               "recorded_at":  "2026-07-03T17:18:17.3172143+08:00",
+                               "retry_count":  1,
+                               "task_id":  "2026-07-03-workflow-v1-2-dedupe-fixture",
+                               "fail_reason":  "unknown_retry"
+                           },
+                           {
+                               "recorded_at":  "2026-07-04T23:10:00.0000000+08:00",
+                               "retry_count":  1,
+                               "task_id":  "telegram-telegram-1449022024-1189-20260703-185037-401113",
+                               "fail_reason":  "unknown_retry"
+                           }
+                       ],
+    "resolved_evidence":  [
+
+                          ],
+    "impact":  "low",
+    "recommendation":  "有多個工單在無明確 fail_reason 的情況下進行重試；建議確保 METRICS_LOG 記錄完整的失敗原因以利後續分析。",
+    "change_class":  "implementation_change",
+    "josh_approval_status":  "pending",
+    "dedupe_key":  "3a4c592273608c2f268104e0c442328503c9d22baf96ee01e5d54c53297f2073",
+    "status":  "open"
+}

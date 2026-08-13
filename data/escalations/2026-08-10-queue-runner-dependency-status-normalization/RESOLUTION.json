@@ -1,0 +1,21 @@
+{
+    "schema_version":  "2",
+    "task_id":  "2026-08-10-queue-runner-dependency-status-normalization",
+    "resolution_type":  "verified_owner_decision",
+    "decision":  "approve",
+    "resolved_at":  "2026-08-10T15:13:49.9395576+08:00",
+    "resolved_by":  "laptop-impr60b8\\brian",
+    "authentication_method":  "local_owner_token",
+    "request_id":  "6ff1fd61-9241-4c5f-84dc-3b7efd829dd7",
+    "decision_path":  "E:\\AgentOS\\data\\escalations\\2026-08-10-queue-runner-dependency-status-normalization\\DECISION-20260810-151349-943.json",
+    "receipt_path":  "E:\\AgentOS\\data\\escalations\\2026-08-10-queue-runner-dependency-status-normalization\\receipts\\DASHBOARD-20260810-071349-346-3659cd20.json",
+    "receipt_sha256":  "02D432F0D46A34A56DC95EB01DD9F863BC3B9226A224AA2BD7FF304812B108A0",
+    "suspicious_fast_decision":  false,
+    "summary":  "The verified owner selected approve.",
+    "evidence":  [
+                     "E:\\AgentOS\\data\\escalations\\2026-08-10-queue-runner-dependency-status-normalization\\DECISION-20260810-151349-943.json",
+                     "E:\\AgentOS\\data\\escalations\\2026-08-10-queue-runner-dependency-status-normalization\\receipts\\DASHBOARD-20260810-071349-346-3659cd20.json"
+                 ],
+    "josh_action_required":  false,
+    "recommended_status":  "resolved"
+}

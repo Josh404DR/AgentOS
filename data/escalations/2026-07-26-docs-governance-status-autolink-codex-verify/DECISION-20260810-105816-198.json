@@ -1,0 +1,21 @@
+{
+    "schema_version":  "2",
+    "task_id":  "2026-07-26-docs-governance-status-autolink-codex-verify",
+    "decision":  "stop",
+    "note":  "",
+    "decided_by":  "laptop-impr60b8\\brian",
+    "authentication_method":  "local_owner_token",
+    "request_id":  "549aa874-1345-4ab5-8bc0-329f70b1cf60",
+    "decided_at":  "2026-08-10T10:58:16.1954326+08:00",
+    "escalation_created_at":  "2026-07-28T02:38:28.8264721+08:00",
+    "decision_delay_seconds":  1153187.369,
+    "suspicious_fast_decision":  false,
+    "receipt":  {
+                    "path":  "E:\\AgentOS\\data\\escalations\\2026-07-26-docs-governance-status-autolink-codex-verify\\receipts\\DASHBOARD-20260810-025815-716-0de6c870.json",
+                    "sha256":  "1488773D69D782D80FAF3CE4234A96C4FE62BBA561B89B9273B6E99AF55A0072",
+                    "type":  "dashboard_owner_session",
+                    "issued_at":  "2026-08-10T02:58:15.716182+00:00",
+                    "expires_at":  "2026-08-10T03:00:15.716182+00:00",
+                    "verified_at":  "2026-08-10T10:58:16.1954326+08:00"
+                }
+}

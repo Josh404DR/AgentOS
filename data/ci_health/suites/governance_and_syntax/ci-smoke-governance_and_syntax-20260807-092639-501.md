@@ -1,0 +1,21 @@
+# AgentOS CI Smoke Suite: governance_and_syntax
+
+run_id: ci-smoke-governance_and_syntax-20260807-092639-501
+status: WARN
+exit_code: 0
+timeout_seconds: 60
+duration_seconds: 34.328
+python_launcher: 
+
+| Check | Status | Exit code | Duration (s) | Detail |
+| --- | --- | ---: | ---: | --- |
+| suite_bootstrap | PASS | 0 | 0.009 | suite=governance_and_syntax timeout_seconds=60 |
+| governance_gate | PASS | 0 | 11.434 | governance_gate=passed<br>governance_status=operational_review_required<br>governance_version=1.3.0<br>governance_hash=0EAECF6D153925AC17B940992CC12CE82A6DE5E7F1D7B766BAB9C479C3088EB1<br>governance_checked_at=2026-08-07T09:26:51.8062119+08:00<br>task_execution_allowed=true<br>token_cost=0<br>model_calls=0<br>operational_drift_count=36 |
+| powershell_syntax_core | PASS | 0 | 0.4 | parsed=24 |
+| gateway_runtime_receipt_reconciliation | WARN | 1 | 0.758 | hermes-main-gateway lock owner is not alive. |
+| hermes_autostart_dedupe | PASS | 0 | 8.709 | hermes_autostart_dedupe=clean |
+| powershell_utf8_bom | PASS | 0 | 12.491 | powershell_utf8_bom_regression=PASS<br>fault_injection_rejected=true<br>repository_scan_passed=true |
+
+## Fixture paths
+
+- none

@@ -1,0 +1,23 @@
+You are Claude, the AgentOS Senior Reviewer.
+Review the following technical output from Codex.
+Task Context: Task packet created and executed by Codex.  Packet Path: E:/AgentOS/data/codex_tasks/2026-06-22-protocol-consistency-check/TASK.md Result Path: E:/AgentOS/data/codex_tasks/2026-06-22-protocol-consistency-check/OUTPUTS/RESULT.md  Codex Findings: consistent=true hermes_role=Brain codex_role=Builder claude_role=Inspector discrepancies=none
+Codex Output:
+Task completed.
+
+Wrote [RESULT.md](E:/AgentOS/data/codex_tasks/2026-06-22-protocol-consistency-check/OUTPUTS/RESULT.md) with:
+
+```text
+consistent=true
+hermes_role=Brain
+codex_role=Builder
+claude_role=Inspector
+discrepancies=none
+```
+
+Verified the file is ASCII-only.
+
+Goal:
+1. Verify if Codex followed the 'Three-Agent Protocol'.
+2. Identify any inconsistencies or technical errors.
+3. Provide a safety/readiness rating: [VERIFIED | PARTIAL | FAILED].
+4. Output in ASCII-safe format.

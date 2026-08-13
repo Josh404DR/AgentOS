@@ -1,0 +1,19 @@
+{
+  "schema_version": "1",
+  "receipt_type": "dashboard_owner_session",
+  "task_id": "antigravity-canonical-hermes-audit-20260728",
+  "decision": "modify",
+  "actor_id": "laptop-impr60b8\\brian",
+  "authentication_method": "local_owner_token",
+  "request_id": "bd489a6d-baed-466c-bf7f-90f2b8aa823e",
+  "issued_at": "2026-07-28T14:08:43.458743+00:00",
+  "expires_at": "2026-07-28T14:10:43.458743+00:00",
+  "session_validated": true,
+  "csrf_validated": true,
+  "origin_validated": true,
+  "local_client_validated": true,
+  "telegram_identity": "",
+  "confirmation_code_consumed": false,
+  "source_api": "/api/approvals/antigravity-canonical-hermes-audit-20260728/decision",
+  "signature": "68C8F8FFC20554163C1F0B92CE362107A3AAE66B2B3F3E08D85B868754CE885E"
+}

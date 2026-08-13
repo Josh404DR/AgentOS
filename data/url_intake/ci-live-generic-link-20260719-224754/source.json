@@ -1,0 +1,128 @@
+{
+  "fetch_status": "success",
+  "source_untrusted": true,
+  "url": "https://www.iana.org/help/example-domains",
+  "final_url": "https://www.iana.org/help/example-domains",
+  "fetched_at": "2026-07-19T14:47:57.813153+00:00",
+  "status_code": 200,
+  "content_type": "text/html",
+  "title": "Example Domains",
+  "text": "Example Domains\nDomains\nProtocols\nNumbers\nAbout\nExample Domains\nAs described in RFC 2606 and RFC 6761 , a number of domains such as example.com and example.org are maintained for documentation purposes. These domains may be used as illustrative examples in documents without prior coordination with us. They are not available for registration or transfer.\nWe provide a web service on the example domain hosts to provide basic information on the purpose of the domain. These web services are provided as best effort, but are not designed to support production applications. While incidental traffic for incorrectly configured applications is expected, please do not design applications that require the example domains to have operating HTTP service.\nFurther Reading\nIANA-managed Reserved Domains\nLast revised 2017-05-13.\nDomain Names\nRoot Zone Registry\n.INT Registry\n.ARPA Registry\nIDN Repository\nNumber Resources\nAbuse Information\nProtocols\nProtocol Registries\nTime Zone Database\nAbout Us\nNews\nPerformance\nExcellence\nArchive\nContact Us\nThe IANA functions coordinate the Internet’s globally unique identifiers, and are provided by Public Technical Identifiers , an affiliate of ICANN .\nPrivacy Policy\nTerms of Service",
+  "links": [
+    {
+      "url": "https://www.iana.org/",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/domains",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/protocols",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/numbers",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/about",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/go/rfc2606",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/go/rfc6761",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/domains/reserved",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/domains",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/domains/root",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/domains/int",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/domains/arpa",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/domains/idn-tables",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/numbers",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/abuse",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/protocols",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/protocols",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/time-zones",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/about",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/news",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/performance",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/about/excellence",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/archive",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/contact",
+      "text": ""
+    },
+    {
+      "url": "https://pti.icann.org",
+      "text": ""
+    },
+    {
+      "url": "https://www.icann.org/",
+      "text": ""
+    },
+    {
+      "url": "https://www.icann.org/privacy/policy",
+      "text": ""
+    },
+    {
+      "url": "https://www.icann.org/privacy/tos",
+      "text": ""
+    }
+  ],
+  "images": [],
+  "screenshot": "",
+  "error": ""
+}

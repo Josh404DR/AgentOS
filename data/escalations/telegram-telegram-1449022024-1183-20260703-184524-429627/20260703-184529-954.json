@@ -1,0 +1,26 @@
+{
+    "task_id":  "telegram-telegram-1449022024-1183-20260703-184524-429627",
+    "source":  "risky_task",
+    "reason":  "risk_rules_matched:deletion,credentials",
+    "decision_type":  "approve_risky_action",
+    "summary_for_josh":  "Task telegram-telegram-1449022024-1183-20260703-184524-429627 requires Josh decision; no model or worker was invoked.",
+    "options":  [
+                    {
+                        "label":  "Approve",
+                        "effect":  "?迂?冽???蝜潛??瑁?"
+                    },
+                    {
+                        "label":  "Modify",
+                        "effect":  "隤踵?瘙???"
+                    },
+                    {
+                        "label":  "Stop",
+                        "effect":  "?迫隞餃?"
+                    }
+                ],
+    "evidence":  [
+                     "E:\\AgentOS\\data\\codex_tasks\\telegram-telegram-1449022024-1183-20260703-184524-429627\\TASK.md"
+                 ],
+    "created_at":  "2026-07-03T18:45:29.9546159+08:00",
+    "status":  "awaiting_josh"
+}

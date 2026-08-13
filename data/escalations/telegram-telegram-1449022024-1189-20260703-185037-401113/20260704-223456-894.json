@@ -1,0 +1,26 @@
+{
+    "task_id":  "telegram-telegram-1449022024-1189-20260703-185037-401113",
+    "source":  "verify_needs_human",
+    "reason":  "invalid_or_missing_verify_verdict",
+    "decision_type":  "retry_with_changes",
+    "summary_for_josh":  "Codex Verify did not emit a valid verdict; Josh must decide whether to retry.",
+    "options":  [
+                    {
+                        "label":  "Approve",
+                        "effect":  "?迂?冽???蝜潛??瑁?"
+                    },
+                    {
+                        "label":  "Modify",
+                        "effect":  "隤踵?瘙???"
+                    },
+                    {
+                        "label":  "Stop",
+                        "effect":  "?迫隞餃?"
+                    }
+                ],
+    "evidence":  [
+                     "E:\\AgentOS\\data\\codex_tasks\\telegram-telegram-1449022024-1189-20260703-185037-401113-child-04-verify-queue-dependency\\OUTPUTS\\RESULT.md"
+                 ],
+    "created_at":  "2026-07-04T22:34:56.8941088+08:00",
+    "status":  "awaiting_josh"
+}

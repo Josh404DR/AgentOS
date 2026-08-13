@@ -1,0 +1,21 @@
+{
+    "schema_version":  "2",
+    "task_id":  "2026-07-26-queue-active-index-optimization",
+    "decision":  "modify",
+    "note":  "",
+    "decided_by":  "laptop-impr60b8\\brian",
+    "authentication_method":  "local_owner_token",
+    "request_id":  "d20d89b1-f490-494e-86d4-ba40fd415c65",
+    "decided_at":  "2026-07-28T04:30:28.0961825+08:00",
+    "escalation_created_at":  "2026-07-28T03:11:43.8732240+08:00",
+    "decision_delay_seconds":  4724.223,
+    "suspicious_fast_decision":  false,
+    "receipt":  {
+                    "path":  "E:\\AgentOS\\data\\escalations\\2026-07-26-queue-active-index-optimization\\receipts\\DASHBOARD-20260727-203027-285-083ac75b.json",
+                    "sha256":  "3E14390B3AC06D9C3CA0C98B92A06E499848CE6ECA579707CF80AD4B8F947B3B",
+                    "type":  "dashboard_owner_session",
+                    "issued_at":  "2026-07-27T20:30:27.277604+00:00",
+                    "expires_at":  "2026-07-27T20:32:27.277604+00:00",
+                    "verified_at":  "2026-07-28T04:30:28.0961825+08:00"
+                }
+}

@@ -1,0 +1,15 @@
+{
+  "fetch_status": "failed",
+  "source_untrusted": true,
+  "url": "https://example.com/",
+  "final_url": "",
+  "fetched_at": "2026-07-19T14:31:40.834601+00:00",
+  "status_code": null,
+  "content_type": "",
+  "title": "",
+  "text": "",
+  "links": [],
+  "images": [],
+  "screenshot": "",
+  "error": "gaierror:[Errno 11001] getaddrinfo failed"
+}

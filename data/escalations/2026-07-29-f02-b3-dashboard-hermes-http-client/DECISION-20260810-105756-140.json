@@ -1,0 +1,21 @@
+{
+    "schema_version":  "2",
+    "task_id":  "2026-07-29-f02-b3-dashboard-hermes-http-client",
+    "decision":  "stop",
+    "note":  "",
+    "decided_by":  "laptop-impr60b8\\brian",
+    "authentication_method":  "local_owner_token",
+    "request_id":  "79fc1335-f778-439b-ae74-7a894a1ebd89",
+    "decided_at":  "2026-08-10T10:57:56.1362598+08:00",
+    "escalation_created_at":  "2026-07-30T15:30:53.3244050+08:00",
+    "decision_delay_seconds":  934022.812,
+    "suspicious_fast_decision":  false,
+    "receipt":  {
+                    "path":  "E:\\AgentOS\\data\\escalations\\2026-07-29-f02-b3-dashboard-hermes-http-client\\receipts\\DASHBOARD-20260810-025755-662-b66bd9bb.json",
+                    "sha256":  "F1B48845457D28019430F49DBEBA4D5283D991D67A193D3D1AF4C50AEFDDD682",
+                    "type":  "dashboard_owner_session",
+                    "issued_at":  "2026-08-10T02:57:55.661504+00:00",
+                    "expires_at":  "2026-08-10T02:59:55.661504+00:00",
+                    "verified_at":  "2026-08-10T10:57:56.1362598+08:00"
+                }
+}

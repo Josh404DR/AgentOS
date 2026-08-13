@@ -1,0 +1,21 @@
+{
+    "schema_version":  "2",
+    "task_id":  "2026-07-26-escalation-fixture-classification",
+    "resolution_type":  "verified_owner_decision",
+    "decision":  "approve",
+    "resolved_at":  "2026-07-27T02:51:39.9708926+08:00",
+    "resolved_by":  "laptop-impr60b8\\brian",
+    "authentication_method":  "local_owner_token",
+    "request_id":  "e8343e0b-f412-4e1a-a684-92c7a0de18b3",
+    "decision_path":  "E:\\AgentOS\\data\\escalations\\2026-07-26-escalation-fixture-classification\\DECISION-20260727-025139-974.json",
+    "receipt_path":  "E:\\AgentOS\\data\\escalations\\2026-07-26-escalation-fixture-classification\\receipts\\DASHBOARD-20260726-185139-414-6965303a.json",
+    "receipt_sha256":  "3F4389F5BB4D9A85F6025670C64D9D8C1907984782382B925CDB6430DCFC99A2",
+    "suspicious_fast_decision":  false,
+    "summary":  "The verified owner selected approve.",
+    "evidence":  [
+                     "E:\\AgentOS\\data\\escalations\\2026-07-26-escalation-fixture-classification\\DECISION-20260727-025139-974.json",
+                     "E:\\AgentOS\\data\\escalations\\2026-07-26-escalation-fixture-classification\\receipts\\DASHBOARD-20260726-185139-414-6965303a.json"
+                 ],
+    "josh_action_required":  false,
+    "recommended_status":  "resolved"
+}

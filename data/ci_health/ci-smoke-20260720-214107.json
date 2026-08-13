@@ -1,0 +1,164 @@
+{
+    "status":  "FAIL",
+    "started_at":  "2026-07-20T21:41:07.4189114+08:00",
+    "finished_at":  "2026-07-20T21:45:41.6249908+08:00",
+    "duration_seconds":  274.206,
+    "agentos_root":  "E:\\AgentOS",
+    "models_invoked":  true,
+    "external_services_invoked":  true,
+    "queue_rerun_executed":  false,
+    "baseline_approval_executed":  false,
+    "fail_count":  1,
+    "warn_count":  2,
+    "check_count":  24,
+    "created_fixtures":  [
+                             "E:\\AgentOS\\data\\codex_tasks\\ci-smoke-antigravity-outputs-only\\TASK.md",
+                             "E:\\AgentOS\\data\\codex_tasks\\ci-smoke-antigravity-workspace-fallback\\TASK.md"
+                         ],
+    "checks":  [
+                   {
+                       "name":  "governance_gate",
+                       "status":  "PASS",
+                       "detail":  "governance_gate=passed\r\ngovernance_status=operational_review_required\r\ngovernance_version=1.3.0\r\ngovernance_hash=0EAECF6D153925AC17B940992CC12CE82A6DE5E7F1D7B766BAB9C479C3088EB1\r\ngovernance_checked_at=2026-07-20T21:41:14.3133531+08:00\r\ntask_execution_allowed=true\r\ntoken_cost=0\r\nmodel_calls=0\r\noperational_drift_count=17",
+                       "command":  "scripts\\assert_governance_ready.ps1"
+                   },
+                   {
+                       "name":  "powershell_syntax_core",
+                       "status":  "PASS",
+                       "detail":  "parsed=24",
+                       "command":  "PowerShell AST parse core scripts"
+                   },
+                   {
+                       "name":  "gateway_runtime_receipt_reconciliation",
+                       "status":  "WARN",
+                       "detail":  "hermes-main-gateway was not reconciled to running.",
+                       "command":  "scripts\\observability\\test-runtime-receipt-reconciliation.ps1"
+                   },
+                   {
+                       "name":  "hermes_autostart_dedupe",
+                       "status":  "WARN",
+                       "detail":  "exit_code=1\nprimary autostart missing: HermesGatewayAutostart\r\nprimary autostart missing: HermesLiteAutostart",
+                       "command":  "Get-ScheduledTask census vs runtime_registry related_scheduled_tasks"
+                   },
+                   {
+                       "name":  "verify_prompt_fixture",
+                       "status":  "PASS",
+                       "detail":  "PASS: rerun_task_lacks_verdict_before_fix\r\nPASS: rerun_task_has_verdict_after_injection\r\nPASS: standard_task_already_has_verdict\r\nPASS: standard_task_unchanged_after_no-op_injection\r\nPASS: approve_effect_char_count\r\nPASS: modify_effect_char_count\r\nPASS: stop_effect_char_count\r\nPASS: approve_first_char_codepoint\r\nPASS: modify_first_char_codepoint\r\nPASS: stop_first_char_codepoint\r\nPASS: json_roundtrip_approve\r\nPASS: json_roundtrip_modify\r\nPASS: json_roundtrip_stop\r\n--- TOTAL: pass=13 fail=0\r\nAll fixture tests PASSED",
+                       "command":  "data\\tasks\\fixtures\\test_verify_prompt_verdict_injection.ps1"
+                   },
+                   {
+                       "name":  "classifier_regression",
+                       "status":  "PASS",
+                       "detail":  "classifier_regression_status=passed\r\ncase_count=12\r\ncomplex_hit_check=enabled",
+                       "command":  "tests\\classify_task_regression.ps1"
+                   },
+                   {
+                       "name":  "queue_reason_propagation",
+                       "status":  "PASS",
+                       "detail":  "queue_reason_propagation_status=passed\r\ndispatcher_failure_contained=true\r\ndetail=2026-07-20T21:41:46.8360674+08:00 dispatch_id=ci-queue-reason-child-15180-214136730 status=processing detail=dispatcher_start\r\nstatus=partial_failure\r\nreason=agent_timeout\r\nphase=fake_worker\r\nresult_path=E:\\AgentOS\\data\\codex_tasks\\ci-queue-reason-child-15180-214136730\\OUTPUTS\\RESULT.md\r\nexit_code=124\r\n2026-07-20T21:41:47.5059643+08:00 dispatch_id=ci-queue-reason-child-15180-214136730 status=retry_scheduled detail=reason=agent_timeout phase=fake_worker exit_code=124 artifact=E:\\AgentOS\\data\\codex_tasks\\ci-queue-reason-child-15180-214136730\\OUTPUTS\\RESULT.md attempt=1/2\r\n2026-07-20T21:41:48.7642902+08:00 dispatch_id=queue status=learning_collector_done detail=candidates_created=0; governance_escalations=3; skipped_low_frequency=13; skipped_duplicate=2\r\nqueue_status=recovery_pending\r\nroot_dispatch_id=ci-queue-reason-root-15180-214136730\r\ntasks_executed=1\r\ncontained_failures=0",
+                       "command":  "tests\\test_queue_reason_propagation.ps1"
+                   },
+                   {
+                       "name":  "queue_failure_containment",
+                       "status":  "PASS",
+                       "detail":  "queue_failure_containment_status=passed\r\nclaude_to_codex_fallback=true\r\nbounded_attempts_per_route=2\r\nindependent_task_continued=true",
+                       "command":  "tests\\test_queue_failure_containment.ps1"
+                   },
+                   {
+                       "name":  "dispatch_resilience",
+                       "status":  "PASS",
+                       "detail":  "dispatch_resilience_status=passed\r\ncase_count=6\r\ntimeout_elapsed_seconds=18",
+                       "command":  "tests\\test_dispatch_resilience.ps1"
+                   },
+                   {
+                       "name":  "escalation_decision_hardening",
+                       "status":  "PASS",
+                       "detail":  "escalation_decision_hardening=PASS\r\nno_receipt_rejected=true\r\nforged_method_rejected=true\r\nverified_owner_receipt_accepted=true\r\nqueue_invalid_decision_awaiting_josh=true\r\nhistorical_escalation_hashes_unchanged=true",
+                       "command":  "tests\\test_escalation_decision_hardening.ps1"
+                   },
+                   {
+                       "name":  "hermes_root_queue_e2e",
+                       "status":  "PASS",
+                       "detail":  "hermes_root_queue_e2e_status=passed\r\nroot_task_processed_by_queue=true\r\nbounded_retry_then_fallback=true\r\nroot_single_point_removed=true\r\ndispatch_id=ci-hermes-root-failover-4896-214411653",
+                       "command":  "tests\\test_hermes_root_queue_e2e.ps1"
+                   },
+                   {
+                       "name":  "url_knowledge_intake",
+                       "status":  "PASS",
+                       "detail":  "..........\r\n----------------------------------------------------------------------\r\nRan 10 tests in 0.152s\r\nSystem.Management.Automation.RemoteException\r\nOK",
+                       "command":  "python -m unittest URL knowledge tests"
+                   },
+                   {
+                       "name":  "dashboard_security",
+                       "status":  "PASS",
+                       "detail":  "E:\\AgentOS\\dashboard\\backend\\.venv\\Lib\\site-packages\\fastapi\\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\r\n  from starlette.testclient import TestClient as TestClient  # noqa\r\n...........\r\n----------------------------------------------------------------------\r\nRan 11 tests in 2.696s\r\nSystem.Management.Automation.RemoteException\r\nOK",
+                       "command":  "python -m unittest tests\\test_dashboard_security.py"
+                   },
+                   {
+                       "name":  "knowledge_workspace",
+                       "status":  "PASS",
+                       "detail":  "E:\\AgentOS\\dashboard\\backend\\.venv\\Lib\\site-packages\\fastapi\\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\r\n  from starlette.testclient import TestClient as TestClient  # noqa\r\n....................\r\n----------------------------------------------------------------------\r\nRan 20 tests in 3.269s\r\nSystem.Management.Automation.RemoteException\r\nOK",
+                       "command":  "python -m unittest tests\\test_knowledge_workspace.py"
+                   },
+                   {
+                       "name":  "utf8_encoding_boundary",
+                       "status":  "PASS",
+                       "detail":  "encoding_boundary_test_status=passed\r\ncase_count=6",
+                       "command":  "python tests\\test_utf8_encoding_boundary.py"
+                   },
+                   {
+                       "name":  "url_knowledge_security",
+                       "status":  "PASS",
+                       "detail":  "url_knowledge_security_tests=PASS\r\npath_boundary_cases=valid,traversal,absolute_outside,junction\r\nreview_gate_cases=strict_pass,caveats,incomplete\r\nverify_gate_cases=fresh_pass,nonfresh,fail",
+                       "command":  "tests\\test_url_knowledge_security.ps1"
+                   },
+                   {
+                       "name":  "knowledge_sync_retry_dryrun",
+                       "status":  "PASS",
+                       "detail":  "queue_item=ci-live-generic-link-20260719-224754.json|status=would_retry\r\nqueue_item=ci-live-generic-resilient-20260719-225229.json|status=would_retry\r\nqueue_item=telegram-telegram-1449022024-1354-20260720-115628-736386.json|status=would_retry\r\nknowledge_sync_retry_status=completed\r\nprocessed=3\r\nuploaded=0\r\ndeferred=0",
+                       "command":  "scripts\\retry_pending_knowledge_sync.ps1 -DryRun"
+                   },
+                   {
+                       "name":  "model_cli_live_smoke",
+                       "status":  "FAIL",
+                       "detail":  "cmd.exe : Access is denied.",
+                       "command":  "scripts\\model_cli_health_smoke.ps1"
+                   },
+                   {
+                       "name":  "queue_starter_validate_only",
+                       "status":  "PASS",
+                       "detail":  "queue_starter_validation=passed\r\nqueue_root_dispatch_id=ci-smoke-queue-root\r\ntask_path=E:\\AgentOS\\data\\codex_tasks\\ci-smoke-queue-root\\TASK.md\r\nrunner_path=E:\\AgentOS\\scripts\\task_queue_runner.ps1\r\npath_environment_repair=available",
+                       "command":  "scripts\\start_task_queue.ps1 -ValidateOnly"
+                   },
+                   {
+                       "name":  "queue_starter_path_repair_contract",
+                       "status":  "PASS",
+                       "detail":  "path_repair_contract=present",
+                       "command":  "Check start_task_queue.ps1 has Path/PATH repair before Start-Process"
+                   },
+                   {
+                       "name":  "antigravity_outputs_only_dryrun",
+                       "status":  "PASS",
+                       "detail":  "{\r\n    \"worker_alias\":  \"pro\",\r\n    \"windows_user\":  \"brian\",\r\n    \"task_path\":  \"E:\\\\AgentOS\\\\data\\\\codex_tasks\\\\ci-smoke-antigravity-outputs-only\\\\TASK.md\",\r\n    \"risk_level\":  \"low\",\r\n    \"subagent_mode\":  \"static_analysis\",\r\n    \"write_scope\":  \"outputs_only\",\r\n    \"dry_run\":  true,\r\n    \"checked_at\":  \"2026-07-20T21:45:34.1204521+08:00\"\r\n}",
+                       "command":  "scripts\\invoke_antigravity_subagent.ps1 -DryRun outputs_only fixture"
+                   },
+                   {
+                       "name":  "antigravity_workspace_fallback_dryrun",
+                       "status":  "PASS",
+                       "detail":  "{\r\n    \"worker_alias\":  \"pro\",\r\n    \"windows_user\":  \"brian\",\r\n    \"task_path\":  \"E:\\\\AgentOS\\\\data\\\\codex_tasks\\\\ci-smoke-antigravity-workspace-fallback\\\\TASK.md\",\r\n    \"risk_level\":  \"low\",\r\n    \"subagent_mode\":  \"test_execution\",\r\n    \"write_scope\":  \"workspace-write fallback\",\r\n    \"dry_run\":  true,\r\n    \"checked_at\":  \"2026-07-20T21:45:41.3130012+08:00\"\r\n}",
+                       "command":  "scripts\\invoke_antigravity_subagent.ps1 -DryRun workspace-write fallback fixture"
+                   },
+                   {
+                       "name":  "python_compile_core",
+                       "status":  "PASS",
+                       "detail":  "python=E:\\AgentOS\\dashboard\\backend\\.venv\\Scripts\\python.exe",
+                       "command":  "python -m py_compile core Python files"
+                   },
+                   {
+                       "name":  "dashboard_health_endpoint",
+                       "status":  "PASS",
+                       "detail":  "status=ok agentos_root=E:\\AgentOS",
+                       "command":  "GET http://127.0.0.1:8000/api/health"
+                   }
+               ]
+}

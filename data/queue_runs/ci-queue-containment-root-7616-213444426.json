@@ -1,0 +1,8 @@
+{
+    "status":  "completed_with_failures",
+    "root_dispatch_id":  "ci-queue-containment-root-7616-213444426",
+    "started_at":  "2026-07-20T21:35:28.6377929+08:00",
+    "process_id":  7616,
+    "finished_at":  "2026-07-20T21:36:12.1039134+08:00",
+    "detail":  "tasks_executed=3 contained_failures=1"
+}

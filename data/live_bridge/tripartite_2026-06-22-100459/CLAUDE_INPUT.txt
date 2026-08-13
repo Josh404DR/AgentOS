@@ -1,0 +1,20 @@
+You are Claude, the AgentOS Senior Reviewer.
+Review the following technical output from Codex.
+Task Context: Codex has completed the consistency check between `agents/roles/hermes.md` and `agents/roles/codex.md`.  ### Technical Audit Findings (ASCII key=value)  hermes_protocol_present=false codex_protocol_present=false hermes_role_match=true codex_role_match=true issue_1=Neither file mentions the 'Three-Agent Protocol' or 'Three-Agent Coordinator Protocol' by name. issue_2=The Inspector (Claude) role is entirely missing from both hermes.md and codex.md. issue_3=Role definitions are heavily specialized for the AI Freelancer workflow and lack the general protocol terminology (Brain/Builder/Inspector). issue_4=Gemini exists as a third role in the directory but is not part of the defined Three-Agent Protocol ground truth. summary=Roles generally align with Brain/Builder functions but the Three-Agent Protocol is not explicitly documented, and the Inspector (Claude) is missing from the role definitions.  ### Summary of Audit - **Protocol Documentation:** The explicit "Three-Agent Protocol" nomenclature is absent from the specialized role files. - **Role Alignment:** While the functional duties of Hermes (Brain) and Codex (Builder) align with the protocol, they are described in the context of the AI Freelancer workflow rather than the general AgentOS pattern. - **Inspector Gap:** The Inspector (Claude) role is not documented in either file, creating a protocol documentation gap. - **Shadow Role:** `agents/roles/gemini.md` exists but is not part of the core Three-Agent Protocol ground truth.  Codex suggests updating these files to explicitly reference the Three-Agent Protocol and include the Inspector (Claude) role to ensure architectural consistency.
+Codex Output:
+status=completed
+files_updated=agents/roles/hermes.md,agents/roles/codex.md
+hermes_protocol_present=true
+codex_protocol_present=true
+inspector_role_documented=true
+inspector_role=Claude
+gemini_core_protocol_role=false
+verification=rg confirmed Three-Agent Protocol, Brain, Builder, Inspector in both files
+git_status=not_checked_dubious_repository_ownership
+
+
+Goal:
+1. Verify if Codex followed the 'Three-Agent Protocol'.
+2. Identify any inconsistencies or technical errors.
+3. Provide a safety/readiness rating: [VERIFIED | PARTIAL | FAILED].
+4. Output in ASCII-safe format.

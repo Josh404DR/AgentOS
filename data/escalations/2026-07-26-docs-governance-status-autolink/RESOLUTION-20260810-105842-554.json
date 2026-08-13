@@ -1,0 +1,21 @@
+{
+    "schema_version":  "2",
+    "task_id":  "2026-07-26-docs-governance-status-autolink",
+    "resolution_type":  "verified_owner_decision",
+    "decision":  "stop",
+    "resolved_at":  "2026-08-10T10:58:42.5507678+08:00",
+    "resolved_by":  "laptop-impr60b8\\brian",
+    "authentication_method":  "local_owner_token",
+    "request_id":  "4737aae8-3287-4bf4-ac7f-f3ac30c81638",
+    "decision_path":  "E:\\AgentOS\\data\\escalations\\2026-07-26-docs-governance-status-autolink\\DECISION-20260810-105842-554.json",
+    "receipt_path":  "E:\\AgentOS\\data\\escalations\\2026-07-26-docs-governance-status-autolink\\receipts\\DASHBOARD-20260810-025842-085-e2efc100.json",
+    "receipt_sha256":  "4646D88CACD6AED9764146EC434B26FA437B88A3B7748B3CB3A8FA3F2DB1FFBA",
+    "suspicious_fast_decision":  false,
+    "summary":  "The verified owner selected stop.",
+    "evidence":  [
+                     "E:\\AgentOS\\data\\escalations\\2026-07-26-docs-governance-status-autolink\\DECISION-20260810-105842-554.json",
+                     "E:\\AgentOS\\data\\escalations\\2026-07-26-docs-governance-status-autolink\\receipts\\DASHBOARD-20260810-025842-085-e2efc100.json"
+                 ],
+    "josh_action_required":  false,
+    "recommended_status":  "stopped"
+}

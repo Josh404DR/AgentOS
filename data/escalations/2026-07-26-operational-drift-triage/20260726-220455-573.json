@@ -1,0 +1,29 @@
+{
+    "task_id":  "2026-07-26-operational-drift-triage",
+    "source":  "risky_task",
+    "reason":  "unknown_source_core_queue_large_diff",
+    "decision_type":  "approve_risky_action",
+    "summary_for_josh":  "Operational drift triage found scripts\\task_queue_runner.ps1 at +224/-13 lines versus Git baseline; current SHA-256 6A9918F37D7CAF5F81D1CB9D4C1458CB499AF5050B02EED893C9AAFDD51834B0 differs from the latest independently verified recorded hash 721A4A12...865F. No artifact currently proves the full present Queue change belongs to one exact approved dispatch. Processing and staging recommendation for this unknown-source core group are stopped pending Josh.",
+    "options":  [
+                    {
+                        "label":  "Approve",
+                        "effect":  "允許在核准範圍內繼續執行"
+                    },
+                    {
+                        "label":  "Modify",
+                        "effect":  "調整需求後重跑"
+                    },
+                    {
+                        "label":  "Stop",
+                        "effect":  "停止任務"
+                    }
+                ],
+    "evidence":  [
+                     "git diff --numstat: scripts/task_queue_runner.ps1 = 224 additions, 13 deletions",
+                     "current SHA-256: 6A9918F37D7CAF5F81D1CB9D4C1458CB499AF5050B02EED893C9AAFDD51834B0",
+                     "data/codex_tasks/governance-v1.3-root-resilience-20260718-revision-3/OUTPUTS/RESULT.md records task_queue_runner.ps1 approved hash 721A4A12...865F",
+                     "docs/governance/RISK_RULES.md: large refactor of core Dispatcher/Queue beyond exact approved file/acceptance scope is Risky"
+                 ],
+    "created_at":  "2026-07-26T22:04:55.5730886+08:00",
+    "status":  "awaiting_josh"
+}

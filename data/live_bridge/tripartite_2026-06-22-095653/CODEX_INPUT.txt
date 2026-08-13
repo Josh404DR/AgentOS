@@ -1,0 +1,8 @@
+You are Codex. Execute the following task from Hermes in AgentOS (E:\AgentOS).
+Task Packet:
+Codex task packet created and processed.  Task Packet: E:/AgentOS/data/codex_tasks/2026-06-22-three-agent-protocol-consistency/TASK.md Result File: E:/AgentOS/data/codex_tasks/2026-06-22-three-agent-protocol-consistency/OUTPUTS/RESULT.md  Codex Findings: hermes_mentions_protocol=false codex_mentions_protocol=false hermes_role_matches_coordinator=true codex_role_matches_executor=true claude_role_documented_in_hermes=false claude_role_documented_in_codex=false three_agent_roles_complete=false consistency_score=0.5 missing_info=Neither file explicitly mentions Three-Agent Protocol; Claude reviewer QA role is missing from both files. inconsistency=Hermes and Codex roles are compatible with the protocol, but the shared three-agent framing is not documented.  Summary:  The roles in agents/roles/hermes.md and agents/roles/codex.md align with their respective responsibilities in the 'Three-Agent Protocol' (Coordinator and Executor), but the protocol itself and the role of Claude (Reviewer) are not documented in either file.
+
+Output rules:
+1. ASCII only.
+2. key=value format for core findings.
+3. Keep it technical and concise.

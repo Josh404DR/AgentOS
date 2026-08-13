@@ -1,0 +1,21 @@
+{
+    "schema_version":  "2",
+    "task_id":  "2026-07-26-docs-governance-status-autolink",
+    "resolution_type":  "verified_owner_decision",
+    "decision":  "approve",
+    "resolved_at":  "2026-07-27T17:19:58.3405794+08:00",
+    "resolved_by":  "laptop-impr60b8\\brian",
+    "authentication_method":  "local_owner_token",
+    "request_id":  "1b89e115-fb29-4523-944d-3b2203efa653",
+    "decision_path":  "E:\\AgentOS\\data\\escalations\\2026-07-26-docs-governance-status-autolink\\DECISION-20260727-171958-345.json",
+    "receipt_path":  "E:\\AgentOS\\data\\escalations\\2026-07-26-docs-governance-status-autolink\\receipts\\DASHBOARD-20260727-091957-872-1386c51e.json",
+    "receipt_sha256":  "5B6F9BA51BAE27E9DB0469818F68CA276C2F517E903C53BF4C8FB7A1F63660F9",
+    "suspicious_fast_decision":  false,
+    "summary":  "The verified owner selected approve.",
+    "evidence":  [
+                     "E:\\AgentOS\\data\\escalations\\2026-07-26-docs-governance-status-autolink\\DECISION-20260727-171958-345.json",
+                     "E:\\AgentOS\\data\\escalations\\2026-07-26-docs-governance-status-autolink\\receipts\\DASHBOARD-20260727-091957-872-1386c51e.json"
+                 ],
+    "josh_action_required":  false,
+    "recommended_status":  "resolved"
+}

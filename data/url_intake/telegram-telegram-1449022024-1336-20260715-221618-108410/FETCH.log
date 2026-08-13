@@ -1,0 +1,23 @@
+[RESULT_JSON]
+{
+  "fetch_status": "success",
+  "url": "https://www.threads.com/@seraphim0916/post/Dax2UvwEk6r?xmt=AQG0OWcBdajcYVVFDfdPTPeXwZMXp5k_OGhhWNClw3lWM7pZtNhyMxz4LqZf0Rl4XlxwLyJevyg&slof=1",
+  "final_url": "https://www.threads.com/@seraphim0916/post/Dax2UvwEk6r?xmt=AQG0OWcBdajcYVVFDfdPTPeXwZMXp5k_OGhhWNClw3lWM7pZtNhyMxz4LqZf0Rl4XlxwLyJevyg&slof=1",
+  "http_status": 200,
+  "text": "seraphim0916\n22小時\n我付了四家 AI 訂閱,結果每次都只叫同一個模型。\nomnilane 是一張路由表:把每個子任務丟給真正最擅長它的模型——用你本來就在付的訂閱。任何 agentic CLI 都接得上,缺哪家就自動 fallback。\n開源:github.com/Serap…\n#ClaudeCode #Codex #Antygravity #GrokBuild  \n翻譯\n10\n2\n17",
+  "links": [
+    {
+      "url": "http://github.com/Seraphim0916/omnilane",
+      "text": "github.com/Serap…"
+    }
+  ],
+  "post_count": 1,
+  "anchor_found": false,
+  "images": [
+    "E:\\AgentOS\\data\\url_intake\\telegram-telegram-1449022024-1336-20260715-221618-108410\\fetch\\images\\image_02.jpg"
+  ],
+  "screenshot": "E:\\AgentOS\\data\\url_intake\\telegram-telegram-1449022024-1336-20260715-221618-108410\\fetch\\screenshot.png",
+  "source_untrusted": true
+}
+[/RESULT_JSON]
+source_json_path=E:\AgentOS\data\url_intake\telegram-telegram-1449022024-1336-20260715-221618-108410\fetch\source.json

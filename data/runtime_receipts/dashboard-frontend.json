@@ -1,0 +1,10 @@
+{
+    "runtime_id":  "dashboard-frontend",
+    "status":  "running",
+    "process_id":  25812,
+    "executable_path":  "C:\\Windows\\system32\\cmd.exe",
+    "command_match":  "npm run start -- --port 3002",
+    "port":  3002,
+    "started_at":  "2026-08-13T09:04:00.5261031+08:00",
+    "identity":  "LAPTOP-IMPR60B8\\brian"
+}

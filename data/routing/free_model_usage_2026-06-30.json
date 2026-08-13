@@ -1,0 +1,10 @@
+{
+    "date":  "2026-06-30",
+    "providers":  {
+                      "groq":  {
+                                   "attempted_requests":  6,
+                                   "completed_requests":  6,
+                                   "blocked_requests":  0
+                               }
+                  }
+}

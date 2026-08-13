@@ -1,0 +1,8 @@
+{
+    "status":  "completed",
+    "root_dispatch_id":  "ci-queue-failover-root-5796-174106300",
+    "started_at":  "2026-07-28T17:41:06.3283242+08:00",
+    "process_id":  5796,
+    "finished_at":  "2026-07-28T17:41:32.3688748+08:00",
+    "detail":  "tasks_executed=3 contained_failures=0"
+}

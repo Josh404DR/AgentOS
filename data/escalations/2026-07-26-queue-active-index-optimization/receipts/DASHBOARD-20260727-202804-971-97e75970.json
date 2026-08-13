@@ -1,0 +1,19 @@
+{
+  "schema_version": "1",
+  "receipt_type": "dashboard_owner_session",
+  "task_id": "2026-07-26-queue-active-index-optimization",
+  "decision": "modify",
+  "actor_id": "laptop-impr60b8\\brian",
+  "authentication_method": "local_owner_token",
+  "request_id": "e36a7c26-99d0-401d-a10f-9854195e49b2",
+  "issued_at": "2026-07-27T20:28:04.970150+00:00",
+  "expires_at": "2026-07-27T20:30:04.970150+00:00",
+  "session_validated": true,
+  "csrf_validated": true,
+  "origin_validated": true,
+  "local_client_validated": true,
+  "telegram_identity": "",
+  "confirmation_code_consumed": false,
+  "source_api": "/api/approvals/2026-07-26-queue-active-index-optimization/decision",
+  "signature": "E98254DD089CA13B338F3968BAE534B4F340693C208305B7E096CAE885CD4B51"
+}

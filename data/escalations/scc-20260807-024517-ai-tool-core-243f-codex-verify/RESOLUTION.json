@@ -1,0 +1,21 @@
+{
+    "schema_version":  "2",
+    "task_id":  "scc-20260807-024517-ai-tool-core-243f-codex-verify",
+    "resolution_type":  "verified_owner_decision",
+    "decision":  "stop",
+    "resolved_at":  "2026-08-10T10:57:38.2632734+08:00",
+    "resolved_by":  "laptop-impr60b8\\brian",
+    "authentication_method":  "local_owner_token",
+    "request_id":  "17968cd7-71db-4b4f-a95b-f14d97b80e8a",
+    "decision_path":  "E:\\AgentOS\\data\\escalations\\scc-20260807-024517-ai-tool-core-243f-codex-verify\\DECISION-20260810-105738-266.json",
+    "receipt_path":  "E:\\AgentOS\\data\\escalations\\scc-20260807-024517-ai-tool-core-243f-codex-verify\\receipts\\DASHBOARD-20260810-025737-812-2674e8f7.json",
+    "receipt_sha256":  "62C2E433F47B6519F21CFBCAB016BEBF519C834A0955D24C018D85D155DD1CC6",
+    "suspicious_fast_decision":  false,
+    "summary":  "The verified owner selected stop.",
+    "evidence":  [
+                     "E:\\AgentOS\\data\\escalations\\scc-20260807-024517-ai-tool-core-243f-codex-verify\\DECISION-20260810-105738-266.json",
+                     "E:\\AgentOS\\data\\escalations\\scc-20260807-024517-ai-tool-core-243f-codex-verify\\receipts\\DASHBOARD-20260810-025737-812-2674e8f7.json"
+                 ],
+    "josh_action_required":  false,
+    "recommended_status":  "stopped"
+}

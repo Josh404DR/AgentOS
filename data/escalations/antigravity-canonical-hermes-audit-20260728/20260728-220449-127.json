@@ -1,0 +1,31 @@
+{
+    "task_id":  "antigravity-canonical-hermes-audit-20260728",
+    "source":  "simple_fail",
+    "reason":  "verify_failed_after_two_rounds_bundle_tooling_fixed_pending_final_verify",
+    "decision_type":  "retry_with_changes",
+    "summary_for_josh":  "兩次 fresh Verify 皆因 bundle tooling／證據封裝缺口 FAIL；缺口已修且 9/9 回歸 PASS。是否例外允許再送一次 final fresh independent Verify？",
+    "options":  [
+                    {
+                        "label":  "Approve",
+                        "effect":  "允許在核准範圍內繼續執行"
+                    },
+                    {
+                        "label":  "Modify",
+                        "effect":  "調整需求後重跑"
+                    },
+                    {
+                        "label":  "Stop",
+                        "effect":  "停止任務"
+                    }
+                ],
+    "evidence":  [
+                     "Fresh Verify attempt 1 FAIL: stale TEST_RESULT.full.md rolled 7 cases back to 6; fixed by ef278be; regression 8/8 PASS.",
+                     "Fresh Verify attempt 2 FAIL: manually generated commit-scoped patch included TASK.md control artifact; fixed by e0c5fbe; regression 9/9 PASS.",
+                     "Current SCOPED_DIFF.patch length=100477 and task_diff_present=false.",
+                     "Independent verifier confirmed all other Antigravity and Hermes criteria had evidence."
+                 ],
+    "environment":  "runtime",
+    "is_fixture":  false,
+    "created_at":  "2026-07-28T22:04:49.1271641+08:00",
+    "status":  "awaiting_josh"
+}

@@ -1,0 +1,10 @@
+{
+    "root_dispatch_id":  "telegram-telegram-1449022024-1197-20260704-124221-339891",
+    "process_id":  11056,
+    "started_at":  "2026-07-04T12:46:23.5089700+08:00",
+    "status":  "blocked",
+    "stdout_path":  "E:\\AgentOS\\data\\queue_runs\\telegram-telegram-1449022024-1197-20260704-124221-339891.stdout.log",
+    "stderr_path":  "E:\\AgentOS\\data\\queue_runs\\telegram-telegram-1449022024-1197-20260704-124221-339891.stderr.log",
+    "finished_at":  "2026-07-04T12:46:27.6398104+08:00",
+    "detail":  "governance_gate"
+}

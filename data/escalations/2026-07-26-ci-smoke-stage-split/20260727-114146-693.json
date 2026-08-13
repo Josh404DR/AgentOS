@@ -1,0 +1,29 @@
+{
+    "task_id":  "2026-07-26-ci-smoke-stage-split",
+    "source":  "complex_fail",
+    "reason":  "agent_exit_1",
+    "decision_type":  "retry_with_changes",
+    "summary_for_josh":  "All bounded retries and compliant worker fallbacks were exhausted; the queue continued processing independent tasks.",
+    "options":  [
+                    {
+                        "label":  "Approve",
+                        "effect":  "允許在核准範圍內繼續執行"
+                    },
+                    {
+                        "label":  "Modify",
+                        "effect":  "調整需求後重跑"
+                    },
+                    {
+                        "label":  "Stop",
+                        "effect":  "停止任務"
+                    }
+                ],
+    "evidence":  [
+                     "E:\\AgentOS\\data\\codex_tasks\\2026-07-26-ci-smoke-stage-split\\OUTPUTS\\RESULT.md",
+                     "E:\\AgentOS\\data\\codex_tasks\\2026-07-26-ci-smoke-stage-split\\OUTPUTS\\DISPATCH_ATTEMPTS.jsonl"
+                 ],
+    "environment":  "runtime",
+    "is_fixture":  false,
+    "created_at":  "2026-07-27T11:41:46.6925386+08:00",
+    "status":  "awaiting_josh"
+}

@@ -1,0 +1,13 @@
+{
+    "task_id":  "2026-07-03-workflow-v1-2-risky-fixture",
+    "resolution_type":  "josh_decision",
+    "decision":  "approve",
+    "resolved_at":  "2026-07-04T23:25:56.8497711+08:00",
+    "resolved_by":  "Josh",
+    "summary":  "Josh selected approve in Dashboard.",
+    "evidence":  [
+                     "E:\\AgentOS\\data\\escalations\\2026-07-03-workflow-v1-2-risky-fixture\\DECISION-20260704-232556-847.json"
+                 ],
+    "josh_action_required":  false,
+    "recommended_status":  "resolved"
+}

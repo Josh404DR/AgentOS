@@ -1,0 +1,42 @@
+{
+    "run_id":  "ci-smoke-20260807-092056-558",
+    "status":  "TIMEOUT",
+    "exit_code":  124,
+    "started_at":  "2026-08-07T09:20:56.5555408+08:00",
+    "finished_at":  "2026-08-07T09:25:04.1748995+08:00",
+    "duration_seconds":  247.619,
+    "agentos_root":  "E:\\AgentOS",
+    "suite_count":  3,
+    "fail_count":  1,
+    "warn_count":  1,
+    "timeout_count":  1,
+    "suites":  [
+                   {
+                       "suite":  "governance_and_syntax",
+                       "run_id":  "ci-smoke-governance_and_syntax-20260807-092056-558",
+                       "status":  "WARN",
+                       "exit_code":  0,
+                       "duration_seconds":  55.998,
+                       "check_count":  6,
+                       "result_json":  "E:\\AgentOS\\data\\ci_health\\suites\\governance_and_syntax\\ci-smoke-governance_and_syntax-20260807-092056-558.json"
+                   },
+                   {
+                       "suite":  "powershell_regression",
+                       "run_id":  "ci-smoke-powershell_regression-20260807-092056-558",
+                       "status":  "TIMEOUT",
+                       "exit_code":  124,
+                       "duration_seconds":  180.173,
+                       "check_count":  8,
+                       "result_json":  "E:\\AgentOS\\data\\ci_health\\suites\\powershell_regression\\ci-smoke-powershell_regression-20260807-092056-558.json"
+                   },
+                   {
+                       "suite":  "python_suites",
+                       "run_id":  "ci-smoke-python_suites-20260807-092056-558",
+                       "status":  "FAIL",
+                       "exit_code":  1,
+                       "duration_seconds":  5.819,
+                       "check_count":  8,
+                       "result_json":  "E:\\AgentOS\\data\\ci_health\\suites\\python_suites\\ci-smoke-python_suites-20260807-092056-558.json"
+                   }
+               ]
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": "1",
+  "receipt_type": "dashboard_owner_session",
+  "task_id": "ci-queue-01-always-fail-33756-173329447",
+  "decision": "stop",
+  "actor_id": "laptop-impr60b8\\brian",
+  "authentication_method": "local_owner_token",
+  "request_id": "bcd6950b-7a2f-4677-a99d-2b09ad2851c5",
+  "issued_at": "2026-08-10T02:58:38.206294+00:00",
+  "expires_at": "2026-08-10T03:00:38.206294+00:00",
+  "session_validated": true,
+  "csrf_validated": true,
+  "origin_validated": true,
+  "local_client_validated": true,
+  "telegram_identity": "",
+  "confirmation_code_consumed": false,
+  "source_api": "/api/approvals/ci-queue-01-always-fail-33756-173329447/decision",
+  "signature": "BE8B6E55E3A828377754199D6E3CC17B788F4D626AE821CF515568CE4E1B4981"
+}

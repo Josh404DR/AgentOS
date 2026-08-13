@@ -3,19 +3,16 @@
                   "requested":  false
               },
     "cronSummary":  [
-                        "    Name:      daily-upwork-lead-patrol",
                         "    Name:      daily-agentos-health-check",
-                        "    Name:      Daily-Token-Cost-Summary",
-                        "  ⚠  Gateway is not running — jobs won\u0027t fire automatically."
+                        "    Name:      Daily-Token-Cost-Summary"
                     ],
-    "updated":  "2026-06-20T12:30:17",
+    "updated":  "2026-07-30T16:47:36",
     "gateway":  {
                     "pids":  [
-                                 3404,
-                                 41880
+                                 9212
                              ],
-                    "restarted":  false,
+                    "restarted":  true,
                     "running":  true,
-                    "mode":  "legacy-cli-py-gateway"
+                    "mode":  "hermes-gateway-run"
                 }
 }

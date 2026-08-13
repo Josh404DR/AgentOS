@@ -1,0 +1,19 @@
+{
+  "schema_version": "1",
+  "receipt_type": "dashboard_owner_session",
+  "task_id": "2026-07-26-escalation-fixture-classification",
+  "decision": "approve",
+  "actor_id": "laptop-impr60b8\\brian",
+  "authentication_method": "local_owner_token",
+  "request_id": "e8343e0b-f412-4e1a-a684-92c7a0de18b3",
+  "issued_at": "2026-07-26T18:51:39.414744+00:00",
+  "expires_at": "2026-07-26T18:53:39.414744+00:00",
+  "session_validated": true,
+  "csrf_validated": true,
+  "origin_validated": true,
+  "local_client_validated": true,
+  "telegram_identity": "",
+  "confirmation_code_consumed": false,
+  "source_api": "/api/approvals/2026-07-26-escalation-fixture-classification/decision",
+  "signature": "5890C1A6BDFA4B02846CB117E3D75676251B21046BD3A8A4C8B4A0BC853D271B"
+}

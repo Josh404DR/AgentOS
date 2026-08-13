@@ -1,0 +1,21 @@
+{
+    "schema_version":  "2",
+    "task_id":  "ci-queue-01-always-fail-15888-115219259",
+    "resolution_type":  "verified_owner_decision",
+    "decision":  "approve",
+    "resolved_at":  "2026-07-29T12:13:05.2499592+08:00",
+    "resolved_by":  "laptop-impr60b8\\brian",
+    "authentication_method":  "local_owner_token",
+    "request_id":  "c9bbc3eb-15cc-4345-8b56-a16a31c34834",
+    "decision_path":  "E:\\AgentOS\\data\\escalations\\ci-queue-01-always-fail-15888-115219259\\DECISION-20260729-121305-254.json",
+    "receipt_path":  "E:\\AgentOS\\data\\escalations\\ci-queue-01-always-fail-15888-115219259\\receipts\\DASHBOARD-20260729-041304-673-cfd563e2.json",
+    "receipt_sha256":  "1C888740999EED886EDA863A3D79587E6BFF44423B3E87325F9FE0405D963D20",
+    "suspicious_fast_decision":  false,
+    "summary":  "The verified owner selected approve.",
+    "evidence":  [
+                     "E:\\AgentOS\\data\\escalations\\ci-queue-01-always-fail-15888-115219259\\DECISION-20260729-121305-254.json",
+                     "E:\\AgentOS\\data\\escalations\\ci-queue-01-always-fail-15888-115219259\\receipts\\DASHBOARD-20260729-041304-673-cfd563e2.json"
+                 ],
+    "josh_action_required":  false,
+    "recommended_status":  "resolved"
+}

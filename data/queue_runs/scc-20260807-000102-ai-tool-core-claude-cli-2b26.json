@@ -1,0 +1,10 @@
+{
+    "root_dispatch_id":  "scc-20260807-000102-ai-tool-core-claude-cli-2b26",
+    "process_id":  39688,
+    "started_at":  "2026-08-07T08:01:02.5445697+08:00",
+    "status":  "recovery_pending",
+    "stdout_path":  "E:\\AgentOS\\data\\queue_runs\\scc-20260807-000102-ai-tool-core-claude-cli-2b26.stdout.log",
+    "stderr_path":  "E:\\AgentOS\\data\\queue_runs\\scc-20260807-000102-ai-tool-core-claude-cli-2b26.stderr.log",
+    "finished_at":  "2026-08-07T08:03:05.1110789+08:00",
+    "detail":  "tasks_executed=3 contained_failures=1"
+}

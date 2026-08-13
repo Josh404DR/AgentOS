@@ -1,0 +1,12 @@
+{
+  "fetch_status": "success",
+  "url": "https://www.threads.net/@_kylinwin/post/DZ6f9rlkiCV",
+  "final_url": "https://www.threads.com/@_kylinwin/post/DZ6f9rlkiCV",
+  "http_status": 200,
+  "text": "_kylinwin\n6天\n你也跟我一樣是 Claude CLI 玩家嗎?\n這應該很方便吧??\n常常忘記自己 workdir 以及想針對 cross folder 查詢歷史紀錄的話\n這邊有一個方便的 CCR 你要不要來一點\ngithub.com/kylin…  \n翻譯\ngithub.com\nGitHub - kylinfish/claude-code-resume: A fuzzy-search picker for resuming Claude Code sessions across every project — fzf menu, rich preview, live sort, directory filter, quick resume, bilingual UI, and mobile Remote Control.\n15\n5\n1\n18",
+  "images": [
+    "E:\\AgentOS\\data\\url_intake\\legacy-20260624-claude-code-resume\\fetch\\images\\image_02.png"
+  ],
+  "screenshot": "E:\\AgentOS\\data\\url_intake\\legacy-20260624-claude-code-resume\\fetch\\screenshot.png",
+  "source_untrusted": true
+}

@@ -1,0 +1,31 @@
+{
+    "task_id":  "2026-07-26-queue-active-index-optimization",
+    "source":  "complex_fail",
+    "reason":  "revision3_verify_fail_ac1_reparenting_and_unauthorized_revision4_created",
+    "decision_type":  "clarify_requirement",
+    "summary_for_josh":  "第三輪 Verify 判定 AC1 FAIL；Queue 又錯誤建立並派送 revision-4（最終 timeout）。需 Josh 決定接受已知限制、停止，或另開精確核准的 Queue 核心修正工單；AI 不再重試。",
+    "options":  [
+                    {
+                        "label":  "Approve",
+                        "effect":  "允許在核准範圍內繼續執行"
+                    },
+                    {
+                        "label":  "Modify",
+                        "effect":  "調整需求後重跑"
+                    },
+                    {
+                        "label":  "Stop",
+                        "effect":  "停止任務"
+                    }
+                ],
+    "evidence":  [
+                     "Revision-3 fresh independent Verify FAIL: re-parenting staleness violates AC1; verifier requires escalation after third revision.",
+                     "Unexpected deterministic review-flow created revision-4 despite third-round cap and prior MODIFY_CONSUMED-round_3 marker.",
+                     "Revision-4 was automatically dispatched and ended partial_failure: agent_timeout phase=claude_worker exit_code=124 elapsed_seconds=34035.",
+                     "No revision-4 fix was authorized or accepted; artifacts preserved and not deleted."
+                 ],
+    "environment":  "runtime",
+    "is_fixture":  false,
+    "created_at":  "2026-07-29T11:03:14.0371698+08:00",
+    "status":  "awaiting_josh"
+}

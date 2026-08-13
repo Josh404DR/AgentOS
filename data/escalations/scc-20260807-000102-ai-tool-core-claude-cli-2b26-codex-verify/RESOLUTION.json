@@ -1,0 +1,21 @@
+{
+    "schema_version":  "2",
+    "task_id":  "scc-20260807-000102-ai-tool-core-claude-cli-2b26-codex-verify",
+    "resolution_type":  "verified_owner_decision",
+    "decision":  "stop",
+    "resolved_at":  "2026-08-10T10:57:50.4881902+08:00",
+    "resolved_by":  "laptop-impr60b8\\brian",
+    "authentication_method":  "local_owner_token",
+    "request_id":  "0f9914bc-d15e-475c-9896-e293cf65d0b4",
+    "decision_path":  "E:\\AgentOS\\data\\escalations\\scc-20260807-000102-ai-tool-core-claude-cli-2b26-codex-verify\\DECISION-20260810-105750-493.json",
+    "receipt_path":  "E:\\AgentOS\\data\\escalations\\scc-20260807-000102-ai-tool-core-claude-cli-2b26-codex-verify\\receipts\\DASHBOARD-20260810-025749-942-bbaf0a19.json",
+    "receipt_sha256":  "B1E4240CF5079FF51B23506CD877C1489A104B19077E448FDA0A3AC06B16E985",
+    "suspicious_fast_decision":  false,
+    "summary":  "The verified owner selected stop.",
+    "evidence":  [
+                     "E:\\AgentOS\\data\\escalations\\scc-20260807-000102-ai-tool-core-claude-cli-2b26-codex-verify\\DECISION-20260810-105750-493.json",
+                     "E:\\AgentOS\\data\\escalations\\scc-20260807-000102-ai-tool-core-claude-cli-2b26-codex-verify\\receipts\\DASHBOARD-20260810-025749-942-bbaf0a19.json"
+                 ],
+    "josh_action_required":  false,
+    "recommended_status":  "stopped"
+}

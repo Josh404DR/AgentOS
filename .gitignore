@@ -25,6 +25,8 @@ scripts/fan_control/fan_control.log
 **/.venv_notebooklm_poc/
 **/.venv_perplexity_poc/
 **/.venv*/
+/.verify-python/
+/.verify-python-venv/
 dashboard/backend/.venv/
 data/codex_tasks/**/OUTPUTS/CODEX_CONSOLE.log
 

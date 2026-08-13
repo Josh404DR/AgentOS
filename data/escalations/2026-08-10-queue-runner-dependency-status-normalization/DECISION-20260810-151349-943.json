@@ -1,0 +1,21 @@
+{
+    "schema_version":  "2",
+    "task_id":  "2026-08-10-queue-runner-dependency-status-normalization",
+    "decision":  "approve",
+    "note":  "",
+    "decided_by":  "laptop-impr60b8\\brian",
+    "authentication_method":  "local_owner_token",
+    "request_id":  "6ff1fd61-9241-4c5f-84dc-3b7efd829dd7",
+    "decided_at":  "2026-08-10T15:13:49.9395576+08:00",
+    "escalation_created_at":  "2026-08-10T15:07:49.7154727+08:00",
+    "decision_delay_seconds":  360.224,
+    "suspicious_fast_decision":  false,
+    "receipt":  {
+                    "path":  "E:\\AgentOS\\data\\escalations\\2026-08-10-queue-runner-dependency-status-normalization\\receipts\\DASHBOARD-20260810-071349-346-3659cd20.json",
+                    "sha256":  "02D432F0D46A34A56DC95EB01DD9F863BC3B9226A224AA2BD7FF304812B108A0",
+                    "type":  "dashboard_owner_session",
+                    "issued_at":  "2026-08-10T07:13:49.346066+00:00",
+                    "expires_at":  "2026-08-10T07:15:49.346066+00:00",
+                    "verified_at":  "2026-08-10T15:13:49.9395576+08:00"
+                }
+}

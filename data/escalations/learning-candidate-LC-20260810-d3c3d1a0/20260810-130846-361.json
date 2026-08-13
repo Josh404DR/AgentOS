@@ -1,0 +1,67 @@
+﻿{
+    "task_id":  "learning-candidate-LC-20260810-d3c3d1a0",
+    "source":  "learning_candidate_governance",
+    "reason":  "governance_change_candidate:risk_rules_matched:deletion",
+    "decision_type":  "governance_review",
+    "summary_for_josh":  "學習候選項目（LC-20260810-d3c3d1a0）的建議涉及治理層面（risk_rules_matched:deletion），需要 Josh 評估後才能建立後續工單或修改治理文件。詳見此 escalation artifact 的 candidate 欄位。",
+    "candidate":  {
+                      "candidate_id":  "LC-20260810-d3c3d1a0",
+                      "schema_version":  "1.0.0",
+                      "created_at":  "2026-08-10T13:08:46+08:00",
+                      "collector_version":  "1.0.0",
+                      "governance_version":  "1.4.0",
+                      "governance_hash":  "759F5EE67C5706DD7BF9B193913DFA6B6EEF03292FC0B8FA264F40A9A9E146D2",
+                      "source_task_ids":  [
+                                              "telegram-telegram-1449022024-1223-20260708-093932-970665",
+                                              "telegram-telegram-1449022024-1228-20260708-100730-764545",
+                                              "telegram-telegram-1449022024-1427-20260808-133214-217789"
+                                          ],
+                      "source_evidence_paths":  [
+                                                    "E:\\AgentOS\\data\\escalations\\telegram-telegram-1449022024-1223-20260708-093932-970665\\RESOLUTION.json",
+                                                    "E:\\AgentOS\\data\\escalations\\telegram-telegram-1449022024-1228-20260708-100730-764545\\RESOLUTION.json",
+                                                    "E:\\AgentOS\\data\\escalations\\telegram-telegram-1449022024-1427-20260808-133214-217789\\RESOLUTION.json"
+                                                ],
+                      "failure_reason_key":  "risk_rules_matched:deletion",
+                      "failure_reason_examples":  [
+                                                      "risk_rules_matched:deletion"
+                                                  ],
+                      "frequency":  3,
+                      "threshold":  2,
+                      "retry_evidence":  [
+
+                                         ],
+                      "resolved_evidence":  [
+                                                {
+                                                    "resolved_at":  "2026-07-10T12:40:52.6128570+08:00",
+                                                    "task_id":  "telegram-telegram-1449022024-1223-20260708-093932-970665",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\telegram-telegram-1449022024-1223-20260708-093932-970665\\RESOLUTION.json",
+                                                    "reason":  "risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-07-10T12:40:49.1194874+08:00",
+                                                    "task_id":  "telegram-telegram-1449022024-1228-20260708-100730-764545",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\telegram-telegram-1449022024-1228-20260708-100730-764545\\RESOLUTION.json",
+                                                    "reason":  "risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T10:57:23.2821580+08:00",
+                                                    "task_id":  "telegram-telegram-1449022024-1427-20260808-133214-217789",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\telegram-telegram-1449022024-1427-20260808-133214-217789\\RESOLUTION.json",
+                                                    "reason":  "risk_rules_matched:deletion"
+                                                }
+                                            ],
+                      "impact":  "medium",
+                      "recommendation":  "此失敗原因涉及治理、路由或安全層面。需要 Josh 評估是否調整相關治理文件、規則或角色定義。請查閱對應的 escalation artifact 取得詳情。",
+                      "change_class":  "governance_change",
+                      "josh_approval_status":  "pending",
+                      "dedupe_key":  "d3c3d1a0cf217c53cebcde65f4abe01bb21eeb9239913140efc8fee435054bf6",
+                      "status":  "open"
+                  },
+    "evidence":  [
+                     "E:\\AgentOS\\data\\escalations\\telegram-telegram-1449022024-1223-20260708-093932-970665\\RESOLUTION.json",
+                     "E:\\AgentOS\\data\\escalations\\telegram-telegram-1449022024-1228-20260708-100730-764545\\RESOLUTION.json",
+                     "E:\\AgentOS\\data\\escalations\\telegram-telegram-1449022024-1427-20260808-133214-217789\\RESOLUTION.json"
+                 ],
+    "created_at":  "2026-08-10T13:08:46+08:00",
+    "status":  "awaiting_josh"
+}

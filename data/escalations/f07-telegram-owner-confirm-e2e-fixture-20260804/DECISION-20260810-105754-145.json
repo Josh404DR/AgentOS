@@ -1,0 +1,21 @@
+{
+    "schema_version":  "2",
+    "task_id":  "f07-telegram-owner-confirm-e2e-fixture-20260804",
+    "decision":  "stop",
+    "note":  "",
+    "decided_by":  "laptop-impr60b8\\brian",
+    "authentication_method":  "local_owner_token",
+    "request_id":  "d430f706-23b7-4eb7-a673-b2c4ef602cac",
+    "decided_at":  "2026-08-10T10:57:54.1417585+08:00",
+    "escalation_created_at":  "2026-08-04T09:18:48.0000828+08:00",
+    "decision_delay_seconds":  524346.142,
+    "suspicious_fast_decision":  false,
+    "receipt":  {
+                    "path":  "E:\\AgentOS\\data\\escalations\\f07-telegram-owner-confirm-e2e-fixture-20260804\\receipts\\DASHBOARD-20260810-025753-669-7e698bb6.json",
+                    "sha256":  "58233B6F4343DF6AD4FC2DC83778CE9A5B618501EB29CAE44E067F1660C917BB",
+                    "type":  "dashboard_owner_session",
+                    "issued_at":  "2026-08-10T02:57:53.668262+00:00",
+                    "expires_at":  "2026-08-10T02:59:53.668262+00:00",
+                    "verified_at":  "2026-08-10T10:57:54.1417585+08:00"
+                }
+}

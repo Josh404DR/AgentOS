@@ -1,0 +1,19 @@
+{
+  "schema_version": "1",
+  "receipt_type": "dashboard_owner_session",
+  "task_id": "2026-08-10-queue-runner-dependency-status-normalization",
+  "decision": "approve",
+  "actor_id": "laptop-impr60b8\\brian",
+  "authentication_method": "local_owner_token",
+  "request_id": "6ff1fd61-9241-4c5f-84dc-3b7efd829dd7",
+  "issued_at": "2026-08-10T07:13:49.346066+00:00",
+  "expires_at": "2026-08-10T07:15:49.346066+00:00",
+  "session_validated": true,
+  "csrf_validated": true,
+  "origin_validated": true,
+  "local_client_validated": true,
+  "telegram_identity": "",
+  "confirmation_code_consumed": false,
+  "source_api": "/api/approvals/2026-08-10-queue-runner-dependency-status-normalization/decision",
+  "signature": "92213301EA41B016C1D8A59ECD097EC179356726601AADF48E734F26D1BEFC65"
+}

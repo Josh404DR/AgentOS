@@ -1,0 +1,21 @@
+{
+    "schema_version":  "2",
+    "task_id":  "2026-08-10-escalation-classifier-negation-newline-fix",
+    "resolution_type":  "verified_owner_decision",
+    "decision":  "approve",
+    "resolved_at":  "2026-08-10T10:48:29.9672775+08:00",
+    "resolved_by":  "laptop-impr60b8\\brian",
+    "authentication_method":  "local_owner_token",
+    "request_id":  "6e4aaabd-cf37-40c0-a0a3-ae0e26d070b4",
+    "decision_path":  "E:\\AgentOS\\data\\escalations\\2026-08-10-escalation-classifier-negation-newline-fix\\DECISION-20260810-104829-970.json",
+    "receipt_path":  "E:\\AgentOS\\data\\escalations\\2026-08-10-escalation-classifier-negation-newline-fix\\receipts\\DASHBOARD-20260810-024829-526-731eae33.json",
+    "receipt_sha256":  "1DD0C670DC7A559D9314FABFC699D4DBC076A347C3CE12B121979FAC14DE2183",
+    "suspicious_fast_decision":  false,
+    "summary":  "The verified owner selected approve.",
+    "evidence":  [
+                     "E:\\AgentOS\\data\\escalations\\2026-08-10-escalation-classifier-negation-newline-fix\\DECISION-20260810-104829-970.json",
+                     "E:\\AgentOS\\data\\escalations\\2026-08-10-escalation-classifier-negation-newline-fix\\receipts\\DASHBOARD-20260810-024829-526-731eae33.json"
+                 ],
+    "josh_action_required":  false,
+    "recommended_status":  "resolved"
+}

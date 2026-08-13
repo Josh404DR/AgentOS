@@ -1,0 +1,520 @@
+﻿{
+    "task_id":  "learning-candidate-LC-20260810-a796028d",
+    "source":  "learning_candidate_governance",
+    "reason":  "governance_change_candidate:governance_change_candidate:risk_rules_matched:deletion",
+    "decision_type":  "governance_review",
+    "summary_for_josh":  "學習候選項目（LC-20260810-a796028d）的建議涉及治理層面（governance_change_candidate:risk_rules_matched:deletion），需要 Josh 評估後才能建立後續工單或修改治理文件。詳見此 escalation artifact 的 candidate 欄位。",
+    "candidate":  {
+                      "candidate_id":  "LC-20260810-a796028d",
+                      "schema_version":  "1.0.0",
+                      "created_at":  "2026-08-10T15:36:31+08:00",
+                      "collector_version":  "1.0.0",
+                      "governance_version":  "1.4.0",
+                      "governance_hash":  "759F5EE67C5706DD7BF9B193913DFA6B6EEF03292FC0B8FA264F40A9A9E146D2",
+                      "source_task_ids":  [
+                                              "learning-candidate-LC-20260719-81076fbc",
+                                              "learning-candidate-LC-20260720-81076fbc",
+                                              "learning-candidate-LC-20260726-81076fbc",
+                                              "learning-candidate-LC-20260810-d3c3d1a0"
+                                          ],
+                      "source_evidence_paths":  [
+                                                    "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260726-81076fbc\\RESOLUTION.json",
+                                                    "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260810-d3c3d1a0\\RESOLUTION.json"
+                                                ],
+                      "failure_reason_key":  "governance_change_candidate:risk_rules_matched:deletion",
+                      "failure_reason_examples":  [
+                                                      "governance_change_candidate:risk_rules_matched:deletion"
+                                                  ],
+                      "frequency":  78,
+                      "threshold":  2,
+                      "retry_evidence":  [
+
+                                         ],
+                      "resolved_evidence":  [
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:20.5668146+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260719-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T11:17:12.6006407+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260720-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T10:58:45.4903241+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260726-81076fbc",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260726-81076fbc\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                },
+                                                {
+                                                    "resolved_at":  "2026-08-10T15:16:54.7694588+08:00",
+                                                    "task_id":  "learning-candidate-LC-20260810-d3c3d1a0",
+                                                    "resolution_path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260810-d3c3d1a0\\RESOLUTION.json",
+                                                    "reason":  "governance_change_candidate:risk_rules_matched:deletion"
+                                                }
+                                            ],
+                      "impact":  "high",
+                      "recommendation":  "此失敗原因涉及治理、路由或安全層面。需要 Josh 評估是否調整相關治理文件、規則或角色定義。請查閱對應的 escalation artifact 取得詳情。",
+                      "change_class":  "governance_change",
+                      "josh_approval_status":  "pending",
+                      "dedupe_key":  "a796028d49b9a0e5ebc6b1c6db2e79a6c54301137b25209775b943b7f14ca761",
+                      "status":  "open"
+                  },
+    "evidence":  [
+                     "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260719-81076fbc\\RESOLUTION.json",
+                     "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260720-81076fbc\\RESOLUTION.json",
+                     "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260726-81076fbc\\RESOLUTION.json",
+                     "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260810-d3c3d1a0\\RESOLUTION.json"
+                 ],
+    "created_at":  "2026-08-10T15:36:31+08:00",
+    "status":  "awaiting_josh"
+}

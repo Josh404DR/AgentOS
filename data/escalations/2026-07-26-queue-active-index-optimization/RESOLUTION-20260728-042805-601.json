@@ -1,0 +1,21 @@
+{
+    "schema_version":  "2",
+    "task_id":  "2026-07-26-queue-active-index-optimization",
+    "resolution_type":  "verified_owner_decision",
+    "decision":  "modify",
+    "resolved_at":  "2026-07-28T04:28:05.5977479+08:00",
+    "resolved_by":  "laptop-impr60b8\\brian",
+    "authentication_method":  "local_owner_token",
+    "request_id":  "e36a7c26-99d0-401d-a10f-9854195e49b2",
+    "decision_path":  "E:\\AgentOS\\data\\escalations\\2026-07-26-queue-active-index-optimization\\DECISION-20260728-042805-601.json",
+    "receipt_path":  "E:\\AgentOS\\data\\escalations\\2026-07-26-queue-active-index-optimization\\receipts\\DASHBOARD-20260727-202804-971-97e75970.json",
+    "receipt_sha256":  "11593CAD94077AD5EBD662C4FFA9C4FFC8F79BE1E4CC76A0E198EB45EBDE1BB3",
+    "suspicious_fast_decision":  false,
+    "summary":  "The verified owner selected modify.",
+    "evidence":  [
+                     "E:\\AgentOS\\data\\escalations\\2026-07-26-queue-active-index-optimization\\DECISION-20260728-042805-601.json",
+                     "E:\\AgentOS\\data\\escalations\\2026-07-26-queue-active-index-optimization\\receipts\\DASHBOARD-20260727-202804-971-97e75970.json"
+                 ],
+    "josh_action_required":  false,
+    "recommended_status":  "resolved"
+}

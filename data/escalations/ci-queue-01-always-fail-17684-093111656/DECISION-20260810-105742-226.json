@@ -1,0 +1,21 @@
+{
+    "schema_version":  "2",
+    "task_id":  "ci-queue-01-always-fail-17684-093111656",
+    "decision":  "stop",
+    "note":  "",
+    "decided_by":  "laptop-impr60b8\\brian",
+    "authentication_method":  "local_owner_token",
+    "request_id":  "ec7df1d9-020e-4b12-81f9-ad7ebfe6acc8",
+    "decided_at":  "2026-08-10T10:57:42.2221904+08:00",
+    "escalation_created_at":  "2026-08-07T09:33:18.8472259+08:00",
+    "decision_delay_seconds":  264263.375,
+    "suspicious_fast_decision":  false,
+    "receipt":  {
+                    "path":  "E:\\AgentOS\\data\\escalations\\ci-queue-01-always-fail-17684-093111656\\receipts\\DASHBOARD-20260810-025741-751-c96d2f79.json",
+                    "sha256":  "6D29DDE97DB37E58E7508795EA51129426C7244DA2149C75AAB7B757E676B162",
+                    "type":  "dashboard_owner_session",
+                    "issued_at":  "2026-08-10T02:57:41.750335+00:00",
+                    "expires_at":  "2026-08-10T02:59:41.750335+00:00",
+                    "verified_at":  "2026-08-10T10:57:42.2221904+08:00"
+                }
+}

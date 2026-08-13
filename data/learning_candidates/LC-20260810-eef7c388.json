@@ -1,0 +1,93 @@
+﻿{
+    "candidate_id":  "LC-20260810-eef7c388",
+    "schema_version":  "1.0.0",
+    "created_at":  "2026-08-10T13:08:46+08:00",
+    "collector_version":  "1.0.0",
+    "governance_version":  "1.4.0",
+    "governance_hash":  "759F5EE67C5706DD7BF9B193913DFA6B6EEF03292FC0B8FA264F40A9A9E146D2",
+    "source_task_ids":  [
+                            "2026-07-26-ci-smoke-stage-split",
+                            "2026-07-26-docs-governance-status-autolink",
+                            "2026-07-26-queue-active-index-optimization",
+                            "scc-20260806-180343-ai-tool-core-e19f",
+                            "scc-20260807-000102-ai-tool-core-claude-cli-2b26-codex-verify",
+                            "scc-20260807-013915-ai-tool-core-workspace-root-e642-codex-verify",
+                            "scc-20260807-015735-ai-tool-core-9a4d-codex-verify",
+                            "scc-20260807-024517-ai-tool-core-243f-codex-verify"
+                        ],
+    "source_evidence_paths":  [
+                                  "E:\\AgentOS\\data\\escalations\\2026-07-26-ci-smoke-stage-split\\RESOLUTION.json",
+                                  "E:\\AgentOS\\data\\escalations\\2026-07-26-docs-governance-status-autolink\\RESOLUTION.json",
+                                  "E:\\AgentOS\\data\\escalations\\2026-07-26-queue-active-index-optimization\\RESOLUTION.json",
+                                  "E:\\AgentOS\\data\\escalations\\scc-20260806-180343-ai-tool-core-e19f\\RESOLUTION.json",
+                                  "E:\\AgentOS\\data\\escalations\\scc-20260807-000102-ai-tool-core-claude-cli-2b26-codex-verify\\RESOLUTION.json",
+                                  "E:\\AgentOS\\data\\escalations\\scc-20260807-013915-ai-tool-core-workspace-root-e642-codex-verify\\RESOLUTION.json",
+                                  "E:\\AgentOS\\data\\escalations\\scc-20260807-015735-ai-tool-core-9a4d-codex-verify\\RESOLUTION.json",
+                                  "E:\\AgentOS\\data\\escalations\\scc-20260807-024517-ai-tool-core-243f-codex-verify\\RESOLUTION.json"
+                              ],
+    "failure_reason_key":  "agent_exit_1",
+    "failure_reason_examples":  [
+                                    "agent_exit_1"
+                                ],
+    "frequency":  8,
+    "threshold":  2,
+    "retry_evidence":  [
+
+                       ],
+    "resolved_evidence":  [
+                              {
+                                  "resolved_at":  "2026-07-27T17:19:58.3405794+08:00",
+                                  "task_id":  "2026-07-26-docs-governance-status-autolink",
+                                  "resolution_path":  "E:\\AgentOS\\data\\escalations\\2026-07-26-docs-governance-status-autolink\\RESOLUTION.json",
+                                  "reason":  "agent_exit_1"
+                              },
+                              {
+                                  "resolved_at":  "2026-07-27T17:19:48.8286805+08:00",
+                                  "task_id":  "2026-07-26-ci-smoke-stage-split",
+                                  "resolution_path":  "E:\\AgentOS\\data\\escalations\\2026-07-26-ci-smoke-stage-split\\RESOLUTION.json",
+                                  "reason":  "agent_exit_1"
+                              },
+                              {
+                                  "resolved_at":  "2026-07-27T17:19:39.3369468+08:00",
+                                  "task_id":  "2026-07-26-queue-active-index-optimization",
+                                  "resolution_path":  "E:\\AgentOS\\data\\escalations\\2026-07-26-queue-active-index-optimization\\RESOLUTION.json",
+                                  "reason":  "agent_exit_1"
+                              },
+                              {
+                                  "resolved_at":  "2026-08-10T10:57:48.2442619+08:00",
+                                  "task_id":  "scc-20260806-180343-ai-tool-core-e19f",
+                                  "resolution_path":  "E:\\AgentOS\\data\\escalations\\scc-20260806-180343-ai-tool-core-e19f\\RESOLUTION.json",
+                                  "reason":  "agent_exit_1"
+                              },
+                              {
+                                  "resolved_at":  "2026-08-10T10:57:50.4881902+08:00",
+                                  "task_id":  "scc-20260807-000102-ai-tool-core-claude-cli-2b26-codex-verify",
+                                  "resolution_path":  "E:\\AgentOS\\data\\escalations\\scc-20260807-000102-ai-tool-core-claude-cli-2b26-codex-verify\\RESOLUTION.json",
+                                  "reason":  "agent_exit_1"
+                              },
+                              {
+                                  "resolved_at":  "2026-08-10T10:57:40.1724593+08:00",
+                                  "task_id":  "scc-20260807-015735-ai-tool-core-9a4d-codex-verify",
+                                  "resolution_path":  "E:\\AgentOS\\data\\escalations\\scc-20260807-015735-ai-tool-core-9a4d-codex-verify\\RESOLUTION.json",
+                                  "reason":  "agent_exit_1"
+                              },
+                              {
+                                  "resolved_at":  "2026-08-10T10:57:34.8597917+08:00",
+                                  "task_id":  "scc-20260807-013915-ai-tool-core-workspace-root-e642-codex-verify",
+                                  "resolution_path":  "E:\\AgentOS\\data\\escalations\\scc-20260807-013915-ai-tool-core-workspace-root-e642-codex-verify\\RESOLUTION.json",
+                                  "reason":  "agent_exit_1"
+                              },
+                              {
+                                  "resolved_at":  "2026-08-10T10:57:38.2632734+08:00",
+                                  "task_id":  "scc-20260807-024517-ai-tool-core-243f-codex-verify",
+                                  "resolution_path":  "E:\\AgentOS\\data\\escalations\\scc-20260807-024517-ai-tool-core-243f-codex-verify\\RESOLUTION.json",
+                                  "reason":  "agent_exit_1"
+                              }
+                          ],
+    "impact":  "high",
+    "recommendation":  "分析重複出現的失敗原因（agent_exit_1），評估是否需要更新工作流程步驟、驗收條件或相關腳本。",
+    "change_class":  "implementation_change",
+    "josh_approval_status":  "pending",
+    "dedupe_key":  "eef7c3889b8efda00e71fc57d62b84f7bc902bc0d6a8d9fc1b1dbed63717486c",
+    "status":  "open"
+}

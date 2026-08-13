@@ -1,0 +1,123 @@
+{
+    "suite":  "python_suites",
+    "run_id":  "ci-smoke-python_suites-20260807-092056-558",
+    "status":  "FAIL",
+    "exit_code":  1,
+    "timeout_seconds":  150,
+    "started_at":  "2026-08-07T09:24:58.0795804+08:00",
+    "finished_at":  "2026-08-07T09:25:03.8988322+08:00",
+    "duration_seconds":  5.819,
+    "agentos_root":  "E:\\AgentOS",
+    "python_launcher":  {
+                            "kind":  "project_venv",
+                            "path":  "E:\\AgentOS\\dashboard\\backend\\.venv\\Scripts\\python.exe",
+                            "candidates":  [
+                                               {
+                                                   "kind":  "project_venv",
+                                                   "path":  "E:\\AgentOS\\dashboard\\backend\\.venv\\Scripts\\python.exe"
+                                               },
+                                               {
+                                                   "kind":  "bundled_runtime",
+                                                   "path":  "C:\\Users\\brian\\AppData\\Local\\hermes\\hermes-agent\\venv\\Scripts\\python.exe"
+                                               },
+                                               {
+                                                   "kind":  "system_path",
+                                                   "path":  "C:\\Users\\brian\\AppData\\Local\\hermes\\hermes-agent\\venv\\Scripts\\python.exe"
+                                               },
+                                               {
+                                                   "kind":  "system_path",
+                                                   "path":  "C:\\Users\\brian\\AppData\\Local\\Programs\\Python\\Python310\\python.exe"
+                                               },
+                                               {
+                                                   "kind":  "system_path",
+                                                   "path":  "C:\\Users\\brian\\AppData\\Local\\Programs\\Python\\Python314\\python.exe"
+                                               },
+                                               {
+                                                   "kind":  "system_path",
+                                                   "path":  "C:\\Users\\brian\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe"
+                                               }
+                                           ],
+                            "probes":  [
+                                           {
+                                               "kind":  "project_venv",
+                                               "path":  "E:\\AgentOS\\dashboard\\backend\\.venv\\Scripts\\python.exe",
+                                               "status":  "usable",
+                                               "exit_code":  0,
+                                               "raw_output":  "Python 3.12.13"
+                                           }
+                                       ]
+                        },
+    "fail_count":  4,
+    "warn_count":  0,
+    "timeout_count":  0,
+    "check_count":  8,
+    "created_fixtures":  [
+
+                         ],
+    "checks":  [
+                   {
+                       "name":  "suite_bootstrap",
+                       "status":  "PASS",
+                       "exit_code":  0,
+                       "detail":  "suite=python_suites timeout_seconds=150",
+                       "command":  "suite bootstrap",
+                       "duration_seconds":  0.009
+                   },
+                   {
+                       "name":  "python_launcher",
+                       "status":  "PASS",
+                       "exit_code":  0,
+                       "detail":  "kind=project_venv path=E:\\AgentOS\\dashboard\\backend\\.venv\\Scripts\\python.exe probes={\"kind\":\"project_venv\",\"path\":\"E:\\\\AgentOS\\\\dashboard\\\\backend\\\\.venv\\\\Scripts\\\\python.exe\",\"status\":\"usable\",\"exit_code\":0,\"raw_output\":\"Python 3.12.13\"}",
+                       "command":  "Resolve-AgentOSPythonLauncher",
+                       "duration_seconds":  0.032
+                   },
+                   {
+                       "name":  "url_knowledge_intake",
+                       "status":  "FAIL",
+                       "exit_code":  1,
+                       "detail":  "launcher=E:\\AgentOS\\dashboard\\backend\\.venv\\Scripts\\python.exe; exit_code=1; raw_error=Traceback (most recent call last):\r\n  File \"\u003cfrozen runpy\u003e\", line 198, in _run_module_as_main\r\n  File \"\u003cfrozen runpy\u003e\", line 88, in _run_code\r\n  File \"C:\\Users\\brian\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\unittest\\__main__.py\", line 18, in \u003cmodule\u003e\r\n    main(module=None)\r\n  File \"C:\\Users\\brian\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\unittest\\main.py\", line 104, in __init__\r\n    self.parseArgs(argv)\r\n  File \"C:\\Users\\brian\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\unittest\\main.py\", line 142, in parseArgs\r\n    self.testNames = _convert_names(self.tests)\r\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^\r\n  File \"C:\\Users\\brian\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\unittest\\main.py\", line 48, in _convert_names\r\n    return [_convert_name(name) for name in names]\r\n            ^^^^^^^^^^^^^^^^^^^\r\n  File \"C:\\Users\\brian\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\unittest\\main.py\", line 38, in _convert_name\r\n    rel_path = os.path.relpath(name, os.getcwd())\r\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\r\n  File \"\u003cfrozen ntpath\u003e\", line 763, in relpath\r\nValueError: path is on mount \u0027E:\u0027, start on mount \u0027C:\u0027",
+                       "command":  "E:\\AgentOS\\dashboard\\backend\\.venv\\Scripts\\python.exe -m unittest E:\\AgentOS\\tests\\test_url_knowledge_intake.py E:\\AgentOS\\tests\\test_knowledge_relations.py",
+                       "duration_seconds":  0.674
+                   },
+                   {
+                       "name":  "dashboard_security",
+                       "status":  "FAIL",
+                       "exit_code":  1,
+                       "detail":  "launcher=E:\\AgentOS\\dashboard\\backend\\.venv\\Scripts\\python.exe; exit_code=1; raw_error=Traceback (most recent call last):\r\n  File \"\u003cfrozen runpy\u003e\", line 198, in _run_module_as_main\r\n  File \"\u003cfrozen runpy\u003e\", line 88, in _run_code\r\n  File \"C:\\Users\\brian\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\unittest\\__main__.py\", line 18, in \u003cmodule\u003e\r\n    main(module=None)\r\n  File \"C:\\Users\\brian\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\unittest\\main.py\", line 104, in __init__\r\n    self.parseArgs(argv)\r\n  File \"C:\\Users\\brian\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\unittest\\main.py\", line 142, in parseArgs\r\n    self.testNames = _convert_names(self.tests)\r\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^\r\n  File \"C:\\Users\\brian\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\unittest\\main.py\", line 48, in _convert_names\r\n    return [_convert_name(name) for name in names]\r\n            ^^^^^^^^^^^^^^^^^^^\r\n  File \"C:\\Users\\brian\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\unittest\\main.py\", line 38, in _convert_name\r\n    rel_path = os.path.relpath(name, os.getcwd())\r\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\r\n  File \"\u003cfrozen ntpath\u003e\", line 763, in relpath\r\nValueError: path is on mount \u0027E:\u0027, start on mount \u0027C:\u0027",
+                       "command":  "E:\\AgentOS\\dashboard\\backend\\.venv\\Scripts\\python.exe -m unittest E:\\AgentOS\\tests\\test_dashboard_security.py",
+                       "duration_seconds":  0.199
+                   },
+                   {
+                       "name":  "knowledge_workspace",
+                       "status":  "FAIL",
+                       "exit_code":  1,
+                       "detail":  "launcher=E:\\AgentOS\\dashboard\\backend\\.venv\\Scripts\\python.exe; exit_code=1; raw_error=Traceback (most recent call last):\r\n  File \"\u003cfrozen runpy\u003e\", line 198, in _run_module_as_main\r\n  File \"\u003cfrozen runpy\u003e\", line 88, in _run_code\r\n  File \"C:\\Users\\brian\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\unittest\\__main__.py\", line 18, in \u003cmodule\u003e\r\n    main(module=None)\r\n  File \"C:\\Users\\brian\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\unittest\\main.py\", line 104, in __init__\r\n    self.parseArgs(argv)\r\n  File \"C:\\Users\\brian\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\unittest\\main.py\", line 142, in parseArgs\r\n    self.testNames = _convert_names(self.tests)\r\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^\r\n  File \"C:\\Users\\brian\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\unittest\\main.py\", line 48, in _convert_names\r\n    return [_convert_name(name) for name in names]\r\n            ^^^^^^^^^^^^^^^^^^^\r\n  File \"C:\\Users\\brian\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\unittest\\main.py\", line 38, in _convert_name\r\n    rel_path = os.path.relpath(name, os.getcwd())\r\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\r\n  File \"\u003cfrozen ntpath\u003e\", line 763, in relpath\r\nValueError: path is on mount \u0027E:\u0027, start on mount \u0027C:\u0027",
+                       "command":  "E:\\AgentOS\\dashboard\\backend\\.venv\\Scripts\\python.exe -m unittest E:\\AgentOS\\tests\\test_knowledge_workspace.py",
+                       "duration_seconds":  0.174
+                   },
+                   {
+                       "name":  "utf8_encoding_boundary",
+                       "status":  "PASS",
+                       "exit_code":  0,
+                       "detail":  "launcher=E:\\AgentOS\\dashboard\\backend\\.venv\\Scripts\\python.exe; exit_code=0; raw_error=; output=encoding_boundary_test_status=passed\r\ncase_count=6",
+                       "command":  "E:\\AgentOS\\dashboard\\backend\\.venv\\Scripts\\python.exe E:\\AgentOS\\tests\\test_utf8_encoding_boundary.py",
+                       "duration_seconds":  3.573
+                   },
+                   {
+                       "name":  "pytest_dependency",
+                       "status":  "FAIL",
+                       "exit_code":  1,
+                       "detail":  "launcher=E:\\AgentOS\\dashboard\\backend\\.venv\\Scripts\\python.exe; exit_code=1; raw_error=E:\\AgentOS\\dashboard\\backend\\.venv\\Scripts\\python.exe: No module named pytest",
+                       "command":  "E:\\AgentOS\\dashboard\\backend\\.venv\\Scripts\\python.exe -m pytest --version",
+                       "duration_seconds":  0.099
+                   },
+                   {
+                       "name":  "python_compile_core",
+                       "status":  "PASS",
+                       "exit_code":  0,
+                       "detail":  "launcher=E:\\AgentOS\\dashboard\\backend\\.venv\\Scripts\\python.exe; exit_code=0; raw_error=",
+                       "command":  "E:\\AgentOS\\dashboard\\backend\\.venv\\Scripts\\python.exe -m py_compile E:\\AgentOS\\dashboard\\backend\\main.py E:\\AgentOS\\dashboard\\backend\\dashboard_security.py E:\\AgentOS\\integrations\\hermes_plugins\\agentos-typed-dispatch\\__init__.py E:\\AgentOS\\scripts\\agentos_health_check_noagent.py E:\\AgentOS\\scripts\\daily_token_cost_summary_noagent.py E:\\AgentOS\\scripts\\fetch_url_source.py E:\\AgentOS\\scripts\\analyze_knowledge_relations.py",
+                       "duration_seconds":  0.279
+                   }
+               ]
+}

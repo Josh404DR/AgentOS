@@ -1,0 +1,74 @@
+{
+    "status":  "FAIL",
+    "started_at":  "2026-07-10T21:23:22.1071416+08:00",
+    "finished_at":  "2026-07-10T21:23:43.2831918+08:00",
+    "duration_seconds":  21.176,
+    "agentos_root":  "E:\\AgentOS",
+    "models_invoked":  false,
+    "external_services_invoked":  false,
+    "queue_rerun_executed":  false,
+    "baseline_approval_executed":  false,
+    "fail_count":  4,
+    "warn_count":  1,
+    "check_count":  9,
+    "created_fixtures":  [
+                             "E:\\AgentOS\\data\\codex_tasks\\ci-smoke-antigravity-outputs-only\\TASK.md",
+                             "E:\\AgentOS\\data\\codex_tasks\\ci-smoke-antigravity-workspace-fallback\\TASK.md"
+                         ],
+    "checks":  [
+                   {
+                       "name":  "governance_gate",
+                       "status":  "FAIL",
+                       "detail":  "exit_code=22\ngovernance_gate=blocked\r\ngovernance_status=review_required\r\ngovernance_version=1.2.0\r\ngovernance_hash=A29DDC3DE4701A07BECCCB95E9A7DA9A3B897D2C1C60FAD61416C6C85EED666F\r\ndrift_count=1\r\ntask_execution_allowed=false",
+                       "command":  "scripts\\assert_governance_ready.ps1"
+                   },
+                   {
+                       "name":  "powershell_syntax_core",
+                       "status":  "PASS",
+                       "detail":  "parsed=10",
+                       "command":  "PowerShell AST parse core scripts"
+                   },
+                   {
+                       "name":  "verify_prompt_fixture",
+                       "status":  "PASS",
+                       "detail":  "PASS: rerun_task_lacks_verdict_before_fix\r\nPASS: rerun_task_has_verdict_after_injection\r\nPASS: standard_task_already_has_verdict\r\nPASS: standard_task_unchanged_after_no-op_injection\r\nPASS: approve_effect_char_count\r\nPASS: modify_effect_char_count\r\nPASS: stop_effect_char_count\r\nPASS: approve_first_char_codepoint\r\nPASS: modify_first_char_codepoint\r\nPASS: stop_first_char_codepoint\r\nPASS: json_roundtrip_approve\r\nPASS: json_roundtrip_modify\r\nPASS: json_roundtrip_stop\r\n--- TOTAL: pass=13 fail=0\r\nAll fixture tests PASSED",
+                       "command":  "data\\tasks\\fixtures\\test_verify_prompt_verdict_injection.ps1"
+                   },
+                   {
+                       "name":  "classifier_regression",
+                       "status":  "PASS",
+                       "detail":  "classifier_regression_status=passed\r\ncase_count=6",
+                       "command":  "tests\\classify_task_regression.ps1"
+                   },
+                   {
+                       "name":  "queue_starter_validate_only",
+                       "status":  "PASS",
+                       "detail":  "queue_starter_validation=passed\r\nqueue_root_dispatch_id=ci-smoke-queue-root\r\ntask_path=E:\\AgentOS\\data\\codex_tasks\\ci-smoke-queue-root\\TASK.md\r\nrunner_path=E:\\AgentOS\\scripts\\task_queue_runner.ps1\r\npath_environment_repair=available",
+                       "command":  "scripts\\start_task_queue.ps1 -ValidateOnly"
+                   },
+                   {
+                       "name":  "queue_starter_path_repair_contract",
+                       "status":  "FAIL",
+                       "detail":  "Repair-ProcessPathEnvironment must appear before Start-Process",
+                       "command":  "Check start_task_queue.ps1 has Path/PATH repair before Start-Process"
+                   },
+                   {
+                       "name":  "antigravity_outputs_only_dryrun",
+                       "status":  "FAIL",
+                       "detail":  "Governance status is not aligned. Execution blocked.",
+                       "command":  "scripts\\invoke_antigravity_subagent.ps1 -DryRun outputs_only fixture"
+                   },
+                   {
+                       "name":  "antigravity_workspace_fallback_dryrun",
+                       "status":  "FAIL",
+                       "detail":  "Governance status is not aligned. Execution blocked.",
+                       "command":  "scripts\\invoke_antigravity_subagent.ps1 -DryRun workspace-write fallback fixture"
+                   },
+                   {
+                       "name":  "python_compile_core",
+                       "status":  "WARN",
+                       "detail":  "Unable to create process using \u0027\"C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe\" -m py_compile E:\\AgentOS\\dashboard\\backend\\main.py E:\\AgentOS\\integrations\\hermes_plugins\\agentos-typed-dispatch\\__init__.py E:\\AgentOS\\scripts\\agentos_health_check_noagent.py E:\\AgentOS\\scripts\\daily_token_cost_summary_noagent.py\u0027: ?????",
+                       "command":  "python -m py_compile core Python files"
+                   }
+               ]
+}

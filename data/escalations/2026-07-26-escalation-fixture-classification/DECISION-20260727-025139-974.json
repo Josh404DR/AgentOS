@@ -1,0 +1,21 @@
+{
+    "schema_version":  "2",
+    "task_id":  "2026-07-26-escalation-fixture-classification",
+    "decision":  "approve",
+    "note":  "",
+    "decided_by":  "laptop-impr60b8\\brian",
+    "authentication_method":  "local_owner_token",
+    "request_id":  "e8343e0b-f412-4e1a-a684-92c7a0de18b3",
+    "decided_at":  "2026-07-27T02:51:39.9708926+08:00",
+    "escalation_created_at":  "2026-07-26T23:11:12.2964160+08:00",
+    "decision_delay_seconds":  13227.674,
+    "suspicious_fast_decision":  false,
+    "receipt":  {
+                    "path":  "E:\\AgentOS\\data\\escalations\\2026-07-26-escalation-fixture-classification\\receipts\\DASHBOARD-20260726-185139-414-6965303a.json",
+                    "sha256":  "3F4389F5BB4D9A85F6025670C64D9D8C1907984782382B925CDB6430DCFC99A2",
+                    "type":  "dashboard_owner_session",
+                    "issued_at":  "2026-07-26T18:51:39.414744+00:00",
+                    "expires_at":  "2026-07-26T18:53:39.414744+00:00",
+                    "verified_at":  "2026-07-27T02:51:39.9708926+08:00"
+                }
+}

@@ -1,0 +1,49 @@
+{
+    "governance_status":  "operational_review_required",
+    "governance_version":  "1.4.0",
+    "canonical_path":  "E:\\AgentOS\\AGENTS.md",
+    "canonical_hash":  "759F5EE67C5706DD7BF9B193913DFA6B6EEF03292FC0B8FA264F40A9A9E146D2",
+    "checked_at":  "2026-08-13T11:46:06.8689614+08:00",
+    "token_cost":  0,
+    "model_calls":  0,
+    "deletion_executed":  false,
+    "governed_file_count":  11,
+    "monitored_file_count":  85,
+    "drift_count":  0,
+    "operational_drift_count":  6,
+    "drift":  [
+
+              ],
+    "operational_drift":  [
+                              {
+                                  "path":  "current_state.md",
+                                  "class":  "operational",
+                                  "reason":  "hash_changed"
+                              },
+                              {
+                                  "path":  "dashboard\\backend\\main.py",
+                                  "class":  "operational",
+                                  "reason":  "hash_changed"
+                              },
+                              {
+                                  "path":  "dashboard\\start.ps1",
+                                  "class":  "operational",
+                                  "reason":  "hash_changed"
+                              },
+                              {
+                                  "path":  "docs\\claude_ops\\50_PROJECT_STATE_MANAGER_ROLE.md",
+                                  "class":  "operational",
+                                  "reason":  "not_in_baseline"
+                              },
+                              {
+                                  "path":  "prompts\\task_templates\\codex_plan.md",
+                                  "class":  "operational",
+                                  "reason":  "hash_changed"
+                              },
+                              {
+                                  "path":  "scripts\\classify_task.ps1",
+                                  "class":  "operational",
+                                  "reason":  "hash_changed"
+                              }
+                          ]
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": "1",
+  "receipt_type": "dashboard_owner_session",
+  "task_id": "knowledge-workspace-phase1-readonly-20260720",
+  "decision": "approve",
+  "actor_id": "laptop-impr60b8\\brian",
+  "authentication_method": "local_owner_token",
+  "request_id": "e7f0b29d-6ad8-4622-bf01-c8b977e13bbf",
+  "issued_at": "2026-07-21T00:00:22.484214+00:00",
+  "expires_at": "2026-07-21T00:02:22.484214+00:00",
+  "session_validated": true,
+  "csrf_validated": true,
+  "origin_validated": true,
+  "local_client_validated": true,
+  "telegram_identity": "",
+  "confirmation_code_consumed": false,
+  "source_api": "/api/approvals/knowledge-workspace-phase1-readonly-20260720/decision",
+  "signature": "EF38D7183FB7D5E933FBA8AB7EBC1A57FE0F662EB78AA2D642558F6070AA1AB4"
+}

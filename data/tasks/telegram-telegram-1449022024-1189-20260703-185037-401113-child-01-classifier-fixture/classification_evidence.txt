@@ -1,0 +1,68 @@
+--- AgentOS Hermes Rule-Based Classifier Evidence ---
+dispatch_id: telegram-telegram-1449022024-1189-20260703-185037-401113-child-01-classifier-fixture
+classifier_source: E:\AgentOS\scripts\classify_task.ps1
+classifier: rule_based_v1
+models_invoked: false
+fixture_source: fixture_message.txt
+classification_timestamp: 2026-07-03
+
+--- FIXTURE TEXT ---
+Build a plan for validating the AgentOS governance architecture. The workflow dispatcher and queue system must handle dependency-ordered routing for this parent task and child task fixture. Validate governance workflow coverage. Local fixture only.
+
+--- NEGATION PRE-PASS ---
+negation_prefix_pattern: (?i)(?:不|不要|不得|禁止|避免|不可|無需|不需|不會|do\s+not|must\s+not|without|never)
+negated_risk_constraints_found: 0
+negated_risk_constraints: (none)
+risk_scan_text: (unchanged — no negated risk terms present)
+
+--- RISK RULE SCAN (on risk_scan_text) ---
+deletion          pattern=(?i)\b(delete|remove|erase|drop|purge)\b|...   hit=false
+production_data   pattern=(?i)\bproduction\b.*\b(database|db|data)\b|... hit=false
+money             pattern=(?i)\b(payment|billing|subscription|...)\b|...  hit=false
+credentials       pattern=(?i)\b(api[ _-]?key|token|credential|password|oauth|permission)\b|... hit=false
+external_write    pattern=(?i)\b(send|publish|post|upload|deploy|release)\b.*\b(external|...)\b|... hit=false
+security_policy   pattern=(?i)\b(allowlist|blocklist|firewall|access control|security rule)\b|... hit=false
+core_rewrite      pattern=(?i)\b(large|massive|full)\b.*\b(refactor|rewrite)\b|... hit=false
+outage            pattern=(?i)\b(outage|downtime|service interruption)\b|... hit=false
+
+risk_hits_count: 0
+risk_hits: (none)
+
+--- COMPLEX RULE SCAN (on MessageText) ---
+explicit_plan   pattern=(?i)\b(plan|parent task|child task|dependency)\b|...
+  "plan"         matched at: "Build a plan for validating..."
+  "parent task"  matched at: "...for this parent task and child task..."
+  "child task"   matched at: "...parent task and child task fixture..."
+  "dependency"   matched at: "...dependency-ordered routing..."
+  hit=TRUE
+
+multi_component pattern=(?i)\b(frontend|backend|database|api)\b.*\b(frontend|backend|database|api)\b|...
+  hit=false (no multi-component terms present)
+
+architecture    pattern=(?i)\b(architecture|workflow|dispatcher|queue|gateway|governance)\b|...
+  "architecture" matched at: "...governance architecture."
+  "workflow"     matched at: "...workflow dispatcher..."  and "governance workflow coverage"
+  "dispatcher"   matched at: "...workflow dispatcher and queue..."
+  "queue"        matched at: "...dispatcher and queue system..."
+  "governance"   matched at: "AgentOS governance architecture" and "governance workflow coverage"
+  hit=TRUE
+
+multiple_deliverables pattern=(?i)(建立|修改|更新|新增).*(以及|並且|同時).*(建立|修改|更新|新增)
+  hit=false (no Chinese delivery terms present)
+
+complex_hits_count: 2
+complex_hits: explicit_plan,architecture
+
+--- CLASSIFICATION RESULT ---
+task_type=Complex
+risk_hits=
+complex_hits=explicit_plan,architecture
+negated_risk_constraints=
+classifier=rule_based_v1
+models_invoked=false
+
+--- CLASSIFICATION LOGIC TRACE ---
+Step 1: riskHits.Count = 0  → NOT Risky
+Step 2: unclear = false     → NOT classification_unclear
+Step 3: complexHits.Count = 2 > 0 → Complex
+Final: task_type = Complex

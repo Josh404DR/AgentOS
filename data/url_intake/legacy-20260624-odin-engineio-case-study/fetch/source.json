@@ -1,0 +1,13 @@
+{
+  "fetch_status": "success",
+  "url": "https://www.threads.net/@killkli/post/DZ8hpWqEmkh",
+  "final_url": "https://www.threads.com/@killkli/post/DZ8hpWqEmkh",
+  "http_status": 200,
+  "text": "killkli\nOdin\n5天\n到底AGENT能不能編一些不是單純VIBE PROFILE，我想專業夥伴應該都做出來了\n其實我的日常工作很多都是用 coding agent 處理\n不過還是弄個SIDE PROJECT來證明一些小事，也許未來也可以用到：\n使用 Claude Code + Odin language 重現低記憶體、高速的 socket.io 後端伺服器\ngithub.com/killk…\n幾個流變：\n1. PoC\n2. From threads to epoll/kqueue\n3. Just use libuv\n以上三個階段，在AGENT輔助下只花兩天 side project 時間搞定\n編譯好的 binary 只有 4xx KB\n我完全沒學過 Odin （有看過介紹影片啦，但自己沒寫）  \n翻譯\ngithub.com\nGitHub - killkli/odin-engineio: A single-package Odin server implementing Engine.IO v4 + Socket.IO v4/v5 protocol layers\n2\n1\n3",
+  "images": [
+    "E:\\AgentOS\\data\\url_intake\\legacy-20260624-odin-engineio-case-study\\fetch\\images\\image_01.jpg",
+    "E:\\AgentOS\\data\\url_intake\\legacy-20260624-odin-engineio-case-study\\fetch\\images\\image_02.png"
+  ],
+  "screenshot": "E:\\AgentOS\\data\\url_intake\\legacy-20260624-odin-engineio-case-study\\fetch\\screenshot.png",
+  "source_untrusted": true
+}

@@ -1,0 +1,60 @@
+{
+    "schema_version":  "baseline_v1",
+    "generated_at":  "2026-07-13 13:27:21 +08:00",
+    "window":  {
+                   "from":  "2026-07-03T17:18:17.3172143+08:00",
+                   "to":  "2026-07-10T21:05:00+08:00"
+               },
+    "sample_sizes":  {
+                         "metrics_log_entries":  12,
+                         "queue_runs_with_latency":  21,
+                         "codex_task_roots":  172,
+                         "codex_task_nodes":  225,
+                         "verify_results_scanned":  29,
+                         "worker_results_scanned":  131
+                     },
+    "metrics":  {
+                    "first_pass_rate":  {
+                                            "value":  0.1667,
+                                            "quality":  "measured",
+                                            "basis":  "METRICS_LOG: verdict=PASS and retry_count=0"
+                                        },
+                    "avg_loop_count":  {
+                                           "value":  1.17,
+                                           "quality":  "measured",
+                                           "basis":  "METRICS_LOG: retry_count+1"
+                                       },
+                    "false_fail_rate":  {
+                                            "value":  0.4828,
+                                            "quality":  "estimate",
+                                            "basis":  "verify RESULT pattern: encoding/contract signatures; candidates=14 of fail=19"
+                                        },
+                    "misroute_rate":  {
+                                          "value":  0.0153,
+                                          "quality":  "estimate",
+                                          "basis":  "worker RESULT pattern: out-of-scope/no-web signatures"
+                                      },
+                    "avg_nodes_per_task":  {
+                                               "value":  1.31,
+                                               "quality":  "measured",
+                                               "basis":  "codex_tasks directory census grouped by root id"
+                                           },
+                    "avg_cost_per_task":  {
+                                              "value":  1.31,
+                                              "unit":  "nodes_proxy",
+                                              "quality":  "estimate",
+                                              "basis":  "token_actual historically unknown; node count used as cost proxy"
+                                          },
+                    "avg_latency_seconds":  {
+                                                "value":  958.04,
+                                                "quality":  "measured",
+                                                "basis":  "queue_runs finished_at - started_at (only runs with both stamps)"
+                                            },
+                    "human_escalation_rate":  {
+                                                  "value":  1.4167,
+                                                  "quality":  "measured",
+                                                  "basis":  "max(METRICS_LOG escalation_required, ESCALATION_INDEX distinct roots) / logged tasks"
+                                              }
+                },
+    "taxonomy_note":  "false_fail/misroute are heuristic ESTIMATES until Failure Taxonomy normalization (Phase 1.5/4) lands."
+}

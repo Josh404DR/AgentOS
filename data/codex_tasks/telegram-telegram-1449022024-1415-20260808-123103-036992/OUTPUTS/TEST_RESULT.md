@@ -1,0 +1,1 @@
+evidence: 已讀取 E:\AgentOS\AGENTS.md（governance_version=1.3.0）與 E:\AgentOS\current_state.md 確認治理版本；嘗試以 Bash/PowerShell 查核 RustDesk 程序狀態與計算 AGENTS.md SHA-256 雜湊時，兩者皆因非互動 session 缺少核准而被工具拒絕執行，故雜湊/程序現況為 unknown，未捏造。

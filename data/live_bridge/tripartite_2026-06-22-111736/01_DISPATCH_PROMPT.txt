@@ -1,0 +1,5 @@
+You are Hermes, the AgentOS coordinator.
+Create a technical task packet for Codex.
+Task: Check the consistency between agents/roles/hermes.md, agents/roles/codex.md, and agents/roles/claude.md.
+Instruct Codex to output its findings in ASCII-only key=value lines.
+Do NOT pre-fill example values in your instructions; use neutral placeholders like <VALUE>.

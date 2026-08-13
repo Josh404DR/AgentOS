@@ -1,0 +1,27 @@
+[RESULT_JSON]
+{
+  "fetch_status": "success",
+  "url": "https://www.threads.com/@milkmidi/post/Da1JZ3XgV1_?xmt=AQG0sgO2AYLSGSlLG3eNRnOKxTfQaurToGJuygJChjYijb1qC98K_3DrA7ajBymim-Jr1_fiw08&slof=1",
+  "final_url": "https://www.threads.com/@milkmidi/post/Da1JZ3XgV1_?xmt=AQG0sgO2AYLSGSlLG3eNRnOKxTfQaurToGJuygJChjYijb1qC98K_3DrA7ajBymim-Jr1_fiw08&slof=1",
+  "http_status": 200,
+  "text": "milkmidi\n12小時\n大家最愛的 RunCat 新版本，可以支援顯示 Claude Code / Codex 的用量了\ngithub.com/runca…  \n翻譯\ngithub.com\nGitHub - runcat-dev/RunCatNeo: A cute running cat animation on your macOS menubar.\n60\n1\n2\n55",
+  "links": [
+    {
+      "url": "https://github.com/runcat-dev/RunCatNeo",
+      "text": "github.com/runca…"
+    },
+    {
+      "url": "https://github.com/runcat-dev/RunCatNeo",
+      "text": "github.com\nGitHub - runcat-dev/RunCatNeo: A cute running cat animation on your macOS menubar."
+    }
+  ],
+  "post_count": 1,
+  "anchor_found": false,
+  "images": [
+    "E:\\AgentOS\\data\\url_intake\\telegram-telegram-1449022024-1349-20260716-185934-590128\\fetch\\images\\image_02.png"
+  ],
+  "screenshot": "E:\\AgentOS\\data\\url_intake\\telegram-telegram-1449022024-1349-20260716-185934-590128\\fetch\\screenshot.png",
+  "source_untrusted": true
+}
+[/RESULT_JSON]
+source_json_path=E:\AgentOS\data\url_intake\telegram-telegram-1449022024-1349-20260716-185934-590128\fetch\source.json

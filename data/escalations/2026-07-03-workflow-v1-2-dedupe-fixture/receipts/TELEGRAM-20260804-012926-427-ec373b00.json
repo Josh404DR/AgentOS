@@ -1,0 +1,18 @@
+{
+  "schema_version": "1",
+  "receipt_type": "telegram_one_time_confirmation",
+  "task_id": "2026-07-03-workflow-v1-2-dedupe-fixture",
+  "decision": "approve",
+  "actor_id": "telegram:***2024",
+  "authentication_method": "telegram_one_time_confirmation",
+  "request_id": "telegram-12bda66af2ed447ea4c52da8660c84a1",
+  "issued_at": "2026-08-04T01:24:25.371159+00:00",
+  "expires_at": "2026-08-04T01:34:25.371159+00:00",
+  "session_validated": false,
+  "csrf_validated": false,
+  "origin_validated": false,
+  "local_client_validated": false,
+  "telegram_identity": "1449022024",
+  "confirmation_code_consumed": true,
+  "signature": "890052508535A48FA88E0997CFC9B9F53E14DED3F9D7261B8E8602D16579EE65"
+}

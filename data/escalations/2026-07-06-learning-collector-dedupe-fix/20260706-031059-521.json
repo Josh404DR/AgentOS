@@ -1,0 +1,26 @@
+{
+    "task_id":  "2026-07-06-learning-collector-dedupe-fix",
+    "source":  "simple_fail",
+    "reason":  "worker_artifact_contract_failed_after_two_revisions_core_tests_pass",
+    "decision_type":  "accept_partial_delivery",
+    "summary_for_josh":  "核心 Collector 修復已由 Codex Verify 證明 55/55 PASS 且正式 DryRun 無 hash collision；但兩輪 Claude Worker 都未產生有效 SCOPED_DIFF.patch 與 TEST_RESULT.md。",
+    "options":  [
+                    {
+                        "label":  "Approve",
+                        "effect":  "?迂?冽???蝜潛??瑁?"
+                    },
+                    {
+                        "label":  "Modify",
+                        "effect":  "隤踵?瘙???"
+                    },
+                    {
+                        "label":  "Stop",
+                        "effect":  "?迫隞餃?"
+                    }
+                ],
+    "evidence":  [
+                     "E:\\AgentOS\\data\\codex_tasks\\2026-07-06-learning-collector-dedupe-fix-revision-2-codex-verify\\OUTPUTS\\RESULT.md,E:\\AgentOS\\tests\\learning_collector\\run_tests.ps1,E:\\AgentOS\\scripts\\collect_learning_candidates.ps1"
+                 ],
+    "created_at":  "2026-07-06T03:10:59.5219254+08:00",
+    "status":  "awaiting_josh"
+}

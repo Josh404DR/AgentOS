@@ -1,0 +1,10 @@
+{
+    "runtime_id":  "dashboard-backend",
+    "status":  "running",
+    "process_id":  14176,
+    "executable_path":  "E:\\AgentOS\\dashboard\\backend\\.venv\\Scripts\\python.exe",
+    "command_match":  "uvicorn main:app",
+    "port":  8000,
+    "started_at":  "2026-08-13T09:03:58.2749123+08:00",
+    "identity":  "LAPTOP-IMPR60B8\\brian"
+}

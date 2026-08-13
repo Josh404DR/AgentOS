@@ -1,0 +1,20 @@
+[RESULT_JSON]
+{
+  "fetch_status": "success",
+  "url": "https://www.threads.com/@easyanythinghk/post/DbPzzIPgJfr?xmt=AQG0ppoHDn2jEz-CJX0vzwGzfT02-4ZJvnUBwhGEUBNBvhKH7RNQ5ZMIgA_H35ZokHlkKqpRgg&slof=1",
+  "final_url": "https://www.threads.com/?error=invalid_post",
+  "http_status": 200,
+  "text": "sanlux.kevin\n不懂就問脆\n10小時\n為什麼騎樓要裝消防灑水器？\n經過新竹的南門已醫院外面時\n還以為騎樓掛了紅紅的小燈籠\n仔細一看很像是消防用的灑水設施\n但這個東西不是都安裝在室內嗎？\n好像沒有裝在騎樓下的\n為什麼？  \n翻譯\n57\n5\n29",
+  "links": [],
+  "post_count": 1,
+  "anchor_found": false,
+  "images": [
+    "E:\\AgentOS\\data\\url_intake\\telegram-telegram-1449022024-1365-20260726-203954-265425\\fetch\\images\\image_01.jpg",
+    "E:\\AgentOS\\data\\url_intake\\telegram-telegram-1449022024-1365-20260726-203954-265425\\fetch\\images\\image_02.webp",
+    "E:\\AgentOS\\data\\url_intake\\telegram-telegram-1449022024-1365-20260726-203954-265425\\fetch\\images\\image_03.webp"
+  ],
+  "screenshot": "E:\\AgentOS\\data\\url_intake\\telegram-telegram-1449022024-1365-20260726-203954-265425\\fetch\\screenshot.png",
+  "source_untrusted": true
+}
+[/RESULT_JSON]
+source_json_path=E:\AgentOS\data\url_intake\telegram-telegram-1449022024-1365-20260726-203954-265425\fetch\source.json

@@ -1,0 +1,542 @@
+{
+    "governance_version":  "1.4.0",
+    "approved_at":  "2026-08-13T11:46:06.7778755+08:00",
+    "approved_by":  "Josh-authorized scoped governance update",
+    "approved_paths":  [
+                           "scripts\\dispatch_task_packet.ps1"
+                       ],
+    "files":  [
+                  {
+                      "path":  "AGENTS.md",
+                      "class":  "policy",
+                      "exists":  true,
+                      "sha256":  "759F5EE67C5706DD7BF9B193913DFA6B6EEF03292FC0B8FA264F40A9A9E146D2"
+                  },
+                  {
+                      "path":  "agents\\roles\\claude.md",
+                      "exists":  true,
+                      "sha256":  "472D8F9ED2B735BFF1695AB8485136228BB7496D324389A183B24D2A8487DB41"
+                  },
+                  {
+                      "path":  "agents\\roles\\codex.md",
+                      "class":  "policy",
+                      "exists":  true,
+                      "sha256":  "DF11B60592CC4FD20E2B49B9517E8B1AB3ECF6AB35410A478CB470F4B7441938"
+                  },
+                  {
+                      "path":  "agents\\roles\\hermes.md",
+                      "exists":  true,
+                      "sha256":  "19FB54AD4680F344F16879281C03BEAFACDD7696B98701EF52391146E804CF68"
+                  },
+                  {
+                      "path":  "CLAUDE.md",
+                      "exists":  true,
+                      "sha256":  "AE28612BB431E86CF2F0594AD8FD9DA96A68E1690AFEFDDB046E5F867467C617"
+                  },
+                  {
+                      "path":  "docs\\COST_SAVING_ROUTING_PROTOCOL.md",
+                      "exists":  true,
+                      "sha256":  "E019F409E6B5BA5FDBF2A2D1C778E05FB1558B8763B54E36487DFA546FE79CB1"
+                  },
+                  {
+                      "path":  "docs\\EVIDENCE_AND_REPORTING_CONTRACT.md",
+                      "class":  "policy",
+                      "exists":  true,
+                      "sha256":  "DD75DA4F3F9639D35B9249E34E26B536BDB839931E44B55E54A2996259018D73"
+                  },
+                  {
+                      "path":  "docs\\governance\\RISK_RULES.md",
+                      "class":  "policy",
+                      "exists":  true,
+                      "sha256":  "4048963340FD30947D9A04BAAD5E7D4421FE3F58D700D3FF2CF0BF5661B10524"
+                  },
+                  {
+                      "path":  "docs\\governance\\WORKFLOW_V1_2_CONTRACT.md",
+                      "class":  "policy",
+                      "exists":  true,
+                      "sha256":  "68442E3A4C5807F9B11B7F41F7DBCB9F522364ED4AC01DFD11E4A318CFF9201B"
+                  },
+                  {
+                      "path":  "scripts\\assert_governance_ready.ps1",
+                      "class":  "policy",
+                      "exists":  true,
+                      "sha256":  "A6F5F05C1E7875FE4F094AC2C8733027D4FF2DBB775ED316019B1545A0A5D98A"
+                  },
+                  {
+                      "path":  "scripts\\sync_shared_governance.ps1",
+                      "class":  "policy",
+                      "exists":  true,
+                      "sha256":  "1FFACCBC7E9AE32483AC23164303776ECABA7800D2AAEC00FCF9AEE74C159636"
+                  },
+                  {
+                      "path":  "current_state.md",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "EC1ED58EADE586FB9438C672003E86448BC608C9345F2DA18F2863D171CBABAA"
+                  },
+                  {
+                      "path":  "dashboard\\backend\\check_db.py",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "BB452F73CB7181348D3D3BE530EEACBC203276F7E64FE5E7C3CCCB84000CD13D"
+                  },
+                  {
+                      "path":  "dashboard\\backend\\main.py",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "3FEDDF767799E0733BC4C9D5C0E41CFE949EB8EC0058480A376B38BEFC51E76B"
+                  },
+                  {
+                      "path":  "dashboard\\DASHBOARD_SCOPE.md",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "26ABF35409A93D1C246402EBB4C346A1DE81933C1D1CD5FBB89E9EC536925445"
+                  },
+                  {
+                      "path":  "dashboard\\frontend\\app\\globals.css",
+                      "exists":  true,
+                      "sha256":  "C6142B5AE7E2549076E8225750012BCA35DB7D72B1D5D3785E641C2F64F5C576"
+                  },
+                  {
+                      "path":  "dashboard\\frontend\\app\\layout.tsx",
+                      "exists":  true,
+                      "sha256":  "8F434705910108F70848E777CE929A61CEE9EAA8A1471E6F12F48948DC580037"
+                  },
+                  {
+                      "path":  "dashboard\\frontend\\app\\page.tsx",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "F5DC663BD7EFC139ECA33086AF9998F315894ECB5737D30DC9AC0AC51E2F1A85"
+                  },
+                  {
+                      "path":  "dashboard\\frontend\\components\\ApprovalQueue.tsx",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "A00CAD2874E9BDA671E560F279E125C1132D415140267DE063D1EEB19B34648D"
+                  },
+                  {
+                      "path":  "dashboard\\frontend\\components\\DecisionMap.tsx",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "B75A780A7525E5082686E25923E36AAB8A1799F7DC5C91CD6BD810B03D4EC388"
+                  },
+                  {
+                      "path":  "dashboard\\frontend\\components\\DispatchFlow.tsx",
+                      "exists":  true,
+                      "sha256":  "680AAE998723F66FA6AE67E7FBFE2273791218E9DEE06FB1752D30DEC345B719"
+                  },
+                  {
+                      "path":  "dashboard\\frontend\\components\\EventTimeline.tsx",
+                      "exists":  true,
+                      "sha256":  "4EB26BC6AA215BCB8A755D08E0F18724F712816F9C4AA2C830EC7C051FF9BEDC"
+                  },
+                  {
+                      "path":  "dashboard\\frontend\\components\\FailurePath.tsx",
+                      "exists":  true,
+                      "sha256":  "903B3B6891C3CC26E9B623600604609F6214E6A4CEED518DD4C94439FB58A439"
+                  },
+                  {
+                      "path":  "dashboard\\frontend\\components\\GovernanceStatus.tsx",
+                      "exists":  true,
+                      "sha256":  "A91E86CAAC213DD2F3EDF46691CF5BC64B480942997B8EDAE9520BAF49D0EEEC"
+                  },
+                  {
+                      "path":  "dashboard\\frontend\\components\\RuntimeStatus.tsx",
+                      "exists":  true,
+                      "sha256":  "9E1D317BA2B2132B1EBF27C1BA1295CF1E8810104D4830ED90696A30A84EED20"
+                  },
+                  {
+                      "path":  "dashboard\\frontend\\components\\StatusAssistant.tsx",
+                      "exists":  true,
+                      "sha256":  "5725A7F41BBE18EE2EA8BCFE333E0CF7AA1C87797658AE1B091A4A7923DF84A1"
+                  },
+                  {
+                      "path":  "dashboard\\frontend\\components\\TaskBoard.tsx",
+                      "exists":  true,
+                      "sha256":  "F4FA763FF4D335948B2C6206970F5C47B2C8CF1BFF86CEEDF36A1E0FD2A96038"
+                  },
+                  {
+                      "path":  "dashboard\\frontend\\components\\TaskUniverse.tsx",
+                      "exists":  true,
+                      "sha256":  "F226E6C9B9E2D09CBF52672A771A182FD1C4AD22967F784A68D4597E15E3B584"
+                  },
+                  {
+                      "path":  "dashboard\\frontend\\components\\TaskWorkspace.tsx",
+                      "exists":  true,
+                      "sha256":  "E0F7B94F6EFC3AA394B71AA737F6E0C42A066677ED5633E10FCD476423538560"
+                  },
+                  {
+                      "path":  "dashboard\\frontend\\components\\UsagePanel.tsx",
+                      "exists":  true,
+                      "sha256":  "B4899713BA9FFD72C4E51E1B209A8BB595DFBEF02300ABD72FC229D4B1F9B82F"
+                  },
+                  {
+                      "path":  "dashboard\\frontend\\components\\WorkflowSupervisor.tsx",
+                      "exists":  true,
+                      "sha256":  "4695F5092DB245F6FFFE9E26D9AAA8D17890F6D1BB763A6DA5107CC8A6ABB7A0"
+                  },
+                  {
+                      "path":  "dashboard\\frontend\\lib\\api.ts",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "1DE29323A9A5FBFCF310CD1075902885F8BCC465D282F9FD15652E41DA140761"
+                  },
+                  {
+                      "path":  "dashboard\\frontend\\next.config.ts",
+                      "exists":  true,
+                      "sha256":  "623E97F72E817C73037C2E9E879BB90777987D25285FB2992BFE6977E1BE15A0"
+                  },
+                  {
+                      "path":  "dashboard\\frontend\\README.md",
+                      "exists":  true,
+                      "sha256":  "60B55FF7DF79AF72590F9524208E46642BC32BDC175CDAD41349681C0E2F958F"
+                  },
+                  {
+                      "path":  "dashboard\\register_autostart.ps1",
+                      "exists":  true,
+                      "sha256":  "8DF1264A65D5510B33D57B15B719805F71EDD4BA5EDD5108C34332C5D18F20C1"
+                  },
+                  {
+                      "path":  "dashboard\\start.ps1",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "07060715242A8D73C28E355EEE223C0CCA45405FA891C541CD8CDAB26FE1B2FB"
+                  },
+                  {
+                      "path":  "docs\\ARCHITECTURE.md",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "78E666EB568A3B5CE99E639CDB41D4E3C6991C5894709E869AD90B496EF77827"
+                  },
+                  {
+                      "path":  "docs\\claude_ops\\00_DIAGNOSIS.md",
+                      "exists":  true,
+                      "sha256":  "6E395B3F416FD346DFB0284956A0DC35E76C336115CE39D0269A05B8A2B46A3A"
+                  },
+                  {
+                      "path":  "docs\\claude_ops\\10_DISPATCH_RULES.md",
+                      "exists":  true,
+                      "sha256":  "2834289F178CBFEE8AB9FDD03D1DBD0611AB7AFD8500C89A7DE1074D172AAF48"
+                  },
+                  {
+                      "path":  "docs\\claude_ops\\20_JUDGMENT_RUBRICS.md",
+                      "exists":  true,
+                      "sha256":  "1DB0C6E1D9084E948F84BDD5ECBEBC6C108E74812743B25D6DDA279BDF97C0AE"
+                  },
+                  {
+                      "path":  "docs\\claude_ops\\30_DELEGATION_TEMPLATES.md",
+                      "exists":  true,
+                      "sha256":  "363E8EB7A48B0D8B31EE42C50AA394276CAB5C778273B8765DCFA73E8D26FE7C"
+                  },
+                  {
+                      "path":  "docs\\claude_ops\\35_COLLAB_PROMPT.md",
+                      "exists":  true,
+                      "sha256":  "3373141E616271D10511767F5557A0702232761D6BFE2B3C13244A8A95AA3E96"
+                  },
+                  {
+                      "path":  "docs\\claude_ops\\36_RAW_INTAKE.md",
+                      "exists":  true,
+                      "sha256":  "1610924FBD026B4CD97AEECCC7E7DBDEAD2C35066B68E5E6D44B4C437A44FEC5"
+                  },
+                  {
+                      "path":  "docs\\claude_ops\\40_MAINTENANCE_PROTOCOL.md",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "807E0A1773CF71A244D0C7923F5D4B31956FA212B898A3C1209C046069A8B51C"
+                  },
+                  {
+                      "path":  "docs\\claude_ops\\50_LESSONS.md",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "07AD4B305DD47EF90E81C1CF51405FF42E7B8345D70AB030CBFF90AE6414A71A"
+                  },
+                  {
+                      "path":  "docs\\claude_ops\\90_LETTER_TO_FUTURE_SESSIONS.md",
+                      "exists":  true,
+                      "sha256":  "82D04B7054BBB366877CCB541B938BCE36DB52A906934FD5825E100016FF65C8"
+                  },
+                  {
+                      "path":  "integrations\\hermes_plugins\\agentos-typed-dispatch\\__init__.py",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "A3449956B97B8B64AE611A898A9D944BF078DD3C660FBED9E5565A889CE18963"
+                  },
+                  {
+                      "path":  "prompts\\context_packs\\autonomous_coordination_prompt.md",
+                      "exists":  true,
+                      "sha256":  "AD15B22DE5BEF68AEF3877B36E6B1BC214F9AB5FEFE778C81B651D4B1836ACA4"
+                  },
+                  {
+                      "path":  "prompts\\context_packs\\cleanup_approval.md",
+                      "exists":  true,
+                      "sha256":  "0173E8D05533366434047124CE0DA95EBE062D25A95C24F7FD54CD71FF066416"
+                  },
+                  {
+                      "path":  "prompts\\context_packs\\evidence_verification.md",
+                      "exists":  true,
+                      "sha256":  "15E6DAA06FE3D4968E1213D586BC79A2AE8C36595BEB4B8749EE53549B436952"
+                  },
+                  {
+                      "path":  "prompts\\context_packs\\hermes_intake_menu.md",
+                      "exists":  true,
+                      "sha256":  "FB0B27ACA1213C3B9DA5CE30993CFF347650D00F5CBEC7B018AC1FCDCD2E89B7"
+                  },
+                  {
+                      "path":  "prompts\\context_packs\\hermes_ops_v2.md",
+                      "exists":  true,
+                      "sha256":  "A0EC6EDDF0B4FB92881C2F94D5FCAF2DF775E6672DE90695AAC2FC316BD1DFCD"
+                  },
+                  {
+                      "path":  "prompts\\context_packs\\hermes_system_prompt_v2.md",
+                      "exists":  true,
+                      "sha256":  "9F8CEF66ACFF55065D74A6A82CC8B1FA5317106310522CD1FF20E802FD75CB42"
+                  },
+                  {
+                      "path":  "prompts\\context_packs\\hermes_system_prompt_v2.txt",
+                      "exists":  true,
+                      "sha256":  "E2ACD9EC6B38C3BD9B42AF5C929C3216FD017397368EE106DDCC415ADB72406D"
+                  },
+                  {
+                      "path":  "prompts\\context_packs\\minimal.md",
+                      "exists":  true,
+                      "sha256":  "E3399E2A0DF81183C1C508296A71EFF651E620B45828287C92A063EA54457E83"
+                  },
+                  {
+                      "path":  "prompts\\context_packs\\repo_task.md",
+                      "exists":  true,
+                      "sha256":  "A57E3BACF04ABE0A47C388326A56A1FC55E6F86C6141F74CDEA7EF259695A83E"
+                  },
+                  {
+                      "path":  "prompts\\response_templates\\verification_result_zh_tw.md",
+                      "exists":  true,
+                      "sha256":  "9653722A519D4B7473CA41A4B35DAA69CAD52D85AC0CDE64A05BAE6B5BF1DB46"
+                  },
+                  {
+                      "path":  "prompts\\role_headers\\claude_inspector.md",
+                      "exists":  true,
+                      "sha256":  "4FF46A7E5CAB517AB73E24437F47738744B58CD82CC9C63858A6A66AB80D9611"
+                  },
+                  {
+                      "path":  "prompts\\role_headers\\claude_worker.md",
+                      "exists":  true,
+                      "sha256":  "4DF3B88168440C6514031A61B5DD327B5FE011C608FCBB552FD9532C234E706E"
+                  },
+                  {
+                      "path":  "prompts\\role_headers\\codex_builder.md",
+                      "exists":  true,
+                      "sha256":  "2F397C3F0DB554C214811157A7AEF0493CC08A0804E945F24D7B65083A502645"
+                  },
+                  {
+                      "path":  "prompts\\role_headers\\codex_verifier.md",
+                      "exists":  true,
+                      "sha256":  "9FC5E8198D55F6E7973C8E22765CD2C9180A762ABF81597C4BF90142B3DA6D11"
+                  },
+                  {
+                      "path":  "prompts\\task_templates\\claude_review.md",
+                      "exists":  true,
+                      "sha256":  "27F514725F0793E3D6DE84BD6CB0A7AD740865C07C9D93E055B830BCA24FCD1E"
+                  },
+                  {
+                      "path":  "prompts\\task_templates\\claude_worker.md",
+                      "exists":  true,
+                      "sha256":  "43A47443B37E74EADC5250BA40FA292B486E7A662511AED219ECA0FEAF1545E6"
+                  },
+                  {
+                      "path":  "prompts\\task_templates\\codex_build.md",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "65432386A02AAE3534DAF206E6BB23CC4EA7002CEB79ECC232226150985EE408"
+                  },
+                  {
+                      "path":  "prompts\\task_templates\\codex_plan.md",
+                      "exists":  true,
+                      "sha256":  "B5AE090C4AC39240D94F4999B24F23165C162D81E30488EB4E41939E95140702"
+                  },
+                  {
+                      "path":  "prompts\\task_templates\\codex_verify.md",
+                      "exists":  true,
+                      "sha256":  "DC9CE95BA273844A6B854EA028237688D973BB03EFB2D79286246FB915E8C325"
+                  },
+                  {
+                      "path":  "prompts\\task_templates\\ollama_triage.md",
+                      "exists":  true,
+                      "sha256":  "A026EC31336065C62F793A643C021D2A0EC683A3818BB3C0D67F093389EEFC8E"
+                  },
+                  {
+                      "path":  "scripts\\classify_task.ps1",
+                      "exists":  true,
+                      "sha256":  "3E63364D5E282D233F3D4BA22AF442F2F202ABF1DF4FE76376F3F3C3D05FF122"
+                  },
+                  {
+                      "path":  "scripts\\dispatch_task_packet.ps1",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "5025834FAF61E5D95054B90705774CDEC9B969C5C47FFADBD0E9DD821C19D13F"
+                  },
+                  {
+                      "path":  "scripts\\free_model_window.ps1",
+                      "exists":  true,
+                      "sha256":  "A2D987A879CDCCC9F65C0F0A064948FA8A8451C56C892F60AD6C9E28064AA7DB"
+                  },
+                  {
+                      "path":  "scripts\\hermes_claude_bridge.ps1",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "5B7D5781A38B2687C4580F73DEF5D54F41A9B12B1A7084F0BD29CB90F37E54C7"
+                  },
+                  {
+                      "path":  "scripts\\hermes_codex_bridge.ps1",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "F236B6400051906B4F83C9C25AA1EFA3249B7DDF8C06600B02C04C534440A2D1"
+                  },
+                  {
+                      "path":  "scripts\\hermes_tripartite_bridge.ps1",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "267DF7623E5FD7CC4B12D7E6BFC4CCEAE178BE137773438419705F2942EE56C8"
+                  },
+                  {
+                      "path":  "scripts\\local_file_task_worker.ps1",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "9DDFAB328FBB3232E3087FA411A70C1FCB00326D5A099F80FD780AAF4F8EBFF6"
+                  },
+                  {
+                      "path":  "scripts\\publish_url_knowledge.ps1",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "99FA4A9158AC829C3CA9557911F9F8E12C9A23BAA978F162619C1AA6FDE87242"
+                  },
+                  {
+                      "path":  "scripts\\start_hermes_lite.ps1",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "E8330FB5882807CB93F1002B27862C4F68771D53F0158A346AC76AE62A9618E7"
+                  },
+                  {
+                      "path":  "scripts\\start_task_queue.ps1",
+                      "exists":  true,
+                      "sha256":  "3A7456BB3E422520687E0C7AD21AC4A9F48C9BB111A30549761419EFAE718839"
+                  },
+                  {
+                      "path":  "scripts\\task_queue_runner.ps1",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "63D2C550093F449D5058B0995EFF0FD84E0FE000184F1EE7FE4EFD6A04586F6E"
+                  },
+                  {
+                      "path":  "scripts\\threads_url_intake.ps1",
+                      "exists":  true,
+                      "sha256":  "7022F4D887CC0A754E526F1600AD6643D833D424D856869EB11563EE09DC8FE8"
+                  },
+                  {
+                      "path":  "scripts\\typed_dispatch.ps1",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "D582310286ED3A53F40281AE79DF96C1C394D27062D5A22D2CA8D437F17A1479"
+                  },
+                  {
+                      "path":  "scripts\\url_intake_task_packet.ps1",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "F7613CEC21F88F5516BF38ADCA9DDF2C626238AB4124B8F57665914F703D230D"
+                  },
+                  {
+                      "path":  "scripts\\url_intake_worker.ps1",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "4F38CD4F41C0FB84F2F5FFD9A06262198842A8888BF0EE173A095928C74F02DA"
+                  },
+                  {
+                      "path":  "scripts\\write_escalation.ps1",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "3141598B6E7A610249BD9399C3FD739464B36B79852630A44C0C68FC5362E27B"
+                  },
+                  {
+                      "path":  "scripts\\write_task_metric.ps1",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "02649B6D1F1264E4C8CD30D5EA558E3B247BB590A733565C0A2A2B8ADC4C9E77"
+                  },
+                  {
+                      "path":  "dashboard\\backend\\dashboard_security.py",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "F1F9E33FDC66A8593B2A131CB70CFDC022E517B2CA8A206748D21F2A1483FD59"
+                  },
+                  {
+                      "path":  "dashboard\\backend\\external_task_api.py",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "ADD3F25F3E4A91094A1CCC0C4EE934B388B9F21EBD2E4DCA48CB5A0E4684215A"
+                  },
+                  {
+                      "path":  "dashboard\\backend\\hermes_metrics_client.py",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "C0A652DE260893CA817FC18098031F371F6BC20CE32B84775C90BF4B80C9A195"
+                  },
+                  {
+                      "path":  "dashboard\\backend\\knowledge_workspace.py",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "1A2F0C3EC1FD9FB7F2BA824462F7C1FA946A1BDAD7A3B1571F109CC8AB9AE6DD"
+                  },
+                  {
+                      "path":  "dashboard\\dashboard_orphan_guard.ps1",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "1BAA2083421816E5F5CF9AE4B824AACBBDED2716A8B0A552B61A79F07F1C14FF"
+                  },
+                  {
+                      "path":  "dashboard\\frontend\\components\\KnowledgeWorkspace.tsx",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "A85496801C6471A485E76B39E75FBE7B0E5E75B558CBD5BF03A05D9B90DA0316"
+                  },
+                  {
+                      "path":  "dashboard\\frontend\\components\\OwnerSession.tsx",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "101907A56FD2AD89FF1640CC7B4DD91F9363704F0A518BFAA8E05610C98DDB5D"
+                  },
+                  {
+                      "path":  "dashboard\\frontend\\components\\TodayWorkspace.tsx",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "5573CE95FE5A05B49C45B63382EE32C23CC40B84C6ED9A9458C03EA7252EB1CC"
+                  },
+                  {
+                      "path":  "docs\\claude_ops\\PILLAR_A_EVIDENCE_CONTRACT_PROPOSAL_2026-07-29.md",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "E1DBC072B51B7C108686E174D223D481BE159909DF31CE07BF9E9396C5E73D7F"
+                  },
+                  {
+                      "path":  "prompts\\system_architecture_auditor_v2.md",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "23A1BCB8F77CAA17B9B223511D6A3016C0AABAF4CF758C39171AD8F6299F841A"
+                  },
+                  {
+                      "path":  "prompts\\system_architecture_auditor_v3_blind.md",
+                      "class":  "operational",
+                      "exists":  true,
+                      "sha256":  "D82B08FF92AFD49D18C68E30DB6ADDC22957A221D892D0AA4DE682226BD2AD5C"
+                  },
+                  {
+                      "path":  "docs\\governance\\COST_SAVING_ROUTING_PROTOCOL.md",
+                      "class":  "policy",
+                      "exists":  true,
+                      "sha256":  "E019F409E6B5BA5FDBF2A2D1C778E05FB1558B8763B54E36487DFA546FE79CB1"
+                  },
+                  {
+                      "path":  "docs\\governance\\EVIDENCE_AND_REPORTING_CONTRACT.md",
+                      "class":  "policy",
+                      "exists":  true,
+                      "sha256":  "DD75DA4F3F9639D35B9249E34E26B536BDB839931E44B55E54A2996259018D73"
+                  }
+              ]
+}

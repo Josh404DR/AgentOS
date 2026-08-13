@@ -1,0 +1,69 @@
+{
+    "suite":  "governance_and_syntax",
+    "run_id":  "ci-smoke-governance_and_syntax-20260807-092639-501",
+    "status":  "WARN",
+    "exit_code":  0,
+    "timeout_seconds":  60,
+    "started_at":  "2026-08-07T09:26:40.9158007+08:00",
+    "finished_at":  "2026-08-07T09:27:15.2440003+08:00",
+    "duration_seconds":  34.328,
+    "agentos_root":  "E:\\AgentOS",
+    "python_launcher":  null,
+    "fail_count":  0,
+    "warn_count":  1,
+    "timeout_count":  0,
+    "check_count":  6,
+    "created_fixtures":  [
+
+                         ],
+    "checks":  [
+                   {
+                       "name":  "suite_bootstrap",
+                       "status":  "PASS",
+                       "exit_code":  0,
+                       "detail":  "suite=governance_and_syntax timeout_seconds=60",
+                       "command":  "suite bootstrap",
+                       "duration_seconds":  0.009
+                   },
+                   {
+                       "name":  "governance_gate",
+                       "status":  "PASS",
+                       "exit_code":  0,
+                       "detail":  "governance_gate=passed\r\ngovernance_status=operational_review_required\r\ngovernance_version=1.3.0\r\ngovernance_hash=0EAECF6D153925AC17B940992CC12CE82A6DE5E7F1D7B766BAB9C479C3088EB1\r\ngovernance_checked_at=2026-08-07T09:26:51.8062119+08:00\r\ntask_execution_allowed=true\r\ntoken_cost=0\r\nmodel_calls=0\r\noperational_drift_count=36",
+                       "command":  "scripts\\assert_governance_ready.ps1",
+                       "duration_seconds":  11.434
+                   },
+                   {
+                       "name":  "powershell_syntax_core",
+                       "status":  "PASS",
+                       "exit_code":  0,
+                       "detail":  "parsed=24",
+                       "command":  "PowerShell AST parse core scripts",
+                       "duration_seconds":  0.4
+                   },
+                   {
+                       "name":  "gateway_runtime_receipt_reconciliation",
+                       "status":  "WARN",
+                       "exit_code":  1,
+                       "detail":  "hermes-main-gateway lock owner is not alive.",
+                       "command":  "scripts\\observability\\test-runtime-receipt-reconciliation.ps1",
+                       "duration_seconds":  0.758
+                   },
+                   {
+                       "name":  "hermes_autostart_dedupe",
+                       "status":  "PASS",
+                       "exit_code":  0,
+                       "detail":  "hermes_autostart_dedupe=clean",
+                       "command":  "Get-ScheduledTask census vs runtime_registry related_scheduled_tasks",
+                       "duration_seconds":  8.709
+                   },
+                   {
+                       "name":  "powershell_utf8_bom",
+                       "status":  "PASS",
+                       "exit_code":  0,
+                       "detail":  "powershell_utf8_bom_regression=PASS\r\nfault_injection_rejected=true\r\nrepository_scan_passed=true",
+                       "command":  "tests\\test_powershell_utf8_bom.ps1",
+                       "duration_seconds":  12.491
+                   }
+               ]
+}

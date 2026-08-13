@@ -1,0 +1,25 @@
+[RESULT_JSON]
+{
+  "fetch_status": "success",
+  "url": "https://www.threads.com/@sliven0722/post/Da1i9TLCfEU?xmt=AQG0KQKk6hpkQh0M58Sh-eut8pmPpLI-atb0gyT2mhdOIvJBeZ2y_CBOdx9Ho95igL50b3BMByw&slof=1",
+  "final_url": "https://www.threads.com/@sliven0722/post/Da1i9TLCfEU?xmt=AQG0KQKk6hpkQh0M58Sh-eut8pmPpLI-atb0gyT2mhdOIvJBeZ2y_CBOdx9Ho95igL50b3BMByw&slof=1",
+  "http_status": 200,
+  "text": "sliven0722\n7小時\n馬斯克將 Grok Build 直接開源了，短時間內就衝到 4k Star。\ngithub.com/xai-o…\n這是 xAI 推出的 coding agent harness，帶有完整 TUI 介面，全屏、滑鼠互動都支援，看起來就是為了讓開發者能更順手地跟 AI agent 一起工作而做的。\n我已經把 repo 丟給 Codex 去挖。裡面有不少 Rust 相關的結構和 agent 交互邏輯，值得認真看一看，說不定能從中找出可以直接用到自己工具裡的實戰細節。\n對做 AI coding agent 相關東西的人來說，這種來自 xAI 的開源專案，透明度高，值得優先 fork 下來研究。尤其現在大家都在搞本地 agent 流程，這類 harness 能省掉不少從零開始的麻煩。\n有興趣的可以直接去 GitHub 看 README 和代碼。  \n翻譯\ngithub.com\nGitHub - xai-org/grok-build: SpaceXAI's coding agent harness and TUI. Fullscreen, mouse interactive, extensible.\n78\n1\n11\n70",
+  "links": [
+    {
+      "url": "https://github.com/xai-org/grok-build",
+      "text": "github.com/xai-o…"
+    },
+    {
+      "url": "https://github.com/xai-org/grok-build",
+      "text": "github.com\nGitHub - xai-org/grok-build: SpaceXAI's coding agent harness and TUI. Fullscreen, mouse interactive, extensible."
+    }
+  ],
+  "post_count": 1,
+  "anchor_found": false,
+  "images": [],
+  "screenshot": "E:\\AgentOS\\data\\url_intake\\telegram-telegram-1449022024-1340-20260716-180823-773266\\fetch\\screenshot.png",
+  "source_untrusted": true
+}
+[/RESULT_JSON]
+source_json_path=E:\AgentOS\data\url_intake\telegram-telegram-1449022024-1340-20260716-180823-773266\fetch\source.json

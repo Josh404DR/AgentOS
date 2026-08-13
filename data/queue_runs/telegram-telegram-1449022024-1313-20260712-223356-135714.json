@@ -1,0 +1,10 @@
+{
+    "root_dispatch_id":  "telegram-telegram-1449022024-1313-20260712-223356-135714",
+    "process_id":  30424,
+    "started_at":  "2026-07-12T22:34:49.3050292+08:00",
+    "status":  "completed",
+    "stdout_path":  "E:\\AgentOS\\data\\queue_runs\\telegram-telegram-1449022024-1313-20260712-223356-135714.stdout.log",
+    "stderr_path":  "E:\\AgentOS\\data\\queue_runs\\telegram-telegram-1449022024-1313-20260712-223356-135714.stderr.log",
+    "finished_at":  "2026-07-12T22:35:41.5893675+08:00",
+    "detail":  "tasks_executed=1"
+}

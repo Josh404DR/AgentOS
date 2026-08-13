@@ -1,0 +1,21 @@
+{
+    "schema_version":  "2",
+    "task_id":  "2026-07-03-workflow-v1-2-dedupe-fixture",
+    "resolution_type":  "verified_owner_decision",
+    "decision":  "approve",
+    "resolved_at":  "2026-08-04T09:29:27.6278499+08:00",
+    "resolved_by":  "telegram:***2024",
+    "authentication_method":  "telegram_one_time_confirmation",
+    "request_id":  "telegram-12bda66af2ed447ea4c52da8660c84a1",
+    "decision_path":  "E:\\AgentOS\\data\\escalations\\2026-07-03-workflow-v1-2-dedupe-fixture\\DECISION-20260804-092927-636.json",
+    "receipt_path":  "E:\\AgentOS\\data\\escalations\\2026-07-03-workflow-v1-2-dedupe-fixture\\receipts\\TELEGRAM-20260804-012926-427-ec373b00.json",
+    "receipt_sha256":  "35515A251EAC2AA6AD69F102DB8C4E0DBC01976A012D917C7EF347CEB5BCE173",
+    "suspicious_fast_decision":  false,
+    "summary":  "The verified owner selected approve.",
+    "evidence":  [
+                     "E:\\AgentOS\\data\\escalations\\2026-07-03-workflow-v1-2-dedupe-fixture\\DECISION-20260804-092927-636.json",
+                     "E:\\AgentOS\\data\\escalations\\2026-07-03-workflow-v1-2-dedupe-fixture\\receipts\\TELEGRAM-20260804-012926-427-ec373b00.json"
+                 ],
+    "josh_action_required":  false,
+    "recommended_status":  "resolved"
+}

@@ -1,0 +1,9 @@
+{
+    "task_id":  "knowledge-workspace-phase1-readonly-20260720",
+    "decision":  "modify",
+    "note":  "Josh 當前工單指令已明確要求執行兩張單並完成至成功；核准在原 Phase 1 scope 內補齊 Today 分類並做最後一次 fresh Verify。",
+    "decided_by":  "Josh",
+    "authentication_method":  "current_chat_explicit_instruction",
+    "request_id":  "knowledge-workspace-phase1-final-bounded-revision-20260720",
+    "decided_at":  "2026-07-20T17:57:02.1196562+08:00"
+}

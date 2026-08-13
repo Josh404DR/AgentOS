@@ -1,0 +1,29 @@
+{
+    "task_id":  "ci-queue-01-always-fail-30020-111715153",
+    "source":  "simple_fail",
+    "reason":  "agent_exit_9",
+    "decision_type":  "retry_with_changes",
+    "summary_for_josh":  "All bounded retries and compliant worker fallbacks were exhausted; the queue continued processing independent tasks.",
+    "options":  [
+                    {
+                        "label":  "Approve",
+                        "effect":  "允許在核准範圍內繼續執行"
+                    },
+                    {
+                        "label":  "Modify",
+                        "effect":  "調整需求後重跑"
+                    },
+                    {
+                        "label":  "Stop",
+                        "effect":  "停止任務"
+                    }
+                ],
+    "evidence":  [
+                     "E:\\AgentOS\\data\\codex_tasks\\ci-queue-01-always-fail-30020-111715153\\OUTPUTS\\RESULT.md",
+                     "E:\\AgentOS\\data\\codex_tasks\\ci-queue-01-always-fail-30020-111715153\\OUTPUTS\\DISPATCH_ATTEMPTS.jsonl"
+                 ],
+    "environment":  "runtime",
+    "is_fixture":  false,
+    "created_at":  "2026-07-29T11:17:59.6771143+08:00",
+    "status":  "awaiting_josh"
+}

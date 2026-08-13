@@ -1,0 +1,232 @@
+{
+  "fetch_status": "success",
+  "source_untrusted": true,
+  "url": "https://www.iana.org/domains/reserved",
+  "final_url": "https://www.iana.org/domains/reserved",
+  "fetched_at": "2026-07-19T14:52:32.994796+00:00",
+  "status_code": 200,
+  "content_type": "text/html",
+  "title": "IANA-managed Reserved Domains",
+  "text": "IANA-managed Reserved Domains\nDomains\nProtocols\nNumbers\nAbout\nIANA-managed Reserved Domains\nCertain domains are set aside, and nominally registered to “IANA”, for specific policy or technical purposes.\nExample domains\nAs described in RFC 2606 and RFC 6761 , a number of domains such as example.com and example.org are maintained for documentation purposes. These domains may be used as illustrative examples in documents without prior coordination with us. They are not available for registration or transfer.\nTest IDN top-level domains\nThese domains were temporarily delegated by IANA for the IDN Evaluation being conducted by ICANN .\nDomain Domain (A-label) Language Script\nإختبار xn--kgbechtv Arabic Arabic\nآزمایشی xn--hgbk6aj7f53bba Persian Arabic\n测试 xn--0zwm56d Chinese Han (Simplified variant)\n測試 xn--g6w251d Chinese Han (Traditional variant)\nиспытание xn--80akhbyknj4f Russian Cyrillic\nपरीक्षा xn--11b5bs3a9aj6g Hindi Devanagari (Nagari)\nδοκιμή xn--jxalpdlp Greek, Modern (1453-) Greek\n테스트 xn--9t4b11yi5a Korean Hangul (Hangŭl, Hangeul)\nטעסט xn--deba0ad Yiddish Hebrew\nテスト xn--zckzah Japanese Katakana\nபரிட்சை xn--hlcj6aya9esc7a Tamil Tamil\nPolicy-reserved domains\nWe act as both the registrant and registrar for a select number of domains which have been reserved under policy grounds. These exclusions are typically indicated in either technical standards (RFC documents), or contractual limitations .\nDomains which are described as registered to IANA or ICANN on policy grounds are not available for registration or transfer, with the exception of country-name .info domains. These domains are available for release by the ICANN Governmental Advisory Committee Secretariat.\nOther Special-Use Domains\nThere is additionally a Special-Use Domain Names registry documenting special-use domains designated by technical standards. For further information, see Special-Use Domain Names (RFC 6761).\nDomain Names\nOverview\nRoot Zone Management\nOverview\nTop-Level Domains\nFiles and Downloads\nManage Delegations\nInstructions & Guides\n.INT Registry\nOverview\nRegister/modify an .INT domain\nEligibility\n.ARPA Registry\nIDN Practices Repository\nOverview\nSubmit a table\nRoot Key Signing Key (DNSSEC)\nOverview\nTrust Anchors and Rollovers\nKey Signing Ceremonies\nPolicies & Procedures\nCommunity Representatives\nReserved Domains\nDomain Names\nRoot Zone Registry\n.INT Registry\n.ARPA Registry\nIDN Repository\nNumber Resources\nAbuse Information\nProtocols\nProtocol Registries\nTime Zone Database\nAbout Us\nNews\nPerformance\nExcellence\nArchive\nContact Us\nThe IANA functions coordinate the Internet’s globally unique identifiers, and are provided by Public Technical Identifiers , an affiliate of ICANN .\nPrivacy Policy\nTerms of Service",
+  "links": [
+    {
+      "url": "https://www.iana.org/",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/domains",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/protocols",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/numbers",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/about",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/go/rfc2606",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/go/rfc6761",
+      "text": ""
+    },
+    {
+      "url": "http://www.icann.org/topics/idn/",
+      "text": ""
+    },
+    {
+      "url": "http://www.icann.org/",
+      "text": ""
+    },
+    {
+      "url": "http://www.icann.org/en/registries/agreements.htm",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/assignments/special-use-domain-names",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/go/rfc6761",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/domains",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/domains/root",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/domains/root",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/domains/root/db",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/domains/root/files",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/domains/root/manage",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/domains/root/help",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/domains/int",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/domains/int",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/domains/int/manage",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/domains/int/policy",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/domains/arpa",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/domains/idn-tables",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/domains/idn-tables",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/help/idn-repository-procedure",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/dnssec",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/dnssec",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/dnssec/files",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/dnssec/ceremonies",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/dnssec/procedures",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/dnssec/tcrs",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/domains/reserved",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/domains",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/domains/root",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/domains/int",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/domains/arpa",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/domains/idn-tables",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/numbers",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/abuse",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/protocols",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/protocols",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/time-zones",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/about",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/news",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/performance",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/about/excellence",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/archive",
+      "text": ""
+    },
+    {
+      "url": "https://www.iana.org/contact",
+      "text": ""
+    },
+    {
+      "url": "https://pti.icann.org",
+      "text": ""
+    },
+    {
+      "url": "https://www.icann.org/",
+      "text": ""
+    },
+    {
+      "url": "https://www.icann.org/privacy/policy",
+      "text": ""
+    },
+    {
+      "url": "https://www.icann.org/privacy/tos",
+      "text": ""
+    }
+  ],
+  "images": [],
+  "screenshot": "",
+  "error": ""
+}

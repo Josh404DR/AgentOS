@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-06-25 01:12:22 +0800",
-  "fingerprint": "041a3057d86d7a026c36f61812cddd6d12ce16bc8f08388febbd5438c47e1c70",
-  "session_count": 124,
-  "api_call_count": 2036,
-  "non_cache_tokens": 24446743,
-  "total_tokens": 140367355,
-  "report_path": "E:\\AgentOS\\data\\usage\\daily_token_cost_summary\\2026-06-25.md",
+  "updated_at": "2026-07-04 00:00:41 +0800",
+  "fingerprint": "93248b35e6ecc004c48d2bf08efb8c5a53a9ee84854bf42046a062512e16d34d",
+  "session_count": 143,
+  "api_call_count": 2057,
+  "non_cache_tokens": 24915797,
+  "total_tokens": 140853817,
+  "report_path": "E:\\AgentOS\\data\\usage\\daily_token_cost_summary\\2026-07-04.md",
   "models_invoked": false,
   "external_services_invoked": false
 }

@@ -1,0 +1,101 @@
+{
+    "suite":  "powershell_regression",
+    "run_id":  "ci-smoke-powershell_regression-20260804-233105-814",
+    "status":  "RUNNING",
+    "exit_code":  null,
+    "timeout_seconds":  180,
+    "started_at":  "2026-08-04T23:31:28.5647101+08:00",
+    "finished_at":  "2026-08-04T23:34:10.0221110+08:00",
+    "duration_seconds":  161.457,
+    "agentos_root":  "E:\\AgentOS",
+    "python_launcher":  null,
+    "fail_count":  1,
+    "warn_count":  0,
+    "timeout_count":  0,
+    "check_count":  10,
+    "created_fixtures":  [
+
+                         ],
+    "checks":  [
+                   {
+                       "name":  "suite_bootstrap",
+                       "status":  "PASS",
+                       "exit_code":  0,
+                       "detail":  "suite=powershell_regression timeout_seconds=180",
+                       "command":  "suite bootstrap",
+                       "duration_seconds":  0.006
+                   },
+                   {
+                       "name":  "dashboard_orphan_guard",
+                       "status":  "PASS",
+                       "exit_code":  0,
+                       "detail":  "[dashboard-backend] Untrusted port owner: PID=4242 process=python started_at=2026-07-21T08:00:00.0000000+08:00\r\n[dashboard-backend] command_line=python -m uvicorn main:app --port 8000\r\n[dashboard-backend] Inspect manually: Get-CimInstance Win32_Process -Filter \u0027ProcessId=\u003cPID\u003e\u0027 | Select-Object ProcessId,Name,ExecutablePath,CommandLine\r\n[dashboard-backend] After verification: Stop-Process -Id \u003cPID\u003e -Force; .\\start.ps1\r\ndashboard_orphan_guard=PASS\r\nworkspace_backend_only=true\r\nworkspace_frontend_only=true\r\ndiagnostics_and_refusal_present=true\r\nforeign_reclaim_fail_closed=true",
+                       "command":  "tests\\test_dashboard_orphan_guard.ps1",
+                       "duration_seconds":  0.639
+                   },
+                   {
+                       "name":  "dashboard_ux_contract",
+                       "status":  "PASS",
+                       "exit_code":  0,
+                       "detail":  "dashboard_ux_contract=PASS\r\napproval_queue_imported=true\r\napproval_queue_rendered=true\r\nunauthenticated_prompt=true\r\ndecision_endpoint=true\r\ntoken_path_guidance=true\r\nrestart_guidance=true\r\nreclaim_switch=true\r\nutf8_content_type=true\r\nutf8_body_bytes=true",
+                       "command":  "tests\\test_dashboard_ux_contract.ps1",
+                       "duration_seconds":  0.641
+                   },
+                   {
+                       "name":  "verify_prompt_fixture",
+                       "status":  "PASS",
+                       "exit_code":  0,
+                       "detail":  "PASS: rerun_task_lacks_verdict_before_fix\r\nPASS: rerun_task_has_verdict_after_injection\r\nPASS: standard_task_already_has_verdict\r\nPASS: standard_task_unchanged_after_no-op_injection\r\nPASS: approve_effect_char_count\r\nPASS: modify_effect_char_count\r\nPASS: stop_effect_char_count\r\nPASS: approve_first_char_codepoint\r\nPASS: modify_first_char_codepoint\r\nPASS: stop_first_char_codepoint\r\nPASS: json_roundtrip_approve\r\nPASS: json_roundtrip_modify\r\nPASS: json_roundtrip_stop\r\n--- TOTAL: pass=13 fail=0\r\nAll fixture tests PASSED",
+                       "command":  "data\\tasks\\fixtures\\test_verify_prompt_verdict_injection.ps1",
+                       "duration_seconds":  0.841
+                   },
+                   {
+                       "name":  "classifier_regression",
+                       "status":  "PASS",
+                       "exit_code":  0,
+                       "detail":  "classifier_regression_status=passed\r\ncase_count=12\r\ncomplex_hit_check=enabled",
+                       "command":  "tests\\classify_task_regression.ps1",
+                       "duration_seconds":  7.54
+                   },
+                   {
+                       "name":  "learning_governance_dedupe",
+                       "status":  "PASS",
+                       "exit_code":  0,
+                       "detail":  "learning_governance_dedupe=PASS\r\ngovernance_second_run_skip_duplicate=true\r\nescalation_index_persists_dedupe_key=true\r\nexisting_event_directory_guard=true\r\ngeneral_candidate_dedupe_regression=true",
+                       "command":  "tests\\learning_collector\\test_governance_dedupe.ps1",
+                       "duration_seconds":  5.331
+                   },
+                   {
+                       "name":  "queue_reason_propagation",
+                       "status":  "PASS",
+                       "exit_code":  0,
+                       "detail":  "queue_reason_propagation_status=passed\r\ndispatcher_failure_contained=true\r\ndetail=2026-08-04T23:31:52.9800283+08:00 dispatch_id=ci-queue-reason-root-6204-233144214 status=queue_scan detail=scan_ms=3699.266 directory_count=661 scoped_task_count=2 index_rebuilds=1\r\n2026-08-04T23:31:53.0152088+08:00 dispatch_id=ci-queue-reason-child-6204-233144214 status=processing detail=dispatcher_start\r\nstatus=partial_failure\r\nreason=agent_timeout\r\nphase=fake_worker\r\nresult_path=E:\\AgentOS\\data\\codex_tasks\\ci-queue-reason-child-6204-233144214\\OUTPUTS\\RESULT.md\r\nexit_code=124\r\n2026-08-04T23:31:54.2867099+08:00 dispatch_id=ci-queue-reason-child-6204-233144214 status=retry_scheduled detail=reason=agent_timeout phase=fake_worker exit_code=124 artifact=E:\\AgentOS\\data\\codex_tasks\\ci-queue-reason-child-6204-233144214\\OUTPUTS\\RESULT.md attempt=1/2\r\n2026-08-04T23:31:58.2705355+08:00 dispatch_id=queue status=learning_collector_done detail=candidates_created=1; governance_escalations=0; skipped_low_frequency=34; skipped_duplicate=8\r\nqueue_status=recovery_pending\r\nroot_dispatch_id=ci-queue-reason-root-6204-233144214\r\ntasks_executed=1\r\ncontained_failures=0",
+                       "command":  "tests\\test_queue_reason_propagation.ps1",
+                       "duration_seconds":  14.625
+                   },
+                   {
+                       "name":  "queue_failure_containment",
+                       "status":  "PASS",
+                       "exit_code":  0,
+                       "detail":  "queue_failure_containment_status=passed\r\nclaude_to_codex_fallback=true\r\nbounded_attempts_per_route=2\r\nindependent_task_continued=true",
+                       "command":  "tests\\test_queue_failure_containment.ps1",
+                       "duration_seconds":  57.936
+                   },
+                   {
+                       "name":  "dispatch_resilience",
+                       "status":  "PASS",
+                       "exit_code":  0,
+                       "detail":  "dispatch_resilience_status=passed\r\ncase_count=7\r\ntimeout_elapsed_seconds=16",
+                       "command":  "tests\\test_dispatch_resilience.ps1",
+                       "duration_seconds":  72.089
+                   },
+                   {
+                       "name":  "escalation_decision_hardening",
+                       "status":  "FAIL",
+                       "exit_code":  1,
+                       "detail":  "powershell.exe : E:\\AgentOS\\data\\test_runs\\escalation-hardening-140e91ed527b4b25ad05d28b024a75e4\\scripts\\decide_escalat",
+                       "command":  "tests\\test_escalation_decision_hardening.ps1",
+                       "duration_seconds":  1.515
+                   }
+               ]
+}

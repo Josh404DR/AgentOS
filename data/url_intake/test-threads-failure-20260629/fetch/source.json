@@ -1,0 +1,9 @@
+{
+  "fetch_status": "failed",
+  "url": "https://www.threads.net/@test/post/failed-fixture",
+  "text": "",
+  "images": [],
+  "screenshot": "",
+  "source_untrusted": true,
+  "error": "TimeoutError: controlled test failure"
+}

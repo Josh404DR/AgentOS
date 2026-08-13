@@ -1,0 +1,12 @@
+{
+    "schema_version":  1,
+    "dispatch_id":  "telegram-telegram-1449022024-1357-20260720-130342-618302",
+    "status":  "pending_retry",
+    "attempts":  1,
+    "node_path":  "E:\\AgentOS\\data\\knowledge_pool\\2026-07-20-telegram-telegram-1449022024-1357-20260720-130342-618302.md",
+    "export_dir":  "E:\\AgentOS\\exports\\notebooklm_nodes\\telegram-telegram-1449022024-1357-20260720-130342-618302",
+    "notebook_id":  "f6192ee8-7ac9-4665-ae07-44302ea98df0",
+    "last_attempt_at":  "2026-07-20T13:05:20.3887420+08:00",
+    "last_error":  "notebooklm_auth_or_connection_failure",
+    "sync_log_path":  "E:\\AgentOS\\data\\memory\\sync_logs\\knowledge_nodes\\notebooklm_sync_2026-07-20_130519.md"
+}

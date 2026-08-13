@@ -1,0 +1,10 @@
+{
+    "root_dispatch_id":  "scc-20260805-093722-scc-closure-health-verification-17859226-4c87",
+    "process_id":  32168,
+    "started_at":  "2026-08-05T17:37:31.7401867+08:00",
+    "status":  "completed",
+    "stdout_path":  "E:\\AgentOS\\data\\queue_runs\\scc-20260805-093722-scc-closure-health-verification-17859226-4c87.stdout.log",
+    "stderr_path":  "E:\\AgentOS\\data\\queue_runs\\scc-20260805-093722-scc-closure-health-verification-17859226-4c87.stderr.log",
+    "finished_at":  "2026-08-05T17:38:34.1320922+08:00",
+    "detail":  "tasks_executed=1 contained_failures=0"
+}

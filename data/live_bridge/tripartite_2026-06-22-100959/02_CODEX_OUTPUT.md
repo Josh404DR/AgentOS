@@ -1,0 +1,7 @@
+hermes_role=Brain
+codex_role=Builder
+inspector_role=Claude
+protocol_documented_in_hermes=true
+protocol_documented_in_codex=true
+consistency_status=consistent
+discrepancies=none

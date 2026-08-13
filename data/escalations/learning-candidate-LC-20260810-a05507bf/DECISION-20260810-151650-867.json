@@ -1,0 +1,21 @@
+{
+    "schema_version":  "2",
+    "task_id":  "learning-candidate-LC-20260810-a05507bf",
+    "decision":  "stop",
+    "note":  "",
+    "decided_by":  "laptop-impr60b8\\brian",
+    "authentication_method":  "local_owner_token",
+    "request_id":  "57c031a8-e450-4c43-bcb8-f550bfc9a58d",
+    "decided_at":  "2026-08-10T15:16:50.8635882+08:00",
+    "escalation_created_at":  "2026-08-10T13:08:46.0000000+08:00",
+    "decision_delay_seconds":  7684.864,
+    "suspicious_fast_decision":  false,
+    "receipt":  {
+                    "path":  "E:\\AgentOS\\data\\escalations\\learning-candidate-LC-20260810-a05507bf\\receipts\\DASHBOARD-20260810-071650-406-3cfa60ce.json",
+                    "sha256":  "AE58C9E5C4925F39289E1B924018B1BEC75A507CFA7F37504E83E62ECED50999",
+                    "type":  "dashboard_owner_session",
+                    "issued_at":  "2026-08-10T07:16:50.406030+00:00",
+                    "expires_at":  "2026-08-10T07:17:01.682197+00:00",
+                    "verified_at":  "2026-08-10T15:16:50.8635882+08:00"
+                }
+}

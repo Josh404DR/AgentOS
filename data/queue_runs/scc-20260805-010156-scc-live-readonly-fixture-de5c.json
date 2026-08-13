@@ -1,0 +1,10 @@
+{
+    "root_dispatch_id":  "scc-20260805-010156-scc-live-readonly-fixture-de5c",
+    "process_id":  37956,
+    "started_at":  "2026-08-05T09:02:05.3632519+08:00",
+    "status":  "completed",
+    "stdout_path":  "E:\\AgentOS\\data\\queue_runs\\scc-20260805-010156-scc-live-readonly-fixture-de5c.stdout.log",
+    "stderr_path":  "E:\\AgentOS\\data\\queue_runs\\scc-20260805-010156-scc-live-readonly-fixture-de5c.stderr.log",
+    "finished_at":  "2026-08-05T09:03:07.9946017+08:00",
+    "detail":  "tasks_executed=1 contained_failures=0"
+}

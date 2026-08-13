@@ -1,0 +1,19 @@
+{
+  "schema_version": "1",
+  "receipt_type": "dashboard_owner_session",
+  "task_id": "2026-07-26-docs-governance-status-autolink",
+  "decision": "stop",
+  "actor_id": "laptop-impr60b8\\brian",
+  "authentication_method": "local_owner_token",
+  "request_id": "4737aae8-3287-4bf4-ac7f-f3ac30c81638",
+  "issued_at": "2026-08-10T02:58:42.084257+00:00",
+  "expires_at": "2026-08-10T03:00:42.084257+00:00",
+  "session_validated": true,
+  "csrf_validated": true,
+  "origin_validated": true,
+  "local_client_validated": true,
+  "telegram_identity": "",
+  "confirmation_code_consumed": false,
+  "source_api": "/api/approvals/2026-07-26-docs-governance-status-autolink/decision",
+  "signature": "0E5D2157B0808E1F35828F14003333679802A2C68BD1AA740084AEE39F3991C2"
+}

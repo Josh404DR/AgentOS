@@ -1,0 +1,79 @@
+{
+    "status":  "FAIL",
+    "started_at":  "2026-07-11T07:17:21.4268681+08:00",
+    "finished_at":  "2026-07-11T07:17:31.9558353+08:00",
+    "duration_seconds":  10.529,
+    "agentos_root":  "E:\\AgentOS",
+    "models_invoked":  false,
+    "external_services_invoked":  false,
+    "queue_rerun_executed":  false,
+    "baseline_approval_executed":  false,
+    "fail_count":  3,
+    "warn_count":  4,
+    "check_count":  10,
+    "created_fixtures":  [
+
+                         ],
+    "checks":  [
+                   {
+                       "name":  "governance_gate",
+                       "status":  "FAIL",
+                       "detail":  "E:\\AgentOS\\scripts\\sync_shared_governance.ps1 : Exception calling \"WriteAllText\" with \"3\" argument(s): \"Access to the p",
+                       "command":  "scripts\\assert_governance_ready.ps1"
+                   },
+                   {
+                       "name":  "powershell_syntax_core",
+                       "status":  "FAIL",
+                       "detail":  "missing: scripts\\repository_hygiene_check.ps1",
+                       "command":  "PowerShell AST parse core scripts"
+                   },
+                   {
+                       "name":  "verify_prompt_fixture",
+                       "status":  "FAIL",
+                       "detail":  "The argument \u0027E:\\AgentOS\\tests\\fixtures\\test_verify_prompt_verdict_injection.ps1\u0027 to the -File parameter does not exist. Provide the path to an existing \u0027.ps1\u0027 file as an argument to the -File parameter.",
+                       "command":  "tests\\fixtures\\test_verify_prompt_verdict_injection.ps1"
+                   },
+                   {
+                       "name":  "classifier_regression",
+                       "status":  "PASS",
+                       "detail":  "classifier_regression_status=passed\r\ncase_count=6",
+                       "command":  "tests\\classify_task_regression.ps1"
+                   },
+                   {
+                       "name":  "queue_starter_validate_only",
+                       "status":  "PASS",
+                       "detail":  "queue_starter_validation=passed\r\nqueue_root_dispatch_id=ci-smoke-queue-root\r\ntask_path=E:\\AgentOS\\data\\codex_tasks\\ci-smoke-queue-root\\TASK.md\r\nrunner_path=E:\\AgentOS\\scripts\\task_queue_runner.ps1\r\npath_environment_repair=available",
+                       "command":  "scripts\\start_task_queue.ps1 -ValidateOnly"
+                   },
+                   {
+                       "name":  "queue_starter_path_repair_contract",
+                       "status":  "PASS",
+                       "detail":  "path_repair_contract=present",
+                       "command":  "Check start_task_queue.ps1 has Path/PATH repair before Start-Process"
+                   },
+                   {
+                       "name":  "antigravity_outputs_only_dryrun",
+                       "status":  "WARN",
+                       "detail":  "skipped because governance_gate failed",
+                       "command":  "scripts\\invoke_antigravity_subagent.ps1 -DryRun outputs_only fixture"
+                   },
+                   {
+                       "name":  "antigravity_workspace_fallback_dryrun",
+                       "status":  "WARN",
+                       "detail":  "skipped because governance_gate failed",
+                       "command":  "scripts\\invoke_antigravity_subagent.ps1 -DryRun workspace-write fallback fixture"
+                   },
+                   {
+                       "name":  "python_compile_core",
+                       "status":  "WARN",
+                       "detail":  "E:\\AgentOS\\dashboard\\backend\\.venv\\Scripts\\python.exe: [Errno 13] Permission denied: \u0027E:\\\\AgentOS\\\\integrations\\\\hermes_plugins\\\\agentos-typed-dispatch\\\\__pycache__\\\\__init__.cpython-312.pyc.1894035911520\u0027\r\nC:\\Users\\brian\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe: [Errno 13] Permission denied: \u0027E:\\\\AgentOS\\\\integrations\\\\hermes_plugins\\\\agentos-typed-dispatch\\\\__pycache__\\\\__init__.cpython-312.pyc.2398965904512\u0027\r\nC:\\Users\\brian\\AppData\\Local\\hermes\\hermes-agent\\venv\\Scripts\\python.exe: No Python at \u0027\"C:\\Users\\brian\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe\u0027",
+                       "command":  "python -m py_compile core Python files"
+                   },
+                   {
+                       "name":  "dashboard_health_endpoint",
+                       "status":  "WARN",
+                       "detail":  "無法連接至遠端伺服器",
+                       "command":  "GET http://127.0.0.1:8000/api/health"
+                   }
+               ]
+}

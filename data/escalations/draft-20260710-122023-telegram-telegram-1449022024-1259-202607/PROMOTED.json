@@ -1,0 +1,12 @@
+{
+  "source_draft_id": "draft-20260710-122023-telegram-telegram-1449022024-1259-202607",
+  "source_draft_path": "E:\\AgentOS\\data\\tasks\\draft-20260710-122023-telegram-telegram-1449022024-1259-202607\\TASK.md",
+  "target_task_id": "telegram-telegram-1449022024-1259-20260710-122022-897953",
+  "target_task_path": "E:\\AgentOS\\data\\tasks\\telegram-telegram-1449022024-1259-20260710-122022-897953\\TASK.md",
+  "escalation_event_task_id": "draft-20260710-122023-telegram-telegram-1449022024-1259-202607",
+  "resolution_task_id": "draft-20260710-122023-telegram-telegram-1449022024-1259-202607",
+  "decision": "approve",
+  "governance_version": "1.2.0",
+  "governance_hash": "AD20E91AFB53EF06800077F420F8F441E57EEEA0E906794FF219E63F0FFE39C3",
+  "promoted_at": "2026-07-10T16:02:00.000+08:00"
+}

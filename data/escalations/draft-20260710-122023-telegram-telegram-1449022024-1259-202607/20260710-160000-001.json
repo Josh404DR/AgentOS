@@ -1,0 +1,17 @@
+{
+  "task_id": "draft-20260710-122023-telegram-telegram-1449022024-1259-202607",
+  "source": "raw_intake_approval",
+  "reason": "raw_intake_draft_awaiting_josh_approval",
+  "decision_type": "raw_intake_approval",
+  "summary_for_josh": "Raw intake draft awaiting Josh approval for promotion. Draft contains request to diagnose Hermes Lite response quality/speed issues. Josh approved promotion via Telegram request telegram-telegram-1449022024-1267-20260710-151925-439010.",
+  "options": [
+    { "label": "Approve", "effect": "Promote draft to a full task under its dispatch_id" },
+    { "label": "Modify", "effect": "Revise and re-shape before promotion" },
+    { "label": "Stop", "effect": "Discard draft without promoting" }
+  ],
+  "evidence": [
+    "E:\\AgentOS\\data\\tasks\\draft-20260710-122023-telegram-telegram-1449022024-1259-202607\\TASK.md"
+  ],
+  "created_at": "2026-07-10T16:00:00.000+08:00",
+  "status": "awaiting_josh"
+}

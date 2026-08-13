@@ -1,0 +1,10 @@
+{
+    "root_dispatch_id":  "2026-07-26-global-jsonl-append-lock",
+    "process_id":  29416,
+    "started_at":  "2026-07-26T22:37:32.7635069+08:00",
+    "status":  "completed",
+    "stdout_path":  "E:\\AgentOS\\data\\queue_runs\\2026-07-26-global-jsonl-append-lock.stdout.log",
+    "stderr_path":  "E:\\AgentOS\\data\\queue_runs\\2026-07-26-global-jsonl-append-lock.stderr.log",
+    "finished_at":  "2026-07-26T22:46:05.7278432+08:00",
+    "detail":  "tasks_executed=1 contained_failures=0"
+}

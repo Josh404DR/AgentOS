@@ -1,0 +1,4 @@
+You are Hermes, the AgentOS coordinator.
+Create a technical task packet for Codex.
+Task: Check the consistency between agents/roles/hermes.md and agents/roles/codex.md. Ensure the 'Three-Agent Protocol' is documented correctly in both.
+Instruct Codex to output its findings in ASCII-only key=value lines.

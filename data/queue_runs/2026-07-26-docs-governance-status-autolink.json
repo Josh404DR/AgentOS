@@ -1,0 +1,10 @@
+{
+    "root_dispatch_id":  "2026-07-26-docs-governance-status-autolink",
+    "process_id":  30160,
+    "started_at":  "2026-07-26T21:54:53.4121007+08:00",
+    "status":  "completed",
+    "stdout_path":  "E:\\AgentOS\\data\\queue_runs\\2026-07-26-docs-governance-status-autolink.stdout.log",
+    "stderr_path":  "E:\\AgentOS\\data\\queue_runs\\2026-07-26-docs-governance-status-autolink.stderr.log",
+    "finished_at":  "2026-07-27T17:30:23.9935015+08:00",
+    "detail":  "tasks_executed=1 contained_failures=0"
+}

@@ -1,0 +1,3 @@
+test_command: manual line-number grep against current workspace files (dashboard\ has no git history to diff against; see original ticket's SCOPED_DIFF.md provenance note)
+test_result: `page.tsx` line 34 = `公開唯讀區 / Public Read Plane`; line 43 = `擁有者驗證控制區 / Owner-Authenticated Control Plane`; `KnowledgeWorkspace.tsx` lines 70 and 93 = `隔離知識附加區 / Isolated Knowledge Append Plane` — all 4 confirmed present in the live files at time of writing
+evidence: governance gate binding unchanged since original ticket (governance_version/hash match this file's frontmatter, no new gate run required for a no-source-change revision)

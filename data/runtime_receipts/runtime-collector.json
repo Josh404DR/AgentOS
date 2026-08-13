@@ -1,0 +1,10 @@
+{
+    "runtime_id":  "runtime-collector",
+    "status":  "running",
+    "process_id":  23132,
+    "executable_path":  "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+    "command_match":  "E:\\AgentOS\\scripts\\observability\\runtime-collector-loop.ps1",
+    "port":  0,
+    "started_at":  "2026-08-13T09:03:57.5033351+08:00",
+    "identity":  "LAPTOP-IMPR60B8\\brian"
+}

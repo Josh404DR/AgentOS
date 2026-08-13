@@ -1,0 +1,27 @@
+[RESULT_JSON]
+{
+  "fetch_status": "success",
+  "url": "https://www.threads.com/@mangobear2/post/DaZtRdakkX1?xmt=AQG01JiAYdrbmOC_SZcXxdFVx0sg6NIyDV5uE6ls3Vb5iw",
+  "final_url": "https://www.threads.com/@mangobear2/post/DaZtRdakkX1?xmt=AQG01JiAYdrbmOC_SZcXxdFVx0sg6NIyDV5uE6ls3Vb5iw",
+  "http_status": 200,
+  "text": "mangobear2\nFable 5\n2026-7-5\n趁著Claude Fable5第二次短暫的開放\n讓Fable把自己的框架抽取出來\n不同於一般提示詞的單次用法\n而是常駐於Calude上\ngithub.com/Miguo…  \n翻譯\ngithub.com\nfable-harness/README.zh-TW.md at main · Miguok/fable-harness\n450\n35\n80\n731",
+  "links": [
+    {
+      "url": "https://github.com/Miguok/fable-harness/blob/main/README.zh-TW.md",
+      "text": "github.com/Miguo…"
+    },
+    {
+      "url": "https://github.com/Miguok/fable-harness/blob/main/README.zh-TW.md",
+      "text": "github.com\nfable-harness/README.zh-TW.md at main · Miguok/fable-harness"
+    }
+  ],
+  "post_count": 1,
+  "anchor_found": false,
+  "images": [
+    "E:\\AgentOS\\data\\url_intake\\telegram-telegram-1449022024-1333-20260713-180639-482139\\fetch\\images\\image_02.png"
+  ],
+  "screenshot": "E:\\AgentOS\\data\\url_intake\\telegram-telegram-1449022024-1333-20260713-180639-482139\\fetch\\screenshot.png",
+  "source_untrusted": true
+}
+[/RESULT_JSON]
+source_json_path=E:\AgentOS\data\url_intake\telegram-telegram-1449022024-1333-20260713-180639-482139\fetch\source.json

@@ -1,0 +1,9 @@
+status=completed
+files_updated=agents/roles/hermes.md,agents/roles/codex.md
+hermes_protocol_present=true
+codex_protocol_present=true
+inspector_role_documented=true
+inspector_role=Claude
+gemini_core_protocol_role=false
+verification=rg confirmed Three-Agent Protocol, Brain, Builder, Inspector in both files
+git_status=not_checked_dubious_repository_ownership

@@ -1,0 +1,22 @@
+{
+    "task_id": "2026-07-26-operational-drift-triage",
+    "resolution_type": "claude_judgment_under_josh_delegation",
+    "decision": "approve",
+    "resolved_at": "2026-08-08T00:00:00+08:00",
+    "resolved_by": "Claude",
+    "delegation_basis": "Josh 於 2026-08-08 Cowork 對話原話：「由你來判斷這個是否有需要留就好」",
+    "summary": "審查 scripts\\task_queue_runner.ps1 中無工單認領的失敗重試/降級路由邏輯（Get-Attempts/Write-Attempt/Set-TaskRoute/Get-FallbackSpec/Test-RecoverableFailure，約 L316-404，及主迴圈整合部分）。判斷：予以核准保留，理由如下：(1) Get-FallbackSpec 第 382 行明確排除 Risky 任務與 medium/high 風險任務，不會對其自動換路由重跑；(2) Test-RecoverableFailure 明確把 governance_gate_blocked、task_governance_binding_missing、invalid_codex_mode、unsupported_route、config_file_missing 列為不可重試，直接進 escalation，不會把治理性失敗誤判成單純技術性失敗而悄悄重跑；(3) 重試對象僅限 AGENTS.md §2 已核准的既有工作角色（Claude/Codex/Antigravity），未新增未授權路由目標；(4) 用 usedKeys 追蹤已嘗試過的路由組合，非無界重試。整體效果是減少單純技術性失敗（非治理性）不必要地打擾 Josh，同時結構上保留「Risky 與治理性失敗一律送人工」的邊界。",
+    "evidence": [
+        "scripts\\task_queue_runner.ps1:379-397 (Get-FallbackSpec, 含第382行 Risky/medium/high 排除判斷)",
+        "scripts\\task_queue_runner.ps1:399-404 (Test-RecoverableFailure 排除清單)",
+        "scripts\\task_queue_runner.ps1:316-350 (Get-Attempts/Write-Attempt 落地紀錄)",
+        "先前 subagent 交叉比對：本檔案其餘改動已對應多張已完成且獨立驗證的工單（2026-07-26-queue-active-index-optimization、2026-07-29-queue-index-reparenting-staleness-fix、2026-07-29-queue-index-full-sweep-throttle-fix、2026-07-29-revision-round-cap-decision-replay-fix、2026-07-26-global-jsonl-append-lock），僅此段失敗重試/降級邏輯無工單認領"
+    ],
+    "caveats": [
+        "本次審查為程式碼邏輯手動 trace，沙盒環境無 pwsh 無法實跑既有回歸測試（test_dispatch_resilience.ps1、test_queue_failure_containment.ps1、test_queue_reason_propagation.ps1），建議實際 commit 前於有 pwsh 的環境跑一次這三份測試作為最後確認。",
+        "本決策不等同於已完整覆核 task_queue_runner.ps1 全部 552 行未提交變更之每一行；範圍僅限於本escalation 標記的『無工單認領』區段。",
+        "commit 此檔案時須一併帶上其新依賴、目前也是 untracked 狀態的 5 支腳本（scripts\\escalation_receipt_validation.ps1、scripts\\lib\\global_jsonl_lock.ps1、scripts\\rebuild_active_task_index.ps1、scripts\\write_escalation.ps1、scripts\\decide_escalation.ps1），否則乾淨 checkout 會因 dot-source 失敗而炸掉——這是本次审查衍生的獨立建議，不影響本 escalation 的 approve 判斷本身。"
+    ],
+    "josh_action_required": false,
+    "recommended_status": "resolved_by_delegated_claude_judgment"
+}

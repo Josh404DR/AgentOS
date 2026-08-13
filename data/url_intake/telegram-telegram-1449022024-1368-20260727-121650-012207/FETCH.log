@@ -1,0 +1,28 @@
+[RESULT_JSON]
+{
+  "fetch_status": "success",
+  "url": "https://www.threads.com/@nyanako0129/post/DbRVzFtE3yx?xmt=AQG076NFxmTytnfjUsdXcsps80WC8mRCWn8R35sQ1aU89WgUOioBFwazyyW2_FEItbnZdEGgX-M&slof=1",
+  "final_url": "https://www.threads.com/@nyanako0129/post/DbRVzFtE3yx?xmt=AQG076NFxmTytnfjUsdXcsps80WC8mRCWn8R35sQ1aU89WgUOioBFwazyyW2_FEItbnZdEGgX-M&slof=1",
+  "http_status": 200,
+  "text": "nyanako0129\n6小時\n推薦一個反AI的網頁設計skill\ngithub.com/nutlo…  \n翻譯\ngithub.com\nGitHub - Nutlope/hallmark: Anti-AI-slop design skill for Claude Code, Cursor, and Codex.\n88\n2\n15\n88",
+  "links": [
+    {
+      "url": "https://github.com/nutlope/hallmark",
+      "text": "github.com/nutlo…"
+    },
+    {
+      "url": "https://github.com/nutlope/hallmark",
+      "text": "github.com\nGitHub - Nutlope/hallmark: Anti-AI-slop design skill for Claude Code, Cursor, and Codex."
+    }
+  ],
+  "post_count": 1,
+  "anchor_found": false,
+  "images": [
+    "E:\\AgentOS\\data\\url_intake\\telegram-telegram-1449022024-1368-20260727-121650-012207\\fetch\\images\\image_01.jpg",
+    "E:\\AgentOS\\data\\url_intake\\telegram-telegram-1449022024-1368-20260727-121650-012207\\fetch\\images\\image_02.png"
+  ],
+  "screenshot": "E:\\AgentOS\\data\\url_intake\\telegram-telegram-1449022024-1368-20260727-121650-012207\\fetch\\screenshot.png",
+  "source_untrusted": true
+}
+[/RESULT_JSON]
+source_json_path=E:\AgentOS\data\url_intake\telegram-telegram-1449022024-1368-20260727-121650-012207\fetch\source.json

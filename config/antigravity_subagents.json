@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "governance_version": "1.2.0",
+  "default_write_scope": "outputs_only",
+  "workers": [
+    {
+      "alias": "free-a",
+      "windows_user": "quide0120",
+      "plan": "free",
+      "enabled": true,
+      "allowed_modes": ["research", "documentation"],
+      "allowed_risk_levels": ["low"]
+    },
+    {
+      "alias": "free-b",
+      "windows_user": "jamie20260521",
+      "plan": "free",
+      "enabled": true,
+      "allowed_modes": ["documentation", "deduplication"],
+      "allowed_risk_levels": ["low"]
+    },
+    {
+      "alias": "free-c",
+      "windows_user": "pkg05",
+      "plan": "pro",
+      "enabled": true,
+      "allowed_modes": ["static_analysis", "test_execution"],
+      "allowed_risk_levels": ["low"]
+    },
+    {
+      "alias": "pro",
+      "windows_user": "brian",
+      "plan": "pro",
+      "enabled": true,
+      "allowed_modes": ["research", "documentation", "deduplication", "static_analysis", "test_execution"],
+      "allowed_risk_levels": ["low"]
+    }
+  ],
+  "fallback_policy": {
+    "automatic_account_rotation": false,
+    "switch_only_on_explicit_quota_exhaustion": true,
+    "non_quota_failure_action": "stop_and_report"
+  }
+}

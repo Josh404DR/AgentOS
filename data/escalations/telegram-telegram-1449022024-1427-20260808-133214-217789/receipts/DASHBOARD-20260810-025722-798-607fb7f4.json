@@ -1,0 +1,19 @@
+{
+  "schema_version": "1",
+  "receipt_type": "dashboard_owner_session",
+  "task_id": "telegram-telegram-1449022024-1427-20260808-133214-217789",
+  "decision": "stop",
+  "actor_id": "laptop-impr60b8\\brian",
+  "authentication_method": "local_owner_token",
+  "request_id": "fe846317-6cd9-4529-96c2-0dce885eb86d",
+  "issued_at": "2026-08-10T02:57:22.796848+00:00",
+  "expires_at": "2026-08-10T02:59:22.796848+00:00",
+  "session_validated": true,
+  "csrf_validated": true,
+  "origin_validated": true,
+  "local_client_validated": true,
+  "telegram_identity": "",
+  "confirmation_code_consumed": false,
+  "source_api": "/api/approvals/telegram-telegram-1449022024-1427-20260808-133214-217789/decision",
+  "signature": "7F5B91DFC95C13437D21F4B2999CF93BFF1B3191E8D63C9959627FA2BFA1F47F"
+}
