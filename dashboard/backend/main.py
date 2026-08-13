@@ -1117,6 +1117,43 @@ def _load_escalation_fixtures() -> dict[str, bool]:
     return fixtures
 
 
+def _normalize_iso_fraction(value: str) -> str:
+    """Truncate/pad an ISO-8601 timestamp's fractional-seconds component to
+    exactly 6 digits (microseconds) so datetime.fromisoformat() can parse it
+    regardless of the source's precision. PowerShell/.NET commonly emits
+    7-digit fractional seconds (100-nanosecond ticks), which datetime.
+    fromisoformat() rejects on Python versions before 3.11 -- and is not
+    guaranteed to accept even on newer versions -- so we normalize instead of
+    relying on interpreter-specific leniency.
+    """
+    match = re.match(r"^(.*T\d{2}:\d{2}:\d{2})\.(\d+)(.*)$", value)
+    if not match:
+        return value
+    whole, frac, rest = match.groups()
+    frac = (frac + "000000")[:6]
+    return f"{whole}.{frac}{rest}"
+
+
+def _same_instant(a: object, b: object) -> bool:
+    """Compare two ISO-8601 timestamp strings as the same instant, tolerant of
+    differing fractional-second precision (e.g. no fractional seconds vs.
+    7-digit fractional seconds). Falls back to raw string equality if either
+    value is missing or fails to parse, so unexpected formats fail closed
+    (no match) rather than silently matching everything.
+    """
+    if not isinstance(a, str) or not isinstance(b, str):
+        return a == b
+    if a == b:
+        return True
+    try:
+        return (
+            datetime.fromisoformat(_normalize_iso_fraction(a))
+            == datetime.fromisoformat(_normalize_iso_fraction(b))
+        )
+    except ValueError:
+        return False
+
+
 def _list_escalations() -> list[dict]:
     """List all escalations from ESCALATION_INDEX.jsonl, enriched with resolution status."""
     index_path = ESCALATIONS_DIR / "ESCALATION_INDEX.jsonl"
@@ -1173,7 +1210,14 @@ def _list_escalations() -> list[dict]:
             # A decision is bound to one escalation event. A valid decision
             # for an earlier generation of the same task_id must not resolve
             # a later append-only event.
-            if candidate.get("escalation_created_at") != entry.get("created_at"):
+            # NOTE: compare as parsed instants, not raw strings -- the index
+            # writes created_at without fractional seconds (e.g.
+            # "2026-07-26T16:49:26+08:00") while DECISION-*.json's
+            # escalation_created_at is written with 7-digit fractional
+            # seconds (e.g. "2026-07-26T16:49:26.0000000+08:00"). Same
+            # instant, different string, so a raw `!=` always mismatched and
+            # a verified decision could never resolve its escalation.
+            if not _same_instant(candidate.get("escalation_created_at"), entry.get("created_at")):
                 continue
             if AUTH.verify_escalation_decision_record(candidate, escalation_dir):
                 verified_decision = candidate

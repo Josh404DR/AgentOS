@@ -5,6 +5,8 @@
 #   .\start.ps1 -Install   第一次安裝依賴
 #   .\start.ps1 -Stop      關閉所有 dashboard 服務
 #   .\start.ps1 -ReclaimOrphans  接管經 workspace command line 驗證的孤兒程序
+#   .\start.ps1 -BackendPort 8001 -Dev  backend 改用 8001（例如 8000 被其他工具佔用），-Dev 才能即時生效，
+#                                        production 模式需要用同一個 port 重新 npm run build 前端才會生效
 
 param(
     [switch]$Install,
@@ -15,7 +17,9 @@ param(
     [switch]$Dev,
     [switch]$ReclaimOrphans,
     [ValidateRange(1, 65535)]
-    [int]$FrontendPort = 3002
+    [int]$FrontendPort = 3002,
+    [ValidateRange(1, 65535)]
+    [int]$BackendPort = 8000
 )
 
 $ErrorActionPreference = "Stop"
@@ -161,7 +165,7 @@ if (-not (Test-Path $LogDir)) { New-Item -ItemType Directory -Path $LogDir | Out
 if ($Stop) {
     Write-Host "[Stop] Validating dashboard lifecycle receipts..." -ForegroundColor Yellow
     Stop-RuntimeCollector
-    if (-not $FrontendOnly) { Stop-RegisteredDashboardProcess -Name "dashboard-backend" -Port 8000 }
+    if (-not $FrontendOnly) { Stop-RegisteredDashboardProcess -Name "dashboard-backend" -Port $BackendPort }
     if (-not $BackendOnly) { Stop-RegisteredDashboardProcess -Name "dashboard-frontend" -Port $FrontendPort }
     Write-Host "[Stop] Done." -ForegroundColor Green
     return
@@ -262,23 +266,23 @@ Start-RuntimeCollector
 # START BACKEND
 # ─────────────────────────────────────────
 if (-not $FrontendOnly) {
-    Resolve-DashboardOrphanPort -Name "dashboard-backend" -Kind backend -Port 8000 `
+    Resolve-DashboardOrphanPort -Name "dashboard-backend" -Kind backend -Port $BackendPort `
         -ReceiptPath (Join-Path $ReceiptDir "dashboard-backend.json") `
         -BackendPython $BackendPython -FrontendDir $FrontendDir -Reclaim:$ReclaimOrphans
-    if (Test-Port 8000) {
-        if (-not (Test-HttpEndpoint "http://localhost:8000/api/health")) {
-            throw "Port 8000 is occupied, but the dashboard backend health check failed."
+    if (Test-Port $BackendPort) {
+        if (-not (Test-HttpEndpoint "http://localhost:$BackendPort/api/health")) {
+            throw "Port $BackendPort is occupied, but the dashboard backend health check failed."
         }
-        Write-Host "[Backend] Already running and healthy on port 8000." -ForegroundColor Green
+        Write-Host "[Backend] Already running and healthy on port $BackendPort." -ForegroundColor Green
     } else {
-        Write-Host "[Backend] Starting FastAPI on http://localhost:8000..." -ForegroundColor DarkGray
+        Write-Host "[Backend] Starting FastAPI on http://localhost:$BackendPort..." -ForegroundColor DarkGray
         $outLog = Join-Path $LogDir "dashboard-backend.stdout.log"
         $errLog = Join-Path $LogDir "dashboard-backend.stderr.log"
 
                 if (-not (Test-Path -LiteralPath $BackendPython -PathType Leaf)) {
                     throw "Dashboard backend runtime missing: $BackendPython. Run .\start.ps1 -Install first."
                 }
-                $backendArguments = @("-m", "uvicorn", "main:app", "--host", "127.0.0.1", "--port", "8000")
+                $backendArguments = @("-m", "uvicorn", "main:app", "--host", "127.0.0.1", "--port", "$BackendPort")
                 if ($Dev) { $backendArguments += "--reload" }
                 $proc = Start-Process -FilePath $BackendPython `
                     -ArgumentList $backendArguments `
@@ -288,8 +292,8 @@ if (-not $FrontendOnly) {
             -RedirectStandardError  $errLog `
             -PassThru
 
-        if (Wait-HttpReady -Uri "http://localhost:8000/api/health" -Process $proc -TimeoutSeconds 60) {
-            Write-DashboardReceipt -Name "dashboard-backend" -Process $proc -CommandMatch "uvicorn main:app" -Port 8000
+        if (Wait-HttpReady -Uri "http://localhost:$BackendPort/api/health" -Process $proc -TimeoutSeconds 60) {
+            Write-DashboardReceipt -Name "dashboard-backend" -Process $proc -CommandMatch "uvicorn main:app" -Port $BackendPort
             Write-Host "[Backend] Running PID=$($proc.Id)" -ForegroundColor Green
         } else {
             if (Test-Path $errLog) { Get-Content $errLog -Tail 20 }
@@ -326,6 +330,18 @@ if (-not $BackendOnly) {
         }
 
         # Use cmd.exe to run npm so PATH is resolved correctly in hidden mode
+        # NEXT_PUBLIC_API_URL: only takes effect live in -Dev mode (Next dev server reads env at
+        # request time). In production mode (npm run start), NEXT_PUBLIC_* vars are baked in at
+        # `npm run build` time, so overriding it here has no effect unless the frontend was built
+        # with the same BackendPort. If -BackendPort was overridden and you are NOT using -Dev,
+        # rebuild first: cd frontend; $env:NEXT_PUBLIC_API_URL="http://localhost:$BackendPort"; npm run build
+        if ($BackendPort -ne 8000) {
+            $env:NEXT_PUBLIC_API_URL = "http://localhost:$BackendPort"
+            if (-not $Dev) {
+                Write-Host "[Frontend] WARNING: -BackendPort $BackendPort differs from default 8000, but this is a production build (not -Dev)." -ForegroundColor Yellow
+                Write-Host "[Frontend] NEXT_PUBLIC_API_URL is baked in at build time -- the running build may still call port 8000 unless it was rebuilt with this env var set. Use -Dev, or rebuild: npm run build (with NEXT_PUBLIC_API_URL set)." -ForegroundColor Yellow
+            }
+        }
         $proc = Start-Process -FilePath "cmd.exe" `
             -ArgumentList @("/c", $frontendCommand) `
             -WorkingDirectory $FrontendDir `
@@ -370,6 +386,6 @@ if (-not $NoBrowser -and -not $BackendOnly) {
 Write-Host ""
 Write-Host "=== AgentOS Dashboard Ready ===" -ForegroundColor Cyan
 Write-Host "  UI  → http://localhost:$FrontendPort" -ForegroundColor White
-Write-Host "  API → http://localhost:8000/docs" -ForegroundColor White
+Write-Host "  API → http://localhost:$BackendPort/docs" -ForegroundColor White
 Write-Host "  Owner token → $AgentOSRoot\data\dashboard_auth\owner-token.txt" -ForegroundColor White
 Write-Host "  To stop: .\start.ps1 -Stop" -ForegroundColor DarkGray
