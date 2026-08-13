@@ -4,7 +4,7 @@ AgentOS is Josh Hsu's independent freelance automation operating system at `E:\A
 
 Hermes handles receiving, classification, dispatching, and reporting through Telegram. Claude is the default workspace implementer. Codex Plan only breaks down Complex Tasks, while Codex Verify performs independent, read-only blind verification in a separate session. Gemini supports research, summaries, and second opinions. The Queue (task_queue_runner.ps1) is a deterministic scheduler and not an AI agent.
 
-Governance authority: [`AGENTS.md`](AGENTS.md). For the current version, status, hash, and checked time, see the auto-generated [`docs\GOVERNANCE_STATUS_SNAPSHOT.md`](docs/GOVERNANCE_STATUS_SNAPSHOT.md); they are not copied here.
+Governance authority: [`AGENTS.md`](AGENTS.md). For the current version, status, hash, and checked time, see the auto-generated [`docs\reports\GOVERNANCE_STATUS_SNAPSHOT.md`](docs/GOVERNANCE_STATUS_SNAPSHOT.md); they are not copied here.
 
 ## Current Source Of Truth
 
@@ -13,9 +13,9 @@ Governance authority: [`AGENTS.md`](AGENTS.md). For the current version, status,
 - Architecture and implementation status: `docs\ARCHITECTURE.md`
 - Lead, screening, and proposal workflow: `workflows\ai_freelancer_os.md`
 - Hermes-to-Codex task packets: `workflows\hermes_to_codex.md`
-- Model/tool resource inventory: `docs\RESOURCE_INVENTORY.md`
-- Agent routing plan: `docs\AGENT_ROUTING_PLAN.md`
-- Hermes setup and operational status: `docs\SETUP_STATUS.md`
+- Model/tool resource inventory: `docs\reports\RESOURCE_INVENTORY.md`
+- Agent routing plan: `docs\plans\AGENT_ROUTING_PLAN.md`
+- Hermes setup and operational status: `docs\reports\SETUP_STATUS.md`
 - Append-only work history: `progress_log.md`
 - Task escalations: `data\escalations\ESCALATION_INDEX.jsonl`
 - Task metrics: `data\metrics\METRICS_LOG.jsonl`
@@ -48,7 +48,7 @@ Josh <-> Telegram <-> Hermes
 .\scripts\start.ps1
 ```
 
-Known caveat: Hermes proxy on `localhost:8080` is not considered available until an upstream provider login succeeds. See `docs\SETUP_STATUS.md`.
+Known caveat: Hermes proxy on `localhost:8080` is not considered available until an upstream provider login succeeds. See `docs\reports\SETUP_STATUS.md`.
 
 ## Do Not Duplicate
 

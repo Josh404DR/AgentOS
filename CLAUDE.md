@@ -15,7 +15,7 @@
   - 模型升級/完成判準/問 Josh 時機 → `docs\claude_ops\20_JUDGMENT_RUBRICS.md`
   - 派工模板 → `docs\claude_ops\30_DELEGATION_TEMPLATES.md`
   - 改制度/教訓 → `docs\claude_ops\40_MAINTENANCE_PROTOCOL.md`
-  - 標籤/證據規則 → `docs\EVIDENCE_AND_REPORTING_CONTRACT.md`
+  - 標籤/證據規則 → `docs\governance\EVIDENCE_AND_REPORTING_CONTRACT.md`
   - 風險判定 → `docs\governance\RISK_RULES.md`
 - 禁讀＝不得將全文載入模型 context。例外：①確定性腳本讀寫不受限 ②Josh 點名時可讀。
   清單：`data\memory\sync_logs\`、`exports\`、`data\routing_decisions\`、

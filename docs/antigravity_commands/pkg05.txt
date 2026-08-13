@@ -1,0 +1,51 @@
+# schtasks /Create /TN "AgentOS_Antigravity_free-c" /TR "powershell.exe -NoProfile -ExecutionPolicy Bypass -File E:\AgentOS\scripts\poll_antigravity_worker.ps1 -WorkerAlias free-c -Once" /SC MINUTE /MO 5 /RL LIMITED /F
+# 已建立成功，不用再跑。
+
+# 檢查排程狀態、上次執行結果：
+schtasks /Query /TN "AgentOS_Antigravity_free-c" /V /FO LIST
+
+# 手動測試一次，直接看錯誤訊息（不用等排程觸發）：
+powershell -NoProfile -ExecutionPolicy Bypass -File E:\AgentOS\scripts\poll_antigravity_worker.ps1 -WorkerAlias free-c -Once -DryRun
+
+
+
+
+
+Windows PowerShell 5.1
+Copyright (C) Microsoft Corporation.著作權所有，並保留一切權利。
+
+PS C:\Users\pkg05> powershell -NoProfile -ExecutionPolicy Bypass -File E:\AgentOS\scripts\poll_antigravity_worker.ps1 -WorkerAlias free-c -Once -DryRun
+2026-07-06T16:40:40.5492379+08:00 worker=free-c cycle_complete processed=0
+PS C:\Users\pkg05>
+PS C:\Users\pkg05>
+PS C:\Users\pkg05> schtasks /Query /TN "AgentOS_Antigravity_free-c" /V /FO LIST
+
+資料夾: \
+主機名稱:                             LAPTOP-IMPR60B8
+工作名稱:                             \AgentOS_Antigravity_free-c
+下次執行時間:                         2026/7/6 下午 04:45:00
+狀態:                                 就緒
+登入模式:                             僅互動
+上次執行時間:                         2026/7/6 下午 04:40:01
+上次結果:                             0
+作者:                                 LAPTOP-IMPR60B8\pkg05
+執行工作:                             powershell.exe -NoProfile -ExecutionPolicy Bypass -File E:\AgentOS\scripts\poll_antigravity_worker.ps1 -WorkerAlias free-c -Once
+開始位置:                             不適用
+註解:                                 不適用
+排程工作狀態:                         已啟用
+閒置時間:                             已停用
+電源管理:                             在電池模式時停止, 使用電池時不要啟動
+執行身分使用者:                       pkg05
+如果沒有重新排程就刪除工作:           已停用
+如果執行 X 小時又 X 分鐘後就停止工作: 72:00:00
+排程:                                 排程資料無法以此格式提供。
+排程類型:                             只執行一次, 分鐘
+開始時間:                             下午 04:35:00
+開始日期:                             2026/7/6
+結束日期:                             不適用
+天:                                   不適用
+月:                                   不適用
+重複: 每隔:                           0 小時，5 分鐘
+重複: 直到: 時間:                     無
+重複: 直到: 期間:                     已停用
+重複: 如果還在執行就停止:             已停用

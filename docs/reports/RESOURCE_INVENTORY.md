@@ -1,6 +1,6 @@
 # AgentOS Resource Inventory
 
-Updated: 2026-06-21 22:33 Asia/Taipei
+Updated: 2026-07-08 Asia/Taipei（訂閱狀態更新）
 Owner: Josh Hsu
 Purpose: This file is the source of truth for model/tool resources that affect future AgentOS agent configuration.
 
@@ -10,13 +10,13 @@ Local verification performed from `E:\AgentOS`.
 
 | Resource | Verified state | Evidence | Operational status |
 |---|---|---|---|
-| Codex CLI | Installed | `codex --version` -> `codex-cli 0.138.0` | Primary technical execution tool |
+| Codex CLI | Installed | `codex --version` -> `codex-cli 0.138.0` | **額度受限**（2026-07-08 Josh 回報）；恢復時間 7/9 12:55 PM |
 | Gemini CLI | Installed | `gemini --version` -> `0.46.0` | Research/summarization/support tool |
 | Claude Code CLI | Active via tripartite bridge | `claude auth status` -> `loggedIn: true` | Active Inspector via tripartite bridge for tested review handoffs |
-| Claude Pro subscription | Verified via CLI | `claude auth status` | Pro quota available for CLI and manual use |
+| Claude Pro subscription | Verified via CLI | `claude auth status` | **額度受限**（2026-07-08 Josh 回報）；Cowork session 仍可用 |
 | Perplexity subscription | User-reported | Josh reports active subscription | Useful for research; no local AgentOS CLI/API integration verified |
 | Ollama | Installed | `ollama list` succeeded | Local fallback/small model pool |
-| Antigravity IDE desktop subscription | User-reported | Josh reports subscribed desktop usage quota | Manual IDE resource; no AgentOS CLI/API integration verified |
+| Antigravity IDE desktop subscription | User-reported | Josh reports subscribed desktop usage quota | **注意（W33）**：`brian` 帳號（alias `pro`）Josh 表示之後不續約會降為 free。路由規劃不應依賴此訂閱。 |
 | Perplexity IDE | User-reported | Josh reports available IDE resource | Manual research/coding assistant; no AgentOS automation verified |
 | VSCode + Cline free | User-reported | Josh reports available free-tier resource | Manual IDE/agent resource; no AgentOS automation verified |
 | Cursor free quota | User-reported | Josh reports available free quota | Manual IDE coding resource; no AgentOS automation verified |

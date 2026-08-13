@@ -45,6 +45,16 @@ data/upwork/private/
 tools/upwork/__pycache__/
 
 # New task-ticket directories: stop tracking going forward (existing tracked
-# files under data/codex_tasks/ are intentionally left as-is, see git log)
-data/codex_tasks/
+# files under data/codex_tasks/ are intentionally left as-is, see git log).
+# A bare "data/codex_tasks/" directory-level ignore blocks negation for
+# anything nested inside it (git cannot re-include a path whose parent
+# directory is itself excluded), so this uses the layered
+# exclude/re-include/exclude/re-include form instead, to let RESULT.md and
+# TEST_RESULT.md (the Codex Verify evidence-manifest files) stay tracked
+# while everything else under each ticket directory remains untracked.
+data/codex_tasks/*/*
+!data/codex_tasks/*/OUTPUTS/
+data/codex_tasks/*/OUTPUTS/*
+!data/codex_tasks/*/OUTPUTS/RESULT.md
+!data/codex_tasks/*/OUTPUTS/TEST_RESULT.md
 

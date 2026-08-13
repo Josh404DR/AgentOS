@@ -1,0 +1,13 @@
+# 治理基線核准（已跑過，狀態已確認 aligned，不用再跑）：
+# powershell -NoProfile -ExecutionPolicy Bypass -File E:\AgentOS\scripts\sync_shared_governance.ps1 -ApproveBaseline
+
+# pro 帳號手動測試：
+powershell -NoProfile -ExecutionPolicy Bypass -File E:\AgentOS\scripts\poll_antigravity_worker.ps1 -WorkerAlias pro -Once -DryRun
+
+# 隨時確認治理狀態是否還是 aligned：
+type E:\AgentOS\data\governance\governance_status.json
+
+# 從這邊直接看其他三個帳號的執行紀錄，不用切帳號：
+type E:\AgentOS\logs\antigravity_poll_free-a.log
+type E:\AgentOS\logs\antigravity_poll_free-b.log
+type E:\AgentOS\logs\antigravity_poll_free-c.log

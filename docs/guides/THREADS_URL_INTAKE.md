@@ -29,7 +29,7 @@ Telegram
   -> agentos-typed-dispatch pre_gateway_dispatch hook
   -> immediate processing reply
   -> scripts/threads_url_intake.ps1
-  -> fetch_threads.py
+  -> tools/threads/fetch_threads.py
   -> data/url_intake/<dispatch_id>/fetch/source.json
   -> scripts/url_intake_task_packet.ps1
   -> scripts/url_intake_worker.ps1

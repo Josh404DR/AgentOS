@@ -15,15 +15,20 @@ decision layer, source of truth, verifier, or task trigger.
 
 ## Exclusive Bundles
 
-The export creates six fixed bundles. Every included source belongs to one
+The export creates five fixed bundles. Every included source belongs to one
 bundle only:
 
 1. `CORE.md`: architecture, governance, and role definitions.
 2. `OPERATIONS.md`: current procedures, routing, setup, and workflows.
 3. `MEMORY.md`: compact current state and maintained memory indexes.
-4. `KNOWLEDGE_POOL.md`: reusable external research and references.
-5. `PROJECT_ANALYSIS.md`: Cursor-owned analysis, copied read-only.
-6. `RECOMMENDATIONS.md`: Cursor-owned proposals, copied read-only.
+4. `PROJECT_ANALYSIS.md`: Cursor-owned analysis, copied read-only.
+5. `RECOMMENDATIONS.md`: Cursor-owned proposals, copied read-only.
+
+Knowledge Pool nodes are **not** merged into any bundle. Each node is an
+independent NotebookLM source uploaded individually via
+`scripts\publish_url_knowledge.ps1`. Migration audit reports are retained
+separately under `data\memory\sync_logs\knowledge_pool_migration\` and must not
+be uploaded to NotebookLM.
 
 Raw task evidence, bridge transcripts, logs, temporary files, debug artifacts,
 and archives are excluded.
@@ -36,8 +41,9 @@ and archives are excluded.
 - Models invoked: `false`
 - External upload from schedule: `false`
 
-The scheduled task rebuilds the six local bundles and writes a manifest. It
-does not contact NotebookLM.
+The scheduled task rebuilds the five local bundles and writes a manifest. It
+does not contact NotebookLM. Knowledge Pool nodes are not rebuilt by this
+task; they are published individually via `scripts\publish_url_knowledge.ps1`.
 
 ## Manual Live Upload
 

@@ -1,0 +1,10 @@
+{
+  "ADR-0003-governance-single-source": { "x": 620, "y": 40 },
+  "ADR-0004-verify-not-self": { "x": 360, "y": 210 },
+  "ADR-0005-airflow-queue-result-chain": { "x": 700, "y": 210 },
+  "ADR-0006-telegram-typed-dispatch": { "x": 560, "y": 390 },
+  "ADR-0007-dashboard-evidence-console": { "x": 940, "y": 390 },
+  "ADR-0008-url-intake-knowledge-pipeline": { "x": 560, "y": 560 },
+  "ADR-0001-memory-architecture": { "x": 160, "y": 560 },
+  "ADR-0002-skill-library-and-stuck-protocol": { "x": 160, "y": 730 }
+}

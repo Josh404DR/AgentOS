@@ -1,5 +1,10 @@
 # AgentOS Cost-Saving Routing Protocol v0.1
 
+governance_source: E:\AgentOS\AGENTS.md
+
+This file defines routing and cost mechanics. It cannot override shared role,
+approval, deletion, or evidence rules.
+
 Updated: 2026-06-24 23:40 Asia/Taipei
 Owner: Josh Hsu
 Editor: Codex
@@ -38,7 +43,7 @@ matching prompt template, and hand the task to the assigned worker.
 | Resource | Cost class | Default use |
 |---|---|---|
 | Codex CLI | subscription | Build, edit, verify, inspect files, run tests |
-| Claude CLI | subscription | Risk review, architecture critique, checklist work, parallel analysis |
+| Claude CLI | subscription | Default governed workspace implementation and revision work |
 | Ollama | local | Intake classification, format checks, low-risk summaries |
 | Groq | free-plan limited / guarded | Routine chat window candidate and short classification only |
 | OpenRouter | free-model-only / guarded | Backup chat window candidate through `openrouter/free` or `:free` models only |
@@ -61,9 +66,10 @@ Recognized types:
 
 | TYPE | Route to | Template | Context pack | Gemini allowed |
 |---|---|---|---|---|
-| `CODEX_BUILD` | Codex | `prompts/task_templates/codex_build.md` | `repo_task` | No |
+| `CODEX_PLAN` | Codex | `prompts/task_templates/codex_plan.md` | `minimal` | No |
+| `CODEX_BUILD` | Codex | `prompts/task_templates/codex_build.md` | `repo_task` | Legacy only |
 | `CODEX_VERIFY` | Codex | `prompts/task_templates/codex_verify.md` | `evidence_verification` | No |
-| `CLAUDE_REVIEW` | Claude | `prompts/task_templates/claude_review.md` | `evidence_verification` | No |
+| `CLAUDE_REVIEW` | Claude | `prompts/task_templates/claude_review.md` | `evidence_verification` | Legacy only |
 | `CLAUDE_WORKER` | Claude | `prompts/task_templates/claude_worker.md` | `minimal` or `repo_task` | No |
 | `OLLAMA_TRIAGE` | Ollama | `prompts/task_templates/ollama_triage.md` | `minimal` | No |
 | `JOSH_APPROVAL` | Hermes records approval | none | approval target only | No |

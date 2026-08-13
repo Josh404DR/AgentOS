@@ -25,3 +25,6 @@ Include:
 - risks
 - caveats
 - resource_contribution_summary
+- one `changed_file: <path>` line for every modified file
+- exactly one `change_required: true|false` line
+- `test_command: <literal command>` and `test_result: <PASS|FAIL>` evidence

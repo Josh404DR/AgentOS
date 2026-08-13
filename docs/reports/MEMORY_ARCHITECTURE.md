@@ -102,7 +102,7 @@ Recommended rules:
 
 ## Current Known Issues
 
-- `HERMES_NOTES.md` contains earlier mojibake-corrupted sections and should not be treated as clean canonical memory until repaired.
+- `data\memory\HERMES_NOTES.md` contains historical cross-task notes. It is subordinate to `AGENTS.md` and must be reviewed against fresh evidence before reuse.
 - NotebookLM API integration is not yet verified as production-ready.
 - Local Ollama models are useful for low-risk triage but may truncate or underperform on long Hermes brain tasks.
 
